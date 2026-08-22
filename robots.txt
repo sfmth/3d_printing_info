@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sfmth.github.io/3d_printing_info/sitemap.xml
