@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">3D Printing Info social preview</title>
+  <desc id="desc">A clean preview graphic for printer and filament comparison tables.</desc>
+  <rect width="1200" height="630" fill="#0d0d0d"/>
+  <rect x="74" y="74" width="1052" height="482" rx="32" fill="#f9f9f7"/>
+  <g transform="translate(120 116)">
+    <rect x="0" y="0" width="152" height="152" rx="30" fill="#0d0d0d"/>
+    <path d="M38 35h76v22H38z" fill="#f9f9f7"/>
+    <path d="M51 57h50L91 79H61z" fill="#3987e5"/>
+    <path d="M67 79h18l8 20H59z" fill="#f9f9f7"/>
+    <rect x="55" y="101" width="42" height="9" rx="3" fill="#c39412"/>
+    <rect x="35" y="119" width="20" height="10" rx="3" fill="#3fae6b"/>
+    <rect x="66" y="119" width="20" height="10" rx="3" fill="#f9f9f7"/>
+    <rect x="97" y="119" width="20" height="10" rx="3" fill="#3fae6b"/>
+  </g>
+  <text x="318" y="176" fill="#0b0b0b" font-family="Inter, Arial, sans-serif" font-size="88" font-weight="760">3D Printing Info</text>
+  <text x="321" y="244" fill="#52514e" font-family="Inter, Arial, sans-serif" font-size="34">Printer and filament comparison tables</text>
+  <g transform="translate(120 342)" font-family="Inter, Arial, sans-serif">
+    <rect width="260" height="96" rx="14" fill="#ffffff" stroke="#e1e0d9"/>
+    <text x="26" y="39" fill="#898781" font-size="18" font-weight="700">PRINTERS</text>
+    <text x="26" y="70" fill="#0b0b0b" font-size="28" font-weight="700">6 machines</text>
+    <rect x="306" width="260" height="96" rx="14" fill="#ffffff" stroke="#e1e0d9"/>
+    <text x="332" y="39" fill="#898781" font-size="18" font-weight="700">SPECS</text>
+    <text x="332" y="70" fill="#0b0b0b" font-size="28" font-weight="700">140 fields</text>
+    <rect x="612" width="330" height="96" rx="14" fill="#ffffff" stroke="#e1e0d9"/>
+    <text x="638" y="39" fill="#898781" font-size="18" font-weight="700">MATERIALS</text>
+    <text x="638" y="70" fill="#0b0b0b" font-size="28" font-weight="700">filament guide</text>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+{
+  "name": "3D Printing Info",
+  "short_name": "3D Printing",
+  "description": "Reference tables for 3D printer hardware and filament choices.",
+  "start_url": "/3d_printing_info/",
+  "scope": "/3d_printing_info/",
+  "display": "standalone",
+  "background_color": "#f9f9f7",
+  "theme_color": "#0d0d0d",
+  "icons": [
+    {
+      "src": "assets/site-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/site-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

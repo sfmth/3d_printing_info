@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+  <title id="title">Printer comparison</title>
+  <desc id="desc">A compact 3D printer icon.</desc>
+  <rect x="14" y="18" width="68" height="54" rx="8" fill="none" stroke="#2a78d6" stroke-width="6"/>
+  <path d="M32 18v16h32V18" fill="none" stroke="#2a78d6" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M34 42h28l-7 13H41z" fill="#2f8f57"/>
+  <path d="M43 55h10l5 11H38z" fill="#52514e"/>
+  <path d="M26 78h44" fill="none" stroke="#c39412" stroke-width="6" stroke-linecap="round"/>
+</svg>

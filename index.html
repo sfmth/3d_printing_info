@@ -3,10 +3,49 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Static reference tables for 3D printer hardware and filament choices.">
+<meta name="description" content="Searchable 3D printer comparison and filament guide with hardware specs, material properties, safety notes, prices, and source-backed details.">
 <meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0d0d0d">
 <link rel="canonical" href="https://sfmth.github.io/3d_printing_info/">
-<title>3D Printing Info</title>
+<link rel="icon" href="assets/site-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="3D Printing Info">
+<meta property="og:title" content="3D Printing Info">
+<meta property="og:description" content="Searchable reference tables for comparing 3D printers and filament materials.">
+<meta property="og:url" content="https://sfmth.github.io/3d_printing_info/">
+<meta property="og:image" content="https://sfmth.github.io/3d_printing_info/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="3D Printing Info">
+<meta name="twitter:description" content="Searchable reference tables for comparing 3D printers and filament materials.">
+<meta name="twitter:image" content="https://sfmth.github.io/3d_printing_info/assets/og-card.png">
+<title>3D Printing Info | Printer and Filament Comparison Tables</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "3D Printing Info",
+  "alternateName": "3D printer and filament comparison tables",
+  "url": "https://sfmth.github.io/3d_printing_info/",
+  "description": "Searchable reference tables for comparing 3D printers and filament materials.",
+  "image": "https://sfmth.github.io/3d_printing_info/assets/og-card.png",
+  "hasPart": [
+    {
+      "@type": "WebPage",
+      "name": "3D Printer Comparison",
+      "url": "https://sfmth.github.io/3d_printing_info/comparison.html"
+    },
+    {
+      "@type": "WebPage",
+      "name": "Filament Comparison",
+      "url": "https://sfmth.github.io/3d_printing_info/filaments.html"
+    }
+  ]
+}
+</script>
 <style>
 :root {
   color-scheme: light;
@@ -29,27 +68,44 @@
 body { margin:0; min-height:100vh; background:var(--plane); color:var(--ink); font:15px/1.6 var(--sans); }
 a { color:inherit; }
 .wrap { max-width:1100px; margin:0 auto; padding:40px 20px 64px; }
-header { display:grid; gap:14px; grid-template-columns:minmax(0,1fr) auto; align-items:end; border-bottom:1px solid var(--grid); padding-bottom:22px; }
+.topbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:56px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:700; text-decoration:none; }
+.brand img { width:32px; height:32px; border-radius:8px; }
+.nav { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.nav a { color:var(--ink-2); text-decoration:none; border:1px solid var(--axis); border-radius:999px; padding:5px 12px; font-size:13px; background:var(--surface); }
+.nav a:hover { color:var(--ink); border-color:var(--accent); }
+header { display:grid; gap:14px; grid-template-columns:minmax(0,1fr) auto; align-items:end; border-bottom:1px solid var(--grid); padding-bottom:24px; }
 h1 { margin:0; font-size:clamp(2rem,5vw,4.2rem); line-height:.96; letter-spacing:0; }
-.deck { margin:0; max-width:65ch; color:var(--ink-2); font-size:1rem; }
+.deck { margin:14px 0 0; max-width:68ch; color:var(--ink-2); font-size:1.08rem; }
 .mark { width:132px; aspect-ratio:1; display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
 .mark span { border:1px solid var(--axis); background:var(--surface); box-shadow:var(--raise); }
 .mark span:nth-child(1), .mark span:nth-child(5), .mark span:nth-child(9) { background:color-mix(in srgb,var(--accent) 18%,var(--surface)); }
 .mark span:nth-child(3), .mark span:nth-child(7) { background:color-mix(in srgb,var(--good) 20%,var(--surface)); }
 .mark span:nth-child(6) { background:color-mix(in srgb,var(--warn) 22%,var(--surface)); }
+.stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:18px; }
+.stat { border:1px solid var(--grid); border-radius:8px; padding:12px 14px; background:color-mix(in srgb,var(--surface) 74%,transparent); }
+.stat b { display:block; line-height:1.1; font-size:1.25rem; }
+.stat span { display:block; color:var(--muted); font-size:12px; margin-top:3px; }
 .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:28px; }
-.card { display:flex; flex-direction:column; min-height:250px; padding:22px; background:var(--surface); border:1px solid var(--ring); border-radius:8px; box-shadow:var(--raise); text-decoration:none; }
+.card { display:grid; grid-template-rows:auto auto 1fr auto; min-height:270px; padding:22px; background:var(--surface); border:1px solid var(--ring); border-radius:8px; box-shadow:var(--raise); text-decoration:none; }
 .card:hover { border-color:var(--accent); }
+.card-head { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.card-icon { width:56px; height:56px; }
 .kicker { font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
 h2 { margin:12px 0 8px; font-size:1.55rem; line-height:1.15; letter-spacing:0; }
 .card p { margin:0; color:var(--ink-2); max-width:58ch; }
-.meta { display:flex; gap:8px; flex-wrap:wrap; margin-top:auto; padding-top:28px; }
+.meta { display:flex; gap:8px; flex-wrap:wrap; align-self:end; padding-top:28px; }
 .pill { font-size:12px; color:var(--ink-2); border:1px solid var(--axis); border-radius:999px; padding:3px 9px; }
-footer { margin-top:24px; color:var(--muted); font-size:12.5px; }
+.note { margin:18px 0 0; color:var(--muted); font-size:13px; max-width:80ch; }
+footer { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:24px; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--ink-2); }
 @media (max-width:760px) {
   .wrap { padding-top:28px; }
+  .topbar { align-items:flex-start; flex-direction:column; margin-bottom:36px; }
+  .nav { justify-content:flex-start; }
   header { grid-template-columns:1fr; }
   .mark { width:96px; }
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .grid { grid-template-columns:1fr; }
   .card { min-height:220px; }
 }
@@ -57,10 +113,22 @@ footer { margin-top:24px; color:var(--muted); font-size:12.5px; }
 </head>
 <body>
 <div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="./" aria-label="3D Printing Info home">
+      <img src="assets/site-icon.svg" alt="">
+      <span>3D Printing Info</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="comparison.html">Printers</a>
+      <a href="filaments.html">Filaments</a>
+      <a href="sitemap.xml">Sitemap</a>
+    </nav>
+  </div>
+
   <header>
     <div>
       <h1>3D Printing Info</h1>
-      <p class="deck">Static reference tables for printer hardware and filament choices, built to run directly on GitHub Pages.</p>
+      <p class="deck">Searchable reference tables for comparing 3D printers, filament materials, print settings, safety tradeoffs, prices, and source-backed technical details.</p>
     </div>
     <div class="mark" aria-hidden="true">
       <span></span><span></span><span></span>
@@ -69,9 +137,19 @@ footer { margin-top:24px; color:var(--muted); font-size:12.5px; }
     </div>
   </header>
 
+  <section class="stats" aria-label="Site summary">
+    <div class="stat"><b>2</b><span>interactive guides</span></div>
+    <div class="stat"><b>140</b><span>printer specs</span></div>
+    <div class="stat"><b>6</b><span>FDM machines</span></div>
+    <div class="stat"><b>2026</b><span>price snapshots</span></div>
+  </section>
+
   <main class="grid" aria-label="Available references">
     <a class="card" href="comparison.html">
-      <span class="kicker">Printer guide</span>
+      <span class="card-head">
+        <span class="kicker">Printer guide</span>
+        <img class="card-icon" src="assets/printer.svg" alt="">
+      </span>
       <h2>3D Printer Comparison</h2>
       <p>Six FDM machines compared across hardware, firmware, materials, safety, performance, and support.</p>
       <span class="meta">
@@ -82,7 +160,10 @@ footer { margin-top:24px; color:var(--muted); font-size:12.5px; }
     </a>
 
     <a class="card" href="filaments.html">
-      <span class="kicker">Material guide</span>
+      <span class="card-head">
+        <span class="kicker">Material guide</span>
+        <img class="card-icon" src="assets/spool.svg" alt="">
+      </span>
       <h2>Filament Comparison</h2>
       <p>Polymer families, print settings, wear, moisture behavior, mechanical properties, safety, and brand prices.</p>
       <span class="meta">
@@ -93,7 +174,12 @@ footer { margin-top:24px; color:var(--muted); font-size:12.5px; }
     </a>
   </main>
 
-  <footer>Published as a static GitHub Pages site.</footer>
+  <p class="note">The table pages are standalone static HTML files, so the site can be hosted without a build step.</p>
+
+  <footer>
+    <span>Published as a static GitHub Pages site.</span>
+    <span><a href="robots.txt">robots.txt</a> · <a href="sitemap.xml">sitemap.xml</a></span>
+  </footer>
 </div>
 </body>
 </html>

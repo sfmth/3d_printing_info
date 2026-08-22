@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">3D Printing Info icon</title>
+  <desc id="desc">A stylized printer nozzle over a grid of comparison cells.</desc>
+  <rect width="512" height="512" rx="96" fill="#0d0d0d"/>
+  <path d="M132 124h248v72H132z" fill="#f9f9f7"/>
+  <path d="M176 196h160l-34 66h-92z" fill="#3987e5"/>
+  <path d="M232 262h48l20 54h-88z" fill="#f9f9f7"/>
+  <path d="M196 316h120v28H196z" fill="#c39412"/>
+  <g fill="#f9f9f7">
+    <rect x="126" y="386" width="54" height="28" rx="8"/>
+    <rect x="202" y="386" width="54" height="28" rx="8"/>
+    <rect x="278" y="386" width="54" height="28" rx="8"/>
+    <rect x="354" y="386" width="32" height="28" rx="8"/>
+  </g>
+  <g fill="#3fae6b">
+    <rect x="126" y="342" width="54" height="28" rx="8"/>
+    <rect x="278" y="342" width="54" height="28" rx="8"/>
+  </g>
+</svg>

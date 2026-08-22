@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+  <title id="title">Filament comparison</title>
+  <desc id="desc">A filament spool with a loose strand.</desc>
+  <circle cx="42" cy="48" r="30" fill="none" stroke="#2f8f57" stroke-width="6"/>
+  <circle cx="42" cy="48" r="10" fill="none" stroke="#2f8f57" stroke-width="6"/>
+  <path d="M23 36h38M20 48h44M23 60h38" fill="none" stroke="#2a78d6" stroke-width="5" stroke-linecap="round"/>
+  <path d="M72 48c12 0 14 10 6 17-7 6-5 13 7 13" fill="none" stroke="#c39412" stroke-width="6" stroke-linecap="round"/>
+</svg>
