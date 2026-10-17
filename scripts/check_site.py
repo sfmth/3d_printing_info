@@ -3,11 +3,13 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from html import escape
-from urllib.parse import urlsplit, unquote
+from collections import Counter
+from urllib.parse import urlsplit, unquote, quote
 import hashlib
 import json
 import re
 import subprocess
+import statistics
 import tempfile
 import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, payload, counts
@@ -15,6 +17,15 @@ from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, payload, counts
 
 def digest(x):
     return hashlib.sha256(json.dumps(x, sort_keys=True, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+
+
+def snapshot(data):
+    return {'cats': {c['id']: {
+        'record': digest(c),
+        'core': digest({k: v for k, v in c.items() if k not in ('pr', 'px')}),
+        'products': [digest(p) for p in c.get('pr', [])],
+        'px': c.get('px')
+    } for c in data['cats']}, 'src': {k: digest(s) for k, s in data['src'].items()}}
 
 
 class Page(HTMLParser):
@@ -32,6 +43,7 @@ class Page(HTMLParser):
 
 def run():
     baseline = json.loads((ROOT/'data/baseline-integrity.json').read_text())
+    checkpoint = json.loads((ROOT/'data/catalog-checkpoint.json').read_text())
     datasets = {}
     for name in PAGES:
         text = (ROOT/name).read_text(); d = payload(text); datasets[name] = d
@@ -40,10 +52,29 @@ def run():
         assert len(cats)==len(d['cats']), ('Duplicate category ID',name)
         fields={f['id']:f for f in d['fields']}
         assert len(fields)==len(d['fields']), ('Duplicate field ID',name)
-        for key,expected in baseline['catalogs'][name]['cats'].items():
-            assert key in cats and digest(cats[key])==expected, ('Original catalog record changed/dropped',name,key)
-        for key,expected in baseline['catalogs'][name]['src'].items():
+        saved = checkpoint['catalogs'][name]
+        # Appending products may change only the product list and its derived price summary.
+        # Preserve every old product object, including repeated records, and all category specs.
+        for key, expected in saved['cats'].items():
+            assert key in cats, ('Catalog record dropped', name, key)
+            c = cats[key]
+            assert digest({k:v for k,v in c.items() if k not in ('pr','px')}) == expected['core'], ('Catalog specifications changed', name, key)
+            assert not Counter(expected['products']) - Counter(digest(p) for p in c.get('pr', [])), ('Existing product changed/dropped', name, key)
+            if digest(c) != expected['record']:
+                assert name == 'filaments.html', ('Printer changed', key)
+                prices = [p['k'] for p in c.get('pr', []) if p.get('k') is not None]
+                derived = {'min':min(prices),'max':max(prices),'med':round(statistics.median(prices),2),'n':len(prices)} if prices else None
+                assert c.get('px') == derived, ('Stale product price summary', key)
+        for key,expected in saved['src'].items():
             assert key in d['src'] and digest(d['src'][key])==expected, ('Original source changed/dropped',name,key)
+        # The newer checkpoint must retain every record/source protected by the rollback manifest.
+        for key,expected in baseline['catalogs'][name]['cats'].items():
+            assert saved['cats'][key]['record'] == expected, ('Rollback checkpoint mismatch', name, key)
+        for key,expected in baseline['catalogs'][name]['src'].items():
+            assert saved['src'][key] == expected, ('Rollback source checkpoint mismatch', name, key)
+        raw_checkpoint = subprocess.run(['git','show',checkpoint['commit']+':'+name],cwd=ROOT,capture_output=True,text=True)
+        if raw_checkpoint.returncode == 0:
+            assert snapshot(payload(raw_checkpoint.stdout)) == saved, ('Checkpoint differs from Git object', name)
         # Check the recorded baseline against real Git objects whenever history is available.
         raw=subprocess.run(['git','show',baseline['baseline']+':'+name],cwd=ROOT,capture_output=True,text=True)
         if raw.returncode==0:
@@ -64,6 +95,17 @@ def run():
                 spec(p.get('sp',{}))
                 assert set(p.get('s',[]))<=d['src'].keys(),p
                 assert set(p.get('tds') or [])<=d['src'].keys(),p
+                if p.get('retail'):
+                    r=p['retail']
+                    assert r['store'] and r['location'] and r['status']
+                    assert re.fullmatch(r'\d{4}-\d{2}-\d{2}',r['checked'])
+                    assert set(r['s']) <= set(p['s']) and r['s'],p
+                    assert all(d['src'][sid]['d']==r['checked'] and d['src'][sid]['p']==r['store'] for sid in r['s'])
+                    assert r['mass_kg'] > 0
+                    assert p['k'] == (round(r['listed_usd']/r['mass_kg'],2) if r['listed_usd'] is not None else None),p
+                    assert r['reference_usd'] is None or r['reference_usd'] >= r['listed_usd'],p
+                    # Linear print-speed claims must never populate volumetric flow.
+                    if 'B7' in p['sp']: assert 'mm³/s' in p['sp']['B7']['v'] or 'mm3/s' in p['sp']['B7']['v'],p
         cs=counts(d)
         structured=[json.loads(m) for m in LD.findall(text)]
         webpage=next(x for x in structured if x['@type']=='WebPage')
@@ -81,6 +123,16 @@ def run():
         for c in d['cats']: assert c['n'].replace('&','&amp;') in static or c['n'] in static,(name,c['id'])
         print(f'{name}: {cs}; all original records and sources preserved')
     filaments=datasets['filaments.html']; printers=datasets['comparison.html']
+    retail=[p for c in filaments['cats'] for p in c['pr'] if p.get('retail')]
+    assert {'Inland','Cookiecad','Insignia'} <= {p['b'] for p in retail}
+    retail_page=(ROOT/'filaments.html').read_text()
+    for brand in {p['b'] for p in retail}:
+        assert 'filaments.html?brand='+quote(brand,safe='') in retail_page,brand
+    for c in filaments['cats']:
+        for p in c['pr']:
+            if not p.get('retail'):continue
+            guide=(ROOT/'materials'/(c['id']+'.html')).read_text()
+            for value in [p['p'],p['pn'],p['nt'],p['u']]:assert escape(value) in guide,(c['id'],'missing product detail',p['p'])
     hardness=next(f for f in filaments['fields'] if f['id']=='E10')
     assert hardness['type']=='text' and hardness['mixed'] and not hardness['dir']
     peba=next(c for c in filaments['cats'] if c['id']=='peba')

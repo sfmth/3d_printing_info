@@ -143,6 +143,29 @@ try {
   assert.equal(await page.locator('#q').inputValue(),'PEBA (polyether block amide)');
   assert.equal(await page.locator('#mtbody tr.row.open').count(),1);
   step('Material and product filtering, mixed-hardness comparison, price qualifiers, profile export and material-guide round trip');
+  const storeProducts=materials.cats.flatMap(c=>c.pr.filter(p=>p.retail));
+  for (const brand of [...new Set(storeProducts.map(p=>p.b))]) {
+    await visit('filaments.html');
+    await page.locator('#retail-brands summary').click();
+    await page.locator('#retail-brands').getByRole('link',{name:brand,exact:true}).click();
+    await page.locator('#v-products').waitFor({state:'visible'});
+    const expected=storeProducts.filter(p=>p.b===brand);
+    assert.equal(await page.locator('#q').inputValue(),brand);
+    assert.equal(await page.locator('#ptbody > tr').count(),expected.length);
+    for (const p of expected) {
+      const row=page.locator('#ptbody > tr').filter({has:page.getByRole('link',{name:p.p,exact:true})});
+      assert.equal(await row.count(),1,p.p);
+      assert.ok((await row.innerText()).includes(p.retail.checked),p.p);
+      assert.equal(await row.locator('a').first().getAttribute('href'),p.u);
+      assert.ok((await row.innerText()).includes(p.pn),p.p);
+    }
+    if (brand==='Inland') await page.screenshot({path:path.join(root,'test-results/retail-filaments.png')});
+  }
+  await visit('filaments.html?brand=insignia');
+  assert.equal(await page.locator('#ptbody > tr').count(),storeProducts.filter(p=>p.b==='Insignia').length);
+  await visit('filaments.html?brand=missing-brand');
+  assert.equal(await page.locator('#mtbody tr.row').count(),materials.cats.length);
+  step('All store-brand shortcuts filter the product table; every new listing retains its retailer link and dated price notes');
   for (const c of materials.cats) {
     const response=await page.goto(base+'materials/'+c.id+'.html',{waitUntil:'domcontentloaded'});
     assert.equal(response.status(),200,c.id);
@@ -186,6 +209,11 @@ try {
   await staticPage.goto(base+'filaments.html');
   assert.equal(await staticPage.locator('#static > table').first().locator('tbody tr').count(),materials.cats.length);
   assert.equal(await staticPage.locator('#static-products tbody tr').count(),productCount);
+  for (const p of storeProducts) {
+    const link=staticPage.locator('#static-products').getByRole('link',{name:p.b+' '+p.p,exact:true});
+    assert.equal(await link.count(),1,p.p);
+    assert.equal(await link.getAttribute('href'),p.u);
+  }
   await staticPage.locator('#static a[href="materials/peba.html"]').first().click();
   assert.match(await staticPage.locator('h1').innerText(),/PEBA/);
   assert.equal(await staticPage.locator('main table').count()>0,true);

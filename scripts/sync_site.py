@@ -6,6 +6,7 @@ No network or third-party dependencies. Never consumes console excerpts.
 """
 from pathlib import Path
 from html import escape
+from urllib.parse import quote
 import json
 import re
 
@@ -48,6 +49,21 @@ def counts(data):
             'brands': len({(p['b'] if p else c.get('brand', '')).lower()
                            for c in data['cats'] for p in (c.get('pr') or [None])
                            if (p and p.get('b')) or c.get('brand')})}
+
+
+def retail_links(data):
+    groups = {}
+    for c in data['cats']:
+        for p in c.get('pr', []):
+            if p.get('retail'):
+                groups.setdefault(p['b'], []).append(p)
+    total = sum(map(len, groups.values()))
+    body = '<details class="material-directory" id="retail-brands"><summary>Filament in US stores · '+str(total)+' sourced listings</summary><p>Selected product lines with dated store-stock or pickup listings. Check the retailer for current local stock and prices. Each product retains its own source, spool mass and price notes.</p><ul>'
+    for brand, products in sorted(groups.items()):
+        stores = ', '.join(sorted({p['retail']['store'] for p in products}))
+        dates = ', '.join(sorted({p['retail']['checked'] for p in products}))
+        body += '<li><a href="filaments.html?brand='+quote(brand,safe='')+'">'+E(brand)+'</a> · '+E(stores)+' · '+str(len(products))+' product lines · checked '+E(dates)+' · <a href="'+E(products[0]['u'])+'">retailer example</a></li>'
+    return body+'</ul></details>'
 
 
 def refs(data, ids):
@@ -226,6 +242,7 @@ def sync():
         label='printer' if printer else 'material'
         content='<details class="material-directory"><summary>Browse all '+str(cs['items'])+' '+label+' guides</summary><ul>'+''.join('<li><a href="'+directory+'/'+E(c['id'])+'.html">'+E(c['n'])+'</a></li>' for c in data['cats'])+'</ul></details>'
         page=marker(page,label+'-links',content)
+        if not printer: page=marker(page,'retail-brands',retail_links(data))
         path.write_text(page)
     summary={'printers':len(datasets[PAGES[0]]['cats']),'printer-fields':len(datasets[PAGES[0]]['fields']),'materials':len(datasets[PAGES[1]]['cats']),'products':counts(datasets[PAGES[1]])['products']}
     path=ROOT/'index.html';index=path.read_text()
