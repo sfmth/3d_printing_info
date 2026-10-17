@@ -95,10 +95,13 @@ try {
   assert.equal(await page.locator('h1').innerText(),'Anycubic Photon P1 Max');
   await page.screenshot({path:path.join(root,'test-results/printer-guide.png')});
   await page.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
+  await page.locator('#mtbody tr.row.open').waitFor({state:'visible'});
+  assert.match(page.url(),/comparison\.html#anycubic-photon-p1-max$/);
   assert.equal(await page.locator('#mtbody tr.row.open').count(),1);
   assert.equal(await page.locator('#q').inputValue(),'Anycubic Photon P1 Max');
   await page.locator('.site-nav').getByRole('link',{name:'Printer guides',exact:true}).click();
   assert.match(page.url(),/printers\/$/);
+  await page.getByRole('heading',{name:'Printer guides',exact:true}).waitFor({state:'visible'});
   assert.equal(await page.locator('main li a').count(),printers.cats.length);
   step('Printer detail-page round trip and complete crawlable printer directory');
   await visit('filaments.html');
@@ -135,6 +138,7 @@ try {
   assert.match(page.url(),/materials\/peba.html$/);
   assert.match(await page.locator('h1').innerText(),/PEBA/);
   await page.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
+  await page.locator('#mtbody tr.row.open').waitFor({state:'visible'});
   assert.equal(await page.locator('#mtbody tr.row').count(),1);
   assert.equal(await page.locator('#q').inputValue(),'PEBA (polyether block amide)');
   assert.equal(await page.locator('#mtbody tr.row.open').count(),1);
