@@ -1,6 +1,6 @@
 # 3D Printing Info
 
-Static GitHub Pages reference for printer hardware and filament materials. Existing interactive comparisons, family filters, field guides, theme controls and slicer exports are retained. Individual material guides work without JavaScript.
+Static GitHub Pages reference for printer hardware and filament materials. Existing interactive comparisons, family filters, field guides, theme controls and slicer exports are retained. Every material and printer has an individual guide that works without JavaScript.
 
 ## Catalog maintenance
 
@@ -11,9 +11,9 @@ python3 scripts/sync_site.py
 python3 scripts/check_site.py
 ```
 
-The sync command derives homepage totals, WebPage/Dataset/ItemList metadata, fallback tables, every `materials/<catalog-id>.html` guide, the material directory and sitemap from the catalogs. Generated files are committed so GitHub Pages has no runtime build dependency. Update `DATE` in `scripts/sync_site.py` when revising generated content; it is a page revision date, not a replacement for existing source or price dates. The check command fails on stale generated output and compares all original records, nested products and sources with the rollback integrity manifest and, when present, the original Git objects.
+The sync command derives homepage totals, WebPage/Dataset/ItemList metadata, fallback tables, every `materials/<catalog-id>.html` and `printers/<catalog-id>.html` guide, both directories and the sitemap from the catalogs. Generated files are committed so GitHub Pages has no runtime build dependency. Update `DATE` in `scripts/sync_site.py` when revising generated content; it is a page revision date, not a replacement for existing source or price dates. The check command fails on stale generated output and compares all original records, nested products and sources with the rollback integrity manifest and, when present, the original Git objects.
 
-The restored baseline contains 130 printers, 82 material categories and 394 products. This rebuild adds two printers and PEBA/eSUN PEBA-90A: **132 printers, 83 materials, 395 filament products, 151 printer fields**. Counts are checked against the payloads rather than maintained manually.
+The restored baseline contains 130 printers, 82 material categories and 394 products. This rebuild adds two printers and PEBA/eSUN PEBA-90A: **132 printers, 83 materials, 395 filament products, 151 printer fields**. Counts are checked against the payloads rather than maintained manually. The catalog generates **215 detail pages: 83 material guides and 132 printer guides**, plus the two directories and three main pages (220 content URLs). Each guide renders every known catalog field with its source links and dates; this does not imply a new audit of historical specifications.
 
 ## Data definitions
 
@@ -33,7 +33,7 @@ npx playwright install --with-deps chromium
 npm run test:browser
 ```
 
-The test serves a clean checkout under `/3d_printing_info/`, matching the production project URL. It checks real Chromium rendering, both interactive tables, search, family filtering, sorting, two-printer/material comparisons, hardness handling, field guides, theme, PEBA slicer export, product prices, material-page navigation, all material URLs, mobile layout, missing assets/errors and complete no-JavaScript tables. It writes screenshots plus `test-results/browser-results.json`, including the exact tested commit. The PR validation workflow runs these checks and uploads the evidence. It checks out the PR head SHA, not an unrecorded local tree or only an upload hash.
+The test serves a clean checkout under `/3d_printing_info/`, matching the production project URL. It checks real Chromium rendering, both interactive tables, search, family filtering, sorting, two-printer/material comparisons, hardness handling, field guides, theme, PEBA slicer export, product prices, material-page navigation, all material and printer URLs, mobile layout, missing assets/errors and complete no-JavaScript tables. It writes screenshots plus `test-results/browser-results.json`, including the exact tested commit. The PR validation workflow runs these checks and uploads the evidence. It checks out the PR head SHA, not an unrecorded local tree or only an upload hash.
 
 Analytics is intercepted in browser tests to avoid test pageviews in production. Tests assert a single loader request and config queue entry, not successful external script execution or data receipt. Material-page source links and identifiers are statically validated; every external historical source is not re-fetched by CI.
 
@@ -42,7 +42,7 @@ Analytics is intercepted in browser tests to avoid test pageviews in production.
 Every content page has one GA4 loader/config for `G-12FDG0Z8JB`. After an approved deployment:
 
 1. Confirm the ID belongs to the intended Analytics web stream. With blockers disabled and any consent requirements satisfied, open each guide and check the network request for `gtag.js` and GA collection requests. Use Analytics **Realtime/DebugView** to verify actual receipt. Tags and test mocks cannot establish ingestion.
-2. In Search Console, use the URL-prefix property `https://sfmth.github.io/3d_printing_info/`, submit `sitemap.xml` and inspect the homepage, both comparisons and a material guide. Check live URL rendering, Google-selected canonical, indexing status and coverage.
+2. In Search Console, use the URL-prefix property `https://sfmth.github.io/3d_printing_info/`, submit `sitemap.xml` and inspect the homepage, both comparisons, a material guide and a printer guide. Check live URL rendering, Google-selected canonical, indexing status and coverage.
 3. Read Search Console's Performance report for impressions, clicks and queries. Missing Analytics data does not establish missing Google Search traffic.
 4. `robots.txt` in this project directory is a useful declaration but crawler rules are actually controlled by `https://sfmth.github.io/robots.txt` at the host root. Check that host-root file, HTTP status and `X-Robots-Tag` after deployment. A sitemap and crawlable HTML support discovery; they do not guarantee indexing or ranking.
 
