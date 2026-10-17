@@ -1,0 +1,10 @@
+{
+  "name": "3d-printing-info-validation",
+  "private": true,
+  "scripts": {
+    "sync": "python3 scripts/sync_site.py",
+    "check": "python3 scripts/check_site.py",
+    "test:browser": "node tests/browser.mjs"
+  },
+  "devDependencies": { "playwright": "1.56.1" }
+}

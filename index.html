@@ -130,7 +130,7 @@ footer a { color:var(--ink-2); }
     <nav class="nav" aria-label="Primary">
       <a href="comparison.html">Printers</a>
       <a href="filaments.html">Filaments</a>
-      <a href="sitemap.xml">Sitemap</a>
+      <a href="materials/">Material guides</a>
     </nav>
   </div>
 
@@ -147,10 +147,10 @@ footer a { color:var(--ink-2); }
   </header>
 
   <section class="stats" aria-label="Site summary">
-    <div class="stat"><b>2</b><span>interactive guides</span></div>
-    <div class="stat"><b>140</b><span>printer specs</span></div>
-    <div class="stat"><b>6</b><span>FDM machines</span></div>
-    <div class="stat"><b>2026</b><span>price snapshots</span></div>
+    <div class="stat"><b data-summary="printers">132</b><span>printers</span></div>
+    <div class="stat"><b data-summary="printer-fields">151</b><span>printer fields</span></div>
+    <div class="stat"><b data-summary="materials">83</b><span>materials with guides</span></div>
+    <div class="stat"><b data-summary="products">395</b><span>filament products</span></div>
   </section>
 
   <main class="grid" aria-label="Available references">
@@ -160,10 +160,10 @@ footer a { color:var(--ink-2); }
         <img class="card-icon" src="assets/printer.svg" alt="">
       </span>
       <h2>3D Printer Comparison</h2>
-      <p>Six FDM machines compared across hardware, firmware, materials, safety, performance, and support.</p>
+      <p>FDM and resin printers compared across hardware, firmware, materials, safety, performance, and support.</p>
       <span class="meta">
-        <span class="pill">6 machines</span>
-        <span class="pill">140 specs</span>
+        <span class="pill"><span data-summary="printers">132</span> printers</span>
+        <span class="pill"><span data-summary="printer-fields">151</span> fields</span>
         <span class="pill">Interactive table</span>
       </span>
     </a>
@@ -183,7 +183,7 @@ footer a { color:var(--ink-2); }
     </a>
   </main>
 
-  <p class="note">The table pages are standalone static HTML files, so the site can be hosted without a build step.</p>
+  <p class="note">Browse individual <a href="materials/">material guides</a> for print settings, properties, product listings and dated sources. Prices are snapshots; read the entry notes for sale/from prices and test conditions.</p>
 
   <footer>
     <span>Published as a static GitHub Pages site.</span>
