@@ -1,0 +1,35 @@
+name: Validate reference catalogs and browser behavior
+on:
+  pull_request:
+  push:
+    branches: [main, 'rebuild/**']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate catalogs, preservation, generated pages and metadata
+        run: python scripts/check_site.py
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Exercise the exact branch commit in Chromium
+        run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-verification-${{ github.event.pull_request.head.sha || github.sha }}
+          path: test-results/
+          if-no-files-found: ignore

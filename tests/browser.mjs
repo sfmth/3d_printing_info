@@ -1,0 +1,168 @@
+/** Real Chromium integration checks. Serve under the GitHub Pages project prefix.
+ * Analytics is intercepted: we verify the loader request/config queue, not ingestion.
+ */
+import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import http from 'node:http';
+import { execFileSync } from 'node:child_process';
+const root = path.resolve(new URL('..', import.meta.url).pathname);
+const prefix = '/3d_printing_info/';
+const catalog = async name => JSON.parse((await fs.readFile(path.join(root,name),'utf8')).match(/<script[^>]*id="payload"[^>]*>([\s\S]*?)<\/script>/)[1]);
+const printers = await catalog('comparison.html'), materials = await catalog('filaments.html');
+const productCount = materials.cats.reduce((n,c)=>n+c.pr.length,0);
+const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.xml':'application/xml','.webmanifest':'application/manifest+json'};
+const server = http.createServer(async (req,res) => {
+  try {
+    let pathname = decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+    if (!pathname.startsWith(prefix)) { res.writeHead(404); return res.end(); }
+    let target = path.resolve(root, pathname.slice(prefix.length));
+    if (!target.startsWith(root+path.sep) && target!==root) { res.writeHead(403); return res.end(); }
+    if ((await fs.stat(target)).isDirectory()) target = path.join(target,'index.html');
+    res.setHeader('content-type',mime[path.extname(target)] || 'text/plain');
+    res.end(await fs.readFile(target));
+  } catch { res.writeHead(404); res.end(); }
+});
+await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+const base = `http://127.0.0.1:${server.address().port}${prefix}`;
+await fs.mkdir(path.join(root,'test-results'),{recursive:true});
+let browser;
+const steps=[];
+const step = (message) => { steps.push(message); console.log('PASS',message); };
+try {
+  browser = await chromium.launch();
+  const context = await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
+  let loads=0; const errors=[], missing=[];
+  await context.route('https://**/*', async route => {
+    if (route.request().url().startsWith('https://www.googletagmanager.com/gtag/js')) {
+      loads++; await route.fulfill({contentType:'application/javascript',body:'/* Analytics loader intercepted by integration test. */'});
+    } else await route.abort();
+  });
+  const page = await context.newPage();
+  page.on('pageerror',error=>errors.push(error.message));
+  page.on('response',r=>{if(r.url().startsWith(base) && r.status()>=400) missing.push(r.url());});
+  async function visit(file) {
+    const before=loads;
+    const response=await page.goto(base+file,{waitUntil:'networkidle'});
+    assert.equal(response.status(),200,file);
+    assert.equal(loads-before,1,`one Analytics loader request: ${file}`);
+    assert.equal(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count(),1);
+    assert.equal(await page.evaluate(()=>window.dataLayer.filter(x=>x[0]==='config' && x[1]==='G-12FDG0Z8JB').length),1);
+  }
+  await visit('');
+  for (const [key,n] of Object.entries({printers:printers.cats.length,'printer-fields':printers.fields.length,materials:materials.cats.length,products:productCount})) {
+    for (const s of await page.locator(`[data-summary="${key}"]`).allTextContents()) assert.equal(Number(s),n);
+  }
+  await page.screenshot({path:path.join(root,'test-results/home.png')});
+  await page.getByRole('link',{name:'Printers',exact:true}).click();
+  assert.equal(await page.locator('#mtbody tr.row').count(),printers.cats.length);
+  step('Homepage catalog counts and printer navigation');
+  await page.getByLabel('Search printers',{exact:true}).fill('Photon P1 Max');
+  assert.equal(await page.locator('#mtbody tr.row').count(),1);
+  await page.locator('input.selbox').check();
+  await page.getByLabel('Search printers',{exact:true}).fill('Photon Mono M7 Max');
+  assert.equal(await page.locator('#mtbody tr.row').count(),1);
+  await page.locator('input.selbox').check();
+  await page.locator('button[data-view="compare"]').click();
+  assert.equal(await page.locator('#cmpout table thead th').count(),3);
+  assert.match(await page.locator('#cmpout').innerText(),/15–25 mm\/h/);
+  assert.match(await page.locator('#cmpout').innerText(),/≤31 mm\/h/);
+  assert.match(await page.locator('#cmpout').innerText(),/2026-10-17/);
+  await page.screenshot({path:path.join(root,'test-results/printer-compare.png')});
+  await page.locator('#cmpclear').click();
+  assert.match(await page.locator('#cmpout').innerText(),/Pick printers/);
+  await page.locator('button[data-view="materials"]').click();
+  await page.getByLabel('Search printers',{exact:true}).fill('');
+  await page.locator('#famchips button[data-f="RESIN"]').click();
+  assert.equal(await page.locator('#mtbody tr.row').count(),printers.cats.filter(c=>c.f==='RESIN').length);
+  await page.locator('#famchips button[data-f="RESIN"]').click();
+  const first=await page.locator('#mtbody tr.row').first().getAttribute('data-id');
+  await page.locator('#mthead th[data-k="name"]').click();
+  assert.notEqual(await page.locator('#mtbody tr.row').first().getAttribute('data-id'),first);
+  await page.locator('#theme').click();
+  assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+  await page.locator('#scalesbtn').click();
+  assert.equal(await page.locator('#legendpanel').isVisible(),true);
+  await page.locator('#gq').fill('price');
+  assert.match(await page.locator('#legend').innerText(),/snapshot/);
+  await page.locator('#lpclose').click();
+  step('Printer search, family filtering, sorting, two-printer comparison, sources, field guide and theme');
+  await visit('filaments.html');
+  assert.equal(await page.locator('#mtbody tr.row').count(),materials.cats.length);
+  await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
+  assert.equal(await page.locator('#mtbody tr.row').count(),1);
+  await page.locator('input.selbox').check();
+  await page.getByLabel('Search materials and products',{exact:true}).fill('TPU 95A');
+  await page.locator('input.selbox').first().check();
+  await page.locator('button[data-view="compare"]').click();
+  assert.equal(await page.locator('#cmpout table thead th').count(),3);
+  const hardness=page.locator('#cmpout tr').filter({has:page.locator('td.fn').filter({hasText:'Hardness (scale-specific)'})});
+  assert.equal(await hardness.count(),1);
+  assert.equal(await hardness.locator('td.best').count(),0);
+  assert.match(await hardness.innerText(),/Shore A/);
+  await page.locator('#cmpclear').click();
+  await page.locator('button[data-view="products"]').click();
+  await page.getByLabel('Search materials and products',{exact:true}).fill('');
+  assert.equal(await page.locator('#ptbody > tr').count(),productCount);
+  await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
+  assert.equal(await page.locator('#ptbody > tr').count(),1);
+  assert.match(await page.locator('#ptbody').innerText(),/From \$60.99/);
+  await page.locator('button[data-view="materials"]').click();
+  await page.locator('#mtbody tr.row .full').click();
+  assert.match(await page.locator('#mtbody tr.detail').innerText(),/9 mm³\/s/);
+  const downloading=page.waitForEvent('download');
+  await page.locator('#mtbody button[data-prof="dl"][data-prod="-1"]').click();
+  const downloaded=await downloading;
+  const profile=JSON.parse(await fs.readFile(await downloaded.path(),'utf8'));
+  assert.deepEqual(profile.filament_type,['PEBA']);
+  assert.deepEqual(profile.filament_max_volumetric_speed,['9']);
+  await page.screenshot({path:path.join(root,'test-results/peba-table.png')});
+  await page.locator('#mtbody a.guide-link').click();
+  assert.match(page.url(),/materials\/peba.html$/);
+  assert.match(await page.locator('h1').innerText(),/PEBA/);
+  await page.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
+  assert.equal(await page.locator('#mtbody tr.row').count(),1);
+  assert.equal(await page.locator('#q').inputValue(),'PEBA (polyether block amide)');
+  assert.equal(await page.locator('#mtbody tr.row.open').count(),1);
+  step('Material and product filtering, mixed-hardness comparison, price qualifiers, profile export and material-guide round trip');
+  for (const c of materials.cats) {
+    const response=await page.goto(base+'materials/'+c.id+'.html',{waitUntil:'domcontentloaded'});
+    assert.equal(response.status(),200,c.id);
+    assert.match(await page.locator('h1').innerText(),new RegExp(c.n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+    assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://sfmth.github.io/3d_printing_info/materials/'+c.id+'.html');
+  }
+  step(`All ${materials.cats.length} material guide URLs render with matching canonical metadata`);
+  await visit('materials/peba.html');
+  await page.screenshot({path:path.join(root,'test-results/peba-guide.png')});
+  await page.setViewportSize({width:390,height:844});
+  await page.goto(base,{waitUntil:'networkidle'});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'homepage mobile width');
+  await page.getByRole('link',{name:'Filaments',exact:true}).click();
+  await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
+  assert.equal(await page.locator('#mtbody tr.row').count(),1);
+  await page.screenshot({path:path.join(root,'test-results/mobile-filaments.png')});
+  await page.goto(base+'materials/peba.html',{waitUntil:'networkidle'});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'guide mobile width');
+  await page.screenshot({path:path.join(root,'test-results/mobile-guide.png')});
+  step('Mobile navigation, material filtering and guide layout at 390 px');
+  const nojs=await browser.newContext({javaScriptEnabled:false});
+  const staticPage=await nojs.newPage();
+  await staticPage.goto(base+'comparison.html');
+  assert.equal(await staticPage.locator('#static tbody tr').count(),printers.cats.length);
+  await staticPage.goto(base+'filaments.html');
+  assert.equal(await staticPage.locator('#static > table').first().locator('tbody tr').count(),materials.cats.length);
+  assert.equal(await staticPage.locator('#static-products tbody tr').count(),productCount);
+  await staticPage.locator('#static a[href="materials/peba.html"]').first().click();
+  assert.match(await staticPage.locator('h1').innerText(),/PEBA/);
+  assert.equal(await staticPage.locator('main table').count()>0,true);
+  step('No-JavaScript tables preserve every printer, material and product; guide links work');
+  assert.deepEqual(errors,[],'uncaught JavaScript errors');
+  assert.deepEqual(missing,[],'missing local assets');
+  step('No uncaught JavaScript exceptions or missing local assets');
+  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount},analytics:'One loader request and config per checked page; loader intercepted, ingestion not verified',steps};
+  await fs.writeFile(path.join(root,'test-results/browser-results.json'),JSON.stringify(result,null,2)+'\n');
+} finally {
+  if(browser) await browser.close();
+  await new Promise(resolve=>server.close(resolve));
+}
