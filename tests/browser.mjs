@@ -88,6 +88,22 @@ try {
   assert.match(await page.locator('#legend').innerText(),/snapshot/);
   await page.locator('#lpclose').click();
   step('Printer search, family filtering, sorting, two-printer comparison, sources, field guide and theme');
+  await visit('comparison.html');
+  await page.getByLabel('Search printers',{exact:true}).fill('Photon P1 Max');
+  await page.locator('#mtbody a.guide-link').click();
+  assert.match(page.url(),/printers\/anycubic-photon-p1-max.html$/);
+  assert.equal(await page.locator('h1').innerText(),'Anycubic Photon P1 Max');
+  await page.screenshot({path:path.join(root,'test-results/printer-guide.png')});
+  await page.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
+  await page.locator('#mtbody tr.row.open').waitFor({state:'visible'});
+  assert.match(page.url(),/comparison\.html#anycubic-photon-p1-max$/);
+  assert.equal(await page.locator('#mtbody tr.row.open').count(),1);
+  assert.equal(await page.locator('#q').inputValue(),'Anycubic Photon P1 Max');
+  await page.locator('.site-nav').getByRole('link',{name:'Printer guides',exact:true}).click();
+  assert.match(page.url(),/printers\/$/);
+  await page.getByRole('heading',{name:'Printer guides',exact:true}).waitFor({state:'visible'});
+  assert.equal(await page.locator('main li a').count(),printers.cats.length);
+  step('Printer detail-page round trip and complete crawlable printer directory');
   await visit('filaments.html');
   assert.equal(await page.locator('#mtbody tr.row').count(),materials.cats.length);
   await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
@@ -122,6 +138,7 @@ try {
   assert.match(page.url(),/materials\/peba.html$/);
   assert.match(await page.locator('h1').innerText(),/PEBA/);
   await page.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
+  await page.locator('#mtbody tr.row.open').waitFor({state:'visible'});
   assert.equal(await page.locator('#mtbody tr.row').count(),1);
   assert.equal(await page.locator('#q').inputValue(),'PEBA (polyether block amide)');
   assert.equal(await page.locator('#mtbody tr.row.open').count(),1);
@@ -133,6 +150,14 @@ try {
     assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://sfmth.github.io/3d_printing_info/materials/'+c.id+'.html');
   }
   step(`All ${materials.cats.length} material guide URLs render with matching canonical metadata`);
+  for (const c of printers.cats) {
+    const response=await page.goto(base+'printers/'+c.id+'.html',{waitUntil:'domcontentloaded'});
+    assert.equal(response.status(),200,c.id);
+    assert.equal(await page.locator('h1').innerText(),c.n);
+    assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://sfmth.github.io/3d_printing_info/printers/'+c.id+'.html');
+    assert.equal(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count(),1);
+  }
+  step(`All ${printers.cats.length} printer guide URLs render with matching canonical metadata and one Analytics tag`);
   await visit('materials/peba.html');
   await page.screenshot({path:path.join(root,'test-results/peba-guide.png')});
   await page.setViewportSize({width:390,height:844});
@@ -145,10 +170,18 @@ try {
   await page.goto(base+'materials/peba.html',{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'guide mobile width');
   await page.screenshot({path:path.join(root,'test-results/mobile-guide.png')});
-  step('Mobile navigation, material filtering and guide layout at 390 px');
+  await page.goto(base+'printers/anycubic-photon-p1-max.html',{waitUntil:'networkidle'});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'printer guide mobile width');
+  await page.screenshot({path:path.join(root,'test-results/mobile-printer-guide.png')});
+  step('Mobile navigation, filtering, material and printer guide layouts at 390 px');
   const nojs=await browser.newContext({javaScriptEnabled:false});
   const staticPage=await nojs.newPage();
   await staticPage.goto(base+'comparison.html');
+  assert.equal(await staticPage.locator('#static tbody tr').count(),printers.cats.length);
+  await staticPage.locator('#static a[href="printers/anycubic-photon-p1-max.html"]').click();
+  assert.equal(await staticPage.locator('h1').innerText(),'Anycubic Photon P1 Max');
+  assert.equal(await staticPage.locator('main table').count()>0,true);
+  await staticPage.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
   assert.equal(await staticPage.locator('#static tbody tr').count(),printers.cats.length);
   await staticPage.goto(base+'filaments.html');
   assert.equal(await staticPage.locator('#static > table').first().locator('tbody tr').count(),materials.cats.length);
@@ -160,7 +193,7 @@ try {
   assert.deepEqual(errors,[],'uncaught JavaScript errors');
   assert.deepEqual(missing,[],'missing local assets');
   step('No uncaught JavaScript exceptions or missing local assets');
-  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount},analytics:'One loader request and config per checked page; loader intercepted, ingestion not verified',steps};
+  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount,detailPages:printers.cats.length+materials.cats.length},analytics:'One loader request and config per checked page; loader intercepted, ingestion not verified',steps};
   await fs.writeFile(path.join(root,'test-results/browser-results.json'),JSON.stringify(result,null,2)+'\n');
 } finally {
   if(browser) await browser.close();

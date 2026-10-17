@@ -2,6 +2,7 @@
 """Validate complete catalogs, preservation, crawlability and generated output."""
 from pathlib import Path
 from html.parser import HTMLParser
+from html import escape
 from urllib.parse import urlsplit, unquote
 import hashlib
 import json
@@ -92,8 +93,9 @@ def run():
     for key,n in summary.items():
         found=re.findall('data-summary="'+key+r'">(\d+)',index)
         assert found and all(int(x)==n for x in found),(key,found,n)
-    paths=[ROOT/'index.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html')]
+    paths=[ROOT/'index.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html')]
     assert len(list((ROOT/'materials').glob('*.html')))==len(filaments['cats'])+1
+    assert len(list((ROOT/'printers').glob('*.html')))==len(printers['cats'])+1
     canonicals=set()
     for path in paths:
         text=path.read_text();name=str(path.relative_to(ROOT)); parsed=Page(text)
@@ -102,7 +104,7 @@ def run():
         assert text.count("gtag('config', 'G-12FDG0Z8JB')")==1,name
         assert len(re.findall('<title>.*?</title>',text))==1,name
         canonical=[a['href'] for a in parsed.attrs('link') if a.get('rel')=='canonical']
-        url=BASE+('' if name=='index.html' else 'materials/' if name=='materials/index.html' else name)
+        url=BASE+('' if name=='index.html' else name[:-10] if name.endswith('/index.html') else name)
         assert canonical==[url],(name,canonical)
         assert url not in canonicals,('Duplicate canonical',url)
         canonicals.add(url)
@@ -129,11 +131,21 @@ def run():
                     tmp.write(script);tmp.flush()
                     checked=subprocess.run(['node','--check',tmp.name],capture_output=True,text=True)
                     assert checked.returncode==0,(name,checked.stderr)
-    for c in filaments['cats']:
-        html=(ROOT/'materials'/ (c['id']+'.html')).read_text()
-        assert c['n'].replace('&','&amp;') in html or c['n'] in html,c['id']
-        assert 'Published value and conditions' in html and 'Sources and dates' in html,c['id']
-        assert 'materials/'+c['id']+'.html' in (ROOT/'filaments.html').read_text(),c['id']
+    for directory,data,comparison in [('materials',filaments,'filaments.html'),('printers',printers,'comparison.html')]:
+        listing=(ROOT/comparison).read_text()
+        itemlist=next(json.loads(x) for x in LD.findall(listing) if json.loads(x).get('@type')=='ItemList')
+        assert [x['url'] for x in itemlist['itemListElement']]==[BASE+directory+'/'+c['id']+'.html' for c in data['cats']]
+        for c in data['cats']:
+            html=(ROOT/directory/(c['id']+'.html')).read_text()
+            assert escape(c['n']) in html,c['id']
+            assert 'Published value and conditions' in html and 'Sources and dates' in html,c['id']
+            assert directory+'/'+c['id']+'.html' in listing,c['id']
+            # Every published value and every attached source must survive static rendering.
+            for e in c['sp'].values():
+                assert escape(e['v']) in html,(directory,c['id'],'missing published value')
+                for sid in e.get('s',[]):
+                    source=data['src'][sid]
+                    if source.get('u'):assert escape(source['u']) in html,(directory,c['id'],sid)
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     urls=[x.text for x in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)]
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)
