@@ -9,6 +9,7 @@ from html import escape
 from urllib.parse import quote
 import json
 import re
+from material_design import write_art, detail_body, directory_body
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
@@ -118,56 +119,30 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
     for key, val in {'og:title': name, 'og:description': desc, 'og:url': url, 'og:type': 'article' if path.endswith('.html') else 'website', 'og:image': BASE+'assets/og-card.png', 'og:site_name': '3D Printing Info'}.items():
         head += '<meta property="' + key + '" content="' + E(val) + '">'
     head += '<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="'+E(name)+'"><meta name="twitter:description" content="'+E(desc)+'"><meta name="twitter:image" content="'+BASE+'assets/og-card.png">'
-    head += '<link rel="icon" href="' + depth + 'assets/site-icon.svg"><link rel="stylesheet" href="' + depth + 'assets/materials.css">' + analytics + ld(schema) + '</head><body><div class="wrap">'
-    nav = '<nav class="nav" aria-label="Primary"><a href="' + depth + '">Home</a><a href="' + depth + 'comparison.html">Printers</a><a href="' + depth + 'filaments.html">Filaments</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Material guides</a></nav>'
+    if path.startswith('materials/'):
+        head += '<link rel="stylesheet" href="'+depth+'assets/material-guides.css">'
+        if path.endswith('/index.html'): head += '<script defer src="'+depth+'assets/material-guides.js"></script>'
+    head += '<link rel="icon" href="' + depth + 'assets/site-icon.svg"><link rel="stylesheet" href="' + depth + 'assets/materials.css">' + analytics + ld(schema) + '</head><body'+(' class="material-page '+('material-library' if path.endswith('/index.html') else 'material-detail')+'"' if path.startswith('materials/') else '')+'><div class="wrap">'
+    nav = '<nav class="nav" aria-label="Primary"><a href="' + depth + '">Home</a><a href="' + depth + 'comparison.html">Printers</a><a href="' + depth + 'filaments.html">Filaments</a><a href="' + depth + 'printers/">Printer guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Material guides</a></nav>'
     if path.startswith('printers/'):
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Printer guides</a><a href="../materials/">Material guides</a></nav>'
     return head + '<div class="topbar"><a class="brand" href="' + depth + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + DATE + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a></footer></div></body></html>\n'
 
 
 def generate_materials(data, index):
+    write_art(ROOT)
     styles = re.search(r'<style>(.*?)</style>', index, re.S)[1]
     styles += '\nheader { display:block; } h1 { font-size:clamp(1.8rem,5vw,3rem); line-height:1.08; } h2 { margin-top:28px; } .facts { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); } .fact { border:1px solid var(--grid); border-radius:8px; background:var(--surface); padding:16px; } .fact h3 { margin:0 0 6px; font-size:1rem; } .fact p { margin:0; } .source-note, .price-note { color:var(--ink-2); font-size:13px; } .table-scroll { overflow:auto; } table { width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; } td,th { border:1px solid var(--grid); padding:10px; vertical-align:top; text-align:left; } th { background:var(--surface); } td ul { margin:0; padding-left:18px; } .directory { columns:3 230px; } .directory li { padding:5px; break-inside:avoid; } details { border:1px solid var(--grid); border-radius:8px; padding:14px; margin-top:16px; } summary { cursor:pointer; font-weight:600; } .breadcrumbs { font-size:13px; color:var(--ink-2); margin-bottom:16px; } p { max-width:88ch; } .topbar { margin-bottom:32px; }\n'
     (ROOT/'assets/materials.css').write_text(styles)
     analytics = re.search(r'<!-- Google tag.*?</script>\s*<script>.*?</script>', index, re.S)[0]
     paths = []
-    directory = []
     for c in data['cats']:
         path = 'materials/' + c['id'] + '.html'; paths.append(path)
         desc = c['n'] + ': print settings, mechanical and thermal properties, product listings and dated sources. ' + c.get('sum','')
-        body = '<p class="breadcrumbs"><a href="../">Home</a> / <a href="./">Material guides</a> / ' + E(c['n']) + '</p><header><span class="kicker">' + E(c['f']) + ' · Material guide</span><h1>' + E(c['n']) + '</h1><p class="deck">' + E(c.get('sum','')) + '</p></header>'
-        body += '<p><a class="pill" href="../filaments.html?material=' + E(c['id']) + '">Open in interactive comparison</a></p><p class="source-note">Values below describe the catalog’s representative grades, with sources on each row. Manufacturer datasheets and independent tests are labeled by source type and date. Printed orientation, test method, conditioning and formulation can change the result. Unknown values are —; a listed use is not a certification.</p>'
-        cards = [('B1','Nozzle temperature','°C'),('B2','Bed temperature','°C'),('D3','Drying',''),('B7','Volumetric flow','mm³/s')]
-        body += '<section class="facts" aria-label="Printing quick reference">' + ''.join('<div class="fact"><h3>' + label + ((' ('+unit+')') if unit else '') + '</h3><p>' + E(value(c,fid)) + '</p><div class="source-note">' + refs(data,c['sp'].get(fid,{}).get('s',[])) + '</div></div>' for fid,label,unit in cards) + '</section>'
-        for sid, section in data['sections'].items():
-            fs = [f for f in data['fields'] if f['sec']==sid and f['id'] in c['sp']]
-            if not fs: continue
-            body += '<section><h2>' + E(section) + '</h2><div class="table-scroll"><table><caption>' + E(c['n'] + ' — ' + section) + '</caption><thead><tr><th scope="col">Property and unit</th><th scope="col">Published value and conditions</th><th scope="col">Sources and dates</th></tr></thead><tbody>'
-            for f in fs:
-                e = c['sp'][f['id']]
-                body += '<tr><th scope="row">' + E(f['name']) + ((' (' + E(f['unit']) + ')') if f.get('unit') else '') + '</th><td>' + E(e['v']) + '</td><td>' + refs(data,e.get('s',[])) + '</td></tr>'
-            body += '</tbody></table></div></section>'
-        if c.get('pr'):
-            body += '<section><h2>Product listings and datasheets</h2><p class="source-note">Prices are historical snapshots in USD/kg, not live quotes. Read sale/from qualifiers, spool weight, shipping and tax notes. Product-specific figures are shown separately from material summaries.</p>'
-            for p in c['pr']:
-                name = p['b']+' '+p['p']; label = E(name)
-                if p.get('u'): label = '<a href="'+E(p['u'])+'">'+label+'</a>'
-                body += '<details><summary>' + label + ' · '+ (E(p['k'])+' USD/kg' if p.get('k') is not None else 'Price unknown') + '</summary><p class="price-note">' + E(p.get('pn','')) + '</p><p>' + E(p.get('nt','')) + '</p>' + refs(data,[*p.get('s',[]),*(p.get('tds') or [])])
-                if p.get('sp'):
-                    body += '<div class="table-scroll"><table><caption>'+E(name)+' — product-specific figures</caption><tbody>'
-                    for f in data['fields']:
-                        if f['id'] not in p['sp']:continue
-                        e=p['sp'][f['id']]
-                        body += '<tr><th scope="row">'+E(f['name'])+((' ('+E(f['unit'])+')') if f.get('unit') else '')+'</th><td>'+E(e['v'])+'</td><td>'+refs(data,e.get('s',[]))+'</td></tr>'
-                    body += '</tbody></table></div>'
-                body += '</details>'
-            body += '</section>'
-        siblings = [x for x in data['cats'] if x['f']==c['f'] and x['id']!=c['id']]
-        if siblings: body += '<h2>Other '+E(c['f'])+' materials</h2><ul class="directory">'+''.join('<li><a href="'+E(x['id'])+'.html">'+E(x['n'])+'</a></li>' for x in siblings)+'</ul>'
+        body = detail_body(data,c,refs,value)
         schema = {'@context':'https://schema.org','@type':'WebPage','name':c['n']+' material guide','url':BASE+path,'description':desc,'isPartOf':{'@type':'WebSite','url':BASE,'name':'3D Printing Info'},'mainEntity':{'@type':'TechArticle','headline':c['n']+' — printing, properties and sources','about':c['n'],'description':c.get('sum',''),'url':BASE+path,'citation':[s['u'] for k,s in data['src'].items() if s.get('u') and k in {sid for e in c['sp'].values() for sid in e.get('s',[])}]}}
         (ROOT/path).write_text(guide_page(c['n']+' filament guide',desc,path,body,analytics,styles,schema))
-        directory.append('<li><a href="'+E(c['id'])+'.html">'+E(c['n'])+'</a> · '+E(c['f'])+'</li>')
-    body = '<header><h1>Material guides</h1><p class="deck">'+str(len(data['cats']))+' filament materials with printing parameters, properties, product listings and source dates.</p></header><p><a href="../filaments.html">Use the interactive filament comparison</a> to filter materials, compare grades and export slicer starting points.</p><ul class="directory">'+''.join(directory)+'</ul>'
+    body = directory_body(data)
     path='materials/index.html'
     (ROOT/path).write_text(guide_page('3D printing material guides','Browse '+str(len(data['cats']))+' source-backed filament material guides with printing parameters, mechanical properties and product listings.',path,body,analytics,styles,{'@context':'https://schema.org','@type':'CollectionPage','name':'3D printing material guides','url':BASE+'materials/','mainEntity':{'@type':'ItemList','numberOfItems':len(data['cats']),'itemListElement':[{'@type':'ListItem','position':i,'name':c['n'],'url':BASE+'materials/'+c['id']+'.html'} for i,c in enumerate(data['cats'],1)]}}))
     expected={Path(x).name for x in paths}|{'index.html'}
