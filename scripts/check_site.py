@@ -13,6 +13,7 @@ import statistics
 import tempfile
 import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, payload, counts
+from material_design import FAMILIES, art_name
 
 
 def digest(x):
@@ -198,13 +199,30 @@ def run():
                 for sid in e.get('s',[]):
                     source=data['src'][sid]
                     if source.get('u'):assert escape(source['u']) in html,(directory,c['id'],sid)
+            if directory=='materials':
+                parsed=Page(html)
+                assert 'material-visual' in html and 'Illustration' in html,c['id']
+                assert any(a.get('src')=='../assets/materials/'+art_name(c['f']) for a in parsed.attrs('img')),c['id']
+                # Disclosure changes visibility, never the complete record or its source links.
+                for p in c.get('pr',[]):
+                    for key in ('p','pn','nt'): assert escape(p.get(key,'')) in html,(c['id'],'missing product text',key)
+                    for e in p.get('sp',{}).values():
+                        assert escape(e['v']) in html,(c['id'],'missing product value')
+                        for sid in e.get('s',[]):assert escape(data['src'][sid]['u']) in html,(c['id'],'missing product source')
+                for a in parsed.attrs('a'):
+                    if a.get('href','').startswith('#'):assert a['href'][1:] in parsed.ids,(c['id'],'broken guide anchor',a['href'])
+    library=(ROOT/'materials/index.html').read_text()
+    assert len(re.findall(r'data-material="[^"]+"',library))==len(filaments['cats'])
+    for family in FAMILIES:
+        svg=ROOT/'assets/materials'/art_name(family)
+        assert ET.parse(svg).getroot().tag.endswith('svg'),family
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     urls=[x.text for x in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)]
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)
     robots=(ROOT/'robots.txt').read_text()
     assert 'Disallow:' not in robots and BASE+'sitemap.xml' in robots
     # Staleness test: sync must be idempotent across all generated pages/metadata.
-    files=[*paths,ROOT/'sitemap.xml',ROOT/'assets/materials.css']
+    files=[*paths,ROOT/'sitemap.xml',ROOT/'assets/materials.css',*(ROOT/'assets/materials').glob('*.svg')]
     before={p:p.read_bytes() for p in files}
     subprocess.run(['python3',str(ROOT/'scripts/sync_site.py')],check=True,capture_output=True)
     assert all(p.read_bytes()==content for p,content in before.items()),'Generated files out of date: run python scripts/sync_site.py'
