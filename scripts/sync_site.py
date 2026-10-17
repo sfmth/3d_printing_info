@@ -9,7 +9,7 @@ from html import escape
 from urllib.parse import quote
 import json
 import re
-from material_design import write_art, detail_body, directory_body
+from material_design import detail_body, directory_body
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
@@ -130,7 +130,6 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
 
 
 def generate_materials(data, index):
-    write_art(ROOT)
     styles = re.search(r'<style>(.*?)</style>', index, re.S)[1]
     styles += '\nheader { display:block; } h1 { font-size:clamp(1.8rem,5vw,3rem); line-height:1.08; } h2 { margin-top:28px; } .facts { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); } .fact { border:1px solid var(--grid); border-radius:8px; background:var(--surface); padding:16px; } .fact h3 { margin:0 0 6px; font-size:1rem; } .fact p { margin:0; } .source-note, .price-note { color:var(--ink-2); font-size:13px; } .table-scroll { overflow:auto; } table { width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; } td,th { border:1px solid var(--grid); padding:10px; vertical-align:top; text-align:left; } th { background:var(--surface); } td ul { margin:0; padding-left:18px; } .directory { columns:3 230px; } .directory li { padding:5px; break-inside:avoid; } details { border:1px solid var(--grid); border-radius:8px; padding:14px; margin-top:16px; } summary { cursor:pointer; font-weight:600; } .breadcrumbs { font-size:13px; color:var(--ink-2); margin-bottom:16px; } p { max-width:88ch; } .topbar { margin-bottom:32px; }\n'
     (ROOT/'assets/materials.css').write_text(styles)

@@ -11,8 +11,9 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const prefix = '/3d_printing_info/';
 const catalog = async name => JSON.parse((await fs.readFile(path.join(root,name),'utf8')).match(/<script[^>]*id="payload"[^>]*>([\s\S]*?)<\/script>/)[1]);
 const printers = await catalog('comparison.html'), materials = await catalog('filaments.html');
+const examples = JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'));
 const productCount = materials.cats.reduce((n,c)=>n+c.pr.length,0);
-const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.xml':'application/xml','.webmanifest':'application/manifest+json'};
+const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.xml':'application/xml','.webmanifest':'application/manifest+json'};
 const server = http.createServer(async (req,res) => {
   try {
     let pathname = decodeURIComponent(new URL(req.url,'http://localhost').pathname);
@@ -173,12 +174,13 @@ try {
   await page.getByLabel('Search material guides',{exact:true}).fill('PEBA');
   assert.equal(await page.locator('[data-material]:not([hidden])').count(),1);
   assert.match(await page.locator('#material-results').innerText(),/^1 of/);
-  await page.locator('[data-material="peba"]').click();
+  await page.locator('[data-material="peba"] .material-card-link').click();
   assert.match(page.url(),/materials\/peba.html$/);
   assert.equal(await page.locator('.spec-group[open]').count(),0,'technical tables start collapsed');
   assert.equal(await page.locator('.product-library[open]').count(),0,'product lists start collapsed');
-  await page.locator('.material-visual img').evaluate(img=>img.decode());
-  assert.equal(await page.locator('.material-visual img').evaluate(img=>img.naturalWidth>0),true);
+  assert.equal(await page.locator('[data-print-example]').count(),0,'no unrelated photo for PEBA');
+  assert.match(await page.locator('#prints').innerText(),/No verified photo example/);
+  assert.equal(await page.locator('#prints .model-search-links a').count(),3);
   await page.screenshot({path:path.join(root,'test-results/material-overview.png')});
   await page.locator('#spec-b > summary').focus();
   await page.keyboard.press('Enter');
@@ -199,7 +201,24 @@ try {
   await page.screenshot({path:path.join(root,'test-results/material-library.png')});
   await page.getByLabel('Search material guides',{exact:true}).fill('PLA');
   await page.screenshot({path:path.join(root,'test-results/material-library-filtered.png')});
-  step('Illustrated material library search/family filters, empty/reset states, keyboard accordions, complete sourced properties and product details');
+  step('Material library search/family filters, empty/reset states, keyboard accordions, complete sourced properties and product details');
+  for (const [id,e] of Object.entries(examples)) {
+    await visit('materials/'+id+'.html');
+    const photo=page.locator('.material-visual img');
+    await photo.evaluate(img=>img.decode());
+    assert.equal(await photo.getAttribute('alt'),e.alt);
+    assert.deepEqual(await photo.evaluate(img=>[img.naturalWidth,img.naturalHeight]),[e.width,e.height]);
+    assert.equal(await page.locator('.print-photo-link').getAttribute('href'),e.url);
+    assert.equal(await page.locator('.print-title').getAttribute('href'),e.url);
+    assert.ok((await page.locator('.material-visual figcaption').innerText()).includes(e.creator));
+    await page.locator('#prints .inline-sources > summary').click();
+    assert.ok((await page.locator('#prints').innerText()).includes(e.evidence));
+    assert.equal(await page.locator('#prints .model-search-links a').count(),3);
+    if(id==='pla')await page.screenshot({path:path.join(root,'test-results/printed-pla-guide.png')});
+  }
+  await visit('materials/');
+  await page.screenshot({path:path.join(root,'test-results/printed-material-library.png')});
+  step(`All ${Object.keys(examples).length} real print photos decode at recorded dimensions, with model links, creator credits, material evidence and license links`);
   for (const c of materials.cats) {
     const response=await page.goto(base+'materials/'+c.id+'.html',{waitUntil:'domcontentloaded'});
     assert.equal(response.status(),200,c.id);
@@ -227,6 +246,10 @@ try {
   await page.goto(base+'materials/peba.html',{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'guide mobile width');
   await page.screenshot({path:path.join(root,'test-results/mobile-guide.png')});
+  await page.goto(base+'materials/pla.html',{waitUntil:'networkidle'});
+  await page.locator('.material-visual img').evaluate(img=>img.decode());
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'photo guide mobile width');
+  await page.screenshot({path:path.join(root,'test-results/mobile-printed-guide.png')});
   await page.goto(base+'materials/',{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'material library mobile width');
   await page.screenshot({path:path.join(root,'test-results/mobile-material-library.png')});
@@ -250,7 +273,7 @@ try {
   assert.equal(await staticPage.locator('[data-material]').count(),materials.cats.length);
   assert.equal(await staticPage.locator('.material-search').isVisible(),false);
   await staticPage.locator('[data-family-group="PLA"] > summary').click();
-  await staticPage.locator('[data-material="pla"]').click();
+  await staticPage.locator('[data-material="pla"] .material-card-link').click();
   await staticPage.locator('#spec-b > summary').click();
   assert.equal(await staticPage.locator('#spec-b table').isVisible(),true);
   await staticPage.locator('#spec-b .row-sources > summary').first().click();
