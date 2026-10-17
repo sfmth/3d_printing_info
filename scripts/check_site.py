@@ -13,7 +13,7 @@ import statistics
 import tempfile
 import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, payload, counts
-from material_design import FAMILIES, art_name
+from material_design import EXAMPLES
 
 
 def digest(x):
@@ -201,8 +201,15 @@ def run():
                     if source.get('u'):assert escape(source['u']) in html,(directory,c['id'],sid)
             if directory=='materials':
                 parsed=Page(html)
-                assert 'material-visual' in html and 'Illustration' in html,c['id']
-                assert any(a.get('src')=='../assets/materials/'+art_name(c['f']) for a in parsed.attrs('img')),c['id']
+                assert not any(a.get('src','').startswith('../assets/materials/') for a in parsed.attrs('img')),c['id']
+                assert 'prints' in parsed.ids,c['id']
+                for host in ('www.printables.com/search/models?q=','makerworld.com/en/search/models?keyword=','www.thingiverse.com/search?q='):
+                    assert any(a.get('href','').startswith('https://'+host) for a in parsed.attrs('a')),(c['id'],'missing model discovery link')
+                if c['id'] in EXAMPLES:
+                    e=EXAMPLES[c['id']]
+                    assert any(a.get('src')=='../'+e['image'] and a.get('alt')==e['alt'] for a in parsed.attrs('img')),c['id']
+                    for key in ('url','license_url','creator','evidence','note','checked'): assert escape(e[key]) in html,(c['id'],'missing photo provenance',key)
+                else:assert 'No verified photo example is curated for this exact material yet.' in html,c['id']
                 # Disclosure changes visibility, never the complete record or its source links.
                 for p in c.get('pr',[]):
                     for key in ('p','pn','nt'): assert escape(p.get(key,'')) in html,(c['id'],'missing product text',key)
@@ -213,16 +220,25 @@ def run():
                     if a.get('href','').startswith('#'):assert a['href'][1:] in parsed.ids,(c['id'],'broken guide anchor',a['href'])
     library=(ROOT/'materials/index.html').read_text()
     assert len(re.findall(r'data-material="[^"]+"',library))==len(filaments['cats'])
-    for family in FAMILIES:
-        svg=ROOT/'assets/materials'/art_name(family)
-        assert ET.parse(svg).getroot().tag.endswith('svg'),family
+    assert set(EXAMPLES)<=set(c['id'] for c in filaments['cats'])
+    assert not (ROOT/'assets/materials').exists() or not list((ROOT/'assets/materials').glob('*.svg'))
+    for key,e in EXAMPLES.items():
+        assert e['image'].startswith('assets/prints/') and '..' not in e['image']
+        photo=ROOT/e['image']
+        assert hashlib.sha256(photo.read_bytes()).hexdigest()==e['sha256'],(key,'photo bytes changed')
+        assert e['width']>0 and e['height']>0 and e['creator'] and e['evidence'] and e['alt']
+        assert e['image_url'].startswith('https://media.printables.com/media/prints/')
+        assert e['url'].startswith('https://www.printables.com/model/')
+        assert e['license_url'].startswith('https://creativecommons.org/')
+        assert re.fullmatch(r'\d{4}-\d{2}-\d{2}',e['checked'])
+        assert escape(e['url']) in library and escape(e['creator']) in library
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     urls=[x.text for x in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)]
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)
     robots=(ROOT/'robots.txt').read_text()
     assert 'Disallow:' not in robots and BASE+'sitemap.xml' in robots
     # Staleness test: sync must be idempotent across all generated pages/metadata.
-    files=[*paths,ROOT/'sitemap.xml',ROOT/'assets/materials.css',*(ROOT/'assets/materials').glob('*.svg')]
+    files=[*paths,ROOT/'sitemap.xml',ROOT/'assets/materials.css']
     before={p:p.read_bytes() for p in files}
     subprocess.run(['python3',str(ROOT/'scripts/sync_site.py')],check=True,capture_output=True)
     assert all(p.read_bytes()==content for p,content in before.items()),'Generated files out of date: run python scripts/sync_site.py'
