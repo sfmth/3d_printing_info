@@ -1,0 +1,608 @@
+{
+  "schema_version": 1,
+  "sources": {
+    "prusament-pla-tds": {
+      "title": "Prusament PLA technical data sheet",
+      "publisher": "Prusa Polymers a.s.",
+      "authors": [
+        "Prusa Polymers a.s."
+      ],
+      "url": "https://storage.googleapis.com/prusa3d-content-prod-14e8-wordpress-prusament-prod/2024/05/7ca620c4-prusament-pla-plablend.zip",
+      "document_date": "2022-07-27",
+      "version": "1.1",
+      "accessed": "2026-10-18",
+      "kind": "manufacturer-test",
+      "scope": "Archive member Prusament PLA/1_PLA_Prusament_TDS_2022_EN.pdf; Manufacturer measurements on FFF coupons for this commercial product; color, lot and reinforcement content are not specified. No raw replicate data or definition of the reported plus/minus term is supplied. Printed-coupon tensile results do not report conditioning, test temperature, test rate, detailed dimensions or specimen count. The 24 °C / 22% humidity footnote belongs to the separate moisture-uptake rows and is not treated as a tensile conditioning protocol."
+    },
+    "prusament-petg-tds": {
+      "title": "Prusament PETG technical data sheet",
+      "publisher": "Prusa Polymers a.s.",
+      "authors": [
+        "Prusa Polymers a.s."
+      ],
+      "url": "https://storage.googleapis.com/prusa3d-content-prod-14e8-wordpress-prusament-prod/2023/10/9f8d2165-tds_prusament-petg_n_en.pdf",
+      "document_date": "2022-02-16",
+      "version": "1.1",
+      "accessed": "2026-10-18",
+      "kind": "manufacturer-test",
+      "scope": "Manufacturer measurements on FFF coupons for this commercial product; color, lot and reinforcement content are not specified. No raw replicate data or definition of the reported plus/minus term is supplied. Printed-coupon tensile results do not report conditioning, test temperature, test rate, detailed dimensions or specimen count. The 24 °C / 22% humidity footnote belongs to the separate moisture-uptake rows and is not treated as a tensile conditioning protocol."
+    },
+    "prusament-asa-tds": {
+      "title": "Prusament ASA technical data sheet",
+      "publisher": "Prusa Polymers a.s.",
+      "authors": [
+        "Prusa Polymers a.s."
+      ],
+      "url": "https://storage.googleapis.com/prusa3d-content-prod-14e8-wordpress-prusament-prod/2024/05/bc8551ef-tds_prusament-asa_2024_en.pdf",
+      "document_date": "2024-05-20",
+      "version": "1.1",
+      "accessed": "2026-10-18",
+      "kind": "manufacturer-test",
+      "scope": "Manufacturer measurements on FFF coupons for this commercial product; color, lot and reinforcement content are not specified. No raw replicate data or definition of the reported plus/minus term is supplied. Printed-coupon tensile results do not report conditioning, test temperature, test rate, detailed dimensions or specimen count. The 24 °C / 22% humidity footnote belongs to the separate moisture-uptake rows and is not treated as a tensile conditioning protocol."
+    },
+    "prusament-pc-tds": {
+      "title": "Prusament PC Blend technical data sheet",
+      "publisher": "Prusa Polymers a.s.",
+      "authors": [
+        "Prusa Polymers a.s."
+      ],
+      "url": "https://prusament.com/wp-content/uploads/2022/10/PCBlend_Prusament_TDS_2022_16_EN.pdf",
+      "document_date": "2022-02-16",
+      "version": "1.1",
+      "accessed": "2026-10-18",
+      "kind": "manufacturer-test",
+      "scope": "Manufacturer measurements on FFF coupons for this commercial product; color, lot and reinforcement content are not specified. No raw replicate data or definition of the reported plus/minus term is supplied. Printed-coupon tensile results do not report conditioning, test temperature, test rate, detailed dimensions or specimen count. The 24 °C / 22% humidity footnote belongs to the separate moisture-uptake rows and is not treated as a tensile conditioning protocol. Its polymer is described as a PC blend; the other blend constituents are not identified."
+    },
+    "astm-d638": {
+      "title": "ASTM D638-22 — Standard Test Method for Tensile Properties of Plastics",
+      "publisher": "ASTM International",
+      "authors": [
+        "ASTM International"
+      ],
+      "url": "https://store.astm.org/standards/d638",
+      "document_date": "2022-07-21",
+      "version": "D638-22",
+      "accessed": "2026-10-18",
+      "kind": "test-method-scope",
+      "scope": "Public scope and significance/use statements, not a reproduction of the full standard. This source does not establish that a supplier used D638 or complied with any particular procedure."
+    },
+    "amza-2021": {
+      "title": "Accelerated Aging Effect on Mechanical Properties of Common 3D-Printing Polymers",
+      "publisher": "Amza et al. / Polymers",
+      "authors": [
+        "Catalin Gheorghe Amza",
+        "Aurelian Zapciu",
+        "Florin Baciu",
+        "Mihai Ion Vasile",
+        "Adrian Ionut Nicoara"
+      ],
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8659210/",
+      "document_date": "2021-11-26",
+      "version": "Polymers 13(23), 4132; DOI 10.3390/polym13234132",
+      "accessed": "2026-10-18",
+      "kind": "independent-experiment",
+      "scope": "FFF specimens: opaque blue Fillamentum PLA Extrafill and transparent natural PrimaSelect PETG; Creality Ender-3, Cura 4.5, 100% grid ±45° infill, 0.2 mm layers, two contours. PLA nozzle/bed: 205/45 °C; PETG: 235/65 °C. Unaged controls are discussed separately from UV-B-aged groups; ASTM D638-14 Type I dimensions, 1 mm/min, 23 °C / 50% RH, five specimens per tensile group. Ultimate strength is distinct from the supplier yield property."
+    },
+    "fischbach-2023": {
+      "title": "Effect of physical aging on the flexural creep in 3D printed thermoplastic",
+      "publisher": "Fischbach and Weinberg",
+      "authors": [
+        "Marcel Fischbach",
+        "Kerstin Weinberg"
+      ],
+      "url": "https://arxiv.org/html/2302.11240v2",
+      "document_date": "2023-08-16",
+      "version": "arXiv:2302.11240v2",
+      "accessed": "2026-10-18",
+      "kind": "independent-experiment",
+      "scope": "Author manuscript, printed BASF Ultrafuse PLA; 100% infill, 0.2 mm layers, 215 °C nozzle, 30 °C bed; ISO 899-2 bending creep. The long-duration test uses one specimen under a 10 N nominal force for 170 h near 20 °C. No family-wide lifetime or reduction factor is inferred. The long-duration specimen had an initial age of five hours; the authors report laboratory relative humidity of 30–50%."
+    },
+    "astm-d256": {
+      "title": "ASTM D256-26 — Standard Test Methods for Determining the Izod Pendulum Impact Resistance of Plastics",
+      "publisher": "ASTM International",
+      "authors": [
+        "ASTM International"
+      ],
+      "url": "https://store.astm.org/standards/d256",
+      "document_date": "2026-04-29",
+      "version": "D256-26",
+      "accessed": "2026-10-18",
+      "kind": "test-method-scope",
+      "scope": "Public scope and significance/use statements explain impact-test dependencies. No paid standard text or material-specific impact design value is reproduced."
+    },
+    "stratasys-tooling": {
+      "title": "Design Considerations: FDM Additive Manufacturing Tooling",
+      "publisher": "Stratasys",
+      "authors": [
+        "Stratasys"
+      ],
+      "url": "https://www.stratasys.com/contentassets/1a0cc7a8e7d14f29ac972189bfeade4c/dg_fdm_designconsiderationsfdmtooling_0718a.pdf?v=48fbe5",
+      "document_date": null,
+      "version": "PDF footer identifier DG_FDM_DesignConsiderationsFDMTooling_0618a",
+      "accessed": "2026-10-18",
+      "kind": "manufacturer-guidance",
+      "scope": "Industrial Stratasys FDM tooling guidance. It supplies design context, not qualification of the Prusament grades or a desktop printer. A precise publication date is not stated in the document metadata used here."
+    }
+  },
+  "series": {
+    "prusament-pla-horizontal": {
+      "source_id": "prusament-pla-tds",
+      "grade": "Prusament PLA",
+      "manufacturer": "Prusa Polymers a.s.",
+      "material_id": "pla",
+      "base_polymer": "PLA",
+      "filler": null,
+      "process": "FFF",
+      "orientation": "Horizontal (source label); diagram shows a flat coupon in XY, with its long axis along X.",
+      "specimen_geometry": null,
+      "test_standard": "ISO 527-1 (revision not reported)",
+      "test_rate": null,
+      "test_temperature": null,
+      "conditioning": null,
+      "printer": "Original Prusa i3 MK3",
+      "printing": {
+        "layer_height": "0.20 mm",
+        "infill": "100%, rectilinear",
+        "perimeters": 2,
+        "nozzle_temperature": "215 °C, every layer",
+        "bed_temperature": "60 °C, every layer",
+        "chamber_temperature": null,
+        "slicer": "Slic3r Prusa Edition 1.40.0",
+        "infill_print_speed": "200 mm/s; a slicer setting, not a tensile test rate",
+        "top_bottom_solid_layers": "0 / 0",
+        "specimen_cooling": null,
+        "extrusion_multiplier": null
+      },
+      "post_processing": null,
+      "sample_count": null,
+      "scatter_definition": null,
+      "locator": "Archive member Prusament PLA/1_PLA_Prusament_TDS_2022_EN.pdf; PDF p. 2, lower mechanical-results table, first result column; PDF p. 3, specimen-printing note and orientation sketch."
+    },
+    "prusament-pla-vertical-xz": {
+      "source_id": "prusament-pla-tds",
+      "grade": "Prusament PLA",
+      "manufacturer": "Prusa Polymers a.s.",
+      "material_id": "pla",
+      "base_polymer": "PLA",
+      "filler": null,
+      "process": "FFF",
+      "orientation": "Vertical xz (source label); diagram shows an on-edge coupon in XZ, with its long axis along X. This is not a coupon loaded along build Z.",
+      "specimen_geometry": null,
+      "test_standard": "ISO 527-1 (revision not reported)",
+      "test_rate": null,
+      "test_temperature": null,
+      "conditioning": null,
+      "printer": "Original Prusa i3 MK3",
+      "printing": {
+        "layer_height": "0.20 mm",
+        "infill": "100%, rectilinear",
+        "perimeters": 2,
+        "nozzle_temperature": "215 °C, every layer",
+        "bed_temperature": "60 °C, every layer",
+        "chamber_temperature": null,
+        "slicer": "Slic3r Prusa Edition 1.40.0",
+        "infill_print_speed": "200 mm/s; a slicer setting, not a tensile test rate",
+        "top_bottom_solid_layers": "0 / 0",
+        "specimen_cooling": null,
+        "extrusion_multiplier": null
+      },
+      "post_processing": null,
+      "sample_count": null,
+      "scatter_definition": null,
+      "locator": "Archive member Prusament PLA/1_PLA_Prusament_TDS_2022_EN.pdf; PDF p. 2, lower mechanical-results table, second result column; PDF p. 3, specimen-printing note and orientation sketch."
+    },
+    "prusament-petg-horizontal": {
+      "source_id": "prusament-petg-tds",
+      "grade": "Prusament PETG",
+      "manufacturer": "Prusa Polymers a.s.",
+      "material_id": "petg",
+      "base_polymer": "PETG",
+      "filler": null,
+      "process": "FFF",
+      "orientation": "Horizontal (source label); diagram shows a flat coupon in XY, with its long axis along X.",
+      "specimen_geometry": null,
+      "test_standard": "ISO 527-1 (revision not reported)",
+      "test_rate": null,
+      "test_temperature": null,
+      "conditioning": null,
+      "printer": "Original Prusa i3 MK3",
+      "printing": {
+        "layer_height": "0.20 mm",
+        "infill": "100%, rectilinear",
+        "perimeters": 2,
+        "nozzle_temperature": "250 °C, every layer",
+        "bed_temperature": "80 °C, every layer",
+        "chamber_temperature": null,
+        "slicer": "Slic3r Prusa Edition 1.40.0",
+        "infill_print_speed": "200 mm/s; a slicer setting, not a tensile test rate",
+        "top_bottom_solid_layers": "0 / 0",
+        "specimen_cooling": null,
+        "extrusion_multiplier": null
+      },
+      "post_processing": null,
+      "sample_count": null,
+      "scatter_definition": null,
+      "locator": "PDF p. 2, lower mechanical-results table, first result column; PDF p. 3, specimen-printing note and orientation sketch."
+    },
+    "prusament-petg-vertical-xz": {
+      "source_id": "prusament-petg-tds",
+      "grade": "Prusament PETG",
+      "manufacturer": "Prusa Polymers a.s.",
+      "material_id": "petg",
+      "base_polymer": "PETG",
+      "filler": null,
+      "process": "FFF",
+      "orientation": "Vertical xz (source label); diagram shows an on-edge coupon in XZ, with its long axis along X. This is not a coupon loaded along build Z.",
+      "specimen_geometry": null,
+      "test_standard": "ISO 527-1 (revision not reported)",
+      "test_rate": null,
+      "test_temperature": null,
+      "conditioning": null,
+      "printer": "Original Prusa i3 MK3",
+      "printing": {
+        "layer_height": "0.20 mm",
+        "infill": "100%, rectilinear",
+        "perimeters": 2,
+        "nozzle_temperature": "250 °C, every layer",
+        "bed_temperature": "80 °C, every layer",
+        "chamber_temperature": null,
+        "slicer": "Slic3r Prusa Edition 1.40.0",
+        "infill_print_speed": "200 mm/s; a slicer setting, not a tensile test rate",
+        "top_bottom_solid_layers": "0 / 0",
+        "specimen_cooling": null,
+        "extrusion_multiplier": null
+      },
+      "post_processing": null,
+      "sample_count": null,
+      "scatter_definition": null,
+      "locator": "PDF p. 2, lower mechanical-results table, second result column; PDF p. 3, specimen-printing note and orientation sketch."
+    },
+    "prusament-asa-horizontal": {
+      "source_id": "prusament-asa-tds",
+      "grade": "Prusament ASA",
+      "manufacturer": "Prusa Polymers a.s.",
+      "material_id": "asa",
+      "base_polymer": "ASA",
+      "filler": null,
+      "process": "FFF",
+      "orientation": "Horizontal (source label); diagram shows a flat coupon in XY, with its long axis along X.",
+      "specimen_geometry": null,
+      "test_standard": "ISO 527-1 (revision not reported)",
+      "test_rate": null,
+      "test_temperature": null,
+      "conditioning": null,
+      "printer": "Original Prusa i3 MK3S",
+      "printing": {
+        "layer_height": "0.20 mm",
+        "infill": "100%, rectilinear",
+        "perimeters": 2,
+        "nozzle_temperature": "265 °C, every layer",
+        "bed_temperature": "110 °C, every layer",
+        "chamber_temperature": null,
+        "slicer": "Slic3r Prusa Edition v2.0.0",
+        "infill_print_speed": "200 mm/s; a slicer setting, not a tensile test rate",
+        "top_bottom_solid_layers": "0 / 0",
+        "specimen_cooling": null,
+        "extrusion_multiplier": null
+      },
+      "post_processing": null,
+      "sample_count": null,
+      "scatter_definition": null,
+      "locator": "PDF p. 2, lower mechanical-results table, first result column; PDF p. 3, specimen-printing note and orientation sketch."
+    },
+    "prusament-asa-vertical-xz": {
+      "source_id": "prusament-asa-tds",
+      "grade": "Prusament ASA",
+      "manufacturer": "Prusa Polymers a.s.",
+      "material_id": "asa",
+      "base_polymer": "ASA",
+      "filler": null,
+      "process": "FFF",
+      "orientation": "Vertical xz (source label); diagram shows an on-edge coupon in XZ, with its long axis along X. This is not a coupon loaded along build Z.",
+      "specimen_geometry": null,
+      "test_standard": "ISO 527-1 (revision not reported)",
+      "test_rate": null,
+      "test_temperature": null,
+      "conditioning": null,
+      "printer": "Original Prusa i3 MK3S",
+      "printing": {
+        "layer_height": "0.20 mm",
+        "infill": "100%, rectilinear",
+        "perimeters": 2,
+        "nozzle_temperature": "265 °C, every layer",
+        "bed_temperature": "110 °C, every layer",
+        "chamber_temperature": null,
+        "slicer": "Slic3r Prusa Edition v2.0.0",
+        "infill_print_speed": "200 mm/s; a slicer setting, not a tensile test rate",
+        "top_bottom_solid_layers": "0 / 0",
+        "specimen_cooling": null,
+        "extrusion_multiplier": null
+      },
+      "post_processing": null,
+      "sample_count": null,
+      "scatter_definition": null,
+      "locator": "PDF p. 2, lower mechanical-results table, second result column; PDF p. 3, specimen-printing note and orientation sketch."
+    },
+    "prusament-pc-horizontal": {
+      "source_id": "prusament-pc-tds",
+      "grade": "Prusament PC Blend",
+      "manufacturer": "Prusa Polymers a.s.",
+      "material_id": "pc",
+      "base_polymer": "PC blend; other constituents not identified",
+      "filler": null,
+      "process": "FFF",
+      "orientation": "Horizontal (source label); diagram shows a flat coupon in XY, with its long axis along X.",
+      "specimen_geometry": null,
+      "test_standard": "ISO 527-1 (revision not reported)",
+      "test_rate": null,
+      "test_temperature": null,
+      "conditioning": null,
+      "printer": "Original Prusa i3 MK3S",
+      "printing": {
+        "layer_height": "0.20 mm",
+        "infill": "100%, rectilinear",
+        "perimeters": 2,
+        "nozzle_temperature": "275 °C, every layer",
+        "bed_temperature": "115 °C, every layer",
+        "chamber_temperature": null,
+        "slicer": "PrusaSlicer 2.1.1",
+        "infill_print_speed": "200 mm/s; a slicer setting, not a tensile test rate",
+        "top_bottom_solid_layers": "0 / 0",
+        "specimen_cooling": "Off during specimen printing",
+        "extrusion_multiplier": 1.034
+      },
+      "post_processing": null,
+      "sample_count": null,
+      "scatter_definition": null,
+      "locator": "PDF p. 2, lower mechanical-results table, first result column; PDF p. 3, specimen-printing note and orientation sketch."
+    },
+    "prusament-pc-vertical-xz": {
+      "source_id": "prusament-pc-tds",
+      "grade": "Prusament PC Blend",
+      "manufacturer": "Prusa Polymers a.s.",
+      "material_id": "pc",
+      "base_polymer": "PC blend; other constituents not identified",
+      "filler": null,
+      "process": "FFF",
+      "orientation": "Vertical xz (source label); diagram shows an on-edge coupon in XZ, with its long axis along X. This is not a coupon loaded along build Z.",
+      "specimen_geometry": null,
+      "test_standard": "ISO 527-1 (revision not reported)",
+      "test_rate": null,
+      "test_temperature": null,
+      "conditioning": null,
+      "printer": "Original Prusa i3 MK3S",
+      "printing": {
+        "layer_height": "0.20 mm",
+        "infill": "100%, rectilinear",
+        "perimeters": 2,
+        "nozzle_temperature": "275 °C, every layer",
+        "bed_temperature": "115 °C, every layer",
+        "chamber_temperature": null,
+        "slicer": "PrusaSlicer 2.1.1",
+        "infill_print_speed": "200 mm/s; a slicer setting, not a tensile test rate",
+        "top_bottom_solid_layers": "0 / 0",
+        "specimen_cooling": "Off during specimen printing",
+        "extrusion_multiplier": 1.034
+      },
+      "post_processing": null,
+      "sample_count": null,
+      "scatter_definition": null,
+      "locator": "PDF p. 2, lower mechanical-results table, second result column; PDF p. 3, specimen-printing note and orientation sketch."
+    }
+  },
+  "measurements": {
+    "prusament-pla-horizontal-yield": {
+      "series_id": "prusament-pla-horizontal",
+      "property": "tensile_yield_strength",
+      "definition": "The supplier identifies this result as yield stress; it is not identified as ultimate stress or stress at rupture.",
+      "unit": "MPa",
+      "value": 51,
+      "qualifier": "=",
+      "spread": 3,
+      "locator": "Archive member Prusament PLA/1_PLA_Prusament_TDS_2022_EN.pdf; PDF p. 2, lower table, data row 1, first result column.",
+      "finding": "The published Prusament PLA coupon result is 51 MPa, with a reported plus/minus term of 3 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-pla-horizontal-modulus": {
+      "series_id": "prusament-pla-horizontal",
+      "property": "tensile_modulus",
+      "definition": "Axial elastic modulus from tensile testing; the source reports GPa, converted here to MPa by multiplying by 1000.",
+      "unit": "MPa",
+      "value": 2300,
+      "qualifier": "=",
+      "spread": 100,
+      "locator": "Archive member Prusament PLA/1_PLA_Prusament_TDS_2022_EN.pdf; PDF p. 2, lower table, data row 2, first result column.",
+      "finding": "The published Prusament PLA coupon result is 2300 MPa, with a reported plus/minus term of 100 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-pla-vertical-xz-yield": {
+      "series_id": "prusament-pla-vertical-xz",
+      "property": "tensile_yield_strength",
+      "definition": "The supplier identifies this result as yield stress; it is not identified as ultimate stress or stress at rupture.",
+      "unit": "MPa",
+      "value": 59,
+      "qualifier": "=",
+      "spread": 2,
+      "locator": "Archive member Prusament PLA/1_PLA_Prusament_TDS_2022_EN.pdf; PDF p. 2, lower table, data row 1, second result column.",
+      "finding": "The published Prusament PLA coupon result is 59 MPa, with a reported plus/minus term of 2 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-pla-vertical-xz-modulus": {
+      "series_id": "prusament-pla-vertical-xz",
+      "property": "tensile_modulus",
+      "definition": "Axial elastic modulus from tensile testing; the source reports GPa, converted here to MPa by multiplying by 1000.",
+      "unit": "MPa",
+      "value": 2400,
+      "qualifier": "=",
+      "spread": 100,
+      "locator": "Archive member Prusament PLA/1_PLA_Prusament_TDS_2022_EN.pdf; PDF p. 2, lower table, data row 2, second result column.",
+      "finding": "The published Prusament PLA coupon result is 2400 MPa, with a reported plus/minus term of 100 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-petg-horizontal-yield": {
+      "series_id": "prusament-petg-horizontal",
+      "property": "tensile_yield_strength",
+      "definition": "The supplier identifies this result as yield stress; it is not identified as ultimate stress or stress at rupture.",
+      "unit": "MPa",
+      "value": 47,
+      "qualifier": "=",
+      "spread": 2,
+      "locator": "PDF p. 2, lower table, data row 1, first result column.",
+      "finding": "The published Prusament PETG coupon result is 47 MPa, with a reported plus/minus term of 2 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-petg-horizontal-modulus": {
+      "series_id": "prusament-petg-horizontal",
+      "property": "tensile_modulus",
+      "definition": "Axial elastic modulus from tensile testing; the source reports GPa, converted here to MPa by multiplying by 1000.",
+      "unit": "MPa",
+      "value": 1500,
+      "qualifier": "=",
+      "spread": 100,
+      "locator": "PDF p. 2, lower table, data row 2, first result column.",
+      "finding": "The published Prusament PETG coupon result is 1500 MPa, with a reported plus/minus term of 100 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-petg-vertical-xz-yield": {
+      "series_id": "prusament-petg-vertical-xz",
+      "property": "tensile_yield_strength",
+      "definition": "The supplier identifies this result as yield stress; it is not identified as ultimate stress or stress at rupture.",
+      "unit": "MPa",
+      "value": 50,
+      "qualifier": "=",
+      "spread": 1,
+      "locator": "PDF p. 2, lower table, data row 1, second result column.",
+      "finding": "The published Prusament PETG coupon result is 50 MPa, with a reported plus/minus term of 1 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-petg-vertical-xz-modulus": {
+      "series_id": "prusament-petg-vertical-xz",
+      "property": "tensile_modulus",
+      "definition": "Axial elastic modulus from tensile testing; the source reports GPa, converted here to MPa by multiplying by 1000.",
+      "unit": "MPa",
+      "value": 1600,
+      "qualifier": "=",
+      "spread": 100,
+      "locator": "PDF p. 2, lower table, data row 2, second result column.",
+      "finding": "The published Prusament PETG coupon result is 1600 MPa, with a reported plus/minus term of 100 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-asa-horizontal-yield": {
+      "series_id": "prusament-asa-horizontal",
+      "property": "tensile_yield_strength",
+      "definition": "The supplier identifies this result as yield stress; it is not identified as ultimate stress or stress at rupture.",
+      "unit": "MPa",
+      "value": 42,
+      "qualifier": "=",
+      "spread": 1,
+      "locator": "PDF p. 2, lower table, data row 1, first result column.",
+      "finding": "The published Prusament ASA coupon result is 42 MPa, with a reported plus/minus term of 1 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-asa-horizontal-modulus": {
+      "series_id": "prusament-asa-horizontal",
+      "property": "tensile_modulus",
+      "definition": "Axial elastic modulus from tensile testing; the source reports GPa, converted here to MPa by multiplying by 1000.",
+      "unit": "MPa",
+      "value": 1600,
+      "qualifier": "=",
+      "spread": 100,
+      "locator": "PDF p. 2, lower table, data row 2, first result column.",
+      "finding": "The published Prusament ASA coupon result is 1600 MPa, with a reported plus/minus term of 100 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-asa-vertical-xz-yield": {
+      "series_id": "prusament-asa-vertical-xz",
+      "property": "tensile_yield_strength",
+      "definition": "The supplier identifies this result as yield stress; it is not identified as ultimate stress or stress at rupture.",
+      "unit": "MPa",
+      "value": 45,
+      "qualifier": "=",
+      "spread": 2,
+      "locator": "PDF p. 2, lower table, data row 1, second result column.",
+      "finding": "The published Prusament ASA coupon result is 45 MPa, with a reported plus/minus term of 2 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-asa-vertical-xz-modulus": {
+      "series_id": "prusament-asa-vertical-xz",
+      "property": "tensile_modulus",
+      "definition": "Axial elastic modulus from tensile testing; the source reports GPa, converted here to MPa by multiplying by 1000.",
+      "unit": "MPa",
+      "value": 1700,
+      "qualifier": "=",
+      "spread": 100,
+      "locator": "PDF p. 2, lower table, data row 2, second result column.",
+      "finding": "The published Prusament ASA coupon result is 1700 MPa, with a reported plus/minus term of 100 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-pc-horizontal-yield": {
+      "series_id": "prusament-pc-horizontal",
+      "property": "tensile_yield_strength",
+      "definition": "The supplier identifies this result as yield stress; it is not identified as ultimate stress or stress at rupture.",
+      "unit": "MPa",
+      "value": 63,
+      "qualifier": "=",
+      "spread": 1,
+      "locator": "PDF p. 2, lower table, data row 1, first result column.",
+      "finding": "The published Prusament PC Blend coupon result is 63 MPa, with a reported plus/minus term of 1 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-pc-horizontal-modulus": {
+      "series_id": "prusament-pc-horizontal",
+      "property": "tensile_modulus",
+      "definition": "Axial elastic modulus from tensile testing; the source reports GPa, converted here to MPa by multiplying by 1000.",
+      "unit": "MPa",
+      "value": 1900,
+      "qualifier": "=",
+      "spread": 100,
+      "locator": "PDF p. 2, lower table, data row 2, first result column.",
+      "finding": "The published Prusament PC Blend coupon result is 1900 MPa, with a reported plus/minus term of 100 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-pc-vertical-xz-yield": {
+      "series_id": "prusament-pc-vertical-xz",
+      "property": "tensile_yield_strength",
+      "definition": "The supplier identifies this result as yield stress; it is not identified as ultimate stress or stress at rupture.",
+      "unit": "MPa",
+      "value": 63,
+      "qualifier": "=",
+      "spread": 1,
+      "locator": "PDF p. 2, lower table, data row 1, second result column.",
+      "finding": "The published Prusament PC Blend coupon result is 63 MPa, with a reported plus/minus term of 1 MPa whose statistical meaning is unspecified."
+    },
+    "prusament-pc-vertical-xz-modulus": {
+      "series_id": "prusament-pc-vertical-xz",
+      "property": "tensile_modulus",
+      "definition": "Axial elastic modulus from tensile testing; the source reports GPa, converted here to MPa by multiplying by 1000.",
+      "unit": "MPa",
+      "value": 2000,
+      "qualifier": "=",
+      "spread": 100,
+      "locator": "PDF p. 2, lower table, data row 2, second result column.",
+      "finding": "The published Prusament PC Blend coupon result is 2000 MPa, with a reported plus/minus term of 100 MPa whose statistical meaning is unspecified."
+    }
+  },
+  "claims": {
+    "tensile-test-scope": {
+      "source_id": "astm-d638",
+      "locator": "Public Significance and Use §§4.1, 4.3–4.5 and Note 5; Scope §1.1 and Note 1.",
+      "finding": "Tensile properties depend on specimen preparation, rate and environment; modulus characterizes the initial response. Testing over different load durations and environments is needed for engineering use. ASTM D638 and ISO 527-1 have differing technical content."
+    },
+    "stiffness-vs-strength": {
+      "source_id": "amza-2021",
+      "locator": "§2 and Table 1 (materials and printing); §3.2, Table 2, PLA Control and PETG Control columns.",
+      "finding": "In the unaged control groups, the tested PLA specimens had a higher modulus while the tested PETG specimens had a higher ultimate tensile strength. This is an independent printed-grade result, not a yield-stress comparison or a statement about all PLA and PETG."
+    },
+    "direction-and-load-path": {
+      "source_id": "stratasys-tooling",
+      "locator": "§§2.3.1–2.3.2, printed pp. 7–8.",
+      "finding": "The guide connects FDM orientation to directional strength and recommends a short, direct load path. Its process-specific statements are not universal Z-strength data."
+    },
+    "prusa-orientation": {
+      "source_id": "prusament-pla-tds",
+      "locator": "Archive member Prusament PLA/1_PLA_Prusament_TDS_2022_EN.pdf, PDF p. 3, orientation sketch; corresponding PDF p. 3 sketches in PETG, ASA and PC Blend sheets.",
+      "finding": "The inspected source sketches show both tensile coupons with the long axis along X: Horizontal is flat XY, and Vertical xz is on-edge XZ. Those are not in-plane versus build-Z tensile tests. The corresponding series retain their own source locators."
+    },
+    "creep-below-tg": {
+      "source_id": "fischbach-2023",
+      "locator": "§3.1/Table 1 (material and process), §3.3 (test protocol), §4.2/Figure 11 and §5 (long-duration observations).",
+      "finding": "One printed Ultrafuse PLA specimen continued to creep under the long room-temperature bending hold below its glass transition. This evidence calls for a sustained-load check but does not supply a general lifetime prediction."
+    },
+    "impact-test-scope": {
+      "source_id": "astm-d256",
+      "locator": "Public Scope §1.1 and Notes 3–4; Significance and Use §§5.2, 5.7–5.9.",
+      "finding": "Specimen preparation, notch, conditioning and failure type affect impact results. A no-break observation is not an unlimited impact resistance. Results from different impact methods and specimen configurations do not establish a common ranking."
+    },
+    "industrial-tooling-context": {
+      "source_id": "stratasys-tooling",
+      "locator": "§1.4, printed p. 4, Volvo Trucks application context.",
+      "finding": "The manufacturer documents industrial FDM use by Volvo Trucks for lifting devices and ancillary tooling. This passage does not identify the exact grade or load rating for each component."
+    }
+  }
+}

@@ -73,6 +73,7 @@ try {
   }
   await page.screenshot({path:path.join(root,'test-results/home.png')});
   await page.getByRole('link',{name:'Printers',exact:true}).click();
+  await page.locator('#mtbody tr.row').first().waitFor({state:'visible'});
   assert.equal(await page.locator('#mtbody tr.row').count(),printers.cats.length);
   step('Homepage catalog counts and printer navigation');
   await page.getByLabel('Search printers',{exact:true}).fill('Photon P1 Max');
@@ -305,12 +306,83 @@ try {
     assert.equal(article.about.name,c.n,c.id);
   }
   step(`All ${printers.cats.length} printer guides render technical-article metadata without unsupported Product entities, matching canonical URLs and one Analytics tag`);
+  const articlePath='articles/choosing-fdm-material-load-bearing-part.html';
+  const articleTitle='Choosing an FDM material for a load-bearing part';
+  await visit('');
+  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Selection articles',exact:true}).click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+'articles/').pathname);
+  await page.waitForLoadState('networkidle');
+  await visit('articles/');
+  assert.ok(await page.locator('[data-article-card]').count()>0,'article hub has a published article');
+  await page.screenshot({path:path.join(root,'test-results/article-index.png')});
+  await page.locator('a[data-article-card][href="choosing-fdm-material-load-bearing-part.html"]').click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+articlePath).pathname);
+  await page.waitForLoadState('networkidle');
+  await visit(articlePath);
+  assert.equal(await page.locator('body.article-page').count(),1);
+  assert.equal(await page.locator('main h1').innerText(),articleTitle);
+  assert.equal(await page.locator('#quick-answer').isVisible(),true);
+  assert.equal(await page.locator('#verification').isVisible(),true);
+  const articleMetadata=(await referenceMetadata()).documents.find(document=>document['@type']==='WebPage');
+  assert.equal(articleMetadata.url,'https://sfmth.github.io/3d_printing_info/'+articlePath);
+  assert.equal(articleMetadata.mainEntity['@type'],'TechArticle');
+  assert.equal(articleMetadata.mainEntity.headline,articleTitle);
+  assert.ok(articleMetadata.mainEntity.author,'article has identified authorship');
+  assert.match(articleMetadata.mainEntity.dateModified,/^\d{4}-\d{2}-\d{2}/);
+  const evidenceTable=page.locator('#measurements table.evidence-table');
+  assert.equal(await evidenceTable.isVisible(),true);
+  assert.ok(await evidenceTable.locator('tr[data-measurement]').count()>=8,'pilot preserves grade-specific measurements');
+  const tableText=await evidenceTable.innerText();
+  for(const polymer of [/PLA/,/PETG/,/ASA/,/PC/]) assert.match(tableText,polymer);
+  assert.match(tableText,/MPa|GPa/,'engineering units are visible in the comparison');
+  for(const row of await evidenceTable.locator('tr[data-measurement]').all()) {
+    assert.ok((await row.innerText()).trim().length>20,'measurement rows retain readable context');
+    assert.ok(await row.locator('a.evidence-link').count()>0,'each measurement links its evidence');
+  }
+  const claims=page.locator('p[data-evidence-refs]');
+  assert.ok(await claims.count()>0,'engineering claims identify their evidence');
+  for(const claim of await claims.all()) {
+    assert.ok(await claim.locator('a.claim-citation[href^="https://"]').count()>0,'claim has a direct primary-source citation');
+    assert.ok(await claim.locator('a.evidence-link[href^="#evidence-"]').count()>0,'claim exposes precise evidence context');
+  }
+  for(const href of await page.locator('a.evidence-link').evaluateAll(links=>links.map(link=>link.getAttribute('href')))) {
+    assert.match(href,/^#evidence-/);
+    assert.equal(await page.locator(href).count(),1,'evidence anchor resolves: '+href);
+  }
+  const methods=page.locator('#methods details[data-series]');
+  assert.ok(await methods.count()>0,'test-series conditions are available');
+  for(const method of await methods.all()) {
+    if(await method.getAttribute('open')===null) await method.locator(':scope > summary').click();
+    assert.equal(await method.getAttribute('open'),'');
+    assert.ok((await method.innerText()).trim().length>80,'expanded method includes specimen and test context');
+  }
+  assert.ok(await page.locator('#sources li[data-source]').count()>0);
+  for(const source of await page.locator('#sources li[data-source]').all()) {
+    assert.ok(await source.locator('a[href^="https://"]').count()>0,'source retains its primary URL');
+  }
+  await page.locator('#measurements').evaluate(el=>el.scrollIntoView({block:'start'}));
+  await page.screenshot({path:path.join(root,'test-results/article-desktop.png')});
+  await page.locator('main a[href="../materials/pla.html"]').first().click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+'materials/pla.html').pathname);
+  await page.locator('#selection-articles a[href="../'+articlePath+'"]').click();
+  assert.equal(await page.locator('main h1').innerText(),articleTitle);
+  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Material guides',exact:true}).click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+'materials/').pathname);
+  for(const id of ['pla','petg','asa','pc']) {
+    await visit('materials/'+id+'.html');
+    assert.equal(await page.locator('#selection-articles a[href="../'+articlePath+'"]').count(),1,id+' links to its selection article');
+  }
+  await visit('filaments.html');
+  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Selection articles',exact:true}).click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+'articles/').pathname);
+  step('Selection article hub and pilot retain grade-specific evidence, conditions, primary citations, technical-article metadata and material-guide round trips');
   await visit('materials/peba.html');
   await page.screenshot({path:path.join(root,'test-results/peba-guide.png')});
   await page.setViewportSize({width:390,height:844});
   await page.goto(base,{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'homepage mobile width');
   await page.getByRole('link',{name:'Filaments',exact:true}).click();
+  await page.locator('#mtbody tr.row').first().waitFor({state:'visible'});
   await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
   assert.equal(await page.locator('#mtbody tr.row').count(),1);
   await page.screenshot({path:path.join(root,'test-results/mobile-filaments.png')});
@@ -333,6 +405,25 @@ try {
   await page.goto(base+'printers/anycubic-photon-p1-max.html',{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'printer guide mobile width');
   await page.screenshot({path:path.join(root,'test-results/mobile-printer-guide.png')});
+  await visit(articlePath);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'article mobile width');
+  const mobileTable=page.locator('#measurements table.evidence-table');
+  const scrollState=await mobileTable.evaluate(table=>{
+    let wrapper=table.parentElement;
+    while(wrapper && !/^(auto|scroll)$/.test(getComputedStyle(wrapper).overflowX)) wrapper=wrapper.parentElement;
+    if(!wrapper) return null;
+    const original=wrapper.scrollLeft;
+    wrapper.scrollLeft=wrapper.scrollWidth;
+    const result={width:wrapper.clientWidth,contentWidth:wrapper.scrollWidth,scrolled:wrapper.scrollLeft>original};
+    wrapper.scrollLeft=original;
+    return result;
+  });
+  assert.ok(scrollState && scrollState.contentWidth>scrollState.width && scrollState.scrolled,'mobile comparison scrolls inside its own wrapper');
+  await page.locator('#measurements').evaluate(el=>el.scrollIntoView({block:'start'}));
+  await page.screenshot({path:path.join(root,'test-results/article-mobile.png')});
+  await visit('articles/');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'article hub mobile width');
+  step('Article hub and evidence table remain readable at 390 px with horizontal scrolling contained inside the comparison');
   step('Mobile navigation, filtering, material and printer guide layouts at 390 px');
   const nojs=await browser.newContext({javaScriptEnabled:false});
   const staticPage=await nojs.newPage();
@@ -370,6 +461,32 @@ try {
   assert.match(await staticPage.locator('h1').innerText(),/PEBA/);
   assert.equal(await staticPage.locator('main table').count()>0,true);
   step('No-JavaScript tables preserve every printer, material and product; guide links work');
+  await staticPage.goto(base);
+  await staticPage.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Selection articles',exact:true}).click();
+  await staticPage.locator('a[data-article-card][href="choosing-fdm-material-load-bearing-part.html"]').click();
+  assert.equal(await staticPage.locator('main h1').innerText(),articleTitle);
+  assert.equal(await staticPage.locator('#quick-answer').isVisible(),true);
+  assert.equal(await staticPage.locator('#measurements table.evidence-table').isVisible(),true);
+  assert.ok(await staticPage.locator('#measurements tr[data-measurement]').count()>=8);
+  const staticMethod=staticPage.locator('#methods details[data-series]').first();
+  if(await staticMethod.getAttribute('open')===null) {
+    await staticMethod.locator(':scope > summary').focus();
+    await staticPage.keyboard.press('Enter');
+  }
+  assert.equal(await staticMethod.getAttribute('open'),'','test conditions expand without JavaScript');
+  assert.ok((await staticMethod.innerText()).length>80);
+  const staticEvidence=staticPage.locator('p[data-evidence-refs] a.evidence-link').first();
+  const evidenceTarget=await staticEvidence.getAttribute('href');
+  await staticEvidence.click();
+  assert.equal(new URL(staticPage.url()).hash,evidenceTarget);
+  assert.equal(await staticPage.locator(evidenceTarget).count(),1);
+  assert.equal(await staticPage.locator(evidenceTarget).isVisible(),true,'fragment navigation reveals its evidence record without JavaScript');
+  assert.ok(await staticPage.locator('#sources li[data-source] a[href^="https://"]').count()>0);
+  assert.equal(await staticPage.locator('#verification').isVisible(),true);
+  await staticPage.locator('main a[href="../materials/pla.html"]').first().click();
+  await staticPage.locator('#selection-articles a[href="../'+articlePath+'"]').click();
+  assert.equal(await staticPage.locator('main h1').innerText(),articleTitle);
+  step('Article navigation, comparison values, native method disclosures, evidence anchors and source links work without JavaScript');
   assert.deepEqual(errors,[],'uncaught JavaScript errors');
   assert.deepEqual(missing,[],'missing local assets');
   step('No uncaught JavaScript exceptions or missing local assets');

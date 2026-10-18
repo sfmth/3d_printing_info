@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "articles": [
+    {
+      "id": "choosing-fdm-material-load-bearing-part",
+      "title": "Choosing an FDM material for a load-bearing part",
+      "description": "Screen specific PLA, PETG, ASA and PC Blend grades by the failure mode, then check orientation, sustained loading and the limits of published coupon tests.",
+      "category": "Mechanical performance",
+      "published": "2026-10-18",
+      "modified": "2026-10-18",
+      "author": {"@type": "Organization", "name": "3D Printing Info"},
+      "authorship_note": "Editorial synthesis assisted by AI, based on the linked supplier documents and experimental research. No mechanical testing was performed for this article.",
+      "materials": {"pla": "PLA", "petg": "PETG", "asa": "ASA", "pc": "PC"},
+      "measurements": [
+        "prusament-pla-horizontal-modulus", "prusament-pla-horizontal-yield",
+        "prusament-pla-vertical-xz-modulus", "prusament-pla-vertical-xz-yield",
+        "prusament-petg-horizontal-modulus", "prusament-petg-horizontal-yield",
+        "prusament-petg-vertical-xz-modulus", "prusament-petg-vertical-xz-yield",
+        "prusament-asa-horizontal-modulus", "prusament-asa-horizontal-yield",
+        "prusament-asa-vertical-xz-modulus", "prusament-asa-vertical-xz-yield",
+        "prusament-pc-horizontal-modulus", "prusament-pc-horizontal-yield",
+        "prusament-pc-vertical-xz-modulus", "prusament-pc-vertical-xz-yield"
+      ],
+      "claims": ["tensile-test-scope", "stiffness-vs-strength", "direction-and-load-path", "prusa-orientation", "creep-below-tg", "impact-test-scope", "industrial-tooling-context"],
+      "answer": {
+        "heading": "Choose the failure criterion before choosing the polymer",
+        "paragraphs": [
+          {"kind": "interpretation", "text": "For a bracket, fixture or support, begin with the permitted deflection, the load direction and how long the force acts. A grade that limits immediate bending may still deform during a long hold, or fail where the part pulls across layers. PLA, PETG, ASA and PC Blend are candidates to screen against those requirements; the evidence here does not establish a universal winner.", "refs": ["tensile-test-scope", "direction-and-load-path"]},
+          {"text": "The table reports specific Prusament printed-coupon results for tensile modulus and yield strength. It is useful for deciding what to investigate next. Its missing test conditions and lack of build-Z tensile results prevent it from supplying design allowables for an arbitrary printed part.", "refs": ["prusament-pla-horizontal-modulus", "prusa-orientation"]}
+        ]
+      },
+      "sections": [
+        {
+          "id": "requirements",
+          "title": "Turn “strong enough” into a requirement",
+          "paragraphs": [
+            {"text": "Separate initial elastic deflection, yielding, ultimate tensile failure and rupture. Modulus describes the initial stress–strain response; yield is a different point on that response. Neither quantity measures the force needed to break your complete bracket. Its section, holes, fasteners and load application determine how a nominal force becomes a local stress.", "refs": ["tensile-test-scope"]},
+            {"kind": "interpretation", "text": "Write down the force and its lever arm, the allowed displacement at the working surface, the load duration, and the temperature and moisture range. Also identify drops, repeated cycles and chemical contact. These become distinct acceptance checks. A single maximum-strength entry cannot answer all of them.", "refs": ["tensile-test-scope", "impact-test-scope"]}
+          ]
+        },
+        {
+          "id": "measurements",
+          "title": "A grade-specific tensile screening table",
+          "paragraphs": [
+            {"text": "The following supplier results share the stated ISO 527-1 method, with its revision unspecified. Keep the two source orientations separate. Printers, slicers and extrusion temperatures differ, and the tensile test temperature, speed, conditioning and specimen count are unreported. This is a same-method screening collection, not a controlled common-condition experiment.", "refs": ["prusament-pla-horizontal-yield", "prusament-petg-horizontal-yield", "prusament-asa-horizontal-yield", "prusament-pc-horizontal-yield"]}
+          ]
+        },
+        {
+          "id": "stiffness-and-failure",
+          "title": "Stiffness and tensile strength answer different questions",
+          "paragraphs": [
+            {"text": "An independent experiment by Amza and colleagues illustrates the distinction: its unaged Fillamentum PLA Extrafill specimens had a higher tensile modulus than its PrimaSelect PETG specimens, while the PETG specimens had the higher ultimate tensile strength. These were ASTM D638 tests on Ender-3 prints, rather than the supplier ISO yield tests above. Their absolute results are kept out of this table.", "refs": ["stiffness-vs-strength"]},
+            {"kind": "interpretation", "text": "For a locating fixture, a deflection limit may govern before yielding. For a part that must carry a short overload, a yield criterion may govern instead. Investigate the relevant grade property and the part’s section together. Do not replace yield with ultimate or rupture stress, and do not divide an external force by a convenient nominal area without checking the actual load path.", "refs": ["tensile-test-scope", "direction-and-load-path"]}
+          ]
+        },
+        {
+          "id": "orientation",
+          "title": "An on-edge coupon is not a build-Z tensile test",
+          "paragraphs": [
+            {"text": "In these Prusament drawings, “Horizontal” is a flat coupon in XY. “Vertical xz” is an on-edge coupon whose long axis still follows X. It does not mean the tensile force pulls along the machine’s build Z. The two columns therefore cannot establish interlayer tensile strength or a cross-layer reduction factor.", "refs": ["prusa-orientation"]},
+            {"kind": "interpretation", "text": "Trace force through the proposed part and choose a build orientation around that path. A layer interface crossing a heavily loaded root needs evidence relevant to that interface. If a candidate sheet supplies only in-plane coupons, request directional data or test representative specimens and the component. A polymer name cannot resolve that gap.", "refs": ["direction-and-load-path", "prusa-orientation"]}
+          ]
+        },
+        {
+          "id": "time-and-impact",
+          "title": "A brief tensile test does not settle a long hold or an impact",
+          "paragraphs": [
+            {"text": "Fischbach and Weinberg observed continuing flexural creep in printed BASF Ultrafuse PLA during a long room-temperature hold below its glass transition. The long-duration result came from one specimen, so it supports the need to investigate time-dependent deformation, rather than a general life prediction or a universal strength reduction.", "refs": ["creep-below-tg"]},
+            {"text": "Impact testing introduces another question. ASTM D256 identifies specimen preparation, notch, conditioning and failure mode as factors affecting the result. A notched Izod result, an unnotched Charpy result and a coupon that did not break are not interchangeable numbers. No impact ranking is inferred from the tensile table.", "refs": ["impact-test-scope"]},
+            {"kind": "interpretation", "text": "For a continuously loaded support, measure displacement during a representative hold at the service temperature. For a bolted fixture, assess the assembled joint through the required hold and operating cycles. For a protective component, reproduce the relevant impact and inspect its mounting points. Specify acceptance limits before testing.", "refs": ["tensile-test-scope", "creep-below-tg", "impact-test-scope"]}
+          ]
+        },
+        {
+          "id": "engineering-context",
+          "title": "Use industrial examples as context for the decision",
+          "paragraphs": [
+            {"text": "Stratasys describes Volvo Trucks using industrial FDM for lifting devices and ancillary tooling. The cited account does not assign an exact grade or load rating to each component. It establishes a tooling application context; it cannot qualify a desktop-printed PLA, ASA or PC Blend substitute.", "refs": ["industrial-tooling-context"]},
+            {"kind": "interpretation", "text": "Expand the candidate list when these four grades lack the necessary directional, thermal, environmental or long-term evidence. A conditioned nylon, reinforced grade or higher-temperature polymer may deserve testing, but each brings a new grade and process to qualify. This pilot supplies no common-condition results that rank those alternatives. Start that comparison with the missing measurement, rather than assuming the family name solves the problem.", "refs": ["tensile-test-scope"]}
+          ]
+        },
+        {
+          "id": "methods",
+          "title": "Printing conditions, source limits and traceability",
+          "paragraphs": [
+            {"text": "Each record below retains the supplier’s specimen settings and orientation label. Open a record for printer, temperatures, slicer, infill and the source table locator. Unknown fields remain explicit. The displayed PC grade is PC Blend; its other blend constituents are not identified. These values are separate from the older material-family catalog.", "refs": ["prusament-pc-horizontal-modulus"]},
+            {"text": "The largest remaining gaps are tensile conditioning and test rate, true build-Z tension, specimen-level scatter, sustained-load behavior and performance of the intended geometry. An “accessed” date records when a document was consulted; it does not mean a supplier measurement was repeated then.", "refs": ["prusa-orientation", "tensile-test-scope"]}
+          ]
+        },
+        {
+          "id": "verification",
+          "title": "Before releasing a part",
+          "paragraphs": [{"text": "The following is an engineering verification sequence for the stated use. Set the required margin and acceptance limits through the project’s design process; the reported supplier values and unspecified ± terms do not define them.", "refs": ["tensile-test-scope"]}],
+          "items": [
+            {"text": "Record the exact grade, color or lot where relevant, filament preparation, machine, build orientation, toolpath and post-processing. Keep the tested process with the result."},
+            {"text": "Measure initial deflection and permanent set using the real load path, supports, fasteners and critical dimensions. Include the orientations that control the proposed failure mode."},
+            {"text": "Run the needed sustained-load, cycle, temperature, moisture and impact checks with explicit pass/fail limits. A short tensile coupon result cannot substitute for these conditions.", "refs": ["tensile-test-scope"]},
+            {"text": "If the evidence cannot support the required margin, change the geometry, material or manufacturing route and repeat the affected checks. Preserve the failed result and the reason for the change."}
+          ]
+        }
+      ],
+      "table": {
+        "caption": "Manufacturer FFF coupon results · values are reported supplier values ± an undefined term · ISO 527-1, revision unspecified · tensile temperature, rate and conditioning not reported. Modulus converted from GPa to MPa.",
+        "rows": [
+          {"modulus": "prusament-pla-horizontal-modulus", "strength": "prusament-pla-horizontal-yield"},
+          {"modulus": "prusament-petg-horizontal-modulus", "strength": "prusament-petg-horizontal-yield"},
+          {"modulus": "prusament-asa-horizontal-modulus", "strength": "prusament-asa-horizontal-yield"},
+          {"modulus": "prusament-pc-horizontal-modulus", "strength": "prusament-pc-horizontal-yield"},
+          {"modulus": "prusament-pla-vertical-xz-modulus", "strength": "prusament-pla-vertical-xz-yield"},
+          {"modulus": "prusament-petg-vertical-xz-modulus", "strength": "prusament-petg-vertical-xz-yield"},
+          {"modulus": "prusament-asa-vertical-xz-modulus", "strength": "prusament-asa-vertical-xz-yield"},
+          {"modulus": "prusament-pc-vertical-xz-modulus", "strength": "prusament-pc-vertical-xz-yield"}
+        ],
+        "notes": [
+          {"text": "Read the first four rows as the source’s flat group and the last four as its on-edge XZ group. No best/worst colors, pooled average or numerical material ranking is assigned. Identical method names alone cannot establish identical test conditions.", "refs": ["tensile-test-scope", "prusa-orientation"]},
+          {"text": "The sheets do not define ± as a standard deviation, standard error or confidence interval. They do not report ultimate or rupture tensile stress here. The separate moisture-uptake footnotes are not a tensile conditioning procedure.", "refs": ["prusament-pla-horizontal-yield", "prusament-petg-horizontal-yield", "prusament-asa-horizontal-yield", "prusament-pc-horizontal-yield"]}
+        ]
+      }
+    }
+  ]
+}

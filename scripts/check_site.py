@@ -14,6 +14,8 @@ import tempfile
 import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, payload, counts
 from material_design import EXAMPLES, APPLICATIONS
+from material_articles import load_articles, load_evidence, measure_value
+from check_articles import validate_evidence
 
 
 def digest(x):
@@ -174,9 +176,41 @@ def run():
     for key,n in summary.items():
         found=re.findall('data-summary="'+key+r'">(\d+)',index)
         assert found and all(int(x)==n for x in found),(key,found,n)
-    paths=[ROOT/'index.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html')]
+    paths=[ROOT/'index.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html'),*(ROOT/'articles').glob('*.html')]
     assert len(list((ROOT/'materials').glob('*.html')))==len(filaments['cats'])+1
     assert len(list((ROOT/'printers').glob('*.html')))==len(printers['cats'])+1
+    article_data, evidence = load_articles(), load_evidence()
+    validate_evidence(evidence, article_data, {c['id'] for c in filaments['cats']})
+    expected_articles={a['id']+'.html' for a in article_data['articles']}|{'index.html'}
+    assert {p.name for p in (ROOT/'articles').glob('*.html')}==expected_articles,'Unexpected article pages'
+    article_index=(ROOT/'articles/index.html').read_text()
+    index_schema=next(json.loads(s) for s in LD.findall(article_index))
+    assert index_schema['@type']=='CollectionPage' and index_schema['mainEntity']['numberOfItems']==len(article_data['articles'])
+    assert [item['url'] for item in index_schema['mainEntity']['itemListElement']]==[BASE+'articles/'+a['id']+'.html' for a in article_data['articles']]
+    for article in article_data['articles']:
+        path=ROOT/'articles'/(article['id']+'.html'); html=path.read_text(); parsed=Page(html)
+        schema=next(json.loads(s) for s in LD.findall(html)); entity=schema['mainEntity']
+        assert schema['@type']=='WebPage' and entity['@type']=='TechArticle'
+        assert entity['author']==article['author'] and entity['datePublished']==article['published'] and entity['dateModified']==article['modified']
+        assert 'Article revision: '+article['modified'] in html and 'Catalog values retain' not in html
+        assert article['id']+'.html' in article_index
+        assert len([attrs for attrs in parsed.attrs('tr') if 'data-measurement' in attrs])==len(article['table']['rows'])
+        source_ids=set()
+        for ref in [*article['measurements'],*article['claims']]:
+            item=evidence['claims'].get(ref) or evidence['measurements'].get(ref)
+            sid=item.get('source_id') or evidence['series'][item['series_id']]['source_id']; source_ids.add(sid)
+            assert 'evidence-'+ref in parsed.ids and escape(item['locator']) in html,(article['id'],'missing evidence record',ref)
+            if 'value' in item:assert escape(measure_value(item)) in html
+        assert set(entity['citation'])=={evidence['sources'][sid]['url'] for sid in source_ids}
+        for cid in article['materials']:
+            assert '../materials/'+cid+'.html' in html
+            assert '../articles/'+article['id']+'.html' in (ROOT/'materials'/(cid+'.html')).read_text()
+        for attrs in parsed.attrs('a'):
+            href=attrs.get('href','')
+            if href.startswith('#'):assert unquote(href[1:]) in parsed.ids,(article['id'],'missing article anchor',href)
+        for sid in source_ids:assert evidence['sources'][sid]['url'].replace('&','&amp;') in html
+    for entry in ('index.html','filaments.html','materials/index.html'):
+        assert 'articles/' in (ROOT/entry).read_text(),('Missing article discovery route',entry)
     canonicals=set()
     for path in paths:
         text=path.read_text();name=str(path.relative_to(ROOT)); parsed=Page(text)
@@ -295,6 +329,8 @@ def run():
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     urls=[x.text for x in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)]
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)
+    revisions={url.find('s:loc',ns).text:url.find('s:lastmod',ns).text for url in ET.parse(ROOT/'sitemap.xml').findall('s:url',ns)}
+    for article in article_data['articles']:assert revisions[BASE+'articles/'+article['id']+'.html']==article['modified']
     robots=(ROOT/'robots.txt').read_text()
     assert 'Disallow:' not in robots and BASE+'sitemap.xml' in robots
     # Staleness test: sync must be idempotent across all generated pages/metadata.

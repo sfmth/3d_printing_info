@@ -66,6 +66,16 @@ The existing `.github/workflows/pages.yml` deployment workflow is unchanged. Con
 
 ## Material guide presentation
 
+### Material selection articles
+
+The [professional article plan](docs/material-selection-articles-plan.md) defines seven articles, beginning with a reviewable pilot. The first milestone adds [Choosing an FDM material for a load-bearing part](articles/choosing-fdm-material-load-bearing-part.html) and an [article index](articles/index.html): two article URLs in addition to the 220 catalog/reference URLs (222 content URLs total). The remaining comparisons stay in the research backlog pending review of the pilot evidence model and presentation.
+
+`data/article-evidence.json` holds grade-specific supplier measurements and independently consulted experimental/design sources. Each result retains its property definition, method, process, orientation, source locator and reported printing conditions; unknown test conditions stay explicit. `data/material-articles.json` holds the prose and its evidence references. `scripts/material_articles.py` renders both without taking comparison values from the protected catalog. Editorial interpretation is labeled, unspecified ± terms remain unspecified, and the Prusament on-edge XZ coupons are not presented as build-Z tensile results.
+
+Edit article dates only for substantive article/evidence revisions. The article footer, TechArticle metadata and sitemap use those dates independently of the catalog generator's global revision date. Re-run `python3 scripts/sync_site.py`, `python3 scripts/check_site.py`, `python3 -m unittest discover -s tests -p 'test_article_evidence.py'` and the existing browser suite after changes. Evidence validation checks identities, references, units, conditions and comparison pairs; browser checks include sources, native method disclosures, mobile table scrolling and no-JavaScript access. Source links are not re-fetched during CI; a source revision needs a human/source audit before updating its records.
+
+The pilot follows the release safeguards above: draft PR for review before proceeding with the later article milestones.
+
 The material library and all 83 detail guides use a visual overview followed by progressive disclosure. Search, family filters and six starting points help readers find a material. Native HTML disclosures retain every property, source and product record without JavaScript; both interactive comparison tables retain their behavior.
 
 Real creator photographs replace the generated spool illustrations. 34 creator-reported examples cover 31 exact material guides, with 30 locally served, unmodified print photos. These include PLA variants, nylon composites, PET/PETG-CF, PCTG, PC/ABS, polypropylene, HIPS, conductive and flexible grades. PEBA, PA6-CF and PC/ABS use model links without assigning an unverified or unsuitable photo; PVA is explicitly a sacrificial-support example, not the finished model body. Each example has a direct Printables link, creator credit, listing license and material evidence. The decorated TPU case is identified as finished/decorated. Other guides show clearly labeled searches on Printables, MakerWorld and Thingiverse, without assigning a related material’s photo to an unverified grade.

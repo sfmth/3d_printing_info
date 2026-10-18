@@ -10,6 +10,7 @@ from urllib.parse import quote
 import json
 import re
 from material_design import detail_body, directory_body
+from material_articles import generate_articles, load_articles
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
@@ -122,10 +123,16 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
     if path.startswith('materials/'):
         head += '<link rel="stylesheet" href="'+depth+'assets/material-guides.css">'
         if path.endswith('/index.html'): head += '<script defer src="'+depth+'assets/material-guides.js"></script>'
-    head += '<link rel="icon" href="' + depth + 'assets/site-icon.svg"><link rel="stylesheet" href="' + depth + 'assets/materials.css">' + analytics + ld(schema) + '</head><body'+(' class="material-page '+('material-library' if path.endswith('/index.html') else 'material-detail')+'"' if path.startswith('materials/') else '')+'><div class="wrap">'
+    article = path.startswith('articles/')
+    body_class = 'article-page' if article else 'material-page '+('material-library' if path.endswith('/index.html') else 'material-detail') if path.startswith('materials/') else ''
+    head += '<link rel="icon" href="' + depth + 'assets/site-icon.svg"><link rel="stylesheet" href="' + depth + 'assets/materials.css">'
+    if article: head += '<link rel="stylesheet" href="'+depth+'assets/material-articles.css">'
+    head += analytics + ld(schema) + '</head><body'+(' class="'+body_class+'"' if body_class else '')+'><div class="wrap">'
     nav = '<nav class="nav" aria-label="Primary"><a href="' + depth + '">Home</a><a href="' + depth + 'comparison.html">Printers</a><a href="' + depth + 'filaments.html">Filaments</a><a href="' + depth + 'printers/">Printer guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Material guides</a></nav>'
     if path.startswith('printers/'):
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Printer guides</a><a href="../materials/">Material guides</a></nav>'
+    if article:
+        nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="../materials/">Material guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Selection articles</a></nav>'
     return head + '<div class="topbar"><a class="brand" href="' + depth + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + DATE + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a></footer></div></body></html>\n'
 
 
@@ -227,8 +234,11 @@ def sync():
     path.write_text(index)
     material_paths=generate_materials(datasets[PAGES[1]],index)
     printer_paths=generate_printers(datasets[PAGES[0]],index)
-    urls=['','comparison.html','filaments.html','materials/','printers/',*material_paths,*printer_paths]
-    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+DATE+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
+    article_paths=generate_articles(BASE,index,guide_page,{c['id'] for c in datasets[PAGES[1]]['cats']})
+    urls=['','comparison.html','filaments.html','materials/','printers/',*material_paths,*printer_paths,*article_paths]
+    article_dates={'articles/'+a['id']+'.html':a['modified'] for a in load_articles()['articles']}
+    article_dates['articles/']=max(article_dates.values())
+    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
     (ROOT/'sitemap.xml').write_text(sitemap)
     print(json.dumps(summary,sort_keys=True))
 
