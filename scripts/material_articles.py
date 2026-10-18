@@ -6,6 +6,8 @@ from check_articles import strict_load_json, validate_evidence
 
 ROOT = Path(__file__).resolve().parents[1]
 E = lambda value: escape(str(value), quote=True)
+DETAIL_CONTEXT_FIELDS = {'recommended_filament_drying', 'recommended_chamber', 'orientation_support',
+                         'specimen_settings_scope', 'dry_status_definition', 'annealing', 'thermal_state'}
 
 
 def load_articles():
@@ -50,6 +52,10 @@ def display(value):
     return 'Not reported' if value is None else str(value)
 
 
+def source_kind(source):
+    return source['kind'].replace('-', ' ').capitalize()
+
+
 def measure_value(item):
     result = ('' if item['qualifier'] == '=' else item['qualifier']) + f"{item['value']:g}"
     if item['spread'] is not None:
@@ -58,17 +64,57 @@ def measure_value(item):
 
 
 def table_body(article, evidence):
+    if 'tables' in article:
+        return ''.join(comparison_table(table, evidence) for table in article['tables'])
     body = '<div class="table-scroll" role="region" aria-label="Grade measurements" tabindex="0"><table class="evidence-table"><caption>' + E(article['table']['caption']) + '</caption><thead><tr><th scope="col">Exact filament grade</th><th scope="col">Source orientation</th><th scope="col">Tensile modulus<br>MPa</th><th scope="col">Tensile yield strength<br>MPa</th><th scope="col">Test context</th></tr></thead><tbody>'
     for row in article['table']['rows']:
         modulus, strength = (evidence['measurements'][row[key]] for key in ('modulus', 'strength'))
         series = evidence['series'][modulus['series_id']]
         body += ('<tr data-measurement="' + E(row['modulus'] + ' ' + row['strength']) + '"><th scope="row">'
-                 + E(series['grade']) + '</th><td>' + E(series['orientation']) + '</td><td>'
+                 + E(series['grade']) + '</th><td>' + E(display(series['orientation'])) + '</td><td>'
                  + E(measure_value(modulus)) + '<br>' + citation(evidence, row['modulus']) + '</td><td>'
                  + E(measure_value(strength)) + '<br>' + citation(evidence, row['strength']) + '</td><td>'
                  + E(series['test_standard']) + '<br>' + E(display(series['test_temperature']))
                  + '<br><a href="#series-' + E(modulus['series_id']) + '">Printing &amp; test conditions</a></td></tr>')
     return body + '</tbody></table></div>'
+
+
+def context_label(key):
+    for suffix, unit in (('_percent', '%'), ('_temperature_c', '°C'), ('_duration_h', 'h')):
+        if key.endswith(suffix):
+            return key[:-len(suffix)].replace('_', ' ').capitalize() + (' temperature' if suffix == '_temperature_c' else ' duration' if suffix == '_duration_h' else '') + ' (' + unit + ')'
+    return key.replace('_', ' ').capitalize()
+
+
+def comparison_table(table, evidence):
+    body = '<div class="comparison-group" id="table-' + E(table['id']) + '"><h3>' + E(table['title']) + '</h3>'
+    caption_id = 'table-' + table['id'] + '-caption'
+    body += '<p class="comparison-caption" id="' + E(caption_id) + '">' + E(table['caption']) + '</p>'
+    body += '<div class="table-scroll" role="region" aria-label="' + E(table['title']) + '" tabindex="0"><table class="evidence-table" aria-label="' + E(table['title']) + '" aria-describedby="' + E(caption_id) + '" data-evidence-table="' + E(table['id']) + '"><thead><tr><th scope="col">Exact grade &amp; process</th><th scope="col">Orientation &amp; specimen state</th>'
+    body += ''.join('<th scope="col">' + E(column['label']) + '<br>' + E(column['unit']) + '</th>' for column in table['columns'])
+    body += '<th scope="col">Test conditions &amp; source</th></tr></thead><tbody>'
+    for row in table['rows']:
+        sid = row['series_id']; series = evidence['series'][sid]
+        source = evidence['sources'][series['source_id']]
+        refs = [ref for ref in row['values'].values() if ref is not None]
+        body += '<tr data-measurement="' + E(' '.join(refs)) + '" data-test-series="' + E(sid) + '"><th scope="row">' + E(series['grade']) + '<span class="result-context">' + E(series['process'] + ' · ' + source_kind(source)) + '</span></th><td>'
+        body += E(display(series['orientation'])) + '<span class="result-context">Conditioning: ' + E(display(series['conditioning'])) + '</span><span class="result-context">Post-processing: ' + E(display(series['post_processing'])) + '</span></td>'
+        for column in table['columns']:
+            ref = row['values'][column['key']]
+            if ref is None:
+                body += '<td class="evidence-gap">Not reported</td>'
+            else:
+                item = evidence['measurements'][ref]
+                body += '<td data-result="' + E(ref) + '">' + E(measure_value(item)) + '<br>' + citation(evidence, ref) + '</td>'
+        body += '<td><strong>' + E(series['test_standard']) + '</strong><span class="result-context">Test temperature: ' + E(display(series['test_temperature'])) + '</span>'
+        for key, value in series.get('context', {}).items():
+            if key in DETAIL_CONTEXT_FIELDS:
+                continue
+            body += '<span class="result-context">' + E(context_label(key) + ': ' + display(value)) + '</span>'
+        body += '<a href="#series-' + E(sid) + '">Specimen &amp; processing details</a></td></tr>'
+    body += '</tbody></table></div>'
+    body += ''.join(paragraph(block, evidence) for block in table['notes'])
+    return body + '</div>'
 
 
 def method_records(article, evidence):
@@ -81,13 +127,15 @@ def method_records(article, evidence):
     for sid, series in evidence['series'].items():
         if sid not in used:
             continue
-        body += '<details data-series="' + E(sid) + '" id="series-' + E(sid) + '"><summary>' + E(series['grade'] + ' · ' + series['orientation']) + '</summary><dl class="method-fields">'
+        body += '<details data-series="' + E(sid) + '"><summary>' + E(series['grade'] + ' · ' + display(series['orientation'])) + '</summary><div id="series-' + E(sid) + '"><dl class="method-fields">'
         body += '<div><dt>Material identity</dt><dd>' + E(series['manufacturer'] + ' · ' + series['base_polymer'] + ' · filler: ' + display(series['filler'])) + '</dd></div>'
         for key, label in labels.items():
             body += '<div><dt>' + E(label) + '</dt><dd>' + E(display(series[key])) + '</dd></div>'
         for key, value in series['printing'].items():
             body += '<div><dt>' + E(key.replace('_', ' ').capitalize()) + '</dt><dd>' + E(display(value)) + '</dd></div>'
-        body += '</dl></details>'
+        for key, value in series.get('context', {}).items():
+            body += '<div><dt>' + E(context_label(key)) + '</dt><dd>' + E(display(value)) + '</dd></div>'
+        body += '</dl></div></details>'
     return body + '</div>'
 
 
@@ -102,7 +150,7 @@ def source_records(article, evidence):
         if sid not in source_ids:
             continue
         body += '<li data-source="' + E(sid) + '" id="source-' + E(sid) + '"><a href="' + E(source['url']) + '">' + E(source['title']) + '</a><p>'
-        body += E(source['publisher'] + ' · ' + source['kind'] + ' · document date: ' + display(source['document_date']) + ' · version: ' + display(source['version']) + ' · accessed ' + source['accessed'])
+        body += E(source['publisher'] + ' · ' + source_kind(source) + ' · document date: ' + display(source['document_date']) + ' · version: ' + display(source['version']) + ' · accessed ' + source['accessed'])
         if source['authors']:
             body += '<br>' + E(', '.join(source['authors']))
         body += '</p><p>' + E(source['scope']) + '</p></li>'
@@ -117,7 +165,7 @@ def source_records(article, evidence):
 
 
 def article_body(article, evidence):
-    body = '<div class="breadcrumbs"><a href="../">Home</a><span>/</span><a href="./">Selection articles</a><span>/</span><span>Mechanical performance</span></div><article><header class="article-header"><span class="kicker">Material selection · Mechanical performance</span><h1>' + E(article['title']) + '</h1><p class="article-deck">' + E(article['description']) + '</p><p class="article-byline">'
+    body = '<div class="breadcrumbs"><a href="../">Home</a><span>/</span><a href="./">Selection articles</a><span>/</span><span>' + E(article['category']) + '</span></div><article><header class="article-header"><span class="kicker">Material selection · ' + E(article['category']) + '</span><h1>' + E(article['title']) + '</h1><p class="article-deck">' + E(article['description']) + '</p><p class="article-byline">'
     body += E(article['author']['name']) + ' · Published <time datetime="' + E(article['published']) + '">' + E(article['published']) + '</time> · Revised <time datetime="' + E(article['modified']) + '">' + E(article['modified']) + '</time></p><p class="authorship-note">' + E(article['authorship_note']) + '</p></header>'
     body += '<nav class="article-contents" aria-label="On this page"><a href="#quick-answer">The selection decision</a><a href="#measurements">Grade measurements</a><a href="#methods">Test conditions</a><a href="#verification">Before releasing a part</a><a href="#sources">Sources</a></nav>'
     body += '<section class="quick-answer" id="quick-answer"><h2>' + E(article['answer']['heading']) + '</h2>' + ''.join(paragraph(b, evidence) for b in article['answer']['paragraphs']) + '</section>'
@@ -126,7 +174,8 @@ def article_body(article, evidence):
         body += ''.join(paragraph(b, evidence) for b in section.get('paragraphs', []))
         if section['id'] == 'measurements':
             body += table_body(article, evidence)
-            body += ''.join(paragraph(b, evidence) for b in article['table']['notes'])
+            if 'table' in article:
+                body += ''.join(paragraph(b, evidence) for b in article['table']['notes'])
         if section['id'] == 'methods':
             body += method_records(article, evidence)
         if section.get('items'):
@@ -139,10 +188,19 @@ def article_body(article, evidence):
 
 
 def index_body(data):
-    body = '<header class="article-header"><span class="kicker">Engineering decisions</span><h1>Material selection articles</h1><p class="article-deck">Connect a part’s load and service conditions to specific filament grades, test evidence and the next verification step.</p></header><section id="mechanical-performance"><h2>Mechanical performance</h2><div class="article-index">'
-    for article in data['articles']:
-        body += '<a class="article-index-card" data-article-card href="' + E(article['id']) + '.html"><span class="kicker">' + E(article['category']) + '</span><h3>' + E(article['title']) + '</h3><p>' + E(article['description']) + '</p><span>Read the article ↗</span></a>'
-    body += '</div></section><section id="service-environment"><h2>Service environment and further comparisons</h2><p>The research backlog covers structural composites; heat under load; conditioned nylon; outdoor exposure; creep and stress relaxation; and chemical exposure. These topics will be added as their grade-specific evidence is reviewed.</p></section><section><h2>Use the reference library</h2><p><a href="../materials/">Browse all material guides</a> for sourced properties and product records, or <a href="../filaments.html">open the filament comparison</a> to inspect the existing catalog.</p></section>'
+    body = '<header class="article-header"><span class="kicker">Engineering decisions</span><h1>Material selection articles</h1><p class="article-deck">Connect a part’s load and service conditions to specific filament grades, test evidence and the next verification step.</p></header>'
+    groups = dict.fromkeys(article['category'] for article in data['articles'])
+    for category in groups:
+        section_id = re.sub(r'[^a-z0-9]+', '-', category.lower()).strip('-')
+        body += '<section id="' + E(section_id) + '"><h2>' + E(category) + '</h2><div class="article-index">'
+        for article in data['articles']:
+            if article['category'] != category:
+                continue
+            body += '<a class="article-index-card" data-article-card href="' + E(article['id']) + '.html"><span class="kicker">' + E(article['category']) + '</span><h3>' + E(article['title']) + '</h3><p>' + E(article['description']) + '</p><span>Read the article ↗</span></a>'
+        body += '</div></section>'
+    if data.get('backlog'):
+        body += '<section id="research-backlog"><h2>Further comparisons</h2><p>Research continues on ' + E('; '.join(data['backlog'])) + '. New articles follow review of their grade-specific evidence.</p></section>'
+    body += '<section><h2>Use the reference library</h2><p><a href="../materials/">Browse all material guides</a> for sourced properties and product records, or <a href="../filaments.html">open the filament comparison</a> to inspect the existing catalog.</p></section>'
     return body
 
 

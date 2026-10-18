@@ -30,6 +30,8 @@ PROCESSES = {
     'injection molding', 'compression molding', 'extrusion', 'casting',
 }
 QUALIFIERS = {'=', '>', '>=', '<', '<=', '≥', '≤', '≈', '~'}
+ARTICLE_CATEGORIES = {'Mechanical performance', 'Service environment'}
+STRESS_WITH_UNIT = re.compile(r'(?:\d+(?:\.\d+)?|\.\d+)\s*(?:[GkM]?Pa|psi|N/mm(?:2|²|\^2))(?!\w)')
 
 
 def _fail(where, message):
@@ -42,12 +44,12 @@ def _object(value, where):
     return value
 
 
-def _required(value, keys, where, *, exact=False):
+def _required(value, keys, where, *, exact=False, optional=()):
     _object(value, where)
     missing = set(keys) - value.keys()
     if missing:
         _fail(where, 'missing fields: ' + ', '.join(sorted(missing)))
-    if exact and (extra := value.keys() - set(keys)):
+    if exact and (extra := value.keys() - set(keys) - set(optional)):
         _fail(where, 'unknown fields: ' + ', '.join(sorted(extra)))
 
 
@@ -162,8 +164,8 @@ def validate_evidence(evidence, articles, material_ids):
 
     for sid, item in series.items():
         where = f'series {sid}'
-        _required(item, SERIES_FIELDS, where, exact=True)
-        for key in ('source_id', 'grade', 'manufacturer', 'material_id', 'base_polymer', 'process', 'orientation', 'test_standard', 'locator'):
+        _required(item, SERIES_FIELDS, where, exact=True, optional={'context'})
+        for key in ('source_id', 'grade', 'manufacturer', 'material_id', 'base_polymer', 'process', 'test_standard', 'locator'):
             _text(item[key], f'{where}.{key}')
         if item['source_id'] not in sources:
             _fail(where, 'unknown source_id')
@@ -173,7 +175,7 @@ def validate_evidence(evidence, articles, material_ids):
             _fail(where, 'grade must identify the actual commercial/test material')
         if item['process'] not in PROCESSES:
             _fail(where, 'process must identify a known fabrication process')
-        for key in ('filler', 'specimen_geometry', 'test_rate', 'test_temperature', 'conditioning', 'printer', 'post_processing', 'scatter_definition'):
+        for key in ('filler', 'orientation', 'specimen_geometry', 'test_rate', 'test_temperature', 'conditioning', 'printer', 'post_processing', 'scatter_definition'):
             _text(item[key], f'{where}.{key}', nullable=True)
         if item['sample_count'] is not None:
             if type(item['sample_count']) is not int or item['sample_count'] < 1:
@@ -187,6 +189,18 @@ def validate_evidence(evidence, articles, material_ids):
                 _text(value, field)
             else:
                 _number(value, field, minimum=0)
+        if 'context' in item:
+            context = _object(item['context'], f'{where}.context')
+            for key, value in context.items():
+                if not isinstance(key, str) or not PROPERTY.fullmatch(key):
+                    _fail(f'{where}.context', 'condition keys must be safe snake_case identifiers')
+                field = f'{where}.context.{key}'
+                if value is None:
+                    continue
+                if isinstance(value, str):
+                    _text(value, field)
+                else:
+                    _number(value, field)
 
     for mid, item in measurements.items():
         where = f'measurement {mid}'
@@ -206,6 +220,12 @@ def validate_evidence(evidence, articles, material_ids):
             if item['qualifier'] not in {'=', '≈', '~'}:
                 _fail(where, 'a bound cannot carry an exact-value spread')
         test_series = series[item['series_id']]
+        if item['property'] == 'heat_deflection_temperature':
+            if item['unit'] != '°C':
+                _fail(where, 'heat_deflection_temperature requires °C')
+            stress = test_series.get('context', {}).get('stress')
+            if not isinstance(stress, str) or not STRESS_WITH_UNIT.search(stress):
+                _fail(where, 'heat_deflection_temperature requires reported context.stress with stress units')
         scope = sources[test_series['source_id']]['scope']
         if (test_series['scatter_definition'] is not None and
                 re.search(r'(?:statistical meaning[^.]*unspecified|unspecified[^.]*statistical|no[^.]*definition[^.]*plus/minus)', scope + ' ' + item['finding'], re.I)):
@@ -228,7 +248,7 @@ def validate_evidence(evidence, articles, material_ids):
     article_ids = set()
     for article in articles:
         _required(article, {'id', 'title', 'description', 'category', 'author', 'authorship_note',
-                            'published', 'modified', 'materials', 'answer', 'sections', 'table',
+                            'published', 'modified', 'materials', 'answer', 'sections',
                             'measurements', 'claims'}, 'article')
         aid = article['id']
         _slug(aid, 'article.id')
@@ -238,6 +258,10 @@ def validate_evidence(evidence, articles, material_ids):
         article_ids.add(aid)
         for key in ('title', 'description', 'category', 'authorship_note'):
             _text(article[key], f'{where}.{key}')
+        if article['category'] not in ARTICLE_CATEGORIES:
+            _fail(where, 'unknown article category')
+        if ('table' in article) == ('tables' in article):
+            _fail(where, 'expected exactly one of table or tables')
         published = _date(article['published'], f'{where}.published')
         modified = _date(article['modified'], f'{where}.modified')
         if modified < published:
@@ -291,6 +315,70 @@ def validate_evidence(evidence, articles, material_ids):
             blocks(section.get('items', []), f'{where}.{section["id"]}.items')
         if not {'methods', 'measurements', 'verification'} <= actual_sections:
             _fail(where, 'required methods, measurements and verification sections missing')
+        if 'tables' in article:
+            tables = article['tables']
+            if not isinstance(tables, list) or not tables:
+                _fail(where, 'tables must be a nonempty list')
+            table_ids = set()
+            for table in tables:
+                context = f'{where}.table'
+                _required(table, {'id', 'title', 'caption', 'columns', 'rows', 'notes'}, context, exact=True)
+                _slug(table['id'], f'{context}.id')
+                if table['id'] in table_ids:
+                    _fail(where, 'duplicate table ID')
+                if 'table-' + table['id'] in section_ids:
+                    _fail(where, 'table ID collides with a section anchor')
+                table_ids.add(table['id'])
+                for key in ('title', 'caption'):
+                    _text(table[key], f'{context}.{key}')
+                blocks(table['notes'], f'{context}.notes')
+                if not isinstance(table['columns'], list) or not table['columns']:
+                    _fail(context, 'table needs measurement columns')
+                columns = {}
+                for column in table['columns']:
+                    _required(column, {'key', 'label', 'property', 'unit'}, f'{context}.column', exact=True)
+                    for key in ('key', 'property'):
+                        if not isinstance(column[key], str) or not PROPERTY.fullmatch(column[key]):
+                            _fail(context, f'column {key} must be a safe property identifier')
+                    if column['key'] in columns:
+                        _fail(context, 'duplicate column key')
+                    for key in ('label', 'unit'):
+                        _text(column[key], f'{context}.column.{key}')
+                    columns[column['key']] = column
+                if not isinstance(table['rows'], list) or not table['rows']:
+                    _fail(context, 'measurement table needs rows')
+                row_series = set()
+                for row in table['rows']:
+                    _required(row, {'series_id', 'values'}, f'{context}.row', exact=True)
+                    sid = row['series_id']
+                    if not isinstance(sid, str) or sid not in series:
+                        _fail(context, 'table row references an unknown series_id')
+                    if sid in row_series:
+                        _fail(context, 'duplicate table row')
+                    row_series.add(sid)
+                    test_series = series[sid]
+                    if test_series['material_id'] not in materials:
+                        _fail(context, 'table material is outside article scope')
+                    _required(row['values'], columns, f'{context}.row.values', exact=True)
+                    populated = False
+                    for key, column in columns.items():
+                        ref = row['values'][key]
+                        if ref is None:
+                            continue
+                        if not isinstance(ref, str) or ref not in declared_measurements:
+                            _fail(context, 'table measurement is missing or undeclared')
+                        measurement = measurements[ref]
+                        if measurement['series_id'] != sid:
+                            _fail(context, 'table row combines incompatible test series')
+                        if measurement['property'] != column['property'] or measurement['unit'] != column['unit']:
+                            _fail(context, f'table {key} requires {column["property"]} in {column["unit"]}')
+                        populated = True
+                        used.add(ref)
+                    if not populated:
+                        _fail(context, 'table row needs at least one measurement; unknown cells must be null')
+            if used != declared:
+                _fail(where, 'unused declared evidence: ' + ', '.join(sorted(declared - used)))
+            continue
         table = article['table']
         _required(table, {'caption', 'rows', 'notes'}, f'{where}.table')
         _text(table['caption'], f'{where}.table.caption')

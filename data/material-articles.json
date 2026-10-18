@@ -8,25 +8,62 @@
       "category": "Mechanical performance",
       "published": "2026-10-18",
       "modified": "2026-10-18",
-      "author": {"@type": "Organization", "name": "3D Printing Info"},
+      "author": {
+        "@type": "Organization",
+        "name": "3D Printing Info"
+      },
       "authorship_note": "Editorial synthesis assisted by AI, based on the linked supplier documents and experimental research. No mechanical testing was performed for this article.",
-      "materials": {"pla": "PLA", "petg": "PETG", "asa": "ASA", "pc": "PC"},
+      "materials": {
+        "pla": "PLA",
+        "petg": "PETG",
+        "asa": "ASA",
+        "pc": "PC"
+      },
       "measurements": [
-        "prusament-pla-horizontal-modulus", "prusament-pla-horizontal-yield",
-        "prusament-pla-vertical-xz-modulus", "prusament-pla-vertical-xz-yield",
-        "prusament-petg-horizontal-modulus", "prusament-petg-horizontal-yield",
-        "prusament-petg-vertical-xz-modulus", "prusament-petg-vertical-xz-yield",
-        "prusament-asa-horizontal-modulus", "prusament-asa-horizontal-yield",
-        "prusament-asa-vertical-xz-modulus", "prusament-asa-vertical-xz-yield",
-        "prusament-pc-horizontal-modulus", "prusament-pc-horizontal-yield",
-        "prusament-pc-vertical-xz-modulus", "prusament-pc-vertical-xz-yield"
+        "prusament-pla-horizontal-modulus",
+        "prusament-pla-horizontal-yield",
+        "prusament-pla-vertical-xz-modulus",
+        "prusament-pla-vertical-xz-yield",
+        "prusament-petg-horizontal-modulus",
+        "prusament-petg-horizontal-yield",
+        "prusament-petg-vertical-xz-modulus",
+        "prusament-petg-vertical-xz-yield",
+        "prusament-asa-horizontal-modulus",
+        "prusament-asa-horizontal-yield",
+        "prusament-asa-vertical-xz-modulus",
+        "prusament-asa-vertical-xz-yield",
+        "prusament-pc-horizontal-modulus",
+        "prusament-pc-horizontal-yield",
+        "prusament-pc-vertical-xz-modulus",
+        "prusament-pc-vertical-xz-yield"
       ],
-      "claims": ["tensile-test-scope", "stiffness-vs-strength", "direction-and-load-path", "prusa-orientation", "creep-below-tg", "impact-test-scope", "industrial-tooling-context"],
+      "claims": [
+        "tensile-test-scope",
+        "stiffness-vs-strength",
+        "direction-and-load-path",
+        "prusa-orientation",
+        "creep-below-tg",
+        "impact-test-scope",
+        "industrial-tooling-context"
+      ],
       "answer": {
         "heading": "Choose the failure criterion before choosing the polymer",
         "paragraphs": [
-          {"kind": "interpretation", "text": "For a bracket, fixture or support, begin with the permitted deflection, the load direction and how long the force acts. A grade that limits immediate bending may still deform during a long hold, or fail where the part pulls across layers. PLA, PETG, ASA and PC Blend are candidates to screen against those requirements; the evidence here does not establish a universal winner.", "refs": ["tensile-test-scope", "direction-and-load-path"]},
-          {"text": "The table reports specific Prusament printed-coupon results for tensile modulus and yield strength. It is useful for deciding what to investigate next. Its missing test conditions and lack of build-Z tensile results prevent it from supplying design allowables for an arbitrary printed part.", "refs": ["prusament-pla-horizontal-modulus", "prusa-orientation"]}
+          {
+            "kind": "interpretation",
+            "text": "For a bracket, fixture or support, begin with the permitted deflection, the load direction and how long the force acts. A grade that limits immediate bending may still deform during a long hold, or fail where the part pulls across layers. PLA, PETG, ASA and PC Blend are candidates to screen against those requirements; the evidence here does not establish a universal winner.",
+            "refs": [
+              "tensile-test-scope",
+              "direction-and-load-path"
+            ]
+          },
+          {
+            "text": "The table reports specific Prusament printed-coupon results for tensile modulus and yield strength. It is useful for deciding what to investigate next. Its missing test conditions and lack of build-Z tensile results prevent it from supplying design allowables for an arbitrary printed part.",
+            "refs": [
+              "prusament-pla-horizontal-modulus",
+              "prusa-orientation"
+            ]
+          }
         ]
       },
       "sections": [
@@ -34,87 +71,1002 @@
           "id": "requirements",
           "title": "Turn “strong enough” into a requirement",
           "paragraphs": [
-            {"text": "Separate initial elastic deflection, yielding, ultimate tensile failure and rupture. Modulus describes the initial stress–strain response; yield is a different point on that response. Neither quantity measures the force needed to break your complete bracket. Its section, holes, fasteners and load application determine how a nominal force becomes a local stress.", "refs": ["tensile-test-scope"]},
-            {"kind": "interpretation", "text": "Write down the force and its lever arm, the allowed displacement at the working surface, the load duration, and the temperature and moisture range. Also identify drops, repeated cycles and chemical contact. These become distinct acceptance checks. A single maximum-strength entry cannot answer all of them.", "refs": ["tensile-test-scope", "impact-test-scope"]}
+            {
+              "text": "Separate initial elastic deflection, yielding, ultimate tensile failure and rupture. Modulus describes the initial stress–strain response; yield is a different point on that response. Neither quantity measures the force needed to break your complete bracket. Its section, holes, fasteners and load application determine how a nominal force becomes a local stress.",
+              "refs": [
+                "tensile-test-scope"
+              ]
+            },
+            {
+              "kind": "interpretation",
+              "text": "Write down the force and its lever arm, the allowed displacement at the working surface, the load duration, and the temperature and moisture range. Also identify drops, repeated cycles and chemical contact. These become distinct acceptance checks. A single maximum-strength entry cannot answer all of them.",
+              "refs": [
+                "tensile-test-scope",
+                "impact-test-scope"
+              ]
+            }
           ]
         },
         {
           "id": "measurements",
           "title": "A grade-specific tensile screening table",
           "paragraphs": [
-            {"text": "The following supplier results share the stated ISO 527-1 method, with its revision unspecified. Keep the two source orientations separate. Printers, slicers and extrusion temperatures differ, and the tensile test temperature, speed, conditioning and specimen count are unreported. This is a same-method screening collection, not a controlled common-condition experiment.", "refs": ["prusament-pla-horizontal-yield", "prusament-petg-horizontal-yield", "prusament-asa-horizontal-yield", "prusament-pc-horizontal-yield"]}
+            {
+              "text": "The following supplier results share the stated ISO 527-1 method, with its revision unspecified. Keep the two source orientations separate. Printers, slicers and extrusion temperatures differ, and the tensile test temperature, speed, conditioning and specimen count are unreported. This is a same-method screening collection, not a controlled common-condition experiment.",
+              "refs": [
+                "prusament-pla-horizontal-yield",
+                "prusament-petg-horizontal-yield",
+                "prusament-asa-horizontal-yield",
+                "prusament-pc-horizontal-yield"
+              ]
+            }
           ]
         },
         {
           "id": "stiffness-and-failure",
           "title": "Stiffness and tensile strength answer different questions",
           "paragraphs": [
-            {"text": "An independent experiment by Amza and colleagues illustrates the distinction: its unaged Fillamentum PLA Extrafill specimens had a higher tensile modulus than its PrimaSelect PETG specimens, while the PETG specimens had the higher ultimate tensile strength. These were ASTM D638 tests on Ender-3 prints, rather than the supplier ISO yield tests above. Their absolute results are kept out of this table.", "refs": ["stiffness-vs-strength"]},
-            {"kind": "interpretation", "text": "For a locating fixture, a deflection limit may govern before yielding. For a part that must carry a short overload, a yield criterion may govern instead. Investigate the relevant grade property and the part’s section together. Do not replace yield with ultimate or rupture stress, and do not divide an external force by a convenient nominal area without checking the actual load path.", "refs": ["tensile-test-scope", "direction-and-load-path"]}
+            {
+              "text": "An independent experiment by Amza and colleagues illustrates the distinction: its unaged Fillamentum PLA Extrafill specimens had a higher tensile modulus than its PrimaSelect PETG specimens, while the PETG specimens had the higher ultimate tensile strength. These were ASTM D638 tests on Ender-3 prints, rather than the supplier ISO yield tests above. Their absolute results are kept out of this table.",
+              "refs": [
+                "stiffness-vs-strength"
+              ]
+            },
+            {
+              "kind": "interpretation",
+              "text": "For a locating fixture, a deflection limit may govern before yielding. For a part that must carry a short overload, a yield criterion may govern instead. Investigate the relevant grade property and the part’s section together. Do not replace yield with ultimate or rupture stress, and do not divide an external force by a convenient nominal area without checking the actual load path.",
+              "refs": [
+                "tensile-test-scope",
+                "direction-and-load-path"
+              ]
+            }
           ]
         },
         {
           "id": "orientation",
           "title": "An on-edge coupon is not a build-Z tensile test",
           "paragraphs": [
-            {"text": "In these Prusament drawings, “Horizontal” is a flat coupon in XY. “Vertical xz” is an on-edge coupon whose long axis still follows X. It does not mean the tensile force pulls along the machine’s build Z. The two columns therefore cannot establish interlayer tensile strength or a cross-layer reduction factor.", "refs": ["prusa-orientation"]},
-            {"kind": "interpretation", "text": "Trace force through the proposed part and choose a build orientation around that path. A layer interface crossing a heavily loaded root needs evidence relevant to that interface. If a candidate sheet supplies only in-plane coupons, request directional data or test representative specimens and the component. A polymer name cannot resolve that gap.", "refs": ["direction-and-load-path", "prusa-orientation"]}
+            {
+              "text": "In these Prusament drawings, “Horizontal” is a flat coupon in XY. “Vertical xz” is an on-edge coupon whose long axis still follows X. It does not mean the tensile force pulls along the machine’s build Z. The two columns therefore cannot establish interlayer tensile strength or a cross-layer reduction factor.",
+              "refs": [
+                "prusa-orientation"
+              ]
+            },
+            {
+              "kind": "interpretation",
+              "text": "Trace force through the proposed part and choose a build orientation around that path. A layer interface crossing a heavily loaded root needs evidence relevant to that interface. If a candidate sheet supplies only in-plane coupons, request directional data or test representative specimens and the component. A polymer name cannot resolve that gap.",
+              "refs": [
+                "direction-and-load-path",
+                "prusa-orientation"
+              ]
+            }
           ]
         },
         {
           "id": "time-and-impact",
           "title": "A brief tensile test does not settle a long hold or an impact",
           "paragraphs": [
-            {"text": "Fischbach and Weinberg observed continuing flexural creep in printed BASF Ultrafuse PLA during a long room-temperature hold below its glass transition. The long-duration result came from one specimen, so it supports the need to investigate time-dependent deformation, rather than a general life prediction or a universal strength reduction.", "refs": ["creep-below-tg"]},
-            {"text": "Impact testing introduces another question. ASTM D256 identifies specimen preparation, notch, conditioning and failure mode as factors affecting the result. A notched Izod result, an unnotched Charpy result and a coupon that did not break are not interchangeable numbers. No impact ranking is inferred from the tensile table.", "refs": ["impact-test-scope"]},
-            {"kind": "interpretation", "text": "For a continuously loaded support, measure displacement during a representative hold at the service temperature. For a bolted fixture, assess the assembled joint through the required hold and operating cycles. For a protective component, reproduce the relevant impact and inspect its mounting points. Specify acceptance limits before testing.", "refs": ["tensile-test-scope", "creep-below-tg", "impact-test-scope"]}
+            {
+              "text": "Fischbach and Weinberg observed continuing flexural creep in printed BASF Ultrafuse PLA during a long room-temperature hold below its glass transition. The long-duration result came from one specimen, so it supports the need to investigate time-dependent deformation, rather than a general life prediction or a universal strength reduction.",
+              "refs": [
+                "creep-below-tg"
+              ]
+            },
+            {
+              "text": "Impact testing introduces another question. ASTM D256 identifies specimen preparation, notch, conditioning and failure mode as factors affecting the result. A notched Izod result, an unnotched Charpy result and a coupon that did not break are not interchangeable numbers. No impact ranking is inferred from the tensile table.",
+              "refs": [
+                "impact-test-scope"
+              ]
+            },
+            {
+              "kind": "interpretation",
+              "text": "For a continuously loaded support, measure displacement during a representative hold at the service temperature. For a bolted fixture, assess the assembled joint through the required hold and operating cycles. For a protective component, reproduce the relevant impact and inspect its mounting points. Specify acceptance limits before testing.",
+              "refs": [
+                "tensile-test-scope",
+                "creep-below-tg",
+                "impact-test-scope"
+              ]
+            }
           ]
         },
         {
           "id": "engineering-context",
           "title": "Use industrial examples as context for the decision",
           "paragraphs": [
-            {"text": "Stratasys describes Volvo Trucks using industrial FDM for lifting devices and ancillary tooling. The cited account does not assign an exact grade or load rating to each component. It establishes a tooling application context; it cannot qualify a desktop-printed PLA, ASA or PC Blend substitute.", "refs": ["industrial-tooling-context"]},
-            {"kind": "interpretation", "text": "Expand the candidate list when these four grades lack the necessary directional, thermal, environmental or long-term evidence. A conditioned nylon, reinforced grade or higher-temperature polymer may deserve testing, but each brings a new grade and process to qualify. This pilot supplies no common-condition results that rank those alternatives. Start that comparison with the missing measurement, rather than assuming the family name solves the problem.", "refs": ["tensile-test-scope"]}
+            {
+              "text": "Stratasys describes Volvo Trucks using industrial FDM for lifting devices and ancillary tooling. The cited account does not assign an exact grade or load rating to each component. It establishes a tooling application context; it cannot qualify a desktop-printed PLA, ASA or PC Blend substitute.",
+              "refs": [
+                "industrial-tooling-context"
+              ]
+            },
+            {
+              "kind": "interpretation",
+              "text": "Expand the candidate list when these four grades lack the necessary directional, thermal, environmental or long-term evidence. A conditioned nylon, reinforced grade or higher-temperature polymer may deserve testing, but each brings a new grade and process to qualify. This pilot supplies no common-condition results that rank those alternatives. Start that comparison with the missing measurement, rather than assuming the family name solves the problem.",
+              "refs": [
+                "tensile-test-scope"
+              ]
+            }
           ]
         },
         {
           "id": "methods",
           "title": "Printing conditions, source limits and traceability",
           "paragraphs": [
-            {"text": "Each record below retains the supplier’s specimen settings and orientation label. Open a record for printer, temperatures, slicer, infill and the source table locator. Unknown fields remain explicit. The displayed PC grade is PC Blend; its other blend constituents are not identified. These values are separate from the older material-family catalog.", "refs": ["prusament-pc-horizontal-modulus"]},
-            {"text": "The largest remaining gaps are tensile conditioning and test rate, true build-Z tension, specimen-level scatter, sustained-load behavior and performance of the intended geometry. An “accessed” date records when a document was consulted; it does not mean a supplier measurement was repeated then.", "refs": ["prusa-orientation", "tensile-test-scope"]}
+            {
+              "text": "Each record below retains the supplier’s specimen settings and orientation label. Open a record for printer, temperatures, slicer, infill and the source table locator. Unknown fields remain explicit. The displayed PC grade is PC Blend; its other blend constituents are not identified. These values are separate from the older material-family catalog.",
+              "refs": [
+                "prusament-pc-horizontal-modulus"
+              ]
+            },
+            {
+              "text": "The largest remaining gaps are tensile conditioning and test rate, true build-Z tension, specimen-level scatter, sustained-load behavior and performance of the intended geometry. An “accessed” date records when a document was consulted; it does not mean a supplier measurement was repeated then.",
+              "refs": [
+                "prusa-orientation",
+                "tensile-test-scope"
+              ]
+            }
           ]
         },
         {
           "id": "verification",
           "title": "Before releasing a part",
-          "paragraphs": [{"text": "The following is an engineering verification sequence for the stated use. Set the required margin and acceptance limits through the project’s design process; the reported supplier values and unspecified ± terms do not define them.", "refs": ["tensile-test-scope"]}],
+          "paragraphs": [
+            {
+              "text": "The following is an engineering verification sequence for the stated use. Set the required margin and acceptance limits through the project’s design process; the reported supplier values and unspecified ± terms do not define them.",
+              "refs": [
+                "tensile-test-scope"
+              ]
+            }
+          ],
           "items": [
-            {"text": "Record the exact grade, color or lot where relevant, filament preparation, machine, build orientation, toolpath and post-processing. Keep the tested process with the result."},
-            {"text": "Measure initial deflection and permanent set using the real load path, supports, fasteners and critical dimensions. Include the orientations that control the proposed failure mode."},
-            {"text": "Run the needed sustained-load, cycle, temperature, moisture and impact checks with explicit pass/fail limits. A short tensile coupon result cannot substitute for these conditions.", "refs": ["tensile-test-scope"]},
-            {"text": "If the evidence cannot support the required margin, change the geometry, material or manufacturing route and repeat the affected checks. Preserve the failed result and the reason for the change."}
+            {
+              "text": "Record the exact grade, color or lot where relevant, filament preparation, machine, build orientation, toolpath and post-processing. Keep the tested process with the result."
+            },
+            {
+              "text": "Measure initial deflection and permanent set using the real load path, supports, fasteners and critical dimensions. Include the orientations that control the proposed failure mode."
+            },
+            {
+              "text": "Run the needed sustained-load, cycle, temperature, moisture and impact checks with explicit pass/fail limits. A short tensile coupon result cannot substitute for these conditions.",
+              "refs": [
+                "tensile-test-scope"
+              ]
+            },
+            {
+              "text": "If the evidence cannot support the required margin, change the geometry, material or manufacturing route and repeat the affected checks. Preserve the failed result and the reason for the change."
+            }
           ]
         }
       ],
       "table": {
         "caption": "Manufacturer FFF coupon results · values are reported supplier values ± an undefined term · ISO 527-1, revision unspecified · tensile temperature, rate and conditioning not reported. Modulus converted from GPa to MPa.",
         "rows": [
-          {"modulus": "prusament-pla-horizontal-modulus", "strength": "prusament-pla-horizontal-yield"},
-          {"modulus": "prusament-petg-horizontal-modulus", "strength": "prusament-petg-horizontal-yield"},
-          {"modulus": "prusament-asa-horizontal-modulus", "strength": "prusament-asa-horizontal-yield"},
-          {"modulus": "prusament-pc-horizontal-modulus", "strength": "prusament-pc-horizontal-yield"},
-          {"modulus": "prusament-pla-vertical-xz-modulus", "strength": "prusament-pla-vertical-xz-yield"},
-          {"modulus": "prusament-petg-vertical-xz-modulus", "strength": "prusament-petg-vertical-xz-yield"},
-          {"modulus": "prusament-asa-vertical-xz-modulus", "strength": "prusament-asa-vertical-xz-yield"},
-          {"modulus": "prusament-pc-vertical-xz-modulus", "strength": "prusament-pc-vertical-xz-yield"}
+          {
+            "modulus": "prusament-pla-horizontal-modulus",
+            "strength": "prusament-pla-horizontal-yield"
+          },
+          {
+            "modulus": "prusament-petg-horizontal-modulus",
+            "strength": "prusament-petg-horizontal-yield"
+          },
+          {
+            "modulus": "prusament-asa-horizontal-modulus",
+            "strength": "prusament-asa-horizontal-yield"
+          },
+          {
+            "modulus": "prusament-pc-horizontal-modulus",
+            "strength": "prusament-pc-horizontal-yield"
+          },
+          {
+            "modulus": "prusament-pla-vertical-xz-modulus",
+            "strength": "prusament-pla-vertical-xz-yield"
+          },
+          {
+            "modulus": "prusament-petg-vertical-xz-modulus",
+            "strength": "prusament-petg-vertical-xz-yield"
+          },
+          {
+            "modulus": "prusament-asa-vertical-xz-modulus",
+            "strength": "prusament-asa-vertical-xz-yield"
+          },
+          {
+            "modulus": "prusament-pc-vertical-xz-modulus",
+            "strength": "prusament-pc-vertical-xz-yield"
+          }
         ],
         "notes": [
-          {"text": "Read the first four rows as the source’s flat group and the last four as its on-edge XZ group. No best/worst colors, pooled average or numerical material ranking is assigned. Identical method names alone cannot establish identical test conditions.", "refs": ["tensile-test-scope", "prusa-orientation"]},
-          {"text": "The sheets do not define ± as a standard deviation, standard error or confidence interval. They do not report ultimate or rupture tensile stress here. The separate moisture-uptake footnotes are not a tensile conditioning procedure.", "refs": ["prusament-pla-horizontal-yield", "prusament-petg-horizontal-yield", "prusament-asa-horizontal-yield", "prusament-pc-horizontal-yield"]}
+          {
+            "text": "Read the first four rows as the source’s flat group and the last four as its on-edge XZ group. No best/worst colors, pooled average or numerical material ranking is assigned. Identical method names alone cannot establish identical test conditions.",
+            "refs": [
+              "tensile-test-scope",
+              "prusa-orientation"
+            ]
+          },
+          {
+            "text": "The sheets do not define ± as a standard deviation, standard error or confidence interval. They do not report ultimate or rupture tensile stress here. The separate moisture-uptake footnotes are not a tensile conditioning procedure.",
+            "refs": [
+              "prusament-pla-horizontal-yield",
+              "prusament-petg-horizontal-yield",
+              "prusament-asa-horizontal-yield",
+              "prusament-pc-horizontal-yield"
+            ]
+          }
         ]
       }
+    },
+    {
+      "id": "pc-cf-pa6-cf-pa12-cf-structural-components",
+      "title": "PC-CF vs PA6-CF vs PA12-CF for structural components",
+      "description": "Compare named carbon-filled FFF grades through service moisture, tensile direction, impact behavior and the processing needed to reproduce the published coupons.",
+      "category": "Mechanical performance",
+      "published": "2026-10-18",
+      "modified": "2026-10-18",
+      "author": {
+        "@type": "Organization",
+        "name": "3D Printing Info"
+      },
+      "authorship_note": "Editorial synthesis assisted by AI, based on the linked supplier tests and application account. No new mechanical testing was performed.",
+      "materials": {
+        "pc-cf": "PC-CF",
+        "pa6-cf": "PA6-CF",
+        "pa12-cf": "PA12-CF"
+      },
+      "measurements": [
+        "fiberon-pa6-cf-dry-xy-tensile-modulus",
+        "fiberon-pa6-cf-dry-xy-tensile-strength",
+        "fiberon-pa6-cf-dry-z-tensile-modulus",
+        "fiberon-pa6-cf-dry-z-tensile-strength",
+        "fiberon-pa6-cf-dry-xy-charpy-impact",
+        "fiberon-pa6-cf-wet-xy-tensile-modulus",
+        "fiberon-pa6-cf-wet-xy-tensile-strength",
+        "fiberon-pa6-cf-wet-z-tensile-modulus",
+        "fiberon-pa6-cf-wet-z-tensile-strength",
+        "fiberon-pa6-cf-wet-xy-charpy-impact",
+        "fiberon-pa12-cf-dry-xy-tensile-modulus",
+        "fiberon-pa12-cf-dry-xy-tensile-strength",
+        "fiberon-pa12-cf-dry-z-tensile-modulus",
+        "fiberon-pa12-cf-dry-z-tensile-strength",
+        "fiberon-pa12-cf-dry-xy-charpy-impact",
+        "fiberon-pa12-cf-wet-xy-tensile-modulus",
+        "fiberon-pa12-cf-wet-xy-tensile-strength",
+        "fiberon-pa12-cf-wet-z-tensile-modulus",
+        "fiberon-pa12-cf-wet-z-tensile-strength",
+        "fiberon-pa12-cf-wet-xy-charpy-impact",
+        "prusament-pccf-horizontal-tensile-modulus",
+        "prusament-pccf-horizontal-tensile-yield",
+        "prusament-pccf-horizontal-charpy-impact",
+        "prusament-pccf-vertical-xz-tensile-modulus",
+        "prusament-pccf-vertical-xz-tensile-yield",
+        "prusament-pccf-vertical-xz-charpy-impact"
+      ],
+      "claims": [
+        "composite-pa6-formulation",
+        "composite-pa6-axes",
+        "composite-pa6-protocol",
+        "composite-pa12-axes",
+        "composite-pa12-protocol",
+        "composite-pa12-formulation",
+        "composite-pccf-scope",
+        "composite-pa12-annealing-discrepancy",
+        "composite-cure-application",
+        "tensile-test-scope",
+        "impact-test-scope",
+        "direction-and-load-path"
+      ],
+      "answer": {
+        "heading": "Choose the moisture state and load direction first",
+        "paragraphs": [
+          {
+            "text": "For a stiff fixture, the relevant comparison is the grade after its intended printing, annealing and service exposure. The Fiberon results show a change in which nylon grade has the higher reported in-plane modulus after water conditioning. Prusament PC Blend Carbon Fiber has a separate yield dataset with different directional coverage. These sources support conditional screening, not a three-family strength ranking.",
+            "refs": [
+              "fiberon-pa6-cf-dry-xy-tensile-modulus",
+              "fiberon-pa6-cf-wet-xy-tensile-modulus",
+              "fiberon-pa12-cf-dry-xy-tensile-modulus",
+              "fiberon-pa12-cf-wet-xy-tensile-modulus",
+              "composite-pccf-scope"
+            ]
+          },
+          {
+            "text": "Carry forward PA6-CF20 when its measured dry stiffness is relevant to a moisture-controlled use. Investigate PA12-CF10 when retention through the documented water exposure matters. Keep the PC composite as a candidate to qualify against the same requirements, especially where matched conditioned or build-Z data are missing. None of these short coupon tests settles long-term deflection, a bolted joint or a component proof load.",
+            "refs": [
+              "tensile-test-scope",
+              "composite-pa6-protocol",
+              "composite-pa12-protocol",
+              "composite-pccf-scope"
+            ],
+            "kind": "interpretation"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "id": "grade-scope",
+          "title": "Three commercial formulations, not three pure matrices",
+          "paragraphs": [
+            {
+              "text": "The grades here are Prusament PC Blend Carbon Fiber, Fiberon PA6-CF20 and Fiberon PA12-CF10. Their fillers and matrices are not matched experiments: Prusament does not disclose the fiber loading in this sheet, and Polymaker markets different fiber contents for the two nylons. Its PA12 product description identifies a long-chain copolyamide. These measurements cannot isolate the effect of changing only the base polymer.",
+              "refs": [
+                "composite-pccf-scope",
+                "composite-pa12-formulation",
+                "composite-pa6-formulation"
+              ]
+            },
+            {
+              "text": "The nylon tables label their stress result only as tensile strength. They do not establish whether it is yield, the maximum stress or the stress at rupture. The Prusament sheet explicitly labels yield. Keep that distinction when a design criterion concerns permanent set, and keep tensile modulus separate from bending modulus.",
+              "refs": [
+                "fiberon-pa6-cf-dry-xy-tensile-strength",
+                "fiberon-pa12-cf-dry-xy-tensile-strength",
+                "prusament-pccf-horizontal-tensile-yield"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "measurements",
+          "title": "Read each protocol and moisture group separately",
+          "paragraphs": [
+            {
+              "text": "These are manufacturer FFF coupon results. The two Fiberon sheets share stated specimen temperatures, shell count, fill and annealing, but omit several test variables. Their dry and immersed groups remain separate below. The Prusament yield group and the notched-impact group use their own definitions and methods. An undefined ± term is not a design margin or a confidence interval.",
+              "refs": [
+                "composite-pa6-protocol",
+                "composite-pa12-protocol",
+                "composite-pccf-scope"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "moisture-selection",
+          "title": "A dry stiffness advantage can disappear after conditioning",
+          "paragraphs": [
+            {
+              "text": "In the supplier dry XY data, PA6-CF20 has the higher tensile modulus. After the same duration and temperature of immersion, PA12-CF10 has the higher reported XY modulus. This is a comparison of the named formulations and these measured states. The wet specimens did not contain the same amount of water: the sheets report 5.30% for PA6-CF20 and 2.92% for PA12-CF10.",
+              "refs": [
+                "fiberon-pa6-cf-dry-xy-tensile-modulus",
+                "fiberon-pa12-cf-dry-xy-tensile-modulus",
+                "fiberon-pa6-cf-wet-xy-tensile-modulus",
+                "fiberon-pa12-cf-wet-xy-tensile-modulus",
+                "composite-pa6-protocol",
+                "composite-pa12-protocol"
+              ]
+            },
+            {
+              "text": "Use that change to define a verification boundary. A locating jig may be limited by the displacement after storage in humid air, while an intermittently loaded support may need both a displacement limit and an impact check. The hot-water exposure is not a prediction of how quickly either part changes in room air. Test at the expected service humidity and record actual specimen moisture where the decision depends on it.",
+              "refs": [
+                "tensile-test-scope",
+                "composite-pa6-protocol",
+                "composite-pa12-protocol"
+              ],
+              "kind": "interpretation"
+            }
+          ]
+        },
+        {
+          "id": "cross-layer",
+          "title": "Directional results do not make every axis comparable",
+          "paragraphs": [
+            {
+              "text": "Polymaker describes its Z label as layer-to-layer behavior. Its nylon tensile tables show lower values in that direction than in XY for the same reported state, while omitting a drawing or preparation route for the Z tensile specimens. The Prusament on-edge XZ sketch keeps coupon length along X. It cannot replace a missing PC-composite tensile test along build Z.",
+              "refs": [
+                "composite-pa6-axes",
+                "composite-pa12-axes",
+                "fiberon-pa6-cf-dry-z-tensile-strength",
+                "fiberon-pa12-cf-dry-z-tensile-strength",
+                "composite-pccf-scope"
+              ]
+            },
+            {
+              "text": "At a loaded bracket root or fastener lug, align the measured direction with the proposed tensile load path. If a critical interface is pulled apart across layers, ask for the specimen construction behind the supplier Z result and qualify your own process. A favorable in-plane modulus cannot supply that interface strength.",
+              "refs": [
+                "direction-and-load-path",
+                "composite-pccf-scope"
+              ],
+              "kind": "interpretation"
+            }
+          ]
+        },
+        {
+          "id": "impact",
+          "title": "Conditioning can change impact and stiffness in different directions",
+          "paragraphs": [
+            {
+              "text": "The PA6-CF20 notched Charpy value rises in the water-conditioned group while its tensile modulus falls. That prevents a single stiffness score from standing in for all mechanical performance. The PA12-CF10 notched results remain close in the reported groups; without replicate count or a defined uncertainty term, that observation does not establish statistical equivalence.",
+              "refs": [
+                "fiberon-pa6-cf-dry-xy-charpy-impact",
+                "fiberon-pa6-cf-wet-xy-charpy-impact",
+                "fiberon-pa6-cf-wet-xy-tensile-modulus",
+                "fiberon-pa12-cf-dry-xy-charpy-impact",
+                "fiberon-pa12-cf-wet-xy-charpy-impact"
+              ]
+            },
+            {
+              "text": "Prusament separately reports notched Charpy values of 12 ± 1 kJ/m² for its flat coupons and 17 ± 2 kJ/m² on edge, with an edgewise blow under ISO 179-1. Moisture state and notch dimensions are not given, so those values are not added to the conditioned nylon ranking. Charpy energy per area is also not an allowable drop energy for a complete part.",
+              "refs": [
+                "prusament-pccf-horizontal-charpy-impact",
+                "prusament-pccf-vertical-xz-charpy-impact",
+                "impact-test-scope"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "process-and-application",
+          "title": "Qualify the process that produced the evidence",
+          "paragraphs": [
+            {
+              "text": "The nylon mechanical specimens were printed at 300 °C onto a 50 °C bed, with full fill, two shells and cooling off, then annealed at 100 °C for 16 h. Their layer height, raster, printer and slicer are not supplied. The PC composite used an MK3S, 0.20 mm rectilinear layers, 285 °C nozzle, 115 °C bed and cooling off; its mechanical-table annealing state is unspecified. Treat those differences as part of each dataset.",
+              "refs": [
+                "composite-pa6-protocol",
+                "composite-pa12-protocol",
+                "composite-pccf-scope"
+              ]
+            },
+            {
+              "text": "Drying filament before extrusion and conditioning a finished part are different operations. Reproducing an annealed, immersed coupon calls for both a controlled print process and the stated post-print exposure. The PA12 web FAQ and TDS disagree about annealing duration; this article uses the sixteen-hour protocol attached to the mechanical results. Confirm the applicable revision before setting a production process.",
+              "refs": [
+                "composite-pa12-protocol",
+                "composite-pa12-annealing-discrepancy"
+              ],
+              "kind": "interpretation"
+            },
+            {
+              "text": "A Polymaker account identifies Fiberon PA6-CF20 in CURE Mannheim steering hardware and aerodynamic cores made by filament printing. It shows an engineering application of the named grade. The account does not report loads, process qualification or moisture history, so it cannot establish a safe load or service life for another component.",
+              "refs": [
+                "composite-cure-application"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "methods",
+          "title": "What remains unresolved",
+          "paragraphs": [
+            {
+              "text": "The expandable records preserve test identifiers, settings and source locators. Both suppliers omit specimen count and the meaning of their ± terms. The Fiberon strength endpoint and Z specimen preparation remain unresolved; the PC composite lacks a matched dry/wet or true build-Z tensile comparison. No creep curve, fatigue limit or bolted-joint retention is established by these tables.",
+              "refs": [
+                "composite-pa6-axes",
+                "composite-pa12-axes",
+                "composite-pccf-scope",
+                "tensile-test-scope"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verification",
+          "title": "Choose the next test from the failure mode",
+          "paragraphs": [
+            {
+              "text": "The engineering decision is which grade and process can meet the component requirement after exposure. Set the acceptance limits before using the coupon numbers to choose a candidate.",
+              "refs": [
+                "tensile-test-scope"
+              ],
+              "kind": "interpretation"
+            }
+          ],
+          "items": [
+            {
+              "text": "For a positioning fixture, measure deflection and permanent set in the intended geometry after representative moisture exposure, including the sustained load and service temperature.",
+              "kind": "interpretation"
+            },
+            {
+              "text": "For a bracket with cross-layer tension, retain the exact grade, layer/raster settings, conditioning and build direction, then test that interface and the complete attachment.",
+              "kind": "interpretation"
+            },
+            {
+              "text": "For impact service, reproduce the relevant strike and mounting conditions rather than converting Charpy energy per area into a component drop rating.",
+              "refs": [
+                "impact-test-scope"
+              ],
+              "kind": "interpretation"
+            },
+            {
+              "text": "If annealing is part of the proposed process, check the finished critical dimensions after annealing and after moisture conditioning; verify the entire route before release.",
+              "kind": "interpretation"
+            }
+          ]
+        }
+      ],
+      "tables": [
+        {
+          "id": "nylon-dry-tensile",
+          "title": "Fiberon tensile results: annealed dry state",
+          "caption": "Supplier-labelled dry coupons after 100 °C / 16 h annealing; residual moisture unspecified. ISO 527 / GB/T 1040, parts and revisions unspecified. Test temperature, loading rate, n and meaning of ± are unreported.",
+          "columns": [
+            {
+              "key": "modulus",
+              "label": "Tensile modulus",
+              "property": "tensile_modulus",
+              "unit": "MPa"
+            },
+            {
+              "key": "strength",
+              "label": "Supplier tensile strength; endpoint unspecified",
+              "property": "tensile_strength",
+              "unit": "MPa"
+            }
+          ],
+          "rows": [
+            {
+              "series_id": "fiberon-pa6-cf-dry-xy-tensile",
+              "values": {
+                "modulus": "fiberon-pa6-cf-dry-xy-tensile-modulus",
+                "strength": "fiberon-pa6-cf-dry-xy-tensile-strength"
+              }
+            },
+            {
+              "series_id": "fiberon-pa6-cf-dry-z-tensile",
+              "values": {
+                "modulus": "fiberon-pa6-cf-dry-z-tensile-modulus",
+                "strength": "fiberon-pa6-cf-dry-z-tensile-strength"
+              }
+            },
+            {
+              "series_id": "fiberon-pa12-cf-dry-xy-tensile",
+              "values": {
+                "modulus": "fiberon-pa12-cf-dry-xy-tensile-modulus",
+                "strength": "fiberon-pa12-cf-dry-xy-tensile-strength"
+              }
+            },
+            {
+              "series_id": "fiberon-pa12-cf-dry-z-tensile",
+              "values": {
+                "modulus": "fiberon-pa12-cf-dry-z-tensile-modulus",
+                "strength": "fiberon-pa12-cf-dry-z-tensile-strength"
+              }
+            }
+          ],
+          "notes": [
+            {
+              "text": "XY and Z are separate supplier directions. The strength endpoint is not identified as yield, ultimate or rupture. Equal exposure does not establish equal water content or replicate ambient service.",
+              "refs": [
+                "composite-pa6-protocol",
+                "composite-pa12-protocol"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "nylon-wet-tensile",
+          "title": "Fiberon tensile results: annealed and water conditioned",
+          "caption": "After 100 °C / 16 h annealing and 60 °C water immersion for 48 h; PA6-CF20 moisture 5.30%, PA12-CF10 2.92%. ISO 527 / GB/T 1040, parts and revisions unspecified. Test temperature, loading rate, n and meaning of ± are unreported.",
+          "columns": [
+            {
+              "key": "modulus",
+              "label": "Tensile modulus",
+              "property": "tensile_modulus",
+              "unit": "MPa"
+            },
+            {
+              "key": "strength",
+              "label": "Supplier tensile strength; endpoint unspecified",
+              "property": "tensile_strength",
+              "unit": "MPa"
+            }
+          ],
+          "rows": [
+            {
+              "series_id": "fiberon-pa6-cf-wet-xy-tensile",
+              "values": {
+                "modulus": "fiberon-pa6-cf-wet-xy-tensile-modulus",
+                "strength": "fiberon-pa6-cf-wet-xy-tensile-strength"
+              }
+            },
+            {
+              "series_id": "fiberon-pa6-cf-wet-z-tensile",
+              "values": {
+                "modulus": "fiberon-pa6-cf-wet-z-tensile-modulus",
+                "strength": "fiberon-pa6-cf-wet-z-tensile-strength"
+              }
+            },
+            {
+              "series_id": "fiberon-pa12-cf-wet-xy-tensile",
+              "values": {
+                "modulus": "fiberon-pa12-cf-wet-xy-tensile-modulus",
+                "strength": "fiberon-pa12-cf-wet-xy-tensile-strength"
+              }
+            },
+            {
+              "series_id": "fiberon-pa12-cf-wet-z-tensile",
+              "values": {
+                "modulus": "fiberon-pa12-cf-wet-z-tensile-modulus",
+                "strength": "fiberon-pa12-cf-wet-z-tensile-strength"
+              }
+            }
+          ],
+          "notes": [
+            {
+              "text": "XY and Z are separate supplier directions. The strength endpoint is not identified as yield, ultimate or rupture. Equal exposure does not establish equal water content or replicate ambient service.",
+              "refs": [
+                "composite-pa6-protocol",
+                "composite-pa12-protocol"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pc-cf-yield",
+          "title": "Prusament PC composite: a separate yield dataset",
+          "caption": "Prusament manufacturer FFF results, ISO 527-1; method revision, conditioning, test temperature, loading rate, n and meaning of ± unreported. Annealing state is not stated. Modulus converted from GPa to MPa.",
+          "columns": [
+            {
+              "key": "modulus",
+              "label": "Tensile modulus",
+              "property": "tensile_modulus",
+              "unit": "MPa"
+            },
+            {
+              "key": "yield",
+              "label": "Tensile yield strength",
+              "property": "tensile_yield_strength",
+              "unit": "MPa"
+            }
+          ],
+          "rows": [
+            {
+              "series_id": "prusament-pccf-horizontal-tensile",
+              "values": {
+                "modulus": "prusament-pccf-horizontal-tensile-modulus",
+                "yield": "prusament-pccf-horizontal-tensile-yield"
+              }
+            },
+            {
+              "series_id": "prusament-pccf-vertical-xz-tensile",
+              "values": {
+                "modulus": "prusament-pccf-vertical-xz-tensile-modulus",
+                "yield": "prusament-pccf-vertical-xz-tensile-yield"
+              }
+            }
+          ],
+          "notes": [
+            {
+              "text": "These coupons are flat XY and on-edge XZ, both loaded along their X length. They do not form the same directional pair as the Fiberon XY/Z results. Neither conditioning nor strength definition supports a pooled PC-versus-nylon ranking.",
+              "refs": [
+                "composite-pccf-scope"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "nylon-notch-impact",
+          "title": "Notched Charpy: keep moisture state with the result",
+          "caption": "Fiberon XY notched Charpy, ISO 179 / GB/T 1043, parts and revisions unspecified. Both groups annealed 100 °C / 16 h; wet groups additionally immersed in 60 °C water for 48 h. Test temperature, n and statistical meaning of ± unreported.",
+          "columns": [
+            {
+              "key": "impact",
+              "label": "Notched Charpy impact strength",
+              "property": "charpy_notched_impact_strength",
+              "unit": "kJ/m²"
+            }
+          ],
+          "rows": [
+            {
+              "series_id": "fiberon-pa6-cf-dry-xy-charpy",
+              "values": {
+                "impact": "fiberon-pa6-cf-dry-xy-charpy-impact"
+              }
+            },
+            {
+              "series_id": "fiberon-pa6-cf-wet-xy-charpy",
+              "values": {
+                "impact": "fiberon-pa6-cf-wet-xy-charpy-impact"
+              }
+            },
+            {
+              "series_id": "fiberon-pa12-cf-dry-xy-charpy",
+              "values": {
+                "impact": "fiberon-pa12-cf-dry-xy-charpy-impact"
+              }
+            },
+            {
+              "series_id": "fiberon-pa12-cf-wet-xy-charpy",
+              "values": {
+                "impact": "fiberon-pa12-cf-wet-xy-charpy-impact"
+              }
+            }
+          ],
+          "notes": [
+            {
+              "text": "The impact-bar drawing shows 80 × 10 × 4 mm and a 45° notch, but not notch depth or tip radius. A component drop or joint impact still requires its own geometry and acceptance criterion.",
+              "refs": [
+                "composite-pa6-protocol",
+                "composite-pa12-protocol"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heat-resistance-under-load-hdt-tg-annealing",
+      "title": "Heat resistance under load: HDT, Tg, annealing and service temperature",
+      "description": "Read thermal measurements by their method, stress and material state before selecting a hot fixture, housing or tool. An HT-PLA example shows why annealing and load belong beside the temperature.",
+      "category": "Service environment",
+      "published": "2026-10-18",
+      "modified": "2026-10-18",
+      "author": {
+        "@type": "Organization",
+        "name": "3D Printing Info"
+      },
+      "authorship_note": "Editorial synthesis assisted by AI, based on the linked technical documents and experimental research. No thermal or mechanical testing was performed for this article.",
+      "materials": {
+        "pla": "PLA",
+        "petg": "PETG",
+        "asa": "ASA",
+        "pc": "PC"
+      },
+      "measurements": [
+        "polymaker-htpla-hdt-045-as-printed-temperature",
+        "polymaker-htpla-hdt-045-annealed-temperature",
+        "polymaker-htpla-hdt-18-as-printed-temperature",
+        "polymaker-htpla-hdt-18-annealed-temperature"
+      ],
+      "claims": [
+        "hdt-is-load-and-time-specific",
+        "hdt-two-stresses",
+        "d648-is-not-iso75",
+        "vicat-is-penetration",
+        "tg-by-dsc",
+        "tg-by-dma",
+        "annealing-changes-printed-pla",
+        "htpla-annealing-protocol-gap",
+        "prusa-thermal-basis-gap",
+        "creep-below-tg"
+      ],
+      "answer": {
+        "heading": "A thermal number needs a load, a duration and a process",
+        "paragraphs": [
+          {
+            "text": "Start with the temperature at the loaded feature and the permitted dimensional drift. HDT is useful screening evidence when its stress, method and material state are attached. It does not certify how long a printed housing, fixture or tool will hold its shape in service. Tg, Vicat and a no-load heat-stability claim answer different questions.",
+            "refs": [
+              "hdt-is-load-and-time-specific",
+              "vicat-is-penetration"
+            ],
+            "kind": "interpretation"
+          },
+          {
+            "text": "The example below keeps one commercial grade’s as-printed and annealed HDT results separate at two test stresses. It illustrates how to read a sheet, rather than ranking PLA, PETG, ASA and PC from unrelated thermal numbers.",
+            "refs": [
+              "hdt-two-stresses",
+              "htpla-annealing-protocol-gap"
+            ]
+          }
+        ]
+      },
+      "sections": [
+        {
+          "id": "measurements",
+          "title": "One grade, two stresses, two thermal states",
+          "paragraphs": [
+            {
+              "text": "Polymaker labels these HT-PLA results as printed or annealed. The sheet does not identify HDT-specific orientation, geometry, heating rate, conditioning or specimen count. Unknowns remain visible in each test record; the listed values are supplier typical results, not component design limits.",
+              "refs": [
+                "polymaker-htpla-hdt-045-as-printed-temperature",
+                "hdt-is-load-and-time-specific"
+              ]
+            },
+            {
+              "text": "Read the stresses as separate tests. The annealed result at the lower stress cannot replace the higher-stress result when screening a loaded feature. Neither is a safe operating temperature for an arbitrary geometry.",
+              "refs": [
+                "polymaker-htpla-hdt-045-annealed-temperature",
+                "polymaker-htpla-hdt-18-annealed-temperature",
+                "hdt-two-stresses"
+              ],
+              "kind": "interpretation"
+            }
+          ]
+        },
+        {
+          "id": "thermal-terms",
+          "title": "Tg, HDT and Vicat measure different responses",
+          "paragraphs": [
+            {
+              "text": "A DSC Tg comes from a heat-capacity change. A DMA Tg is assigned from a change in viscoelastic response; the technique and its frequency matter. Ask which definition was used, and retain the scan rate, thermal history and conditioning when reported. Do not treat a Tg entry as a load-bearing endurance result.",
+              "refs": [
+                "tg-by-dsc",
+                "tg-by-dma"
+              ],
+              "kind": "interpretation"
+            },
+            {
+              "text": "HDT observes deflection while a loaded specimen is heated. ISO 75-2 distinguishes a 0.45 MPa stress from a 1.8 MPa stress. Vicat instead observes needle penetration. A higher Vicat value does not supply the missing HDT value for a housing wall or fixture arm.",
+              "refs": [
+                "hdt-two-stresses",
+                "vicat-is-penetration"
+              ],
+              "kind": "interpretation"
+            },
+            {
+              "text": "Keep ASTM D648 results outside an ISO 75 numerical comparison. The ASTM scope explicitly distinguishes their technical content. Matching the word “HDT” or rounding their stress labels does not make the methods interchangeable.",
+              "refs": [
+                "d648-is-not-iso75"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "annealing",
+          "title": "Treat annealing as a manufacturing state to qualify",
+          "paragraphs": [
+            {
+              "text": "Independent work by Benwood and colleagues on True Red PolyLite PLA supports a mechanism: the printing and post-print thermal history changed crystallinity and the measured heat-deflection response. That study used its own FDM process and ASTM D648 procedure. Its results and annealing recipes are kept separate from the HT-PLA supplier table.",
+              "refs": [
+                "annealing-changes-printed-pla"
+              ]
+            },
+            {
+              "text": "For an annealed candidate, qualify the complete sequence: printing, the actual part-temperature history, support during heating, cooling and final inspection. Check critical holes, locating surfaces and assembled fit after treatment. If the annealing schedule behind a published result is unknown, request it before treating a recommendation as a reproduced test condition.",
+              "refs": [
+                "htpla-annealing-protocol-gap",
+                "annealing-changes-printed-pla"
+              ],
+              "kind": "interpretation"
+            }
+          ]
+        },
+        {
+          "id": "service-decision",
+          "title": "Use the service load to choose the next measurement",
+          "paragraphs": [
+            {
+              "text": "For a hot locating fixture, measure drift at the locating surface while it carries the required force. For an electronics housing, inspect loaded standoffs, latches and fasteners after the required thermal hold and cycles. For a tool touching a hot workpiece briefly, reproduce the contact duration and cooling cycle. These examples define component checks; they are not claims that the illustrated grade has passed them.",
+              "refs": [
+                "hdt-is-load-and-time-specific"
+              ],
+              "kind": "interpretation"
+            },
+            {
+              "text": "Long holds need time-dependent evidence. Fischbach and Weinberg observed continuing creep in a printed Ultrafuse PLA specimen below its glass transition during a room-temperature hold. This does not predict the HT-PLA grade’s life; it shows why being below Tg alone cannot establish dimensional stability under sustained load.",
+              "refs": [
+                "creep-below-tg"
+              ]
+            },
+            {
+              "text": "If the candidate lacks appropriate creep or retained-property data, test a representative part at its service temperature and environment. Include the load path and attachment points. Define allowable drift and permanent set before the test; do not invent a universal temperature margin below HDT.",
+              "refs": [
+                "hdt-is-load-and-time-specific",
+                "creep-below-tg"
+              ],
+              "kind": "interpretation"
+            }
+          ]
+        },
+        {
+          "id": "methods",
+          "title": "What these records establish and what remains unknown",
+          "paragraphs": [
+            {
+              "text": "The supplier’s “as printed” thermal labels establish a printed-material basis, but its mechanical coupon drawings do not establish the HDT orientation. General specimen instructions are also not a confirmed HDT recipe. Annealing state is known where labeled; the exact thermal-test annealing schedule remains unknown.",
+              "refs": [
+                "htpla-annealing-protocol-gap"
+              ]
+            },
+            {
+              "text": "A similar source-boundary issue appears in the Prusament PC Blend sheet: HDT is in its typical-material table, outside the separately labeled printed-mechanical table. This article does not assign those thermal values the tensile specimen’s orientation or printing recipe. Ask the supplier for the thermal specimen process before comparing that row with confirmed printed tests.",
+              "refs": [
+                "prusa-thermal-basis-gap"
+              ]
+            },
+            {
+              "text": "The comparison still needs HDT specimen geometry, build orientation, heating rate, conditioning and replicate information, plus sustained-load or component evidence for the proposed use. A document access date records consultation, not a fresh test.",
+              "refs": [
+                "htpla-annealing-protocol-gap",
+                "hdt-is-load-and-time-specific"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verification",
+          "title": "Before selecting a hot fixture, housing or tool",
+          "paragraphs": [
+            {
+              "text": "Use these as project checks, with acceptance limits chosen for the actual function. A thermal label alone cannot close them.",
+              "refs": [
+                "hdt-is-load-and-time-specific"
+              ],
+              "kind": "interpretation"
+            }
+          ],
+          "items": [
+            {
+              "text": "Record the exact grade and lot where relevant, fabrication process, orientation and full post-processing state. Preserve the measured part-temperature history if annealed."
+            },
+            {
+              "text": "Check the temperature at critical loaded features, including local heat sources and the required hold or contact cycle."
+            },
+            {
+              "text": "Verify displacement, permanent set and fit under the actual supports, fasteners and load; repeat the relevant thermal and moisture conditions."
+            },
+            {
+              "text": "Where endurance matters, obtain or generate time-dependent data over the required conditions. Recheck the geometry or manufacturing route if the evidence cannot support the required margin.",
+              "refs": [
+                "hdt-is-load-and-time-specific",
+                "creep-below-tg"
+              ]
+            }
+          ]
+        }
+      ],
+      "tables": [
+        {
+          "id": "hdt-045",
+          "title": "HT-PLA at 0.45 MPa",
+          "caption": "Supplier ISO 75 results at 0.45 MPa. Same commercial grade; separate thermal states. HDT orientation, geometry, conditioning, heating rate and annealing test schedule are not reported.",
+          "columns": [
+            {
+              "key": "hdt",
+              "label": "HDT at 0.45 MPa",
+              "property": "heat_deflection_temperature",
+              "unit": "°C"
+            }
+          ],
+          "rows": [
+            {
+              "series_id": "polymaker-htpla-hdt-045-as-printed",
+              "values": {
+                "hdt": "polymaker-htpla-hdt-045-as-printed-temperature"
+              }
+            },
+            {
+              "series_id": "polymaker-htpla-hdt-045-annealed",
+              "values": {
+                "hdt": "polymaker-htpla-hdt-045-annealed-temperature"
+              }
+            }
+          ],
+          "notes": [
+            {
+              "text": "Do not substitute a different stress, post-processing state or test method. These values do not establish a continuous-use temperature.",
+              "refs": [
+                "hdt-is-load-and-time-specific",
+                "hdt-two-stresses"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "hdt-18",
+          "title": "HT-PLA at 1.8 MPa",
+          "caption": "Supplier ISO 75 results at 1.8 MPa. Same commercial grade; separate thermal states. HDT orientation, geometry, conditioning, heating rate and annealing test schedule are not reported.",
+          "columns": [
+            {
+              "key": "hdt",
+              "label": "HDT at 1.8 MPa",
+              "property": "heat_deflection_temperature",
+              "unit": "°C"
+            }
+          ],
+          "rows": [
+            {
+              "series_id": "polymaker-htpla-hdt-18-as-printed",
+              "values": {
+                "hdt": "polymaker-htpla-hdt-18-as-printed-temperature"
+              }
+            },
+            {
+              "series_id": "polymaker-htpla-hdt-18-annealed",
+              "values": {
+                "hdt": "polymaker-htpla-hdt-18-annealed-temperature"
+              }
+            }
+          ],
+          "notes": [
+            {
+              "text": "Do not substitute a different stress, post-processing state or test method. These values do not establish a continuous-use temperature.",
+              "refs": [
+                "hdt-is-load-and-time-specific",
+                "hdt-two-stresses"
+              ]
+            }
+          ]
+        }
+      ]
     }
+  ],
+  "backlog": [
+    "conditioned nylon",
+    "outdoor exposure",
+    "creep and stress relaxation",
+    "chemical exposure"
   ]
 }

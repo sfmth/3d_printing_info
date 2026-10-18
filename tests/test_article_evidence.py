@@ -68,6 +68,23 @@ def valid_documents():
     return evidence, {'articles': [article]}
 
 
+def generic_documents():
+    evidence, articles = valid_documents()
+    article = articles['articles'][0]
+    del article['table']
+    article['tables'] = [{
+        'id': 'tensile-results', 'title': 'Printed tensile coupons',
+        'caption': 'Grade-specific values with their source test conditions.',
+        'columns': [
+            {'key': 'modulus', 'label': 'Tensile modulus', 'property': 'tensile_modulus', 'unit': 'MPa'},
+            {'key': 'strength', 'label': 'Tensile yield strength', 'property': 'tensile_yield_strength', 'unit': 'MPa'},
+        ],
+        'rows': [{'series_id': 'pla-horizontal', 'values': {'modulus': 'pla-modulus', 'strength': 'pla-yield'}}],
+        'notes': [],
+    }]
+    return evidence, articles
+
+
 class ArticleEvidenceTests(unittest.TestCase):
     def setUp(self):
         self.evidence, self.articles = valid_documents()
@@ -243,6 +260,215 @@ class ArticleEvidenceTests(unittest.TestCase):
         with patch('check_articles.Path.read_text', return_value='{"value": NaN}'):
             with self.assertRaisesRegex(ValueError, 'nonfinite JSON number'):
                 strict_load_json('unused.json')
+
+
+class GenericArticleTableTests(unittest.TestCase):
+    def setUp(self):
+        self.evidence, self.articles = generic_documents()
+        self.article = self.articles['articles'][0]
+        self.table = self.article['tables'][0]
+        self.series = self.evidence['series']['pla-horizontal']
+
+    def validate(self):
+        validate_evidence(self.evidence, self.articles, {'pla', 'petg', 'asa', 'pc'})
+
+    def use_hdt_table(self):
+        self.article['category'] = 'Service environment'
+        self.series.update(test_standard='ISO 75-2', context={
+            'stress': '1.8 MPa', 'duration': None, 'humidity': None,
+            'annealing': 'No annealing reported by the source.', 'heating_rate': None,
+        })
+        hdt = deepcopy(self.evidence['measurements']['pla-modulus'])
+        hdt.update(property='heat_deflection_temperature', definition='Temperature at the specified deflection under load.',
+                   unit='°C', value=62, spread=None, locator='PDF p. 3, HDT at 1.8 MPa.',
+                   finding='Supplier HDT at the stated test stress; not a continuous service temperature.')
+        self.evidence['measurements']['pla-hdt'] = hdt
+        self.article['measurements'] = ['pla-hdt']
+        self.table['columns'] = [{'key': 'hdt', 'label': 'HDT at 1.8 MPa', 'property': 'heat_deflection_temperature', 'unit': '°C'}]
+        self.table['rows'][0]['values'] = {'hdt': 'pla-hdt'}
+
+    def test_generic_tables_and_optional_context_are_unchanged(self):
+        self.series['context'] = {'stress': None, 'humidity': '50% RH', 'duration': 24, 'annealing': None}
+        before = deepcopy((self.evidence, self.articles))
+        self.validate()
+        self.assertEqual(before, (self.evidence, self.articles))
+
+    def test_unreported_orientation_can_be_null_but_cannot_be_omitted(self):
+        self.series['orientation'] = None
+        self.validate()
+        self.assertIsNone(self.series['orientation'])
+        del self.series['orientation']
+        with self.assertRaisesRegex(ValueError, 'missing fields: orientation'):
+            self.validate()
+
+    def test_generic_tables_can_preserve_labeled_molding_specimens(self):
+        self.series['process'] = 'injection molding'
+        self.validate()
+        self.assertEqual(self.series['process'], 'injection molding')
+
+    def test_legacy_pilot_table_still_requires_material_extrusion(self):
+        evidence, articles = valid_documents()
+        evidence['series']['pla-horizontal']['process'] = 'injection molding'
+        with self.assertRaisesRegex(ValueError, 'material-extrusion specimens'):
+            validate_evidence(evidence, articles, {'pla'})
+
+    def test_unknown_table_cells_remain_explicit_nulls(self):
+        self.table['columns'].append({'key': 'impact', 'label': 'Notched impact strength',
+                                      'property': 'notched_impact_strength', 'unit': 'kJ/m²'})
+        self.table['rows'][0]['values']['impact'] = None
+        self.validate()
+        self.assertIsNone(self.table['rows'][0]['values']['impact'])
+        self.assertIsNone(self.series['filler'])
+
+    def test_empty_rows_cannot_be_published_as_measurements(self):
+        self.table['rows'][0]['values'] = {'modulus': None, 'strength': None}
+        with self.assertRaisesRegex(ValueError, 'at least one measurement'):
+            self.validate()
+
+    def test_generic_columns_enforce_property_and_units(self):
+        for column, field, invalid in ((0, 'unit', 'GPa'), (1, 'property', 'ultimate_tensile_strength')):
+            with self.subTest(field=field):
+                original = self.table['columns'][column][field]
+                self.table['columns'][column][field] = invalid
+                with self.assertRaisesRegex(ValueError, 'requires'):
+                    self.validate()
+                self.table['columns'][column][field] = original
+
+    def test_cells_cannot_mix_notch_or_conditioning_series(self):
+        other = deepcopy(self.series)
+        other.update(conditioning='Equilibrated at 50% RH', context={'notch': 'Unnotched'})
+        self.evidence['series']['pla-conditioned'] = other
+        self.evidence['measurements']['pla-yield']['series_id'] = 'pla-conditioned'
+        self.series['context'] = {'notch': 'Type A notch'}
+        with self.assertRaisesRegex(ValueError, 'incompatible test series'):
+            self.validate()
+
+    def test_cell_must_match_the_explicit_row_series(self):
+        self.evidence['series']['pla-other'] = deepcopy(self.series)
+        self.table['rows'][0]['series_id'] = 'pla-other'
+        with self.assertRaisesRegex(ValueError, 'incompatible test series'):
+            self.validate()
+
+    def test_cell_references_must_exist_and_be_declared_measurements(self):
+        for ref in ('missing-measurement', 'load-path', 23, False):
+            with self.subTest(ref=ref):
+                self.table['rows'][0]['values']['modulus'] = ref
+                with self.assertRaisesRegex(ValueError, 'missing or undeclared'):
+                    self.validate()
+
+    def test_rows_require_exact_column_keys(self):
+        del self.table['rows'][0]['values']['modulus']
+        with self.assertRaisesRegex(ValueError, 'missing fields: modulus'):
+            self.validate()
+        self.table['rows'][0]['values']['modulus'] = 'pla-modulus'
+        self.table['rows'][0]['values']['unexpected'] = None
+        with self.assertRaisesRegex(ValueError, 'unknown fields: unexpected'):
+            self.validate()
+
+    def test_table_requires_existing_row_series(self):
+        self.table['rows'][0]['series_id'] = 'missing-series'
+        with self.assertRaisesRegex(ValueError, 'unknown series_id'):
+            self.validate()
+
+    def test_duplicate_rows_and_column_keys_are_rejected(self):
+        self.table['rows'].append(deepcopy(self.table['rows'][0]))
+        with self.assertRaisesRegex(ValueError, 'duplicate table row'):
+            self.validate()
+        self.table['rows'].pop()
+        self.table['columns'].append(deepcopy(self.table['columns'][0]))
+        with self.assertRaisesRegex(ValueError, 'duplicate column key'):
+            self.validate()
+
+    def test_table_ids_are_unique_and_cannot_shadow_sections(self):
+        self.article['tables'].append(deepcopy(self.table))
+        with self.assertRaisesRegex(ValueError, 'duplicate table ID'):
+            self.validate()
+        self.article['tables'].pop()
+        self.article['sections'].append({'id': 'table-tensile-results', 'title': 'Conflicting section'})
+        with self.assertRaisesRegex(ValueError, 'collides with a section anchor'):
+            self.validate()
+
+    def test_missing_or_ambiguous_table_forms_are_rejected(self):
+        self.article['table'] = valid_documents()[1]['articles'][0]['table']
+        with self.assertRaisesRegex(ValueError, 'exactly one of table or tables'):
+            self.validate()
+        del self.article['tables']
+        del self.article['table']
+        with self.assertRaisesRegex(ValueError, 'exactly one of table or tables'):
+            self.validate()
+
+    def test_generic_tables_and_columns_cannot_be_empty(self):
+        self.article['tables'] = []
+        with self.assertRaisesRegex(ValueError, 'nonempty list'):
+            self.validate()
+        self.article['tables'] = [self.table]
+        self.table['columns'] = []
+        with self.assertRaisesRegex(ValueError, 'needs measurement columns'):
+            self.validate()
+
+    def test_table_notes_cannot_cite_undeclared_evidence(self):
+        self.table['notes'] = [{'text': 'The source did not report conditioning.', 'refs': ['missing-claim']}]
+        with self.assertRaisesRegex(ValueError, 'not declared'):
+            self.validate()
+
+    def test_generic_tables_do_not_hide_unused_declared_measurements(self):
+        self.table['rows'][0]['values']['strength'] = None
+        with self.assertRaisesRegex(ValueError, 'unused declared evidence: pla-yield'):
+            self.validate()
+
+    def test_hdt_requires_stress_with_units_and_celsius(self):
+        self.use_hdt_table()
+        self.validate()
+        for stress in (None, 1.8, '1.8', '23 °C', 'Unspecified stress'):
+            with self.subTest(stress=stress):
+                self.series['context']['stress'] = stress
+                with self.assertRaisesRegex(ValueError, 'context.stress with stress units'):
+                    self.validate()
+        self.series['context']['stress'] = '1.8 MPa'
+        self.evidence['measurements']['pla-hdt']['unit'] = 'K'
+        with self.assertRaisesRegex(ValueError, 'heat_deflection_temperature requires °C'):
+            self.validate()
+
+    def test_hdt_cannot_omit_stress_or_context(self):
+        self.use_hdt_table()
+        del self.series['context']['stress']
+        with self.assertRaisesRegex(ValueError, 'context.stress'):
+            self.validate()
+        del self.series['context']
+        with self.assertRaisesRegex(ValueError, 'context.stress'):
+            self.validate()
+
+    def test_hdt_can_preserve_different_stated_stress_units(self):
+        self.use_hdt_table()
+        for stress in ('0.45 MPa', '264 psi', '1.8 N/mm²'):
+            with self.subTest(stress=stress):
+                self.series['context']['stress'] = stress
+                self.validate()
+                self.assertEqual(self.series['context']['stress'], stress)
+
+    def test_context_requires_safe_keys_and_finite_plain_values(self):
+        for context in ({'test stress': '1.8 MPa'}, {'<script>': 'invalid'}, {'humidity': True},
+                        {'duration': float('nan')}, {'annealing': {'temperature': 100}}, {'stress': []}):
+            with self.subTest(context=context):
+                self.series['context'] = context
+                with self.assertRaises(ValueError):
+                    self.validate()
+
+    def test_unknown_context_values_must_be_null(self):
+        self.series['context'] = {'humidity': 'not reported'}
+        with self.assertRaisesRegex(ValueError, 'unknown values must be null'):
+            self.validate()
+
+    def test_optional_context_does_not_enable_other_series_fields(self):
+        self.series['context'] = {'humidity': None}
+        self.series['invented_test_context'] = 'not a supported field'
+        with self.assertRaisesRegex(ValueError, 'unknown fields: invented_test_context'):
+            self.validate()
+
+    def test_article_categories_are_explicit(self):
+        self.article['category'] = 'Unclassified marketing'
+        with self.assertRaisesRegex(ValueError, 'unknown article category'):
+            self.validate()
 
 
 if __name__ == '__main__':

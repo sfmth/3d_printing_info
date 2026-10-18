@@ -14,7 +14,7 @@ import tempfile
 import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, payload, counts
 from material_design import EXAMPLES, APPLICATIONS
-from material_articles import load_articles, load_evidence, measure_value
+from material_articles import load_articles, load_evidence, measure_value, context_label, DETAIL_CONTEXT_FIELDS
 from check_articles import validate_evidence
 
 
@@ -194,7 +194,19 @@ def run():
         assert entity['author']==article['author'] and entity['datePublished']==article['published'] and entity['dateModified']==article['modified']
         assert 'Article revision: '+article['modified'] in html and 'Catalog values retain' not in html
         assert article['id']+'.html' in article_index
-        assert len([attrs for attrs in parsed.attrs('tr') if 'data-measurement' in attrs])==len(article['table']['rows'])
+        tables=article.get('tables',[article.get('table')])
+        assert len([attrs for attrs in parsed.attrs('tr') if 'data-measurement' in attrs])==sum(len(table['rows']) for table in tables)
+        if 'tables' in article:
+            for table in tables:
+                assert 'table-'+table['id'] in parsed.ids
+                for row in table['rows']:
+                    series=evidence['series'][row['series_id']]
+                    assert 'data-test-series="'+row['series_id']+'"' in html
+                    for key,value in series.get('context',{}).items():
+                        label=context_label(key);shown='Not reported' if value is None else str(value)
+                        assert '<dt>'+escape(label)+'</dt><dd>'+escape(shown)+'</dd>' in html,(article['id'],'missing full test context',key)
+                        if key not in DETAIL_CONTEXT_FIELDS:
+                            assert escape(label+': '+shown) in html,(article['id'],'missing adjacent test context',key)
         source_ids=set()
         for ref in [*article['measurements'],*article['claims']]:
             item=evidence['claims'].get(ref) or evidence['measurements'].get(ref)
