@@ -23,6 +23,8 @@ jobs:
           python-version: '3.12'
       - name: Validate catalogs, preservation, generated pages and metadata
         run: python scripts/check_site.py
+      - name: Test IndexNow selection and failure handling without network requests
+        run: python -m unittest discover -s tests -p 'test_indexnow.py' -v
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
       - name: Exercise the exact branch commit in Chromium
