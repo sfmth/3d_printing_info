@@ -44,6 +44,20 @@ try {
   const page = await context.newPage();
   page.on('pageerror',error=>errors.push(error.message));
   page.on('response',r=>{if(r.url().startsWith(base) && r.status()>=400) missing.push(r.url());});
+  async function referenceMetadata() {
+    return page.locator('script[type="application/ld+json"]').evaluateAll(scripts=>{
+      const documents=scripts.map(script=>JSON.parse(script.textContent));
+      const types=[];
+      function walk(value) {
+        if (!value || typeof value!=='object') return;
+        const declared=value['@type'] || [];
+        types.push(...(Array.isArray(declared)?declared:[declared]));
+        Object.values(value).forEach(walk);
+      }
+      documents.forEach(walk);
+      return {documents,types:types.map(type=>type.replace(/\/$/,'').split(/[/:]/).pop())};
+    });
+  }
   async function visit(file) {
     const before=loads;
     const response=await page.goto(base+file,{waitUntil:'networkidle'});
@@ -51,6 +65,7 @@ try {
     assert.equal(loads-before,1,`one Analytics loader request: ${file}`);
     assert.equal(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count(),1);
     assert.equal(await page.evaluate(()=>window.dataLayer.filter(x=>x[0]==='config' && x[1]==='G-12FDG0Z8JB').length),1);
+    assert.ok(!(await referenceMetadata()).types.includes('Product'),`no unsupported Product markup: ${file}`);
   }
   await visit('');
   for (const [key,n] of Object.entries({printers:printers.cats.length,'printer-fields':printers.fields.length,materials:materials.cats.length,products:productCount})) {
@@ -282,8 +297,14 @@ try {
     assert.equal(await page.locator('h1').innerText(),c.n);
     assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://sfmth.github.io/3d_printing_info/printers/'+c.id+'.html');
     assert.equal(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count(),1);
+    const metadata=await referenceMetadata();
+    assert.ok(!metadata.types.includes('Product'),c.id);
+    const article=metadata.documents.find(document=>document['@type']==='WebPage').mainEntity;
+    assert.equal(article['@type'],'TechArticle',c.id);
+    assert.equal(article.about['@type'],'Thing',c.id);
+    assert.equal(article.about.name,c.n,c.id);
   }
-  step(`All ${printers.cats.length} printer guide URLs render with matching canonical metadata and one Analytics tag`);
+  step(`All ${printers.cats.length} printer guides render technical-article metadata without unsupported Product entities, matching canonical URLs and one Analytics tag`);
   await visit('materials/peba.html');
   await page.screenshot({path:path.join(root,'test-results/peba-guide.png')});
   await page.setViewportSize({width:390,height:844});

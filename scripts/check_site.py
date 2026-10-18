@@ -20,6 +20,21 @@ def digest(x):
     return hashlib.sha256(json.dumps(x, sort_keys=True, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
 
 
+def schema_nodes(value):
+    """Include nested entities and @graph/array entries when auditing JSON-LD."""
+    if isinstance(value, dict):
+        yield value
+        for child in value.values():
+            yield from schema_nodes(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from schema_nodes(child)
+
+
+def schema_type(value):
+    return value.rstrip('/').rsplit('/', 1)[-1].rsplit(':', 1)[-1]
+
+
 def snapshot(data):
     return {'cats': {c['id']: {
         'record': digest(c),
@@ -165,6 +180,16 @@ def run():
     canonicals=set()
     for path in paths:
         text=path.read_text();name=str(path.relative_to(ROOT)); parsed=Page(text)
+        # Product nodes trigger rich-result validation even inside TechArticle.about.
+        # This reference catalog has no supported offer/review/rating markup.
+        for document in map(json.loads, LD.findall(text)):
+            for node in schema_nodes(document):
+                types=node.get('@type',[])
+                if isinstance(types,str):types=[types]
+                assert not any(schema_type(t)=='Product' for t in types),(name,'Unsupported Product rich-result markup')
+        for tag,attrs in parsed.tags:
+            for key in ('itemtype','typeof'):
+                assert not any(schema_type(t)=='Product' for t in attrs.get(key,'').split()),(name,'Unsupported Product microdata/RDFa')
         assert 'bytes omitted' not in text and '[... omitted' not in text, name
         assert text.count('https://www.googletagmanager.com/gtag/js?id=G-12FDG0Z8JB')==1,name
         assert text.count("gtag('config', 'G-12FDG0Z8JB')")==1,name
@@ -203,6 +228,13 @@ def run():
         assert [x['url'] for x in itemlist['itemListElement']]==[BASE+directory+'/'+c['id']+'.html' for c in data['cats']]
         for c in data['cats']:
             html=(ROOT/directory/(c['id']+'.html')).read_text()
+            schema=json.loads(LD.findall(html)[0])
+            assert schema['@type']=='WebPage' and schema['url']==BASE+directory+'/'+c['id']+'.html',(directory,c['id'],'guide metadata')
+            article=schema['mainEntity']
+            assert article['@type']=='TechArticle' and article['url']==schema['url'],(directory,c['id'],'technical article metadata')
+            if directory=='printers':
+                subject=article['about']
+                assert subject['@type']=='Thing' and subject['name']==c['n'],(c['id'],'printer reference subject')
             assert escape(c['n']) in html,c['id']
             assert 'Published value and conditions' in html and 'Sources and dates' in html,c['id']
             assert directory+'/'+c['id']+'.html' in listing,c['id']

@@ -13,7 +13,7 @@ from material_design import detail_body, directory_body
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
-DATE = '2026-10-17'  # Content revision date, not a blanket source/price check date.
+DATE = '2026-10-18'  # Content revision date, not a blanket source/price check date.
 PAGES = ('comparison.html', 'filaments.html')
 PAYLOAD = re.compile(r'<script[^>]*id="payload"[^>]*>(.*?)</script>', re.S)
 LD = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
@@ -174,7 +174,10 @@ def generate_printers(data, index):
         siblings=[x for x in data['cats'] if x.get('brand')==c.get('brand') and x['id']!=c['id']]
         if siblings:body+='<h2>Other '+E(c.get('brand',''))+' printers</h2><ul class="directory">'+''.join('<li><a href="'+E(x['id'])+'.html">'+E(x['n'])+'</a></li>' for x in siblings)+'</ul>'
         used={sid for e in c['sp'].values() for sid in e.get('s',[])}
-        schema={'@context':'https://schema.org','@type':'WebPage','name':c['n']+' printer guide','url':BASE+path,'description':desc,'isPartOf':{'@type':'WebSite','url':BASE,'name':'3D Printing Info'},'mainEntity':{'@type':'TechArticle','headline':c['n']+' — hardware, firmware, prices and sources','about':{'@type':'Product','name':c['n'],'brand':{'@type':'Brand','name':c.get('brand','')},'category':c['f']},'description':c.get('sum',''),'url':BASE+path,'citation':[s['u'] for k,s in data['src'].items() if s.get('u') and k in used]}}
+        # These are technical reference articles with historical price snapshots,
+        # not offer/review records eligible for Google's Product rich results.
+        subject={'@type':'Thing','name':c['n'],'description':c.get('brand','')+' '+c['f']+' 3D printer'}
+        schema={'@context':'https://schema.org','@type':'WebPage','name':c['n']+' printer guide','url':BASE+path,'description':desc,'isPartOf':{'@type':'WebSite','url':BASE,'name':'3D Printing Info'},'mainEntity':{'@type':'TechArticle','headline':c['n']+' — hardware, firmware, prices and sources','about':subject,'description':c.get('sum',''),'url':BASE+path,'citation':[s['u'] for k,s in data['src'].items() if s.get('u') and k in used]}}
         (ROOT/path).write_text(guide_page(c['n']+' printer guide',desc,path,body,analytics,'',schema))
     body='<header><h1>Printer guides</h1><p class="deck">'+str(len(data['cats']))+' FDM and resin printers with hardware specifications, firmware details, dated prices and sources.</p></header><p><a href="../comparison.html">Use the interactive printer comparison</a> to filter models, inspect fields and compare printers side by side.</p>'
     for family in data['families']:
