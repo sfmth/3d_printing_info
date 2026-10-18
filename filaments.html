@@ -280,7 +280,7 @@ table.cmp td.best { background:color-mix(in srgb,var(--r1) 15%,transparent); }
 </div>
 
 <main>
-<p class="reference-note">Prices are dated listing snapshots in USD; sale, from and regular prices are identified in the entry notes. Manufacturer claims and independent tests retain their source labels and conditions. A blank means not documented. Material summaries and dimmed inherited product values describe a family or representative grade; use the product datasheet for the exact spool. Shore A, Shore D and Rockwell are separate scales.</p>
+<p class="reference-note">Prices are dated listing snapshots in USD; sale, from and regular prices are identified in the entry notes. Manufacturer claims and independent tests retain their source labels and conditions. A blank means not documented. Material summaries and dimmed inherited product values describe a family or representative grade; use the product datasheet for the exact spool. Shore A, Shore D and Rockwell are separate scales. Inequalities such as &gt;16.5 are bounds; full conditions are in the tooltip and details. Bounds are excluded from exact-value sorting and ranking.</p>
   <!-- generated:retail-brands -->
 <details class="material-directory" id="retail-brands"><summary>Filament in US stores · 20 sourced listings</summary><p>Selected product lines with dated store-stock or pickup listings. Check the retailer for current local stock and prices. Each product retains its own source, spool mass and price notes.</p><ul><li><a href="filaments.html?brand=Cookiecad">Cookiecad</a> · Micro Center · 3 product lines · checked 2026-10-17 · <a href="https://www.microcenter.com/product/660847/cookiecad-175mm-mint-green-pla-3d-printer-filament-1kg-spool-(22-lbs)?storeid=101">retailer example</a></li><li><a href="filaments.html?brand=Inland">Inland</a> · Micro Center · 11 product lines · checked 2026-10-17 · <a href="https://www.microcenter.com/product/642922/index.html?storeid=101">retailer example</a></li><li><a href="filaments.html?brand=Insignia">Insignia</a> · Best Buy · 6 product lines · checked 2026-10-17 · <a href="https://www.bestbuy.com/product/insignia-matte-pla-1-75mm-filament-matte-black/J2FPJK9VJK">retailer example</a></li></ul></details>
 <!-- /generated:retail-brands -->
@@ -375,6 +375,25 @@ function fmtn(n) {
   if (a >= 10)  return String(Math.round(n * 10) / 10);
   return String(Math.round(n * 100) / 100);
 }
+// Keep published inequalities visible without treating their bounds as exact
+// measurements. Full values and test conditions remain in tooltips and details.
+function numericBound(e) {
+  return e && e.v.match(/^\s*([<>]=?|[≤≥])\s*([+-]?\d+(?:\.\d+)?)/);
+}
+function exactNumber(e) {
+  return e && !numericBound(e) && typeof e.n === 'number' ? e.n : null;
+}
+function numericDisplay(e) {
+  const bound = numericBound(e);
+  if (bound) return esc(bound[1] + bound[2]);
+  return typeof e.n === 'number' ? fmtn(e.n) : esc(e.v);
+}
+function specSortKey(e, f) {
+  if (!e) return null;
+  if (f && f.mixed) return e.v.toLowerCase();
+  if (f && f.type === 'num') return exactNumber(e);
+  return 'n' in e ? e.n : e.v.toLowerCase();
+}
 function ratePill(f, e) {
   const mx = f.max || 5, n = e.n, t = (n - 1) / (mx - 1);
   const col = f.dir === 'lo' ? 'var(--r' + (Math.round(t * 4) + 1) + ')'
@@ -394,8 +413,7 @@ function cell(c, id) {
   if (!e) return '<td class="e">·</td>';
   if (f.type === 'rating') return `<td class="num">${ratePill(f, e)}</td>`;
   if (f.type === 'num') {
-    if (!('n' in e)) return `<td class="num" title="${esc(e.v)}">${esc(e.v)}</td>`;
-    if (!e.r) return `<td class="num" title="${esc(e.v)}">${fmtn(e.n)}</td>`;
+    if (!e.r || numericBound(e)) return `<td class="num" title="${esc(e.v)}">${numericDisplay(e)}</td>`;
     const how = e.rs === 'p' ? `spread across ${e.rn} manufacturer listings` : 'range as published';
     return `<td class="num px" title="${esc(e.v + ' — ' + how)}">${fmtn(e.n)}` +
            `<small>${fmtn(e.r[0])}–${fmtn(e.r[1])}</small></td>`;
@@ -430,7 +448,7 @@ function catKey(c, k) {
   if (k === 'brands') return c.pr.length || null;
   if (k === 'price')  return c.px ? c.px.med : null;
   const e = c.sp[k];
-  return !e ? null : (F[k] && F[k].mixed ? e.v.toLowerCase() : ('n' in e ? e.n : e.v.toLowerCase()));
+  return specSortKey(e, F[k]);
 }
 
 /* ---------- slicer profiles ----------
@@ -634,7 +652,7 @@ function detail(c) {
     const stat = {};
     pcols.forEach(id => {
       const vals = c.pr.map(p => p.sp[id]).filter(Boolean);
-      const nums = vals.map(e => e.n).filter(v => typeof v === 'number');
+      const nums = vals.map(exactNumber).filter(v => v !== null);
       const uniq = new Set(vals.map(e => e.v));
       let sprd = 0;
       if (nums.length > 1 && !F[id].mixed) {
@@ -677,11 +695,11 @@ function detail(c) {
              if (!e) return '<td class="e">·</td>';
              const st = stat[id], f = F[id];
              let cls = '';
-             if (st && st.n > 1 && typeof e.n === 'number' && f.dir && st.mn !== st.mx) {
+             if (st && st.n > 1 && exactNumber(e) !== null && f.dir && st.mn !== st.mx) {
                if (e.n === st.mx) cls = f.dir === 'hi' ? ' best' : ' worst';
                else if (e.n === st.mn) cls = f.dir === 'hi' ? ' worst' : ' best';
              }
-             const val = ('n' in e) ? fmtn(e.n) : esc(e.v);
+             const val = f.type === 'num' ? numericDisplay(e) : ('n' in e) ? fmtn(e.n) : esc(e.v);
              return `<td class="num${cls}" title="${esc(e.v)}">${val}${refs(e.s, rid)}</td>`;
            }).join('') +
            `<td class="pspec">${sheets}${off} ` +
@@ -750,7 +768,7 @@ function prodKey(r, k) {
   if (k === 'f') return r.c.f;
   if (k === 'k') return r.p.k;
   const e = r.p.sp[k] || r.c.sp[k];          // product figure first, else its material's
-  return !e ? null : (F[k] && F[k].mixed ? e.v.toLowerCase() : ('n' in e ? e.n : e.v.toLowerCase()));
+  return specSortKey(e, F[k]);
 }
 
 /* One row per spool. Spec columns use the brand's own published figure where it exists and
@@ -792,7 +810,7 @@ function renderProducts() {
         const f = F[id], cls = own ? '' : ' inh';
         const tip = esc(e.v + (own ? '' : ' — ' + c.n + ' family value, not published for this spool'));
         if (f.type === 'rating') return `<td class="num${cls}" title="${tip}">${ratePill(f, e)}</td>`;
-        if (f.type === 'num') return `<td class="num${cls}" title="${tip}">${'n' in e ? fmtn(e.n) : esc(e.v)}</td>`;
+        if (f.type === 'num') return `<td class="num${cls}" title="${tip}">${numericDisplay(e)}</td>`;
         return `<td class="${cls.trim()}" title="${tip}"><div class="clip">${esc(e.v)}</div></td>`;
       }).join('') +
       `<td class="pspec">${sheets}${off}` +
@@ -835,7 +853,7 @@ function renderCompare() {
       const f = F[id];
       let best = null;
       if (f.dir && (f.type === 'num' || f.type === 'rating')) {
-        const ns = sel.map(c => c.sp[id] && typeof c.sp[id].n === 'number' ? c.sp[id].n : null).filter(x => x !== null);
+        const ns = sel.map(c => exactNumber(c.sp[id])).filter(x => x !== null);
         if (ns.length > 1) best = f.dir === 'hi' ? Math.max(...ns) : Math.min(...ns);
       }
       h += `<tr><td class="stick fn"${f.d ? ` title="${esc(f.d)}"` : ''}>` +
@@ -843,7 +861,7 @@ function renderCompare() {
         sel.map(c => {
           const e = c.sp[id];
           if (!e) return '<td class="e">·</td>';
-          const isBest = best !== null && e.n === best;
+          const isBest = best !== null && exactNumber(e) === best;
           const pill = f.type === 'rating' ? ratePill(f, e) + ' ' : '';
           return `<td class="${isBest ? 'best' : ''}">${pill}${esc(e.v)}${refs(e.s, rid)}</td>`;
         }).join('') + '</tr>';

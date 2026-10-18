@@ -31,7 +31,13 @@ INTRO = {
     'peba': 'A flexible polyamide blend used in cushioning, footwear and sports equipment.',
 }
 FEATURED = ('pla', 'petg', 'asa', 'tpu-95a', 'pc', 'abs')
-EXAMPLES = json.loads((Path(__file__).resolve().parents[1]/'data/print-examples.json').read_text())
+_examples = json.loads((Path(__file__).resolve().parents[1]/'data/print-examples.json').read_text())
+EXAMPLES = {cid: entries if isinstance(entries, list) else [entries] for cid, entries in _examples.items()}
+
+
+def primary_example(cid):
+    entries = EXAMPLES.get(cid, [])
+    return next((e for e in entries if e.get('image')), entries[0] if entries else None)
 LABELS = {'A':'Material & market', 'B':'Print settings', 'C':'Nozzle wear & reliability',
           'D':'Moisture & drying', 'E':'Strength & mechanical properties', 'F':'Heat & temperature',
           'G':'Weather & chemical resistance', 'H':'Health & safety', 'I':'Finishing & post-processing',
@@ -59,21 +65,25 @@ def photograph(e, cls='material-visual'):
 
 def card(c, featured=False):
     cls='featured-card' if featured else 'material-card'
-    text=INTRO.get(c['id']) or c.get('sum','');e=EXAMPLES.get(c['id'])
+    text=INTRO.get(c['id']) or c.get('sum','');e=primary_example(c['id'])
     attrs='' if featured else ' data-material="'+E(c['id'])+'" data-search="'+E(' '.join([c['n'],c.get('aka',''),c['f'],c.get('sum',''),c['sp'].get('A7',{}).get('v','')]))+'"'
-    body='<article class="'+cls+(' has-photo' if e else ' text-only')+'"'+attrs+'><a class="material-card-link" href="'+E(c['id'])+'.html">'
-    if e:body+='<img src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" loading="lazy" width="'+str(e['width'])+'" height="'+str(e['height'])+'">'
+    body='<article class="'+cls+(' has-photo' if e and e.get('image') else ' text-only')+'"'+attrs+'><a class="material-card-link" href="'+E(c['id'])+'.html">'
+    if e and e.get('image'):body+='<img src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" loading="lazy" width="'+str(e['width'])+'" height="'+str(e['height'])+'">'
     body+='<div class="material-card-copy"><span class="eyebrow">'+E(c['f'])+'</span><h3>'+E(c['n'])+'</h3><p>'+E(compact(text,128))+'</p><span class="card-bottom">'+count_label(len(c.get('pr',[])),'product listing')+' <span aria-hidden="true">↗</span></span></div></a>'
     if e:body+='<div class="card-example"><a href="'+E(e['url'])+'">View print by '+E(e['creator'])+' ↗</a> · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a></div>'
     return body+'</article>'
 
 
 def print_section(c):
-    e=EXAMPLES.get(c['id'])
+    examples=EXAMPLES.get(c['id'],[])
+    primary=primary_example(c['id'])
     body='<section class="guide-section print-examples" id="prints"><div class="section-heading"><div><span class="eyebrow">From the maker community</span><h2>Things people print</h2></div></div>'
-    if e:
-        body+='<article class="print-story"><span class="print-badge">Creator-reported '+E(e['material'])+' print</span><h3><a href="'+E(e['url'])+'">'+E(e['title'])+' ↗</a></h3><p>'+E(e['note'])+'</p><a class="text-link" href="'+E(e['url'])+'">Get the model & read the creator’s print notes on '+E(e['platform'])+' ↗</a><details class="inline-sources"><summary>Material evidence & photo credit</summary><p>Creator’s note: “'+E(e['evidence'])+'”</p><p>Photo and model: '+E(e['creator'])+' · <a href="'+E(e['url'])+'">Original listing</a> · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a> · Checked '+E(e['checked'])+'. Photo bytes unchanged. Appearance can include paint or other finishing. This is a creator report, not an independent material test.</p></details></article>'
-    else:body+='<p class="section-description">No verified photo example is curated for this exact material yet. Explore community models below; check each creator’s actual filament and print notes.</p>'
+    for e in examples:
+        body+='<article class="print-story">'
+        if e.get('image') and e is not primary:
+            body+='<a href="'+E(e['url'])+'"><img class="example-photo" src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" width="'+str(e['width'])+'" height="'+str(e['height'])+'" loading="lazy"></a>'
+        body+='<span class="print-badge">Creator-reported '+E(e['material'])+' print</span><h3><a href="'+E(e['url'])+'">'+E(e['title'])+' ↗</a></h3><p>'+E(e['note'])+'</p><a class="text-link" href="'+E(e['url'])+'">Get the model & read the creator’s print notes on '+E(e['platform'])+' ↗</a><details class="inline-sources"><summary>Material evidence & '+('photo credit' if e.get('image') else 'model credit')+'</summary><p>Creator’s note: “'+E(e['evidence'])+'”</p><p>'+('Photo and model' if e.get('image') else 'Model')+': '+E(e['creator'])+' · <a href="'+E(e['url'])+'">Original listing</a> · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a> · Checked '+E(e['checked'])+'. '+('Photo bytes unchanged. Appearance can include paint or other finishing. ' if e.get('image') else '')+'This is a creator report, not an independent material test.</p></details></article>'
+    if not examples:body+='<p class="section-description">No verified photo example is curated for this exact material yet. Explore community models below; check each creator’s actual filament and print notes.</p>'
     body+='<div class="more-models"><h3>Explore more '+E(c.get('sh') or c['n'])+' models</h3>'+discovery(c)+'<p>Search results are ideas, not verified material matches. A suggested filament is not proof of the material in a photo.</p></div></section>'
     return body
 
@@ -94,7 +104,7 @@ def detail_body(data,c,refs,value):
     intro=INTRO.get(c['id']) or compact(c.get('sum',''),190)
     body='<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../">Home</a><span>/</span><a href="./">Material guides</a><span>/</span><span>'+E(c['sh'] if c.get('sh') else c['n'])+'</span></nav>'
     body+='<header class="guide-hero"><div class="hero-copy"><span class="eyebrow">'+E(family[0])+' · Material guide</span><h1>'+E(c['n'])+'</h1><p class="guide-lede">'+E(intro)+'</p><div class="guide-meta"><span>'+count_label(len(products),'product listing')+'</span><span>'+count_label(len(brands),'brand')+'</span></div><a class="primary-action" href="../filaments.html?material='+E(c['id'])+'">Open in interactive comparison <span aria-hidden="true">↗</span></a></div></header>'
-    visual=photograph(EXAMPLES[c['id']]) if c['id'] in EXAMPLES else '<aside class="print-discovery"><span class="eyebrow">Make something with it</span><h2>Find your next print</h2><p>Explore community models and check each creator’s material notes.</p>'+discovery(c)+'<a class="text-link" href="#prints">About printed examples ↓</a></aside>'
+    visual=photograph(primary_example(c['id'])) if (primary_example(c['id']) or {}).get('image') else '<aside class="print-discovery"><span class="eyebrow">Make something with it</span><h2>Find your next print</h2><p>Explore community models and check each creator’s material notes.</p>'+discovery(c)+'<a class="text-link" href="#prints">About printed examples ↓</a></aside>'
     body=body.replace('</header>',visual+'</header>',1)
     body+='<nav class="guide-jumps" aria-label="On this page"><a href="#overview">Overview</a><a href="#prints">Printed examples</a><a href="#setup">Print setup</a><a href="#properties">All properties</a><a href="#products">Filaments</a></nav>'
     body+='<section class="guide-section" id="overview"><div class="section-heading"><div><span class="eyebrow">Understand the material</span><h2>At a glance</h2></div></div><div class="overview-grid"><article class="overview-card"><span class="mini-icon" aria-hidden="true">↗</span><h3>Where it is used</h3><p>'+E(value(c,'A7'))+'</p><details class="inline-sources"><summary>Sources</summary>'+refs(data,c['sp'].get('A7',{}).get('s',[]))+'</details></article><article class="overview-card"><span class="mini-icon" aria-hidden="true">⌁</span><h3>Before you print</h3><dl>'
@@ -136,7 +146,7 @@ def detail_body(data,c,refs,value):
 
 def directory_body(data):
     cs=len(data['cats']);products=sum(len(c.get('pr',[])) for c in data['cats']);brands=len({p['b'].lower() for c in data['cats'] for p in c.get('pr',[])})
-    body='<header class="library-hero"><div><span class="eyebrow">A field guide to 3D printing</span><h1>Material guides</h1><p class="guide-lede">Find the right filament for your next print. Start with the essentials, then explore the settings, properties and sources that matter to you.</p><div class="library-stats"><span><b>'+str(cs)+'</b> materials</span><span><b>'+str(products)+'</b> products</span><span><b>'+str(brands)+'</b> brands</span></div><a class="primary-action" href="#browse-materials">Browse material guides <span aria-hidden="true">↓</span></a><a class="text-link library-compare" href="../filaments.html">Open the interactive comparison table ↗</a></div>'+photograph(EXAMPLES['pla'],'library-visual')+'</header>'
+    body='<header class="library-hero"><div><span class="eyebrow">A field guide to 3D printing</span><h1>Material guides</h1><p class="guide-lede">Find the right filament for your next print. Start with the essentials, then explore the settings, properties and sources that matter to you.</p><div class="library-stats"><span><b>'+str(cs)+'</b> materials</span><span><b>'+str(products)+'</b> products</span><span><b>'+str(brands)+'</b> brands</span></div><a class="primary-action" href="#browse-materials">Browse material guides <span aria-hidden="true">↓</span></a><a class="text-link library-compare" href="../filaments.html">Open the interactive comparison table ↗</a></div>'+photograph(primary_example('pla'),'library-visual')+'</header>'
     lookup={c['id']:c for c in data['cats']}
     body+='<section class="guide-section" id="featured-materials"><div class="section-heading"><div><span class="eyebrow">A few familiar starting points</span><h2>Start exploring</h2></div><a class="text-link" href="#browse-materials">Browse all '+str(cs)+' materials ↓</a></div><div class="featured-grid">'+''.join(card(lookup[cid],True) for cid in FEATURED if cid in lookup)+'</div></section>'
     body+='<section class="guide-section" id="browse-materials"><div class="section-heading"><div><span class="eyebrow">The complete library</span><h2>Browse by material family</h2></div></div><div class="material-search" hidden><label for="material-search">Search material guides</label><div class="search-input-wrap"><input id="material-search" type="search" placeholder="Try PLA, carbon fibre, flexible, outdoor…" autocomplete="off"><button type="button" id="clear-material-search">Clear</button></div><div class="family-filters" role="group" aria-label="Filter material family"><button type="button" data-family="" aria-pressed="true">All materials</button>'+''.join('<button type="button" data-family="'+E(f)+'" aria-pressed="false">'+E(f)+'</button>' for f in data['families'])+'</div><p id="material-results" role="status" aria-live="polite">'+str(cs)+' materials</p></div><div class="material-families">'
