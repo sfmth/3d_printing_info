@@ -206,9 +206,10 @@ def run():
                 for host in ('www.printables.com/search/models?q=','makerworld.com/en/search/models?keyword=','www.thingiverse.com/search?q='):
                     assert any(a.get('href','').startswith('https://'+host) for a in parsed.attrs('a')),(c['id'],'missing model discovery link')
                 if c['id'] in EXAMPLES:
-                    e=EXAMPLES[c['id']]
-                    assert any(a.get('src')=='../'+e['image'] and a.get('alt')==e['alt'] for a in parsed.attrs('img')),c['id']
-                    for key in ('url','license_url','creator','evidence','note','checked'): assert escape(e[key]) in html,(c['id'],'missing photo provenance',key)
+                    for e in EXAMPLES[c['id']]:
+                        if e.get('image'):
+                            assert any(a.get('src')=='../'+e['image'] and a.get('alt')==e['alt'] for a in parsed.attrs('img')),c['id']
+                        for key in ('url','license_url','creator','evidence','note','checked'): assert escape(e[key]) in html,(c['id'],'missing example provenance',key)
                 else:assert 'No verified photo example is curated for this exact material yet.' in html,c['id']
                 # Disclosure changes visibility, never the complete record or its source links.
                 for p in c.get('pr',[]):
@@ -222,16 +223,23 @@ def run():
     assert len(re.findall(r'data-material="[^"]+"',library))==len(filaments['cats'])
     assert set(EXAMPLES)<=set(c['id'] for c in filaments['cats'])
     assert not (ROOT/'assets/materials').exists() or not list((ROOT/'assets/materials').glob('*.svg'))
-    for key,e in EXAMPLES.items():
-        assert e['image'].startswith('assets/prints/') and '..' not in e['image']
-        photo=ROOT/e['image']
-        assert hashlib.sha256(photo.read_bytes()).hexdigest()==e['sha256'],(key,'photo bytes changed')
-        assert e['width']>0 and e['height']>0 and e['creator'] and e['evidence'] and e['alt']
-        assert e['image_url'].startswith('https://media.printables.com/media/prints/')
-        assert e['url'].startswith('https://www.printables.com/model/')
-        assert e['license_url'].startswith('https://creativecommons.org/')
-        assert re.fullmatch(r'\d{4}-\d{2}-\d{2}',e['checked'])
-        assert escape(e['url']) in library and escape(e['creator']) in library
+    for key,entries in EXAMPLES.items():
+        assert entries,(key,'empty example list')
+        for e in entries:
+            assert e['creator'] and e['evidence'] and e['note'] and e['material']
+            assert e['url'].startswith('https://www.printables.com/model/')
+            assert e['license'] and e['license_url'].startswith('https://')
+            if e.get('image'):
+                assert e['image'].startswith('assets/prints/') and '..' not in e['image']
+                photo=ROOT/e['image']
+                assert hashlib.sha256(photo.read_bytes()).hexdigest()==e['sha256'],(key,'photo bytes changed')
+                assert e['width']>0 and e['height']>0 and e['alt']
+                assert e['image_url'].startswith('https://media.printables.com/media/prints/')
+                assert e['license_url'].startswith('https://creativecommons.org/')
+            else:
+                assert not {'image_url','sha256','width','height','alt'} & e.keys(),(key,'partial photo metadata')
+            assert re.fullmatch(r'\d{4}-\d{2}-\d{2}',e['checked'])
+            assert escape(e['url']) in (ROOT/'materials'/(key+'.html')).read_text()
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     urls=[x.text for x in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)]
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)

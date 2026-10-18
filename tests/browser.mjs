@@ -11,9 +11,9 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const prefix = '/3d_printing_info/';
 const catalog = async name => JSON.parse((await fs.readFile(path.join(root,name),'utf8')).match(/<script[^>]*id="payload"[^>]*>([\s\S]*?)<\/script>/)[1]);
 const printers = await catalog('comparison.html'), materials = await catalog('filaments.html');
-const examples = JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'));
+const examples = Object.fromEntries(Object.entries(JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'))).map(([id,entries])=>[id,Array.isArray(entries)?entries:[entries]]));
 const productCount = materials.cats.reduce((n,c)=>n+c.pr.length,0);
-const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.xml':'application/xml','.webmanifest':'application/manifest+json'};
+const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.xml':'application/xml','.webmanifest':'application/manifest+json'};
 const server = http.createServer(async (req,res) => {
   try {
     let pathname = decodeURIComponent(new URL(req.url,'http://localhost').pathname);
@@ -109,6 +109,15 @@ try {
   assert.equal(await page.locator('#mtbody tr.row').count(),materials.cats.length);
   await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
   assert.equal(await page.locator('#mtbody tr.row').count(),1);
+  await page.locator('#presets button').filter({hasText:/^Mechanical$/}).click();
+  for (const [field,expected] of [['E1','>16.5'],['E3','>520']]) {
+    const index=await page.locator(`#mthead th[data-k="${field}"]`).evaluate(th=>th.cellIndex);
+    const cell=page.locator('#mtbody tr.row[data-id="peba"] > td').nth(index);
+    assert.equal(await cell.innerText(),expected,'qualified numeric value stays compact');
+    assert.match(await cell.getAttribute('title'),/printed XY.*GB\/T 1040/);
+    assert.match(await cell.getAttribute('title'),/lower bound/);
+  }
+  await page.screenshot({path:path.join(root,'test-results/peba-numeric-bounds.png')});
   await page.locator('input.selbox').check();
   await page.getByLabel('Search materials and products',{exact:true}).fill('TPU 95A');
   await page.locator('input.selbox').first().check();
@@ -118,6 +127,12 @@ try {
   assert.equal(await hardness.count(),1);
   assert.equal(await hardness.locator('td.best').count(),0);
   assert.match(await hardness.innerText(),/Shore A/);
+  const pebaCompareColumn=await page.locator('#cmpout thead th').filter({hasText:'PEBA'}).evaluate(th=>th.cellIndex);
+  for (const field of ['Tensile strength (XY)','Elongation at break']) {
+    const row=page.locator('#cmpout tr').filter({has:page.locator('td.fn').filter({hasText:field})});
+    assert.match(await row.locator('td').nth(pebaCompareColumn).innerText(),/lower bound/);
+    assert.equal(await row.locator('td').nth(pebaCompareColumn).getAttribute('class'),'','lower bounds are never highlighted as exact best values');
+  }
   await page.locator('#cmpclear').click();
   await page.locator('button[data-view="products"]').click();
   await page.getByLabel('Search materials and products',{exact:true}).fill('');
@@ -125,6 +140,12 @@ try {
   await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
   assert.equal(await page.locator('#ptbody > tr').count(),1);
   assert.match(await page.locator('#ptbody').innerText(),/From \$60.99/);
+  for (const [field,expected] of [['E1','>16.5'],['E3','>520']]) {
+    const index=await page.locator(`#pthead th[data-k="${field}"]`).evaluate(th=>th.cellIndex);
+    const cell=page.locator('#ptbody > tr > td').nth(index);
+    assert.equal(await cell.innerText(),expected);
+    assert.match(await cell.getAttribute('title'),/lower bound/);
+  }
   await page.locator('button[data-view="materials"]').click();
   await page.locator('#mtbody tr.row .full').click();
   assert.match(await page.locator('#mtbody tr.detail').innerText(),/9 mm³\/s/);
@@ -179,7 +200,9 @@ try {
   assert.equal(await page.locator('.spec-group[open]').count(),0,'technical tables start collapsed');
   assert.equal(await page.locator('.product-library[open]').count(),0,'product lists start collapsed');
   assert.equal(await page.locator('[data-print-example]').count(),0,'no unrelated photo for PEBA');
-  assert.match(await page.locator('#prints').innerText(),/No verified photo example/);
+  assert.equal(await page.locator('#prints .print-story').count(),(examples.peba || []).length);
+  if (examples.peba) assert.ok((await page.locator('#prints').innerText()).includes(examples.peba[0].title));
+  else assert.match(await page.locator('#prints').innerText(),/No verified photo example/);
   assert.equal(await page.locator('#prints .model-search-links a').count(),3);
   await page.screenshot({path:path.join(root,'test-results/material-overview.png')});
   await page.locator('#spec-b > summary').focus();
@@ -202,23 +225,35 @@ try {
   await page.getByLabel('Search material guides',{exact:true}).fill('PLA');
   await page.screenshot({path:path.join(root,'test-results/material-library-filtered.png')});
   step('Material library search/family filters, empty/reset states, keyboard accordions, complete sourced properties and product details');
-  for (const [id,e] of Object.entries(examples)) {
+  for (const [id,entries] of Object.entries(examples)) {
     await visit('materials/'+id+'.html');
-    const photo=page.locator('.material-visual img');
-    await photo.evaluate(img=>img.decode());
-    assert.equal(await photo.getAttribute('alt'),e.alt);
-    assert.deepEqual(await photo.evaluate(img=>[img.naturalWidth,img.naturalHeight]),[e.width,e.height]);
-    assert.equal(await page.locator('.print-photo-link').getAttribute('href'),e.url);
-    assert.equal(await page.locator('.print-title').getAttribute('href'),e.url);
-    assert.ok((await page.locator('.material-visual figcaption').innerText()).includes(e.creator));
-    await page.locator('#prints .inline-sources > summary').click();
-    assert.ok((await page.locator('#prints').innerText()).includes(e.evidence));
+    const primary=entries.find(e=>e.image) || entries[0];
+    if (primary.image) {
+      assert.equal(await page.locator('.print-photo-link').getAttribute('href'),primary.url);
+      assert.equal(await page.locator('.print-title').getAttribute('href'),primary.url);
+    } else assert.equal(await page.locator('.material-visual img').count(),0);
+    assert.equal(await page.locator('#prints .print-story').count(),entries.length);
+    for (let i=0;i<entries.length;i++) {
+      const e=entries[i],story=page.locator('#prints .print-story').nth(i);
+      if (e.image) {
+        const photo=e===primary?page.locator('.material-visual img'):story.locator('.example-photo');
+        await photo.evaluate(img=>img.decode());
+        assert.equal(await photo.getAttribute('alt'),e.alt);
+        assert.deepEqual(await photo.evaluate(img=>[img.naturalWidth,img.naturalHeight]),[e.width,e.height]);
+      }
+      assert.equal(await story.locator('h3 a').getAttribute('href'),e.url);
+      await story.locator('.inline-sources > summary').click();
+      assert.ok((await story.innerText()).includes(e.evidence));
+      assert.ok((await story.innerText()).includes(e.creator));
+      assert.ok(await story.locator(`a[href="${e.license_url}"]`).count()>0);
+    }
     assert.equal(await page.locator('#prints .model-search-links a').count(),3);
     if(id==='pla')await page.screenshot({path:path.join(root,'test-results/printed-pla-guide.png')});
+    if(entries.length>1)await page.screenshot({path:path.join(root,`test-results/printed-${id}-examples.png`),fullPage:true});
   }
   await visit('materials/');
   await page.screenshot({path:path.join(root,'test-results/printed-material-library.png')});
-  step(`All ${Object.keys(examples).length} real print photos decode at recorded dimensions, with model links, creator credits, material evidence and license links`);
+  step(`All ${Object.values(examples).flat().length} creator-reported examples have model links, material evidence and license links; all curated photos decode at recorded dimensions`);
   for (const c of materials.cats) {
     const response=await page.goto(base+'materials/'+c.id+'.html',{waitUntil:'domcontentloaded'});
     assert.equal(response.status(),200,c.id);
