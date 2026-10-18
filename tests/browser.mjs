@@ -59,6 +59,7 @@ try {
     });
   }
   async function visit(file) {
+    await page.waitForLoadState('networkidle');
     const before=loads;
     const response=await page.goto(base+file,{waitUntil:'networkidle'});
     assert.equal(response.status(),200,file);
@@ -311,13 +312,11 @@ try {
   await visit('');
   await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Selection articles',exact:true}).click();
   assert.equal(new URL(page.url()).pathname,new URL(base+'articles/').pathname);
-  await page.waitForLoadState('networkidle');
   await visit('articles/');
   assert.ok(await page.locator('[data-article-card]').count()>0,'article hub has a published article');
   await page.screenshot({path:path.join(root,'test-results/article-index.png')});
   await page.locator('a[data-article-card][href="choosing-fdm-material-load-bearing-part.html"]').click();
   assert.equal(new URL(page.url()).pathname,new URL(base+articlePath).pathname);
-  await page.waitForLoadState('networkidle');
   await visit(articlePath);
   assert.equal(await page.locator('body.article-page').count(),1);
   assert.equal(await page.locator('main h1').innerText(),articleTitle);
