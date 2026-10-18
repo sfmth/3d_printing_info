@@ -7,7 +7,9 @@ from check_articles import strict_load_json, validate_evidence
 ROOT = Path(__file__).resolve().parents[1]
 E = lambda value: escape(str(value), quote=True)
 DETAIL_CONTEXT_FIELDS = {'recommended_filament_drying', 'recommended_chamber', 'orientation_support',
-                         'specimen_settings_scope', 'dry_status_definition', 'annealing', 'thermal_state'}
+                         'specimen_settings_scope', 'dry_status_definition', 'annealing', 'thermal_state',
+                         'filler_status', 'annealing_temperature_c', 'annealing_duration_h',
+                         'uptake_condition_is_separate', 'strength_endpoint'}
 
 
 def load_articles():
@@ -87,6 +89,8 @@ def context_label(key):
 
 
 def comparison_table(table, evidence):
+    if table.get('kind') == 'observations':
+        return observation_table(table, evidence)
     body = '<div class="comparison-group" id="table-' + E(table['id']) + '"><h3>' + E(table['title']) + '</h3>'
     caption_id = 'table-' + table['id'] + '-caption'
     body += '<p class="comparison-caption" id="' + E(caption_id) + '">' + E(table['caption']) + '</p>'
@@ -114,6 +118,25 @@ def comparison_table(table, evidence):
         body += '<a href="#series-' + E(sid) + '">Specimen &amp; processing details</a></td></tr>'
     body += '</tbody></table></div>'
     body += ''.join(paragraph(block, evidence) for block in table['notes'])
+    return body + '</div>'
+
+
+def observation_table(table, evidence):
+    """Retain categorical source findings without converting them to scores."""
+    tid = table['id']; caption_id = 'table-' + tid + '-caption'
+    body = '<div class="comparison-group" id="table-' + E(tid) + '"><h3>' + E(table['title']) + '</h3>'
+    body += '<p class="comparison-caption" id="' + E(caption_id) + '">' + E(table['caption']) + '</p>'
+    body += '<div class="table-scroll" role="region" aria-label="' + E(table['title']) + '" tabindex="0"><table class="evidence-table observation-table" aria-label="' + E(table['title']) + '" aria-describedby="' + E(caption_id) + '" data-evidence-table="' + E(tid) + '"><thead><tr><th scope="col">Grade, process &amp; evidence</th><th scope="col">Exposure conditions</th><th scope="col">Reported observation &amp; boundary</th></tr></thead><tbody>'
+    for row in table['rows']:
+        source = evidence['sources'][evidence['claims'][row['refs'][0]]['source_id']]
+        body += '<tr data-observation="' + E(row['id']) + '"><th scope="row">' + E(row['grade'])
+        for label, value in (('Process', row['process']), ('Orientation', row['orientation']), ('Conditioning', row['conditioning'])):
+            body += '<span class="result-context">' + E(label + ': ' + display(value)) + '</span>'
+        body += '<span class="result-context">' + E(source_kind(source)) + '</span></th><td>'
+        for key, value in row['exposure'].items():
+            body += '<span class="result-context">' + E(context_label(key) + ': ' + display(value)) + '</span>'
+        body += '</td><td>' + E(row['observation']) + '<br>' + ' · '.join(citation(evidence, ref) for ref in row['refs']) + '</td></tr>'
+    body += '</tbody></table></div>' + ''.join(paragraph(block, evidence) for block in table['notes'])
     return body + '</div>'
 
 

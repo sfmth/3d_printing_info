@@ -471,5 +471,94 @@ class GenericArticleTableTests(unittest.TestCase):
             self.validate()
 
 
+class ServiceEvidenceTests(unittest.TestCase):
+    def setUp(self):
+        self.evidence, self.articles = generic_documents()
+        self.article = self.articles['articles'][0]
+        self.series = self.evidence['series']['pla-horizontal']
+
+    def validate(self):
+        validate_evidence(self.evidence, self.articles, {'pla'})
+
+    def observation(self):
+        self.article['measurements'] = []
+        self.article['tables'] = [{
+            'id': 'immersion', 'kind': 'observations', 'title': 'Immersion observations',
+            'caption': 'Categorical findings are not numerical design values.', 'notes': [],
+            'rows': [{'id': 'pla-water', 'grade': 'Maker PLA Regular', 'material_id': 'pla',
+                      'process': 'FFF', 'orientation': None, 'conditioning': None,
+                      'exposure': {'method': 'Liquid immersion', 'chemical': 'Water',
+                                   'concentration': None, 'duration': '7 days',
+                                   'temperature': '23 °C', 'applied_stress': None},
+                      'observation': 'No visible change reported; detection limits absent.',
+                      'refs': ['load-path']}],
+        }]
+        return self.article['tables'][0]['rows'][0]
+
+    def test_categorical_observation_retains_unknowns_without_fake_measurements(self):
+        self.observation()
+        before = deepcopy((self.evidence, self.articles))
+        self.validate()
+        self.assertEqual(before, (self.evidence, self.articles))
+
+    def test_observation_requires_explicit_exposure_stress(self):
+        row = self.observation()
+        del row['exposure']['applied_stress']
+        with self.assertRaisesRegex(ValueError, 'missing fields: applied_stress'):
+            self.validate()
+
+    def test_observation_cannot_replace_unknown_with_zero(self):
+        row = self.observation()
+        row['exposure']['concentration'] = 0
+        with self.assertRaisesRegex(ValueError, 'expected nonempty text or null'):
+            self.validate()
+
+    def test_observation_cannot_relabel_a_numeric_measurement_as_a_claim(self):
+        row = self.observation()
+        row['refs'] = ['pla-modulus']
+        with self.assertRaisesRegex(ValueError, 'observation needs declared claim'):
+            self.validate()
+
+    def test_observation_cannot_combine_source_evidence_types(self):
+        row = self.observation()
+        self.evidence['sources']['independent-study'] = deepcopy(self.evidence['sources']['maker-tds'])
+        self.evidence['sources']['independent-study']['kind'] = 'independent-experiment'
+        self.evidence['claims']['other-finding'] = dict(source_id='independent-study', locator='Table 1', finding='A different experiment.')
+        self.article['claims'].append('other-finding')
+        row['refs'].append('other-finding')
+        with self.assertRaisesRegex(ValueError, 'single source and evidence type'):
+            self.validate()
+
+    def time_dependent(self, property='flexural_creep_modulus'):
+        self.evidence['measurements']['pla-modulus']['property'] = property
+        self.article['tables'][0]['columns'][0]['property'] = property
+        self.series['context'] = dict(control_mode='constant load', load='10 N', stress=None,
+                                      duration='170 h', humidity=None, strain=None)
+
+    def test_creep_requires_actual_control_and_applied_load(self):
+        self.time_dependent()
+        self.series['context']['load'] = None
+        with self.assertRaisesRegex(ValueError, 'reported load or stress'):
+            self.validate()
+
+    def test_unknown_humidity_is_explicit_not_omitted(self):
+        self.time_dependent()
+        del self.series['context']['humidity']
+        with self.assertRaisesRegex(ValueError, 'missing fields: humidity'):
+            self.validate()
+
+    def test_relaxation_requires_fixed_imposed_strain(self):
+        self.time_dependent('relaxation_residual_stress')
+        with self.assertRaisesRegex(ValueError, 'constant strain and reported imposed strain'):
+            self.validate()
+        self.series['context'].update(control_mode='constant strain', strain='2%')
+        self.validate()
+
+    def test_exposure_measurement_requires_duration_stress_and_humidity_fields(self):
+        self.series['context'] = {'exposure_method': 'QUV weathering'}
+        with self.assertRaisesRegex(ValueError, 'missing fields: applied_stress, duration, humidity'):
+            self.validate()
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -195,10 +195,16 @@ def run():
         assert 'Article revision: '+article['modified'] in html and 'Catalog values retain' not in html
         assert article['id']+'.html' in article_index
         tables=article.get('tables',[article.get('table')])
-        assert len([attrs for attrs in parsed.attrs('tr') if 'data-measurement' in attrs])==sum(len(table['rows']) for table in tables)
+        assert len([attrs for attrs in parsed.attrs('tr') if 'data-measurement' in attrs or 'data-observation' in attrs])==sum(len(table['rows']) for table in tables)
         if 'tables' in article:
             for table in tables:
                 assert 'table-'+table['id'] in parsed.ids
+                if table.get('kind') == 'observations':
+                    for row in table['rows']:
+                        assert 'data-observation="'+row['id']+'"' in html
+                        for value in [row['grade'],row['process'],row['orientation'],row['conditioning'],row['observation'],*row['exposure'].values()]:
+                            assert escape('Not reported' if value is None else value) in html
+                    continue
                 for row in table['rows']:
                     series=evidence['series'][row['series_id']]
                     assert 'data-test-series="'+row['series_id']+'"' in html

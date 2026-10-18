@@ -79,6 +79,25 @@ try {
       assert.equal(await target.locator('#table-'+table.id).count(),1);
       assert.equal(await rendered.getAttribute('aria-describedby'),'table-'+table.id+'-caption');
       assert.equal(await target.locator('#table-'+table.id+'-caption').innerText(),table.caption);
+      if(table.kind==='observations') {
+        assert.equal(await rendered.locator('tr[data-observation]').count(),table.rows.length);
+        for(const row of table.rows) {
+          const shown=rendered.locator(`tr[data-observation="${row.id}"]`);
+          const text=await shown.innerText();
+          for(const value of [row.grade,row.process,row.orientation,row.conditioning,row.observation,...Object.values(row.exposure)]) {
+            assert.ok(text.includes(value===null?'Not reported':value),row.id+' retains observation context');
+          }
+          const source=articleEvidence.sources[articleEvidence.claims[row.refs[0]].source_id];
+          assert.ok(text.toLowerCase().includes(source.kind.replaceAll('-',' ')));
+          for(const ref of row.refs) {
+            assert.equal(await shown.locator(`a.evidence-link[href="#evidence-${ref}"]`).count(),1);
+            assert.ok((await shown.locator('a.claim-citation').allTextContents()).length>0);
+            assert.ok((await shown.locator('a.claim-citation').evaluateAll(links=>links.map(a=>a.href))).includes(source.url));
+          }
+          for(const item of await shown.locator('.result-context').all()) assert.equal(await item.isVisible(),true);
+        }
+        continue;
+      }
       assert.equal(await rendered.locator('tr[data-test-series]').count(),table.rows.length);
       for(const column of table.columns) {
         assert.ok((await rendered.locator('thead').innerText()).includes(column.label),column.label);
@@ -89,7 +108,7 @@ try {
         const series=articleEvidence.series[row.series_id];
         const source=articleEvidence.sources[series.source_id];
         assert.ok((await shown.locator('th').innerText()).includes(series.grade));
-        const detailFields=new Set(['recommended_filament_drying','recommended_chamber','orientation_support','specimen_settings_scope','dry_status_definition','annealing','thermal_state']);
+        const detailFields=new Set(['recommended_filament_drying','recommended_chamber','orientation_support','specimen_settings_scope','dry_status_definition','annealing','thermal_state','filler_status','annealing_temperature_c','annealing_duration_h','uptake_condition_is_separate','strength_endpoint']);
         const adjacentContext=Object.entries(series.context || {}).filter(([key])=>!detailFields.has(key));
         const context=shown.locator('.result-context');
         assert.ok(await context.count()>=4+adjacentContext.length,'adjacent specimen and source conditions');
@@ -445,10 +464,12 @@ try {
     assert.equal(metadata.mainEntity.dateModified,article.modified);
     await verifyGenericTables(page,article);
     const methodLink=page.locator('table[data-evidence-table] a[href^="#series-"]').first();
-    const methodTarget=await methodLink.getAttribute('href');
-    await methodLink.click();
-    assert.equal(await page.locator(methodTarget+' dl').isVisible(),true,'table link opens its specimen conditions');
-    const evidenceLink=page.locator('td[data-result] a.evidence-link').first();
+    if(await methodLink.count()) {
+      const methodTarget=await methodLink.getAttribute('href');
+      await methodLink.click();
+      assert.equal(await page.locator(methodTarget+' dl').isVisible(),true,'table link opens its specimen conditions');
+    }
+    const evidenceLink=page.locator('table[data-evidence-table] a.evidence-link').first();
     const evidenceTarget=await evidenceLink.getAttribute('href');
     await evidenceLink.click();
     assert.equal(await page.locator(evidenceTarget).isVisible(),true,'result link opens its precise evidence record');
@@ -592,10 +613,12 @@ try {
     assert.equal(await staticPage.locator('main h1').innerText(),article.title);
     await verifyGenericTables(staticPage,article);
     const methodLink=staticPage.locator('table[data-evidence-table] a[href^="#series-"]').first();
-    const methodTarget=await methodLink.getAttribute('href');
-    await methodLink.click();
-    assert.equal(await staticPage.locator(methodTarget+' dl').isVisible(),true,'specimen context opens through its fragment without JavaScript');
-    const evidenceLink=staticPage.locator('td[data-result] a.evidence-link').first();
+    if(await methodLink.count()) {
+      const methodTarget=await methodLink.getAttribute('href');
+      await methodLink.click();
+      assert.equal(await staticPage.locator(methodTarget+' dl').isVisible(),true,'specimen context opens through its fragment without JavaScript');
+    }
+    const evidenceLink=staticPage.locator('table[data-evidence-table] a.evidence-link').first();
     const target=await evidenceLink.getAttribute('href');
     await evidenceLink.click();
     assert.equal(await staticPage.locator(target).isVisible(),true,'evidence record opens without JavaScript');

@@ -201,6 +201,9 @@ def validate_evidence(evidence, articles, material_ids):
                     _text(value, field)
                 else:
                     _number(value, field)
+            if 'exposure_method' in context:
+                _required(context, {'exposure_method', 'duration', 'applied_stress', 'humidity'}, f'{where}.context')
+                _text(context['exposure_method'], f'{where}.context.exposure_method', nullable=True)
 
     for mid, item in measurements.items():
         where = f'measurement {mid}'
@@ -220,6 +223,18 @@ def validate_evidence(evidence, articles, material_ids):
             if item['qualifier'] not in {'=', '≈', '~'}:
                 _fail(where, 'a bound cannot carry an exact-value spread')
         test_series = series[item['series_id']]
+        if item['property'] in {'flexural_creep_modulus', 'tensile_creep_modulus',
+                                'relaxation_maximum_stress', 'relaxation_residual_stress'}:
+            if item['unit'] != 'MPa':
+                _fail(where, 'creep modulus and relaxation stress require MPa')
+            context = test_series.get('context', {})
+            _required(context, {'control_mode', 'load', 'stress', 'duration', 'humidity', 'strain'}, f'{where}.context')
+            _text(context['duration'], f'{where}.context.duration')
+            if item['property'].startswith('relaxation_'):
+                if context['control_mode'] != 'constant strain' or context['strain'] is None:
+                    _fail(where, 'relaxation stress requires constant strain and reported imposed strain')
+            elif context['control_mode'] not in {'constant load', 'constant stress'} or not (context['load'] or context['stress']):
+                _fail(where, 'creep modulus requires constant load/stress and reported load or stress')
         if item['property'] == 'heat_deflection_temperature':
             if item['unit'] != '°C':
                 _fail(where, 'heat_deflection_temperature requires °C')
@@ -322,6 +337,44 @@ def validate_evidence(evidence, articles, material_ids):
             table_ids = set()
             for table in tables:
                 context = f'{where}.table'
+                if table.get('kind') == 'observations':
+                    _required(table, {'id', 'kind', 'title', 'caption', 'rows', 'notes'}, context, exact=True)
+                    _slug(table['id'], f'{context}.id')
+                    if table['id'] in table_ids or 'table-' + table['id'] in section_ids:
+                        _fail(where, 'duplicate or colliding table ID')
+                    table_ids.add(table['id'])
+                    for key in ('title', 'caption'):
+                        _text(table[key], f'{context}.{key}')
+                    blocks(table['notes'], f'{context}.notes')
+                    if not isinstance(table['rows'], list) or not table['rows']:
+                        _fail(context, 'observation table needs rows')
+                    row_ids = set()
+                    for row in table['rows']:
+                        _required(row, {'id', 'grade', 'material_id', 'process', 'orientation',
+                                        'conditioning', 'exposure', 'observation', 'refs'}, context, exact=True)
+                        _slug(row['id'], f'{context}.row.id')
+                        if row['id'] in row_ids:
+                            _fail(context, 'duplicate observation row')
+                        row_ids.add(row['id'])
+                        for key in ('grade', 'observation'):
+                            _text(row[key], f'{context}.row.{key}')
+                        for key in ('orientation', 'conditioning'):
+                            _text(row[key], f'{context}.row.{key}', nullable=True)
+                        if row['process'] is not None and row['process'] not in PROCESSES:
+                            _fail(context, 'observation process must identify a known process or null')
+                        if row['material_id'] not in materials:
+                            _fail(context, 'observation material is outside article scope')
+                        _required(row['exposure'], {'method', 'chemical', 'concentration', 'duration',
+                                                   'temperature', 'applied_stress'}, context, exact=True)
+                        for key, value in row['exposure'].items():
+                            _text(value, f'{context}.exposure.{key}', nullable=key != 'method')
+                        refs = _ids(row['refs'], f'{context}.row.refs')
+                        if not refs or not refs <= declared_claims:
+                            _fail(context, 'observation needs declared claim references, not numeric measurements')
+                        if len({claims[ref]['source_id'] for ref in refs}) != 1:
+                            _fail(context, 'observation row must retain a single source and evidence type')
+                        used.update(refs)
+                    continue
                 _required(table, {'id', 'title', 'caption', 'columns', 'rows', 'notes'}, context, exact=True)
                 _slug(table['id'], f'{context}.id')
                 if table['id'] in table_ids:
