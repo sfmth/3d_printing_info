@@ -12,6 +12,7 @@ const prefix = '/3d_printing_info/';
 const catalog = async name => JSON.parse((await fs.readFile(path.join(root,name),'utf8')).match(/<script[^>]*id="payload"[^>]*>([\s\S]*?)<\/script>/)[1]);
 const printers = await catalog('comparison.html'), materials = await catalog('filaments.html');
 const examples = Object.fromEntries(Object.entries(JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'))).map(([id,entries])=>[id,Array.isArray(entries)?entries:[entries]]));
+const applications = JSON.parse(await fs.readFile(path.join(root,'data/application-examples.json'),'utf8'));
 const productCount = materials.cats.reduce((n,c)=>n+c.pr.length,0);
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.xml':'application/xml','.webmanifest':'application/manifest+json'};
 const server = http.createServer(async (req,res) => {
@@ -259,8 +260,27 @@ try {
     assert.equal(response.status(),200,c.id);
     assert.match(await page.locator('h1').innerText(),new RegExp(c.n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
     assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://sfmth.github.io/3d_printing_info/materials/'+c.id+'.html');
+    const shown=await page.locator('[data-application-example]').evaluateAll(cards=>cards.map(card=>({
+      title:card.querySelector('h3').textContent,
+      use:card.querySelector('.application-use').textContent,
+      reasons:[...card.querySelectorAll('.application-reasons dd')].map(x=>x.textContent),
+      basis:card.dataset.exampleBasis,
+      model:card.querySelector('.application-model')?.getAttribute('href') || null,
+      sources:card.querySelectorAll('.application-sources dl>div').length
+    })));
+    assert.equal(shown.length,5,c.id);
+    assert.deepEqual(shown,applications[c.id].map(e=>({title:e.title,use:e.use,reasons:[e.why,e.advantage,e.tradeoff],basis:e.print_url?'documented':'idea',model:e.print_url||null,sources:e.fields.length})),c.id);
   }
-  step(`All ${materials.cats.length} material guide URLs render with matching canonical metadata`);
+  step(`All ${materials.cats.length} material guides render five complete, sourced application explanations each, with accurate documented/idea labels and canonical metadata`);
+  for(const id of ['pla','peba','pa-aramid']) {
+    await visit('materials/'+id+'.html');
+    const card=page.locator('[data-application-example]').first();
+    assert.equal(await card.locator('.application-reasons').isVisible(),true);
+    await card.locator('.application-sources > summary').click();
+    assert.equal(await card.locator('.application-evidence').isVisible(),true);
+    await page.locator('#prints').scrollIntoViewIfNeeded();
+    await page.screenshot({path:path.join(root,`test-results/application-${id}.png`)});
+  }
   for (const c of printers.cats) {
     const response=await page.goto(base+'printers/'+c.id+'.html',{waitUntil:'domcontentloaded'});
     assert.equal(response.status(),200,c.id);
@@ -280,6 +300,9 @@ try {
   await page.screenshot({path:path.join(root,'test-results/mobile-filaments.png')});
   await page.goto(base+'materials/peba.html',{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'guide mobile width');
+  assert.equal(await page.locator('[data-application-example]').count(),5);
+  await page.locator('#prints').scrollIntoViewIfNeeded();
+  await page.screenshot({path:path.join(root,'test-results/mobile-application-examples.png')});
   await page.screenshot({path:path.join(root,'test-results/mobile-guide.png')});
   await page.goto(base+'materials/pla.html',{waitUntil:'networkidle'});
   await page.locator('.material-visual img').evaluate(img=>img.decode());
@@ -309,6 +332,10 @@ try {
   assert.equal(await staticPage.locator('.material-search').isVisible(),false);
   await staticPage.locator('[data-family-group="PLA"] > summary').click();
   await staticPage.locator('[data-material="pla"] .material-card-link').click();
+  assert.equal(await staticPage.locator('[data-application-example]').count(),5,'five explanations without JavaScript');
+  assert.equal(await staticPage.locator('.application-reasons').first().isVisible(),true);
+  await staticPage.locator('.application-sources > summary').first().click();
+  assert.equal(await staticPage.locator('.application-evidence').first().isVisible(),true);
   await staticPage.locator('#spec-b > summary').click();
   assert.equal(await staticPage.locator('#spec-b table').isVisible(),true);
   await staticPage.locator('#spec-b .row-sources > summary').first().click();

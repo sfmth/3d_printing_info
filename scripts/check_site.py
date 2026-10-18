@@ -13,7 +13,7 @@ import statistics
 import tempfile
 import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, payload, counts
-from material_design import EXAMPLES
+from material_design import EXAMPLES, APPLICATIONS
 
 
 def digest(x):
@@ -124,6 +124,22 @@ def run():
         for c in d['cats']: assert c['n'].replace('&','&amp;') in static or c['n'] in static,(name,c['id'])
         print(f'{name}: {cs}; all original records and sources preserved')
     filaments=datasets['filaments.html']; printers=datasets['comparison.html']
+    assert set(APPLICATIONS)=={c['id'] for c in filaments['cats']},'Every material must have application examples'
+    for c in filaments['cats']:
+        entries=APPLICATIONS[c['id']]
+        assert len(entries)==5,(c['id'],'expected five application examples')
+        assert len({e['title'].casefold().strip() for e in entries})==5,(c['id'],'duplicate application titles')
+        documented={e['url'] for e in EXAMPLES.get(c['id'],[])}
+        for e in entries:
+            for key in ('title','use','why','advantage','tradeoff'):
+                assert isinstance(e.get(key),str) and e[key].strip(),(c['id'],'empty application explanation',key)
+            assert 2<=len(e['fields'])<=5 and len(set(e['fields']))==len(e['fields']),(c['id'],'application evidence fields')
+            assert set(e['fields'])<=set(c['sp']),(c['id'],'unknown application evidence field')
+            assert any(c['sp'][fid].get('s') for fid in e['fields']) or e.get('external_sources'),(c['id'],'application has no cited evidence')
+            if e.get('print_url'):assert e['print_url'] in documented,(c['id'],'unverified documented-print label')
+            for source in e.get('external_sources',[]):
+                assert source['title'] and source['url'].startswith('https://'),(c['id'],'invalid application source')
+        assert documented<={e.get('print_url') for e in entries},(c['id'],'documented print has no material-choice explanation')
     retail=[p for c in filaments['cats'] for p in c['pr'] if p.get('retail')]
     assert {'Inland','Cookiecad','Insignia'} <= {p['b'] for p in retail}
     retail_page=(ROOT/'filaments.html').read_text()
@@ -201,6 +217,11 @@ def run():
                     if source.get('u'):assert escape(source['u']) in html,(directory,c['id'],sid)
             if directory=='materials':
                 parsed=Page(html)
+                assert len([a for a in parsed.attrs('article') if 'data-application-example' in a])==5,(c['id'],'missing application cards')
+                for e in APPLICATIONS[c['id']]:
+                    for key in ('title','use','why','advantage','tradeoff'):
+                        assert escape(e[key]) in html,(c['id'],'missing application content',key)
+                    for source in e.get('external_sources',[]):assert escape(source['url']) in html,(c['id'],'missing application source')
                 assert not any(a.get('src','').startswith('../assets/materials/') for a in parsed.attrs('img')),c['id']
                 assert 'prints' in parsed.ids,c['id']
                 for host in ('www.printables.com/search/models?q=','makerworld.com/en/search/models?keyword=','www.thingiverse.com/search?q='):
@@ -210,7 +231,7 @@ def run():
                         if e.get('image'):
                             assert any(a.get('src')=='../'+e['image'] and a.get('alt')==e['alt'] for a in parsed.attrs('img')),c['id']
                         for key in ('url','license_url','creator','evidence','note','checked'): assert escape(e[key]) in html,(c['id'],'missing example provenance',key)
-                else:assert 'No verified photo example is curated for this exact material yet.' in html,c['id']
+                else:assert 'No creator-reported build is linked for this exact material yet.' in html,c['id']
                 # Disclosure changes visibility, never the complete record or its source links.
                 for p in c.get('pr',[]):
                     for key in ('p','pn','nt'): assert escape(p.get(key,'')) in html,(c['id'],'missing product text',key)
