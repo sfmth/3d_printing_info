@@ -1,0 +1,2675 @@
+{
+  "pla-hs": {
+    "paragraphs": [
+      "High-speed PLA primarily changes manufacturing throughput. Its melt behavior allows more plastic through the nozzle before underextrusion becomes the bottleneck. This matters most on long walls, infill and repeated parts where the printer can actually sustain that flow; a small, intricate model may spend most of its time limited by acceleration or cooling instead.",
+      "The material still fills much the same role as ordinary PLA: rigid models and prototypes made on accessible equipment. High flow is not a promise of stronger parts. Polymaker’s PolySonic data show that printing speed changes mechanical results, and the formulation retains PLA-like limits in heat resistance and sustained-load behavior. A speed label should therefore be treated as a processing advantage, rather than a new service-temperature class."
+    ],
+    "fields": [
+      "A1",
+      "B7",
+      "B5",
+      "E7",
+      "E11",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "PolySonic PLA Technical Data Sheet V5.4",
+        "url": "https://cdn.shopify.com/s/files/1/0548/7299/7945/files/PolySonic_PLA_TDS_EN_V5.4.pdf?v=1731949179"
+      },
+      {
+        "title": "Polymaker Launches New High-Speed 3D Printing Filament — PolySonic PLA & PLA Pro",
+        "url": "https://polymaker.com/polysonic-polymakers-new-family-of-high-speed-filament-shows-the-future-of-high-speed-3d-printing/"
+      }
+    ],
+    "examples": []
+  },
+  "pla-matte": {
+    "paragraphs": [
+      "Matte PLA is mainly a surface-finish choice. Mineral additives scatter light, reducing the shiny highlights that make extrusion lines obvious. That is useful in appearance models, architectural presentation work and visible indoor parts, where readers need to see the shape rather than a glossy reflection. The finish can reduce the amount of sanding or coating needed for a presentable model.",
+      "The filler should not be read as reinforcement. The representative data include lower flexural strength than unfilled PLA, and thin details remain brittle. A matte housing may look more finished while being a worse choice for an impact-loaded latch. Its visual advantage also does not remove PLA’s limitations under heat and sustained loading."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "I6",
+      "E4",
+      "E9",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "Bambu Filament Technical Data Sheet V3.0 — PLA Matte",
+        "url": "https://store.bblcdn.com/s7/default/5b061f2feeac4ba88f355a33248bbda7/Bambu_PLA_Matte_Technical_Data_Sheet.pdf"
+      },
+      {
+        "title": "PLA Mineral — product and technical data",
+        "url": "https://fiberlogy.com/en/fiberlogy-filaments/pla-mineral/"
+      }
+    ],
+    "examples": []
+  },
+  "pla": {
+    "paragraphs": [
+      "PLA is useful early in a design because it reproduces geometry with little warping and does not require a heated chamber. Its stiffness makes concept models feel solid, while fine detail and low shrinkage help reveal interference between parts. Prusa lists concept models, prototypes and low-wear toys among its main uses; its sample prints also include an audio volume knob.",
+      "That makes PLA a practical material for checking shape, assembly and control placement. It is less convincing as evidence that the final part will survive service: heat, impacts and sustained load can expose weaknesses that an unloaded fit model never sees. PLA can creep at room temperature and soften in warm surroundings, even when the print initially feels very rigid."
+    ],
+    "fields": [
+      "A7",
+      "B8",
+      "E2",
+      "E11",
+      "F1",
+      "I6"
+    ],
+    "sources": [
+      {
+        "title": "Prusament PLA Technical Datasheet v1.1",
+        "url": "https://prusament.com/wp-content/uploads/2022/10/PLA_Prusament_TDS_2021_10_EN.pdf"
+      },
+      {
+        "title": "PLA — material guide",
+        "url": "https://help.prusa3d.com/article/pla_2062"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Concept models and prototypes",
+        "text": "Prusa identifies concept models, prototypes and low-wear toys as the main uses of standard PLA, emphasizing detail and low warping rather than demanding service conditions.",
+        "process": "FDM",
+        "scope": "Standard PLA filament",
+        "evidence": "manufacturer-application",
+        "url": "https://help.prusa3d.com/article/pla_2062",
+        "source_title": "Prusa Knowledge Base — PLA"
+      }
+    ]
+  },
+  "pla-plus": {
+    "paragraphs": [
+      "PLA+ and tough PLA are aimed at the gap between a brittle appearance model and a part that has to tolerate handling. Impact modifiers allow the tested grades to absorb more energy before breaking, which matters for enclosures and other functional prototypes that get knocked or dropped during use. They retain the relatively straightforward printing behavior that makes PLA attractive for iteration.",
+      "The trade is often lower stiffness and tensile strength. A tough part may survive a bump better yet deflect more under the same load. “PLA+” is also a supplier label rather than one standardized composition, so the individual product data matter. Published creep and heat-deflection results show why toughness alone does not make these grades suitable for hot or continuously loaded parts."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E2",
+      "E6",
+      "E11",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "PolyMax PLA Technical Data Sheet V5.4",
+        "url": "https://cdn.shopify.com/s/files/1/0548/7299/7945/files/PolyMax_PLA_TDS_EN_V5.4.pdf?v=1731948970"
+      },
+      {
+        "title": "Bambu Filament Technical Data Sheet V3.0 — PLA Tough+",
+        "url": "https://store.bblcdn.com/s1/default/788ce5d74ab94508a6e3fcfee11159a5/Bambu_PLA_Tough_Technical_Data_Sheet.pdf"
+      }
+    ],
+    "examples": []
+  },
+  "pla-recycled": {
+    "paragraphs": [
+      "Recycled PLA serves ordinary PLA applications when the feedstock’s recovered content matters more than a precisely controlled color. Prusament’s recycled PLA is made from manufacturing scrap and has published mechanical results close to the corresponding virgin material. That makes recycled feedstock a credible choice for repeated models and prototypes rather than merely a decorative novelty.",
+      "The useful distinction is the actual producer’s consistency: diameter tolerance, contamination control, color and documented properties matter more than the word “recycled” by itself. It remains PLA, with limited heat resistance and brittle failure behavior. Recycled content is a meaningful purchasing attribute, but it does not by itself establish the environmental impact of an entire printed part or its disposal route."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "A8",
+      "E2",
+      "E9",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "Prusament PLA Recycled Technical Datasheet v1.0",
+        "url": "https://prusament.com/wp-content/uploads/2021/12/7_PLA-Recycled_Prusament_TDS_2021_V4.pdf"
+      },
+      {
+        "title": "Prusament rPLA Corn Pigment 1kg — product page",
+        "url": "https://www.prusa3d.com/en/product/prusament-rpla-corn-pigment-1kg/"
+      },
+      {
+        "title": "Filamentive PLA (recycled) — product page",
+        "url": "https://www.filamentive.com/recycled-pla/"
+      }
+    ],
+    "examples": []
+  },
+  "pla-silk": {
+    "paragraphs": [
+      "Silk PLA is chosen for the way a surface catches light. Gloss-forming additives create reflective highlights on sculptures, ornaments and decorative models, often avoiding a separate glossy coating. The existing planetary-gear print illustrates a visually effective use in a gently handled teaching model; it should not be mistaken for evidence that silk PLA is a good engineering gear material.",
+      "Tested silk-PLA grades have limited elongation and weak layer performance. Thin stems, screw bosses and loaded gear teeth can therefore be poor matches despite an attractive finish. Sanding also removes the very gloss the material was selected for. Its value is usually a finished appearance straight from printing, rather than improved load-bearing capability."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E3",
+      "E8",
+      "I6"
+    ],
+    "sources": [
+      {
+        "title": "Bambu Filament Technical Data Sheet V1.0 — PLA Silk+",
+        "url": "https://store.bblcdn.com/s7/default/3d4344cb7ecc4daf98a0d53c2fdb39b4/Bambu_PLA_Silk__Technical_Data_Sheet.pdf"
+      }
+    ],
+    "examples": []
+  },
+  "pla-cf": {
+    "paragraphs": [
+      "Chopped carbon fibre makes PLA useful where stiffness and a matte surface matter more than toughness. The higher modulus reduces elastic deflection for a given part geometry; the textured finish can also make visible panels look more uniform. The compact ATX case in the gallery was explicitly printed in PLA-CF for its finish, a more defensible interpretation than assuming the fibre was needed for strength.",
+      "Tensile strength and strength across layers do not necessarily improve, and brittle failure remains a concern. Fibre-filled PLA also retains the base polymer’s heat and creep limitations. Its engineering role is therefore a stiff, easily produced composite part within those limits, rather than a substitute for continuous-fibre laminates or a high-temperature nylon composite. The abrasive filler additionally requires wear-resistant printing hardware."
+    ],
+    "fields": [
+      "A7",
+      "E2",
+      "E8",
+      "E9",
+      "F1",
+      "C1"
+    ],
+    "sources": [
+      {
+        "title": "Bambu Filament Technical Data Sheet V4.0 — PLA-CF",
+        "url": "https://store.bblcdn.com/842f399d4e274507953a5231126ec8c1.pdf"
+      },
+      {
+        "title": "PolyLite PLA-CF Technical Data Sheet V5.4",
+        "url": "https://cdn.shopify.com/s/files/1/0548/7299/7945/files/PolyLite_PLA-CF_TDS_EN_V5.4.pdf"
+      },
+      {
+        "title": "CarbonX PLA+CF Technical Data Sheet v3",
+        "url": "https://cdn.shopify.com/s/files/1/0625/4185/6821/files/CarbonX_CF_PLA_TDS_v3.pdf"
+      }
+    ],
+    "examples": []
+  },
+  "pla-gf": {
+    "paragraphs": [
+      "Glass-filled PLA is a more substantial engineering variation than a visual-effect PLA. The fibres increase stiffness, and specifically formulated high-temperature grades can develop better heat-deflection performance after annealing. For HT-PLA-GF, Polymaker reports separate as-printed and annealed results; that distinction matters when comparing it with ordinary PLA or another supplier’s glass-filled grade.",
+      "The resulting material is rigid but brittle, particularly across printed layers. It is therefore a poor default for parts whose main requirement is surviving impacts or repeated flexing. Annealing must also be considered part of manufacturing rather than an optional label: the final dimensions and properties are those of the treated part. A measured HDT at a stated load is not a continuous-use temperature for every shape and stress level."
+    ],
+    "fields": [
+      "A1",
+      "E2",
+      "E3",
+      "E8",
+      "F1",
+      "F6"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker HT-PLA-GF Technical Data Sheet V1.1",
+        "url": "https://cdn.shopify.com/s/files/1/0548/7299/7945/files/Polymaker_HT-PLA-GF_TDS_EN_V1.1.pdf"
+      },
+      {
+        "title": "eSUN ePLA-GF Technical Data Sheet V1.0 (Nov 2023)",
+        "url": "https://3d.nice-cdn.com/upload/file/eSUN_PLA-GF_Filament_TDS_V1.0_1_.pdf"
+      }
+    ],
+    "examples": []
+  },
+  "pla-glow": {
+    "paragraphs": [
+      "Glow PLA adds phosphorescence: material exposed to light continues emitting visible light afterwards. Its role is therefore passive visual identification and decorative effects, rather than a mechanical improvement. Common uses include signage, novelty objects and cosplay. Because brightness depends on the amount of glowing material, a thin outline and a thick inset can give noticeably different results.",
+      "The useful effect fades after charging and depends on the viewing conditions, so ordinary glow filament should not be treated as a qualified emergency-sign material. The additive is abrasive, making nozzle wear a practical cost even for purely decorative printing. The underlying part still has PLA-like heat limits and can remain brittle."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "I6",
+      "C1",
+      "E9",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "Bambu Filament Technical Data Sheet — PLA Glow",
+        "url": "https://store.bblcdn.com/cd34cf072d14484bbf027290d16abe9b.pdf"
+      },
+      {
+        "title": "Safety Data Sheet SDS20251127A12 — Bambu PLA Glow",
+        "url": "https://store.bblcdn.com/s7/default/4a35986db81f466fa7ff4f84344ef57a/SDS20251127A12_Bambu_PLA_Glow.pdf"
+      },
+      {
+        "title": "PLA Usage Guide",
+        "url": "https://wiki.bambulab.com/en/filament/pla"
+      }
+    ],
+    "examples": []
+  },
+  "lw-pla": {
+    "paragraphs": [
+      "LW-PLA addresses mass rather than maximum strength. Its clearest established role is model aircraft, where reducing skin and airframe weight changes the aircraft’s overall weight budget. colorFabb also lists cosplay, where a large shell can become more comfortable to wear. Foaming permits a lower-density printed volume instead of merely removing infill from an otherwise dense material.",
+      "Active-foaming grades expand at the nozzle and need temperature and flow calibrated together. Pre-foamed grades arrive at reduced density and do not respond the same way. Lower density comes with lower stiffness and strength, while foaming also changes surface finish and dimensional behavior. The gallery’s free-flight airplane is a mixed-material assembly, a useful reminder that lightweight printed shells and separate reinforcement often perform different jobs."
+    ],
+    "fields": [
+      "A1",
+      "A2",
+      "A7",
+      "E2",
+      "E8",
+      "I6"
+    ],
+    "sources": [
+      {
+        "title": "Bambu Filament Technical Data Sheet V4.0 — PLA Aero",
+        "url": "https://store.bblcdn.com/cbc8b808aaf84ead9bb3b0b9b43e66af.pdf"
+      },
+      {
+        "title": "PolyLite LW-PLA Technical Data Sheet (V7.0)",
+        "url": "https://cdn.shopify.com/s/files/1/0548/7299/7945/files/PolyLite_LW-PLA_TDS_US_V5.4.pdf?v=1775842318"
+      },
+      {
+        "title": "LW-PLA technical data sheet",
+        "url": "https://colorfabb.us/lw-pla-natural"
+      }
+    ],
+    "examples": [
+      {
+        "title": "RC aircraft and cosplay",
+        "text": "colorFabb lists RC planes and cosplay for its active-foaming LW-PLA. In both, lower printed density reduces the mass of a large shell or airframe.",
+        "process": "FDM",
+        "scope": "colorFabb LW-PLA active-foaming filament",
+        "evidence": "manufacturer-application",
+        "url": "https://colorfabb.us/lw-pla-natural",
+        "source_title": "colorFabb — LW-PLA Natural"
+      }
+    ]
+  },
+  "pla-metal": {
+    "paragraphs": [
+      "Real metal-filled PLA is useful when surface finishing and weight are part of the design. Bronze, copper or iron powder can give an object a much heavier feel than ordinary PLA, and polishing exposes metal particles at the surface. This is a material choice for sculpture, decorative hardware and replicas where metallic appearance should extend beyond a coat of paint.",
+      "The benefit comes from the filler, while a polymer matrix still holds the object together. It does not turn the print into a metal casting with metal-like heat resistance or structural behavior. Finishing can be substantial work, and the dense filler adds weight as well as nozzle wear. Product names also need checking: a metallic-colored filament is not necessarily a metal-powder composite."
+    ],
+    "fields": [
+      "A1",
+      "A2",
+      "A7",
+      "I1",
+      "C2",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "bronzeFill technical data sheet",
+        "url": "https://colorfabb.com/bronzefill"
+      },
+      {
+        "title": "Magnetic Iron PLA — product page and technical data",
+        "url": "https://proto-pasta.com/products/magnetic-iron-pla"
+      },
+      {
+        "title": "PLA Metal — product page",
+        "url": "https://us.store.bambulab.com/products/pla-metal"
+      },
+      {
+        "title": "colorFabb — Octolamp",
+        "url": "https://colorfabb.com/octolamp"
+      },
+      {
+        "title": "colorFabb — Ancient Greek Helmet",
+        "url": "https://colorfabb.com/ancient-greek-helmet"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Octolamp ceiling sculpture",
+        "text": "colorFabb documents Esteban Pacheco’s 156-part bronzeFill octopus lamp. He selected the material for polishing and an oxidized antique surface; the account also records substantial finishing work and a heavy completed assembly.",
+        "process": "FDM",
+        "scope": "colorFabb bronzeFill, PLA/PHA with bronze powder",
+        "evidence": "case-study",
+        "url": "https://colorfabb.com/octolamp",
+        "source_title": "colorFabb — Octolamp"
+      },
+      {
+        "title": "Ancient Greek helmet replica",
+        "text": "Andreas Mielonen printed a scaled helmet in bronzeFill on an Ultimaker 2+, then sanded and patinated it. The material supplied a real bronze-containing surface suitable for the intended aged appearance.",
+        "process": "FDM",
+        "scope": "colorFabb bronzeFill, PLA/PHA with bronze powder",
+        "evidence": "case-study",
+        "url": "https://colorfabb.com/ancient-greek-helmet",
+        "source_title": "colorFabb — Ancient Greek Helmet"
+      }
+    ]
+  },
+  "pla-pha": {
+    "paragraphs": [
+      "PLA/PHA blends are intended to make ordinary PLA printing less brittle while retaining a rigid part. That is useful in general model making and handled prototypes, where a small amount of additional ductility can matter more than squeezing out the highest stiffness. The blend is an adjustment to PLA’s balance of properties, rather than a flexible material or a universal upgrade.",
+      "The actual formulation matters: colorFabb uses a PLA/PHA base in products with other fillers too, and those composites should not inherit the unfilled blend’s properties. Published data do not establish improved creep performance for the blend, and outdoor durability remains limited. Selection should follow the chosen product’s mechanical data rather than an assumption that adding PHA solves all of PLA’s weaknesses."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E2",
+      "E3",
+      "E9",
+      "E11"
+    ],
+    "sources": [
+      {
+        "title": "PLA/PHA technical data sheet",
+        "url": "https://colorfabb.com/pla-pha"
+      }
+    ],
+    "examples": []
+  },
+  "pla-stone": {
+    "paragraphs": [
+      "Stone-filled PLA is selected to reproduce a mineral surface. Architectural models, sculpture and display props benefit from a matte, stone-like texture that would otherwise have to be built through finishing. Depending on the formulation, the mineral filler also changes density and how the surface sands. This is primarily a way to achieve a particular visual and tactile result.",
+      "That result should not be confused with the behavior of real stone. The material remains a polymer composite with PLA-like heat limits, brittle details and limited outdoor durability. Nor are all stone-effect products equivalent: commercial grades have substantially different filler loading and density, so a marble-like pattern alone says little about engineering performance."
+    ],
+    "fields": [
+      "A1",
+      "A2",
+      "A7",
+      "I1",
+      "E9",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "StoneFil safety data sheet",
+        "url": "https://www.formfutura.com/stonefil"
+      },
+      {
+        "title": "Bambu Filament Technical Data Sheet — PLA Marble",
+        "url": "https://store.bblcdn.com/b81e083c7d1f4e2182ef749d48f9ec86.pdf"
+      }
+    ],
+    "examples": []
+  },
+  "pla-wood": {
+    "paragraphs": [
+      "Wood-filled PLA is valuable in model making and decorative work because it can be sanded and stained to resemble timber. The filler contributes to the surface itself, allowing a printed ornament or miniature to take a wood-like finish without recreating every visual cue in paint. colorFabb’s woodFill uses wood fibre in a PLA/PHA base, while other listed grades use different formulations.",
+      "The material does not gain wood’s directional structural behavior from the appearance. The representative printed data show reduced strength, and moisture sensitivity plus particle-related clogging make preparation more demanding than plain PLA. Its most convincing applications use the printed geometry and timber-like finish together, while leaving highly loaded connections and repeated-impact duties to a better suited material."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "I1",
+      "E1",
+      "D1",
+      "C3"
+    ],
+    "sources": [
+      {
+        "title": "Bambu Filament Technical Data Sheet — PLA Wood",
+        "url": "https://store.bblcdn.com/s4/default/6fda0ae88e5a4e66bb5d58f2968eee42/Bambus_PLA_Wood_Technical_Data_Sheet.pdf"
+      },
+      {
+        "title": "woodFill technical data sheet",
+        "url": "https://colorfabb.com/woodfill"
+      },
+      {
+        "title": "FiberWood technical data sheet",
+        "url": "https://fiberlogy.com/en/fiberlogy-filaments/fiberwood/"
+      }
+    ],
+    "examples": []
+  },
+  "pet-cf": {
+    "paragraphs": [
+      "PET-CF occupies a higher-temperature engineering niche than PETG-CF because the PET matrix can crystallize. Polymaker positions PET-CF17 for automotive, robotics and industrial components where stiffness and thermal stability matter. That makes the category relevant to rigid end-use parts and tooling, provided the material has received the processing needed to obtain the quoted properties.",
+      "Annealing is central to that distinction. Polymaker states that it improves heat resistance and stiffness but does not improve impact resistance or layer adhesion; thin features can also deform during the heat treatment. PET-CF remains brittle and direction-dependent, so high in-plane strength should not be read as equivalent strength across layers or reliable flexural-fatigue performance."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E2",
+      "E8",
+      "E9",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "Fiberon PET-CF17 — engineering applications and annealing",
+        "url": "https://shop.polymaker.com/products/fiberon-pet-cf17"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Automotive, robotics and industrial components",
+        "text": "Polymaker lists these engineering sectors for PET-CF17 and ties the grade to stiffness and dimensional stability. The page describes an intended application class rather than a named qualified component.",
+        "process": "FDM",
+        "scope": "Fiberon PET-CF17; annealed thermal properties require annealing",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/fiberon-pet-cf17",
+        "source_title": "Fiberon PET-CF17 — engineering applications and annealing"
+      }
+    ]
+  },
+  "petg-cf": {
+    "paragraphs": [
+      "PETG-CF is chosen when a fixture, mounting part or housing benefits more from rigidity and dimensional stability than from the flexibility of plain PETG. Prusa describes improved stiffness, thermal resistance and printing stability for its carbon-filled grade, along with reduced stringing and a matte surface. These are useful advantages for locating geometry and visible mechanical components.",
+      "The reinforcement does not improve every property: Prusa explicitly reports lower toughness, and published tests show reduced layer performance in some grades. Small highly strained clips, impact-loaded features and sustained precision loads therefore need more care than the carbon-fibre name suggests. The filament is abrasive, and ordinary PETG-CF is not automatically static-dissipative."
+    ],
+    "fields": [
+      "A7",
+      "E2",
+      "E8",
+      "E9",
+      "C1",
+      "G8"
+    ],
+    "sources": [
+      {
+        "title": "Prusament PETG Carbon Fiber — characteristics",
+        "url": "https://prusament.com/materials/prusament-petg-carbon-fiber/"
+      }
+    ],
+    "examples": []
+  },
+  "petg-esd": {
+    "paragraphs": [
+      "ESD PETG serves electronics manufacturing rather than general structural reinforcement. Polymaker lists PCB-assembly fixtures, component trays and electronics housings for PETG-ESD. Its conductive formulation provides a route for charge dissipation while retaining a relatively accessible polyester printing process, making board-specific tooling possible without machining every carrier from commercial ESD stock.",
+      "Electrical behavior is part of the manufacturing process: published data show surface resistivity changing by orders of magnitude with nozzle temperature. Finished-part resistance, contact paths and the grounding arrangement must therefore be verified together. A carbon-filled label alone is insufficient, and the normal PETG limitations around sustained loading and elevated temperatures still apply."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "B3",
+      "G8",
+      "E11",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "Fiberon PETG-ESD — electronics applications",
+        "url": "https://shop.polymaker.com/products/fiberon-petg-esd"
+      }
+    ],
+    "examples": [
+      {
+        "title": "PCB assembly jigs and fixtures",
+        "text": "Polymaker lists PCB assembly tooling for PETG-ESD. A dissipative fixture can support board edges while exposing components and test points; the completed fixture still needs electrical verification.",
+        "process": "FDM",
+        "scope": "Fiberon PETG-ESD",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/fiberon-petg-esd",
+        "source_title": "Fiberon PETG-ESD — electronics applications"
+      },
+      {
+        "title": "Electronic-component trays and storage",
+        "text": "Polymaker lists trays and storage for electronic components. The purpose is controlled charge handling at the contact surface, not increased structural strength from an ordinary carbon-fibre filler.",
+        "process": "FDM",
+        "scope": "Fiberon PETG-ESD",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/fiberon-petg-esd",
+        "source_title": "Fiberon PETG-ESD — electronics applications"
+      },
+      {
+        "title": "Electronics housings and enclosures",
+        "text": "These are listed by Polymaker for its ESD grade. The dissipative formulation addresses static behavior; it does not establish flame, ingress or electrical-insulation certification for an assembled enclosure.",
+        "process": "FDM",
+        "scope": "Fiberon PETG-ESD",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/fiberon-petg-esd",
+        "source_title": "Fiberon PETG-ESD — electronics applications"
+      }
+    ]
+  },
+  "petg-gf": {
+    "paragraphs": [
+      "This category groups glass-reinforced polyesters, but the best-documented example, Fiberon PET-GF15, is PET rather than PETG. Polymaker lists jigs, fixtures, brackets, enclosures and automotive parts. The glass reinforcement provides stiffness for locating and mounting geometry, while the PET matrix allows heat resistance to be increased by annealing.",
+      "The as-printed and annealed material should not be treated interchangeably. Polymaker reports a substantial heat-deflection increase after annealing, accompanied by the practical need to control deformation during that operation. Glass-filled material remains abrasive and less tolerant of large strains than unfilled PETG. Molded-resin data from another polyester grade cannot establish the strength of a particular FDM bracket."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E2",
+      "E3",
+      "F6",
+      "C1"
+    ],
+    "sources": [
+      {
+        "title": "Fiberon PET-GF15 — applications and annealing",
+        "url": "https://shop.polymaker.com/products/fiberon-pet-gf15"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Jigs, fixtures and brackets",
+        "text": "Polymaker lists these uses for PET-GF15. Stiffness supports locating and mounting duties, and annealing is required where the application depends on the grade’s higher thermal performance.",
+        "process": "FDM",
+        "scope": "Fiberon PET-GF15; PET matrix with 15% glass fibre",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/fiberon-pet-gf15",
+        "source_title": "Fiberon PET-GF15 — applications and annealing"
+      },
+      {
+        "title": "Enclosures and automotive parts",
+        "text": "These are manufacturer-listed uses for PET-GF15 rather than verified case studies. The source does not identify a specific vehicle component or transfer an injection-molded qualification to printed parts.",
+        "process": "FDM",
+        "scope": "Fiberon PET-GF15",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/fiberon-pet-gf15",
+        "source_title": "Fiberon PET-GF15 — applications and annealing"
+      }
+    ]
+  },
+  "pctg": {
+    "paragraphs": [
+      "PCTG is useful where impact tolerance and ductility matter more than maximum rigidity. COEX lists mechanical parts, jigs, protective casings and covers for its PCTG Prime grade. Clear grades also make the polymer attractive for viewing covers, although the black grade on that source page should not be presented as a transparent example.",
+      "PCTG’s impressive molded-specimen impact and elongation results do not directly describe every printed part. Layer bonding can be the limiting feature, and published printed-part creep testing makes it a poor default for a continuously loaded precision fixture. Its niche is tough, readily printed functional parts and covers, with actual grade, color and print orientation checked against the application."
+    ],
+    "fields": [
+      "A7",
+      "E3",
+      "E6",
+      "E8",
+      "E11",
+      "I6"
+    ],
+    "sources": [
+      {
+        "title": "COEX PCTG Prime — manufacturer-listed applications",
+        "url": "https://coex3d.com/products/black-pctg-prime"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Protective casings and covers",
+        "text": "COEX lists casings and covers for PCTG Prime, connecting its toughness and chemical resistance to functional use. This is a manufacturer application recommendation, not a certified impact-protection case study.",
+        "process": "FDM",
+        "scope": "COEX PCTG Prime; source product is black",
+        "evidence": "manufacturer-application",
+        "url": "https://coex3d.com/products/black-pctg-prime",
+        "source_title": "COEX PCTG Prime — manufacturer-listed applications"
+      },
+      {
+        "title": "Mechanical parts and jigs",
+        "text": "These are explicit COEX applications. Toughness is valuable where a fixture is handled or knocked, while creep and printed layer strength remain relevant to accurate workholding.",
+        "process": "FDM",
+        "scope": "COEX PCTG Prime",
+        "evidence": "manufacturer-application",
+        "url": "https://coex3d.com/products/black-pctg-prime",
+        "source_title": "COEX PCTG Prime — manufacturer-listed applications"
+      }
+    ]
+  },
+  "petg": {
+    "paragraphs": [
+      "PETG is a useful general-purpose engineering filament for housings, holders, clamps and machine accessories that need some toughness without demanding an enclosed printer. Its relatively low printing shrinkage helps mating parts retain their shape, and its ductility allows modest deformation before fracture. Prusa uses PETG for plastic components on the Original Prusa i3 MK3, providing a real production example rather than just a suggested use.",
+      "The same compliance that helps during handling makes PETG a weaker choice for permanently loaded precision fixtures: it creeps, especially as temperature rises. It also strings and bonds aggressively to some build surfaces. Use the actual grade’s heat-deflection data rather than treating all PETG parts as suitable for a hot enclosure."
+    ],
+    "fields": [
+      "A7",
+      "B3",
+      "B8",
+      "E3",
+      "E11",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "Prusament PETG — applications and production use",
+        "url": "https://prusament.com/materials/prusament-petg/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Original Prusa i3 MK3 plastic components",
+        "text": "Prusa states that the machine’s plastic parts are made from PETG, using its toughness and low-warp printing for functional printer hardware. This identifies the polymer; it does not establish recycled PETG or carbon-filled PETG use.",
+        "process": "FDM",
+        "scope": "Unfilled PETG; Original Prusa i3 MK3",
+        "evidence": "case-study",
+        "url": "https://prusament.com/materials/prusament-petg/",
+        "source_title": "Prusament PETG — applications and production use"
+      },
+      {
+        "title": "Workshop holders and clamps",
+        "text": "Prusa specifically lists holders and clamps as PETG applications. Moderate ductility and low printing warp suit fitted mechanical accessories, while sustained clamping still needs allowance for creep.",
+        "process": "FDM",
+        "scope": "Prusament PETG",
+        "evidence": "manufacturer-application",
+        "url": "https://prusament.com/materials/prusament-petg/",
+        "source_title": "Prusament PETG — applications and production use"
+      }
+    ]
+  },
+  "petg-recycled": {
+    "paragraphs": [
+      "Recycled PETG can perform the same broad organizing, holding and enclosure roles as virgin PETG when the chosen feedstock and grade meet the design requirements. Prusa lists mechanical parts and workshop holders for its recycled grade and reports that it is made from recycled Prusament PETG. The engineering benefit is retaining useful material in a functional application rather than assuming recycled material has unique mechanical advantages.",
+      "Prusament’s recycled-versus-virgin comparison shows lower tensile yield and interlayer adhesion than its virgin counterpart, even though heat deflection and modulus are similar. That makes highly stressed thin features less forgiving. Also separate unfilled recycled PETG from products such as PETG-rCF08, which add recycled carbon fibre and have different stiffness, brittleness and hardware requirements."
+    ],
+    "fields": [
+      "A1",
+      "E1",
+      "E2",
+      "E8",
+      "F1",
+      "B12"
+    ],
+    "sources": [
+      {
+        "title": "Prusament PETG Recycled — applications and feedstock",
+        "url": "https://prusament.com/materials/prusament-petg-recycled/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Workshop holders and mechanical parts",
+        "text": "Prusa lists these uses on its recycled PETG page. The page’s general statement about MK3 printer parts identifies PETG, so it is not evidence that those production parts use the recycled grade.",
+        "process": "FDM",
+        "scope": "Prusament PETG Recycled",
+        "evidence": "manufacturer-application",
+        "url": "https://prusament.com/materials/prusament-petg-recycled/",
+        "source_title": "Prusament PETG Recycled — applications and feedstock"
+      }
+    ]
+  },
+  "abs": {
+    "paragraphs": [
+      "ABS is a practical engineering choice for housings, handled parts, tooling and interior trim when toughness, moderate heat resistance and finishability matter together. The rubber-modified matrix tolerates impact better than brittle display materials, while sanding, painting and solvent joining help turn multipart prints into finished prototypes or repair components.",
+      "Its main compromises are process control and outdoor aging. Large prints can warp or split as cooling stress develops, so enclosure temperature and layer bonding influence the finished component as much as nominal resin strength. UV exposure eventually embrittles ordinary ABS; ASA is usually the more appropriate starting point for prolonged sunlight. Standard ABS also lacks the flame-retardant qualification of a dedicated FR formulation."
+    ],
+    "fields": [
+      "A7",
+      "E9",
+      "B8",
+      "G1",
+      "I1",
+      "F8"
+    ],
+    "sources": [
+      {
+        "title": "ABS material basics — Polymaker",
+        "url": "https://wiki.polymaker.com/the-basics/3d-printing-materials/abs.md"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Bicycle bottle holder",
+        "text": "Polymaker illustrates its ABS material guide with a bicycle bottle holder explicitly captioned as made from its ABS. The source does not identify the exact grade or provide mechanical test results for the holder.",
+        "process": "FDM",
+        "scope": "Polymaker ABS; exact grade unspecified",
+        "evidence": "case-study",
+        "url": "https://wiki.polymaker.com/the-basics/3d-printing-materials/abs.md",
+        "source_title": "ABS material basics — Polymaker"
+      },
+      {
+        "title": "Industrial jigs, fixtures and molding patterns",
+        "text": "Polymaker lists jigs, fixtures, sand-casting patterns and thermoforming-mold patterns among ABS printing applications. These exploit shape, toughness and finishability rather than providing a blanket rating for process temperature or production life.",
+        "process": "FDM",
+        "scope": "ABS polymer family; manufacturer-listed applications",
+        "evidence": "manufacturer-application",
+        "url": "https://wiki.polymaker.com/the-basics/3d-printing-materials/abs.md",
+        "source_title": "ABS material basics — Polymaker"
+      }
+    ]
+  },
+  "abs-plus": {
+    "paragraphs": [
+      "ABS+ is a marketing category rather than a single standardized polymer. Some formulations emphasize easier printing, while Polymaker ABS Pro and ABS Max emphasize higher thermal performance. Polymaker lists enclosures, brackets, clips, jigs and custom printer components for ABS Pro, and automotive components and industrial fixtures for ABS Max. The useful question is which limitation of ordinary ABS the specific formulation addresses.",
+      "Higher heat resistance does not automatically mean greater toughness, easier printing or identical behavior between brands. The documented Pro and Max grades have different processing requirements, with Max calling for an actively heated environment. Match thermal data to its test load and preserve the actual grade name when describing an application; a generic ABS+ spool cannot inherit ABS Max’s figures."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E6",
+      "F1",
+      "F2",
+      "B12"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker ABS Pro — applications",
+        "url": "https://shop.polymaker.com/products/polymaker-abs-pro"
+      },
+      {
+        "title": "Polymaker ABS Max — applications and chamber requirements",
+        "url": "https://shop.polymaker.com/products/polymaker-abs-max"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Enclosures, brackets, clips and custom printer components",
+        "text": "Polymaker lists these applications for ABS Pro where standard ABS may provide insufficient thermal performance. This is a grade-specific recommendation rather than a claim about every ABS+ formulation.",
+        "process": "FDM",
+        "scope": "Polymaker ABS Pro",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/polymaker-abs-pro",
+        "source_title": "Polymaker ABS Pro — applications"
+      },
+      {
+        "title": "Automotive components and industrial fixtures",
+        "text": "Polymaker lists elevated-temperature components and industrial fixtures for ABS Max. Its higher heat deflection comes with demanding hot-end, bed and actively heated enclosure requirements.",
+        "process": "FDM",
+        "scope": "Polymaker ABS Max",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/polymaker-abs-max",
+        "source_title": "Polymaker ABS Max — applications and chamber requirements"
+      }
+    ]
+  },
+  "abs-cf": {
+    "paragraphs": [
+      "ABS-CF is primarily a stiffness and dimensional-stability material. CarbonX ABS+CF is explicitly marketed for rigid structural components with reduced warping, making the category relevant to manufacturing fixtures and mechanical locating parts where elastic movement is undesirable. Its advantage is resisting deflection rather than behaving like a stronger version of ABS in every failure mode.",
+      "Published printed CarbonX data show a large modulus increase but very low elongation at break. That changes design priorities: avoid thin snap features, sharp stress concentrations and assumptions about impact or fatigue life. Carbon reinforcement is abrasive, and this grade’s surface resistance remains outside the intended static-dissipative category. Select ESD-ABS when charge behavior, rather than rigidity, is the requirement."
+    ],
+    "fields": [
+      "A7",
+      "E2",
+      "E3",
+      "E9",
+      "C1",
+      "G8"
+    ],
+    "sources": [
+      {
+        "title": "3DXTech CarbonX ABS+CF — structural applications",
+        "url": "https://www.3dxtech.com/products/carbonx-abs-cf-1"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Rigid structural components",
+        "text": "3DXTech specifically positions CarbonX ABS+CF for high-modulus structural components with dimensional stability. The source identifies an application class, not a named production assembly or a tested allowable load.",
+        "process": "FDM",
+        "scope": "3DXTech CarbonX ABS+CF; chopped-carbon reinforcement",
+        "evidence": "manufacturer-application",
+        "url": "https://www.3dxtech.com/products/carbonx-abs-cf-1",
+        "source_title": "3DXTech CarbonX ABS+CF — structural applications"
+      }
+    ]
+  },
+  "abs-esd": {
+    "paragraphs": [
+      "ESD ABS addresses charge handling in electronics work where ordinary ABS is an electrical insulator. 3DXTech describes 3DXSTAT ESD-ABS as a carbon-nanotube compound for applications requiring ESD protection and cleanliness. The engineering niche is dissipative tooling and handling surfaces; the carbon loading is selected for electrical behavior rather than maximum stiffness.",
+      "That electrical function depends on the finished component and its connection to the broader ESD system. Verify resistance and the actual contact path instead of assuming the filament name proves workstation compliance. Published grade data also show lower elongation than unfilled ABS, so rigid screwed fixtures are less demanding than repeatedly flexed clips. Enclosure-controlled printing remains important for dimensional accuracy and layer integrity."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "G8",
+      "E3",
+      "B3",
+      "B8"
+    ],
+    "sources": [
+      {
+        "title": "3DXTech 3DXSTAT ESD-ABS — intended use",
+        "url": "https://www.3dxtech.com/products/3dxstat-esd-abs-1"
+      }
+    ],
+    "examples": [
+      {
+        "title": "ESD-controlled handling applications",
+        "text": "3DXTech identifies ESD protection and cleanliness as the purpose of 3DXSTAT ESD-ABS. Its product page does not document a named customer tray, fixture or certified assembly, so this remains a manufacturer-stated application category.",
+        "process": "FDM",
+        "scope": "3DXTech 3DXSTAT ESD-ABS",
+        "evidence": "manufacturer-application",
+        "url": "https://www.3dxtech.com/products/3dxstat-esd-abs-1",
+        "source_title": "3DXTech 3DXSTAT ESD-ABS — intended use"
+      }
+    ]
+  },
+  "abs-fr": {
+    "paragraphs": [
+      "FR-ABS is selected when flame behavior is an explicit enclosure or equipment requirement. 3DXTech markets Firewire FR-ABS toward consumer electronics, industrial equipment and transport applications. The useful distinction from ordinary ABS is the flame-retardant resin package, rather than a blanket increase in strength or heat resistance.",
+      "The published UL 94 result belongs to the base resin at a stated thickness; it does not certify an arbitrary printed enclosure. Wall thickness, print orientation, assembly and the relevant end-product test still matter. Published grade data also show reduced elongation compared with unfilled ABS, so strained snap fits may be less suitable even when the flame behavior makes the formulation attractive."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "F8",
+      "E3",
+      "E9",
+      "B8"
+    ],
+    "sources": [
+      {
+        "title": "3DXTech Firewire FR-ABS — resin rating and applications",
+        "url": "https://www.3dxtech.com/products/firewire-r-fr-abs"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Consumer electronics and industrial equipment",
+        "text": "3DXTech lists these sectors for Firewire FR-ABS. Flame-retardant base resin provides a starting material for design and testing; it is not evidence that a particular FDM housing meets an end-product fire requirement.",
+        "process": "FDM",
+        "scope": "3DXTech Firewire FR-ABS; rating applies to base resin",
+        "evidence": "manufacturer-application",
+        "url": "https://www.3dxtech.com/products/firewire-r-fr-abs",
+        "source_title": "3DXTech Firewire FR-ABS — resin rating and applications"
+      }
+    ]
+  },
+  "abs-gf": {
+    "paragraphs": [
+      "ABS-GF is suited to rigid housings, tooling and dimensionally stable mechanical components. Glass reinforcement raises modulus and can reduce the warping associated with unfilled ABS. 3DXTech positions FibreX ABS+GF for structural engineering applications, while Bambu’s documented grade also offers a matte surface that visually softens layer lines.",
+      "Glass-filled ABS is not interchangeable with tough unfilled ABS. In Bambu’s grade comparison, notched impact resistance falls substantially even as stiffness and heat deflection improve. That favors rigid screwed or supported geometry over thin spring clips and impact-prone tabs. Fiber content and matrix formulation vary between products, and the abrasive reinforcement requires suitable printing hardware."
+    ],
+    "fields": [
+      "A7",
+      "E2",
+      "B8",
+      "E6",
+      "F1",
+      "C1"
+    ],
+    "sources": [
+      {
+        "title": "3DXTech FibreX ABS+GF — structural applications",
+        "url": "https://www.3dxtech.com/products/fibrex-abs-gf-1"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Dimensionally stable structural parts",
+        "text": "3DXTech lists structural engineering uses for FibreX ABS+GF and emphasizes stiffness and reduced printing distortion. This identifies the intended function of that glass-filled grade, not a production case study or universal impact-performance claim.",
+        "process": "FDM",
+        "scope": "3DXTech FibreX ABS+GF",
+        "evidence": "manufacturer-application",
+        "url": "https://www.3dxtech.com/products/fibrex-abs-gf-1",
+        "source_title": "3DXTech FibreX ABS+GF — structural applications"
+      }
+    ]
+  },
+  "hips": {
+    "paragraphs": [
+      "HIPS has two distinct jobs in printing: a light, finishable model material and a sacrificial support for ABS or ASA. As support, its value is removability rather than strength: inaccessible material can be dissolved in d-limonene instead of mechanically pulled through a narrow opening. 3DXTech specifically formulates its natural support grade for greater solvent sensitivity than its colored model-material grades.",
+      "For finished models, rubber toughening gives useful ductility, and HIPS sands and paints readily, but it is relatively compliant and has poor long-term UV resistance. Support compatibility is also formulation-dependent: verify that the solvent removes HIPS without damaging the actual main-part grade. A successful model-material print does not establish suitability for a highly stressed rotating or outdoor component."
+    ],
+    "fields": [
+      "A7",
+      "A2",
+      "E2",
+      "E3",
+      "I5",
+      "G1"
+    ],
+    "sources": [
+      {
+        "title": "3DXTech 3DXMAX HIPS — support and model grades",
+        "url": "https://www.3dxtech.com/products/3dxmax-hips"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Break-away or dissolvable supports for ABS and ASA",
+        "text": "3DXTech specifically lists these pairings and notes that its natural HIPS support formulation is made more sensitive to d-limonene than colored model grades. Solvent compatibility still needs checking for the actual supported material.",
+        "process": "FDM",
+        "scope": "3DXTech 3DXMAX HIPS natural support formulation",
+        "evidence": "manufacturer-application",
+        "url": "https://www.3dxtech.com/products/3dxmax-hips",
+        "source_title": "3DXTech 3DXMAX HIPS — support and model grades"
+      }
+    ]
+  },
+  "asa": {
+    "paragraphs": [
+      "ASA is an outdoor engineering polymer: its weather-resistant rubber phase helps exposed parts retain color and useful mechanical properties. That makes outdoor housings, signage and exterior fittings natural applications. Industrial use extends beyond printing: INEOS describes Luran S ASA as a weather-resistant capstock for PVC siding, soffits and roofing, where the surface layer protects the underlying structure from sunlight and fading.",
+      "These co-extruded products demonstrate the polymer family’s weathering niche, not the strength of a particular printed spool. FDM ASA still warps and develops cooling stress, and layer direction matters for loaded brackets. Its UV durability does not make a housing automatically waterproof, and strong solvents such as acetone attack the matrix."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "G1",
+      "B8",
+      "E8",
+      "G3"
+    ],
+    "sources": [
+      {
+        "title": "INEOS Styrolution — ASA exterior facade applications",
+        "url": "https://www.ineos.com/businesses/ineos-styrolution/industries/construction/exterior-facade/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "PVC siding with ASA capstock",
+        "text": "INEOS reports that siding manufacturers use Luran S ASA over a PVC substrate to improve weatherability, particularly for darker colors. This is an industrial surface-layer application, not a 3D-printed wall panel.",
+        "process": "Other — co-extrusion",
+        "scope": "INEOS Luran S ASA family over PVC",
+        "evidence": "manufacturer-application",
+        "url": "https://www.ineos.com/businesses/ineos-styrolution/industries/construction/exterior-facade/",
+        "source_title": "INEOS Styrolution — ASA exterior facade applications"
+      },
+      {
+        "title": "Roofing and soffit capstock",
+        "text": "INEOS lists Luran S over PVC roofing and foam soffits for UV resistance and color retention. The ASA supplies the weather-resistant surface while the substrate provides the broader product structure.",
+        "process": "Other — co-extrusion",
+        "scope": "INEOS Luran S ASA family over PVC",
+        "evidence": "manufacturer-application",
+        "url": "https://www.ineos.com/businesses/ineos-styrolution/industries/construction/exterior-facade/",
+        "source_title": "INEOS Styrolution — ASA exterior facade applications"
+      }
+    ]
+  },
+  "asa-cf": {
+    "paragraphs": [
+      "ASA-CF combines the outdoor durability of ASA with increased stiffness and dimensional stability. The category is relevant to exposed mechanical mounts and structural fittings where deflection matters more than elastic compliance. 3DXTech markets CarbonX ASA+CF for high-modulus outdoor structural components, and its matte surface is useful on visible equipment parts.",
+      "The tradeoff is reduced tolerance for impact and concentrated strain, not a universal improvement over ordinary ASA. Bambu’s grade comparison shows substantially lower notched impact resistance, while the composite remains direction-dependent across layers. Carbon reinforcement also does not establish ESD performance. Use the actual grade’s properties and mount geometry rather than transferring strength or fibre content between manufacturers."
+    ],
+    "fields": [
+      "A7",
+      "E2",
+      "G1",
+      "E6",
+      "E8",
+      "G8"
+    ],
+    "sources": [
+      {
+        "title": "3DXTech CarbonX ASA+CF — outdoor structural applications",
+        "url": "https://www.3dxtech.com/products/carbonx-asa-cf-1"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Outdoor structural components",
+        "text": "3DXTech explicitly combines outdoor suitability with high modulus and dimensional stability for CarbonX ASA+CF. It does not identify a particular customer mount or establish a load rating for arbitrary printed geometry.",
+        "process": "FDM",
+        "scope": "3DXTech CarbonX ASA+CF; 15% carbon fibre on the source page",
+        "evidence": "manufacturer-application",
+        "url": "https://www.3dxtech.com/products/carbonx-asa-cf-1",
+        "source_title": "3DXTech CarbonX ASA+CF — outdoor structural applications"
+      }
+    ]
+  },
+  "asa-aero": {
+    "paragraphs": [
+      "Foaming ASA is intended for lightweight shells and models that also need sunlight resistance. FormFutura lists drones, RC modeling and lightweight exterior components for ApolloX Foaming. Its heat-activated expansion lowers printed density, so the engineering benefit is less mass for a given outer shape rather than maximum strength from a solid material.",
+      "Density becomes a process variable: nozzle temperature, flow and the degree of foaming affect wall formation and dimensions. A highly expanded shell should not inherit the stiffness or fastener-load capability of unfoamed ASA. Bambu’s Aero data also show lower heat deflection than its ordinary ASA, so lightweight and heat-resistant are separate requirements. Published RC applications are manufacturer recommendations, not airframe qualifications."
+    ],
+    "fields": [
+      "A1",
+      "A2",
+      "A7",
+      "B12",
+      "E11",
+      "F1"
+    ],
+    "sources": [
+      {
+        "title": "FormFutura ApolloX Foaming — material guide and applications",
+        "url": "https://www.formfutura.com/blog/blogs-1/material-guide-apollox-foaming-92"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Drones and RC models",
+        "text": "FormFutura specifically lists these applications for ApolloX Foaming, connecting reduced mass with outdoor weather resistance. The source provides an intended application rather than a named flight-tested airframe.",
+        "process": "FDM",
+        "scope": "FormFutura ApolloX Foaming; properties depend on expansion profile",
+        "evidence": "manufacturer-application",
+        "url": "https://www.formfutura.com/blog/blogs-1/material-guide-apollox-foaming-92",
+        "source_title": "FormFutura ApolloX Foaming — material guide and applications"
+      },
+      {
+        "title": "Lightweight exterior components",
+        "text": "FormFutura lists automotive and aerospace exterior applications where reduced mass matters. This is a manufacturer application statement, not evidence of approval for a safety-critical vehicle or aircraft component.",
+        "process": "FDM",
+        "scope": "FormFutura ApolloX Foaming",
+        "evidence": "manufacturer-application",
+        "url": "https://www.formfutura.com/blog/blogs-1/material-guide-apollox-foaming-92",
+        "source_title": "FormFutura ApolloX Foaming — material guide and applications"
+      }
+    ]
+  },
+  "asa-gf": {
+    "paragraphs": [
+      "ASA-GF is an outdoor rigidity material for manufacturing tools, housings, covers and exposed mechanical parts. Spectrum lists these uses for ASA-X GF10, connecting glass reinforcement with stiffness and the ASA matrix with resistance to prolonged sunlight and moisture. It fits parts that need to retain a locating or mounting shape rather than act as elastic hinges.",
+      "The grade and specimen type matter. Spectrum’s published mechanical and thermal figures include injection-molded specimens, so they are not direct load ratings for a printed bracket. ZYLtech reports limited elongation for its grade, favoring generous roots and distributed loads over narrow flexures. Reinforcement content and required nozzle size differ between manufacturers, even when both products are called ASA-GF."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E1",
+      "E3",
+      "G1",
+      "B13"
+    ],
+    "sources": [
+      {
+        "title": "Spectrum ASA-X GF10 — applications and material description",
+        "url": "https://spectrumfilaments.com/en/filament/asa-x-gf10/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Manufacturing tools and equipment",
+        "text": "Spectrum lists manufacturing tools and equipment for ASA-X GF10. Stiffness and outdoor stability are the intended advantages; its molded-specimen data do not directly establish the strength of an FDM tool.",
+        "process": "FDM",
+        "scope": "Spectrum ASA-X GF10; 10% glass fibre",
+        "evidence": "manufacturer-application",
+        "url": "https://spectrumfilaments.com/en/filament/asa-x-gf10/",
+        "source_title": "Spectrum ASA-X GF10 — applications and material description"
+      },
+      {
+        "title": "Housings and covers exposed outdoors",
+        "text": "Spectrum lists housings, covers and components requiring high outdoor-exposure resistance. This is a manufacturer-listed use for the exact grade rather than a documented installed enclosure.",
+        "process": "FDM",
+        "scope": "Spectrum ASA-X GF10",
+        "evidence": "manufacturer-application",
+        "url": "https://spectrumfilaments.com/en/filament/asa-x-gf10/",
+        "source_title": "Spectrum ASA-X GF10 — applications and material description"
+      }
+    ]
+  },
+  "pc-cf": {
+    "paragraphs": [
+      "Carbon-filled PC is chosen primarily to make a heat-resistant part harder to bend. In a camera mount, fixture or mechanical housing, that means locating surfaces can remain aligned under loads that would flex an unfilled part. Prusa demonstrates this engineering role with a fan shroud and the Landy model vehicle mechabox, alongside other mechanical components made from PC Blend Carbon Fiber.",
+      "The compromise is reduced capacity for elastic deformation, making thin snap arms and sharply loaded corners less forgiving. Fibre orientation affects stiffness and thermal movement, while interlayer strength still depends on printing conditions. The filament is abrasive and moisture-sensitive, and its PC matrix retains chemical and outdoor-weathering limitations. Carbon reinforcement alone also does not make the part electrically dissipative."
+    ],
+    "fields": [
+      "E5",
+      "F2",
+      "E3",
+      "E8",
+      "C2",
+      "G8"
+    ],
+    "sources": [
+      {
+        "title": "Prusa — PC Blend Carbon Fiber engineering examples",
+        "url": "https://blog.prusa3d.com/prusament_pc_blend_carbon_fiber_mechanical_resistance_pccf_51028/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Landy model vehicle mechabox",
+        "text": "Prusa presents the Landy mechabox by 3Dsets as a PC Blend Carbon Fiber example for stressed moving components. The point is a mechanically stiff, heat-resistant housing; it is a manufacturer demonstration rather than an independently validated life test.",
+        "process": "FDM/FFF printing",
+        "scope": "Prusament PC Blend Carbon Fiber; grade-specific demonstration",
+        "evidence": "manufacturer-application",
+        "url": "https://blog.prusa3d.com/prusament_pc_blend_carbon_fiber_mechanical_resistance_pccf_51028/",
+        "source_title": "Prusa — typical applications for PC Blend Carbon Fiber"
+      },
+      {
+        "title": "Printer fan shroud",
+        "text": "Prusa illustrates a fan shroud as a heat-resistant PC Blend Carbon Fiber application. This supports the practical use of reinforced PC around warm equipment without implying suitability at heater-block temperatures.",
+        "process": "FDM/FFF printing",
+        "scope": "Prusament PC Blend Carbon Fiber; heat resistance must follow that grade and print conditions",
+        "evidence": "manufacturer-application",
+        "url": "https://blog.prusa3d.com/prusament_pc_blend_carbon_fiber_mechanical_resistance_pccf_51028/",
+        "source_title": "Prusa — typical applications for PC Blend Carbon Fiber"
+      }
+    ]
+  },
+  "pc-esd": {
+    "paragraphs": [
+      "ESD PC addresses a specific conflict in electronics tooling: a fixture must hold its shape and survive handling, yet an ordinary insulating polymer can retain unwanted charge. A dissipative formulation provides a controlled electrical path while the PC matrix supplies useful mechanical and thermal performance. Stratasys explicitly lists tools, jigs, fixtures and assembly aids for PCB production and electronics manufacturing as applications for its PC-ESD material.",
+      "Its advantage is charge management in a mechanically durable locating part, rather than conductivity for carrying power. Electrical resistance depends on the formulation, printing process and environment, so the fixture needs a suitable grounding path and measured performance. Filled PC also has limited elongation, directional printed strength and moisture-sensitive processing; snap features and thin mounting arms need particular care."
+    ],
+    "fields": [
+      "A7",
+      "G8",
+      "E5",
+      "E3",
+      "E8",
+      "D5"
+    ],
+    "sources": [
+      {
+        "title": "Stratasys — PC-ESD electronics tooling applications",
+        "url": "https://support.stratasys.com/en/materials/fdm/pc-esd"
+      }
+    ],
+    "examples": [
+      {
+        "title": "PCB assembly tools and fixtures",
+        "text": "Stratasys identifies PC-ESD tools, jigs, fixtures and assembly aids for electronics manufacturing, combining dissipative behavior with mechanical durability and a higher usable-temperature range. This is a published application class, not a named customer installation.",
+        "process": "FDM printing on supported Fortus systems",
+        "scope": "Stratasys PC-ESD formulation and supported process; not every carbon-filled PC",
+        "evidence": "manufacturer-application",
+        "url": "https://support.stratasys.com/en/materials/fdm/pc-esd",
+        "source_title": "Stratasys Support Center — PC-ESD Material"
+      }
+    ]
+  },
+  "pc-fr": {
+    "paragraphs": [
+      "Flame-retardant PC is important in electrical and transportation components where a useful engineering plastic must also meet specified material flammability requirements. Its value is the combination of a rigid, heat-resistant enclosure and a documented FR formulation, rather than flame retardancy alone. Polymaker reports that CURE Mannheim uses PolyMax PC-FR for TS housings and PCB enclosures in its Formula Student vehicle, selecting it for thermal stability and electrical applications.",
+      "The flame-retardant formulation has limited elongation, so thin latches and sharply loaded mounting bosses can be less forgiving than the housing walls. Drying and layer bonding remain important to mechanical reliability. Flammability classification depends on the specific grade, thickness and test conditions, while a heat-deflection result describes a loaded test specimen rather than a universal continuous operating temperature."
+    ],
+    "fields": [
+      "A7",
+      "F8",
+      "F2",
+      "E3",
+      "E8",
+      "D5"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker — CURE Mannheim PC-FR enclosure use",
+        "url": "https://polymaker.com/industry/automotive/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "CURE Mannheim electronics enclosures",
+        "text": "Polymaker reports PolyMax PC-FR use in the Formula Student team vehicle for TS housings and PCB enclosures, citing thermal stability, layer adhesion and its flame-retardant formulation. The case does not transfer vehicle safety approval to other printed enclosures.",
+        "process": "FDM/FFF printing",
+        "scope": "PolyMax PC-FR in the documented CURE Mannheim application; not generic FR PC certification",
+        "evidence": "case-study",
+        "url": "https://polymaker.com/industry/automotive/",
+        "source_title": "Polymaker — Automotive: CURE Mannheim"
+      }
+    ]
+  },
+  "pc-gf": {
+    "paragraphs": [
+      "Glass-filled PC is an engineering housing material when rigidity and dimensional control matter more than transparency or large elastic deflection. Reinforcement helps locating features resist bending, while the PC matrix contributes heat resistance. Covestro lists Makrolon GF9002 for thin-wall electrical and electronic housings, a clear injection-molding example of this role. Reinforcement level and formulation distinguish such molding grades from glass-filled filaments.",
+      "The tradeoff is lower ductility: a stiff housing can crack at a strained corner instead of yielding. Thermal expansion is also directional; the printed XSTRAND reference expands substantially more through the layers than within them. That matters in a warm fixture with closely spaced mounting holes. Glass filler wears printing hardware, and the material loses the optical clarity that makes unfilled PC useful for windows and light guides."
+    ],
+    "fields": [
+      "E5",
+      "E3",
+      "F2",
+      "F7",
+      "G8",
+      "C2"
+    ],
+    "sources": [
+      {
+        "title": "Covestro — Makrolon GF9002 molding resin and applications",
+        "url": "https://solutions.covestro.com/en/products/makrolon/makrolon-gf9002_000000000080227346"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Thin-wall electrical housings",
+        "text": "Covestro identifies electrical/electronic housings with low wall thickness as applications for Makrolon GF9002, a dimensionally stable, flame-retardant glass-filled PC resin. This illustrates the engineering role of PC-GF without transferring its molding data or flame rating to the catalog filament.",
+        "process": "Injection molding",
+        "scope": "Makrolon GF9002, 10% glass-filled PC; distinct from 30% glass-filled XSTRAND filament",
+        "evidence": "manufacturer-application",
+        "url": "https://solutions.covestro.com/en/products/makrolon/makrolon-gf9002_000000000080227346",
+        "source_title": "Covestro — Makrolon GF9002"
+      }
+    ]
+  },
+  "pc-abs": {
+    "paragraphs": [
+      "PC/ABS balances toughness and heat resistance with the processing behavior and finish of an ABS-containing blend. This explains its position in automotive trim and electronics packaging, where a part must hold mounting features and survive handling. Webasto and Covestro demonstrate the combination in a two-shot roof sensor module bezel: a transparent PC first shot provides sensor windows, while mineral-reinforced PC/ABS forms the opaque supporting structure.",
+      "The ABS phase improves processing balance, but the blend remains sensitive to UV exposure and several solvents. FDM parts still need controlled moisture and adequate layer bonding, particularly around bearing seats and screw bosses. Notched-impact performance varies with temperature and formulation; a mineral-filled molding grade prioritizing dimensional stability will not behave like an unfilled, highly ductile blend."
+    ],
+    "fields": [
+      "A7",
+      "E6",
+      "F2",
+      "E8",
+      "G1",
+      "J2"
+    ],
+    "sources": [
+      {
+        "title": "Covestro — Webasto roof sensor module prototype",
+        "url": "https://www.covestro.com/press/polycarbonate-based-roof-sensor-module-for-automated-driving/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Webasto roof sensor module bezel",
+        "text": "Covestro documents an injection-molded prototype bezel with a transparent Makrolon AG first shot and a mineral-reinforced Bayblend T95 MF PC/ABS second shot. Combining sensor transparency and a supporting opaque structure serves the module design.",
+        "process": "Two-shot injection molding",
+        "scope": "Mineral-reinforced Bayblend T95 MF PC/ABS plus a separate transparent PC grade; not unfilled PC/ABS filament",
+        "evidence": "case-study",
+        "url": "https://www.covestro.com/press/polycarbonate-based-roof-sensor-module-for-automated-driving/",
+        "source_title": "Covestro — Polycarbonate-based Roof Sensor Module for Automated Driving"
+      }
+    ]
+  },
+  "pc": {
+    "paragraphs": [
+      "Polycarbonate matters when a part must combine rigidity, impact toughness and resistance to heat. That combination explains its use in instrument housings and protective covers, while optical grades add an unusual capability: transparent parts that still tolerate mechanical handling. Covestro supplies dedicated lens-quality Makrolon grades for corrective lenses, sunglasses and sports eyewear, combining low weight with optical quality and mechanical robustness.",
+      "Its practical weaknesses are demanding drying and chamber conditions, warping, solvent-induced stress cracking and UV degradation without suitable stabilization. FDM layer bonding can also limit a loaded bracket or housing before the polymer itself fails. Printed optical parts scatter light at layer interfaces, so transparent filament does not automatically produce a useful lens; loaded service temperature must be chosen from grade-specific thermal data."
+    ],
+    "fields": [
+      "A7",
+      "E9",
+      "F2",
+      "I2",
+      "B8",
+      "G1"
+    ],
+    "sources": [
+      {
+        "title": "Covestro — lens-quality polycarbonate applications",
+        "url": "https://solutions.covestro.com/pt/highlights/articles/theme/applications/eyewear"
+      },
+      {
+        "title": "Polymaker — automotive engineering case studies",
+        "url": "https://polymaker.com/industry/automotive/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Optical and sports eyewear",
+        "text": "Covestro identifies mechanical toughness, optical quality and low weight as reasons for using dedicated Makrolon lens grades in eyewear. These properties belong to the specified optical resin and manufactured lens.",
+        "process": "Optical resin processing; the application page does not specify a single molding process",
+        "scope": "Lens-quality Makrolon resin; not general FDM PC or a printed protective-lens qualification",
+        "evidence": "manufacturer-application",
+        "url": "https://solutions.covestro.com/pt/highlights/articles/theme/applications/eyewear",
+        "source_title": "Covestro — Eyewear: Polycarbonates for optical applications"
+      },
+      {
+        "title": "TJU TR21 tail flow deflector",
+        "text": "Polymaker reports that Tongji printed the TR21’s aerodynamic tail deflector in PolyMax PC.",
+        "process": "FDM",
+        "scope": "PolyMax PC filament",
+        "evidence": "case-study",
+        "url": "https://polymaker.com/industry/automotive/",
+        "source_title": "Polymaker — automotive engineering case studies"
+      }
+    ]
+  },
+  "pa11": {
+    "paragraphs": [
+      "PA11 is valued for tough, durable parts that tolerate handling, flexing and chemical exposure. Its castor-oil-derived chemistry also provides a renewable feedstock route, although bio-based does not mean biodegradable. Arkema documents PA11 across industrial fluid systems; its PCV-line case describes PA11 and specialized PPA solutions replacing bulkier rubber tubing where flexibility, chemical resistance and reduced weight are valuable.",
+      "For FDM, toughness and compliance favor clips, impact-prone housings and vibration-loaded parts more than maximum-rigidity fixtures. Moisture still shifts nylon stiffness and fit, and unfilled PA11 heat-deflection performance is much lower than the service envelope of specialized automotive tubing compounds. Print orientation and the bend geometry govern repeated-flex life, so a tough polymer alone does not ensure a durable hinge."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E9",
+      "E13",
+      "D5",
+      "F2"
+    ],
+    "sources": [
+      {
+        "title": "Arkema — Rilsan PA11 engineering polymer",
+        "url": "https://www.arkema.com/usa/en/product/technicalpolymers/rilsan-family-products/rilsan-pa11/"
+      },
+      {
+        "title": "Arkema — PA11 and PPA crankcase-ventilation line case",
+        "url": "https://www.arkema.com/global/en/resources/post/hpp/webzine-post-case-study-crankcase-ventination-lines/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Automotive crankcase-ventilation lines",
+        "text": "Arkema documents PA11 and specialized Rilsan HT PPA solutions for PCV lines, where thinner and lighter plastic tubing can replace bulky rubber while addressing flexibility and chemical exposure. The case covers more than one polymer and must not be read as a universal PA11 temperature rating.",
+        "process": "Automotive tube manufacture; the case page does not identify one processing route",
+        "scope": "Rilsan PA11 and Rilsan HT PPA application-specific tubing solutions; not unfilled FDM PA11",
+        "evidence": "case-study",
+        "url": "https://www.arkema.com/global/en/resources/post/hpp/webzine-post-case-study-crankcase-ventination-lines/",
+        "source_title": "Arkema — PCV lines for thermal engines"
+      }
+    ]
+  },
+  "pa12": {
+    "paragraphs": [
+      "PA12 fills the role of a tough nylon with comparatively low moisture sensitivity, useful where parts must flex repeatedly while retaining a reasonably stable fit. This explains its use in clips, press-fit interfaces and fluid-line systems. Evonik documents widespread VESTAMID L PA12 use in automotive fuel lines; the practical advantage is combining chemical resistance and low-temperature toughness with a lightweight polymer line rather than a heavy or more rigid alternative.",
+      "Lower moisture sensitivity than shorter-chain nylons helps preserve mating clearances, but PA12 still absorbs water and requires dry processing. Printed elongation is strongly orientation-dependent, which matters at a flexing latch root. Sustained loads can cause creep, and close-fitting parts need their conditioned dimensions checked. Fluid sealing, pressure capability and gear wear depend on the compound, surface finish and manufacturing process."
+    ],
+    "fields": [
+      "A7",
+      "E12",
+      "E3",
+      "G3",
+      "G4",
+      "D5"
+    ],
+    "sources": [
+      {
+        "title": "Evonik — VESTAMID PA12 fuel-line extrusion compounds",
+        "url": "https://www.evonik.com/en/company/businesslines/hp/polyamides/vestamid/automotive/fuel-line-systems.html"
+      },
+      {
+        "title": "Evonik — modified PA12 compounds for gear applications",
+        "url": "https://publications.evonik.com/en/media/press-releases/resource-efficiency-archiv/peek-polyimide-and-polyamides-for-high-performance-gears-101638.html"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Automotive fuel-line systems",
+        "text": "Evonik identifies VESTAMID L fuel lines as an established PA12 application and continues to develop molding compounds for automotive line systems. This shows an industrial role for the polymer, not a recommendation to print a fuel-pressure component.",
+        "process": "Extrusion of mono- or multilayer tubing",
+        "scope": "Application-specific VESTAMID L PA12 line compounds; not generic unfilled FDM PA12",
+        "evidence": "manufacturer-application",
+        "url": "https://www.evonik.com/en/company/businesslines/hp/polyamides/vestamid/automotive/fuel-line-systems.html",
+        "source_title": "Evonik — VESTAMID in fuel-line systems"
+      }
+    ]
+  },
+  "pa6": {
+    "paragraphs": [
+      "PA6 is a workhorse nylon for wear parts and mechanically durable components. Toughness and abrasion resistance explain its use in gears, bushings and sliding guides, where a contact surface must survive repeated rubbing rather than simply carry a one-time tensile load. It also serves larger injection-molded parts: BASF documents Ultramid B3K PA6 in BOOXit reusable transport boxes, selected for robust handling and efficient molding.",
+      "Water uptake is the central compromise: conditioned PA6 becomes softer and changes dimensions, directly affecting gear backlash and bushing clearance. Increased impact toughness after conditioning can therefore come at the expense of positional accuracy. FDM layer direction and surface finish also matter, while actual sliding wear depends on the mating material, contact pressure, speed and lubrication."
+    ],
+    "fields": [
+      "A7",
+      "E15",
+      "E9",
+      "G4",
+      "D5",
+      "E8"
+    ],
+    "sources": [
+      {
+        "title": "BASF — Ultramid B3K in BOOXit reusable boxes",
+        "url": "https://www.basf.com/global/en/media/news-releases/2026/09/p-26-154"
+      }
+    ],
+    "examples": [
+      {
+        "title": "BOOXit reusable transport boxes",
+        "text": "BASF reports that BOOXit uses Ultramid B3K BK00464 PA6 for reusable transport boxes, connecting durability and impact resistance with an easy-flow, fast-processing molding grade. The documented benefit concerns repeated logistics handling and economical large-component manufacture.",
+        "process": "Injection molding",
+        "scope": "Ultramid B3K BK00464 PA6 molding resin; not a filled nylon or FDM filament result",
+        "evidence": "case-study",
+        "url": "https://www.basf.com/global/en/media/news-releases/2026/09/p-26-154",
+        "source_title": "BASF — Ultramid B3K BOOXit transport boxes"
+      }
+    ]
+  },
+  "pa-blend": {
+    "paragraphs": [
+      "PA6/66 copolymers tune the nylon backbone to make useful mechanical parts easier to manufacture. For PolyMide CoPA, Polymaker describes slower crystallization as the reason for reduced warping during printing, while preserving a balance of nylon toughness, strength and thermal behavior. The engineering benefit is obtaining a complex functional nylon part without fighting the same shrinkage behavior as an untuned formulation.",
+      "Reduced warping during manufacture does not mean stable properties at every service humidity. CoPA loses substantial stiffness and strength after water conditioning while becoming more resistant to notched impact. A positioning bracket and an impact-contact part therefore benefit from different aspects of the same polymer. Printed direction, conditioning and timely support removal matter, and its Vicat softening figure must not be mistaken for heat resistance under load."
+    ],
+    "fields": [
+      "A1",
+      "B7",
+      "D5",
+      "E5",
+      "E6",
+      "I5"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker — PolyMide CoPA chemistry and crystallization control",
+        "url": "https://polymaker.com/product/polymide-copa"
+      },
+      {
+        "title": "Polymaker — automotive engineering case studies",
+        "url": "https://polymaker.com/industry/automotive/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "TJU TR21 inserts and wing ribs",
+        "text": "Polymaker identifies CoPA in Tongji’s TR21 monocoque inserts and front-wing ribs.",
+        "process": "FDM",
+        "scope": "PolyMide CoPA nylon-6/6,6 filament",
+        "evidence": "case-study",
+        "url": "https://polymaker.com/industry/automotive/",
+        "source_title": "Polymaker — automotive engineering case studies"
+      }
+    ]
+  },
+  "pa66": {
+    "paragraphs": [
+      "PA66 is an established engineering nylon for sliding and locating components, combining stiffness, wear resistance and useful thermal behavior. Ensinger describes unfilled TECAMID 66 stock shapes for mechanical and industrial service. Injection-molding compounds extend that role: its wear-optimized TECACOMP PA66 is specified for plain bearings, guides and couplings, emphasizing both wear of the part and abrasion of its mating surface.",
+      "Moisture-dependent dimensions are a major weakness, particularly at a close-fitting bearing or guide. Modified grades address particular wear, heat or stiffness requirements, but their properties differ from unfilled nylon. For printing, the additional difficulty is limited documentation of an available unfilled PA66 filament and qualified process; stock-shape mechanical and thermal data cannot describe layer strength or printed distortion."
+    ],
+    "fields": [
+      "A5",
+      "E15",
+      "D2",
+      "F1",
+      "F2",
+      "E1"
+    ],
+    "sources": [
+      {
+        "title": "Ensinger — unfilled TECAMID 66 stock shapes",
+        "url": "https://www.ensingerplastics.com/en-us/shapes/pa66-tecamid-66-black"
+      },
+      {
+        "title": "Ensinger — wear-optimized PA66 molding compound",
+        "url": "https://www.ensingerplastics.com/en-us/compounds/tecacomp-pa66-trm-xs-black"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Plain bearings, guides and coupling elements",
+        "text": "Ensinger lists these moving-assembly applications for TECACOMP PA66 TRM XS black, a wear-optimized molding compound. It emphasizes low sliding wear and reduced abrasion of steel or plastic counterfaces, demonstrating why the mating material matters as much as strength.",
+        "process": "Injection molding",
+        "scope": "Modified TECACOMP PA66 TRM XS compound; its formulation and properties are not those of unfilled PA66 stock or filament",
+        "evidence": "manufacturer-application",
+        "url": "https://www.ensingerplastics.com/en-us/compounds/tecacomp-pa66-trm-xs-black",
+        "source_title": "Ensinger — TECACOMP PA66 TRM XS black"
+      }
+    ]
+  },
+  "ppa": {
+    "paragraphs": [
+      "PPA is a broad semi-aromatic nylon family important where dimensional stability, chemical resistance and temperature performance exceed the needs of ordinary nylon applications. Its industrial role includes connectors, pumps and other tightly fitted parts, but those uses usually involve carefully selected compounds. BASF documents a concrete example: Weidmüller uses Ultramid Advanced N3U41 G6 PA9T for OMNIMATE 4.0 PCB connectors and terminals, valuing processing, dimensional stability and compatibility with reflow assembly.",
+      "Unfilled PPA makes a different compromise from reinforced connector compounds: its low-friction behavior suits sliding parts, but loaded heat resistance falls near its glass transition and declines further after moisture saturation. The high melting point therefore says little about a loaded bracket. Dry processing, grade selection and conditioned fit remain important, and annealing can introduce warping rather than automatically improve dimensions."
+    ],
+    "fields": [
+      "A7",
+      "E15",
+      "F2",
+      "D5",
+      "G3",
+      "F6"
+    ],
+    "sources": [
+      {
+        "title": "BASF — Weidmüller PPA connector case",
+        "url": "https://www.basf.com/global/en/media/news-releases/2026/05/p-26-091"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Weidmüller OMNIMATE 4.0 PCB connectors",
+        "text": "BASF reports Weidmüller use of Ultramid Advanced N3U41 G6 in connectors and terminals. Dimensional stability, chemical resistance, color coding and temperature performance support compact components and reflow assembly. These are application-specific molding-material capabilities.",
+        "process": "Injection molding",
+        "scope": "Specialized Ultramid Advanced N3U41 G6 PA9T formulation; not the unfilled Siraya PPA filament",
+        "evidence": "case-study",
+        "url": "https://www.basf.com/global/en/media/news-releases/2026/05/p-26-091",
+        "source_title": "BASF — Ultramid Advanced in Weidmüller PCB connectors"
+      }
+    ]
+  },
+  "pa-aramid": {
+    "paragraphs": [
+      "Aramid-reinforced nylon has a real engineering role in wear-resistant compounds. RTP lists PA66 grades containing aramid fibre, including formulations that also contain PTFE, in its tribological portfolio. The purpose is to tune sliding wear and friction in mating components; the material should not be treated as an interchangeable substitute for a stiffness-focused carbon-filled nylon. Fibre type, lubricant package and counterface jointly determine the useful advantage.",
+      "RTP tests an aramid-and-PTFE PA66 formulation against 1018 C steel at several pressure–velocity conditions, illustrating how contact conditions govern wear and friction. The complete additive package matters; an aramid-only compound cannot inherit PTFE-containing results. These are molded-compound data rather than FDM results, and availability of the engineering compound does not establish an off-the-shelf aramid-nylon filament."
+    ],
+    "fields": [
+      "A1",
+      "A5",
+      "D1",
+      "D5"
+    ],
+    "sources": [
+      {
+        "title": "RTP — aramid-filled PA66 wear-resistant compounds",
+        "url": "https://www.rtpcompany.com/technical-info/data-sheets/series-200-wear-resistant/"
+      },
+      {
+        "title": "RTP — PA66 compound wear tests and counterfaces",
+        "url": "https://www.rtpcompany.com/products/wear-resistant/wear-factor-friction-data/wear-resistance-data-200-series-metric/"
+      }
+    ],
+    "examples": []
+  },
+  "pa12-cf": {
+    "paragraphs": [
+      "PA12-CF is a rigid nylon composite for tooling, fixtures and structural parts whose fit needs to stay reasonably consistent as humidity changes. Carbon fibres resist bending; the PA12 matrix takes up less moisture than PA6, so its stiffness and dimensions generally change less after conditioning. That combination matters for rail carriages, locating fixtures and mounting structures where movement of the part changes alignment.",
+      "Formulations differ substantially: Stratasys uses a 35% carbon-filled PA12 for sheet-metal forming tools, while lighter-filled desktop grades offer a different balance of stiffness and processability. Reinforcement also reduces the stretch available before failure, and the printed layer direction remains important around bolts, inserts and thin connecting sections."
+    ],
+    "fields": [
+      "E2",
+      "E3",
+      "E8",
+      "D5",
+      "I6"
+    ],
+    "sources": [
+      {
+        "title": "Stratasys: 99P Labs metal forming tool",
+        "url": "https://www.stratasys.com/en/resources/case-studies/99p-labs-metal-forming-tool/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "99P Labs sheet-metal forming tool",
+        "text": "Stratasys reports that a forming tool printed in FDM Nylon 12CF produced 40 sheet-metal parts. It illustrates the use of a stiff composite as short-run tooling, rather than a claim that every PA12-CF filament can replace a metal die.",
+        "process": "FDM",
+        "scope": "Stratasys FDM Nylon 12CF, 35 wt% chopped carbon fibre",
+        "evidence": "case-study",
+        "url": "https://www.stratasys.com/en/resources/case-studies/99p-labs-metal-forming-tool/",
+        "source_title": "Stratasys: 99P Labs metal forming tool"
+      }
+    ]
+  },
+  "pa6-cf": {
+    "paragraphs": [
+      "PA6-CF is used when a nylon part must resist bending under load and tolerate more heat than everyday printing plastics. The carbon reinforcement makes it useful for brackets, tooling and machine components that need a definite position rather than a flexible nylon response. The documented trunk-lock replacement below shows a small mechanism repair; larger structural uses require their own load and temperature assessment.",
+      "Its main compromise is moisture sensitivity. Carbon fibre does not stop PA6 absorbing water: dry and conditioned specimens can differ sharply in stiffness and strength. A bracket sized from a dry tensile figure can become much more compliant in service. Orient the print for the applied loads, allow for conditioning when checking fit, and distinguish heat-deflection tests from long-term loaded operation."
+    ],
+    "fields": [
+      "A7",
+      "E2",
+      "E8",
+      "F2",
+      "D5",
+      "I6"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker — automotive engineering case studies",
+        "url": "https://polymaker.com/industry/automotive/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "CURE Mannheim steering mounts",
+        "text": "Polymaker identifies PA6-CF20 in steering mounts and aerodynamic cores on CURE’s Formula Student car.",
+        "process": "FDM",
+        "scope": "Fiberon PA6-CF20 filament",
+        "evidence": "case-study",
+        "url": "https://polymaker.com/industry/automotive/",
+        "source_title": "Polymaker — automotive engineering case studies"
+      }
+    ]
+  },
+  "pa-cf-esd": {
+    "paragraphs": [
+      "This material is for electronics handling where ordinary rigid plastic would accumulate charge: PCB fixtures, storage supports, housings and production tooling. Its defining property is controlled electrical dissipation, combined with nylon stiffness and heat resistance. Polymaker specifically identifies PCB manufacturing and storage among the intended uses of PA612-ESD. Ordinary carbon-filled nylon is not automatically dissipative; many ordinary nylon composites remain electrically insulating.",
+      "The mechanical tradeoff also differs from unfilled nylon. This grade has low elongation and a particularly weak printed Z direction, so thin clips and heavily loaded layer-crossing bosses deserve attention. The finished part and its contact or grounding arrangement need resistance checks: the spool designation alone cannot establish the performance of an entire static-control fixture."
+    ],
+    "fields": [
+      "G8",
+      "E2",
+      "E3",
+      "E8",
+      "F2",
+      "D5"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker: PA612-ESD applications and processing",
+        "url": "https://polymaker.com/fiberon-pa612-esd-esd-safe-with-strength-and-heat-resistance/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "PCB manufacturing and storage fixtures",
+        "text": "Polymaker lists PCB manufacturing, PCB storage and industrial fixtures as intended applications. The point is to combine mechanical support with controlled charge dissipation; this is a manufacturer application recommendation rather than a documented customer installation.",
+        "process": "FDM",
+        "scope": "Polymaker Fiberon PA612-ESD, carbon-filled PA612",
+        "evidence": "manufacturer-application",
+        "url": "https://polymaker.com/fiberon-pa612-esd-esd-safe-with-strength-and-heat-resistance/",
+        "source_title": "Polymaker: PA612-ESD applications and processing"
+      }
+    ]
+  },
+  "pa12-gf": {
+    "paragraphs": [
+      "PA12-GF serves the same broad engineering role as other reinforced nylons: rigid housings, fixture bodies and structural supports. Glass fibre supplies bending stiffness, while the PA12 matrix helps retain properties in humidity better than a PA6-based composite. 3DXTech emphasizes this combination of moisture resistance, low shrinkage and repeatable dimensions for its FibreX Nylon 12+GF30. It is useful when a part needs to hold geometry rather than act as a spring.",
+      "Glass reinforcement does not preserve all the ductility of unfilled nylon. The published elongation is limited, so sharp snap features and force-fit inserts are poor places to assume rubber-like compliance. The grade is also abrasive to printing hardware. Fatigue and creep depend on the particular nylon matrix, fibre alignment and layer bonds, so PA12-GF needs its own loading assessment rather than an assumption based on molded glass-filled nylon."
+    ],
+    "fields": [
+      "A1",
+      "E2",
+      "E3",
+      "D5",
+      "C2",
+      "G8"
+    ],
+    "sources": [
+      {
+        "title": "3DXTech: FibreX Nylon 12+GF30",
+        "url": "https://www.3dxtech.com/products/fibrex-nylon-12-gf30-1"
+      }
+    ],
+    "examples": []
+  },
+  "pa6-gf": {
+    "paragraphs": [
+      "PA6-GF is a stiff, heat-resistant nylon composite for tooling, fixture bodies and rigid mechanical parts. It is particularly useful where resistance to bending and tolerance of processing heat matter more than a flexible nylon feel. A documented industrial use is the full-size automotive fender plug made by Ivan Tampi Customs on a MAKEiT printer: the material remained stable during power sanding rather than gumming as PLA did.",
+      "That example concerns tooling used to create the finished panel, not a claim that the printed plug is a road-going body panel. Glass-filled PA6 can also be brittle: printed elongation can be only a few percent. It absorbs substantial moisture, which reduces stiffness and strength while changing impact behavior. Design around the conditioned material and the actual load direction rather than assuming all nylons are tough and flexible."
+    ],
+    "fields": [
+      "E2",
+      "E3",
+      "E9",
+      "F2",
+      "D5",
+      "I1"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker: full-size fender plug in PA6-GF",
+        "url": "https://polymaker.com/large-scale-models-3d-printed-on-makeit2x4-printer-using-polymaker-pa6-gf-2/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Ivan Tampi Customs fender plug",
+        "text": "Polymaker documents a full-size fender plug printed in PolyMide PA6-GF. The material tolerated repeated power sanding without gumming, supporting the surface preparation needed for the plug-making workflow.",
+        "process": "FDM",
+        "scope": "Polymaker PolyMide PA6-GF; historical grade, not every current PA6-GF spool",
+        "evidence": "case-study",
+        "url": "https://polymaker.com/large-scale-models-3d-printed-on-makeit2x4-printer-using-polymaker-pa6-gf-2/",
+        "source_title": "Polymaker: full-size fender plug in PA6-GF"
+      }
+    ]
+  },
+  "paht-cf": {
+    "paragraphs": [
+      "PAHT-CF and related long-chain carbon-filled nylons are selected for rigid machine parts that encounter both warmth and changing humidity. Compared with PA6 composites, the long-chain matrix reduces moisture-driven changes while the fibres maintain bending stiffness. Polymaker and Amesos used PA612-CF for agricultural-drone water-pump mounting plates, where the mounting had to accommodate the pumps and withstand their mechanical loading.",
+      "The category name covers different formulations rather than a single resin specification. Bambu PAHT-CF and Polymaker PA612-CF15 have different thermal and conditioned-property results, which changes how each should be sized for a warm, loaded component. Lower moisture sensitivity does not mean none, and the loaded heat-deflection figures should not be read as a continuous service temperature. Layer orientation still governs weak attachment features."
+    ],
+    "fields": [
+      "A1",
+      "E2",
+      "E8",
+      "F2",
+      "D5",
+      "G4"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker and Amesos: agricultural-drone pump mounting plates",
+        "url": "https://polymaker.com/polymaker-and-amesos-collaborate-to-produce-water-pump-mounting-plates-effectively-spanning-the-entire-product-lifecycle-of-agricultural-drones-components/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Agricultural-drone water-pump mounting plates",
+        "text": "Amesos designed and tested mounting plates for agricultural-drone pumps; Polymaker selected PolyMide PA612-CF for the required rigidity and mechanical and thermal performance. The case concerns this long-chain nylon composite, not all products sold as PAHT-CF.",
+        "process": "FDM",
+        "scope": "Polymaker PolyMide PA612-CF, a PA612 carbon-fibre filament",
+        "evidence": "case-study",
+        "url": "https://polymaker.com/polymaker-and-amesos-collaborate-to-produce-water-pump-mounting-plates-effectively-spanning-the-entire-product-lifecycle-of-agricultural-drones-components/",
+        "source_title": "Polymaker and Amesos: agricultural-drone pump mounting plates"
+      }
+    ]
+  },
+  "ppa-cf": {
+    "paragraphs": [
+      "PPA-CF moves reinforced nylon toward applications where stiffness has to survive a combination of heat, sustained load and humidity. Its semi-aromatic matrix generally takes up less moisture than PA6, while chopped carbon fibres resist deformation. This combination is useful for industrial tooling and rigid end-use parts where a conventional nylon becomes too compliant. Raise3D targets automotive, aerospace and electronics applications with its 15% carbon-filled PPA formulation.",
+      "For material selection, the exact grade and heat treatment matter more than the PPA-CF name. Some grades obtain much of their heat-deflection performance only after annealing, with dimensional changes and reduced impact performance as possible costs. Low elongation also makes sharp transitions and heavily strained snap fits problematic. Carbon-filled PPA can be electrically conductive, so it should not inherit the insulation assumptions of an unfilled nylon housing."
+    ],
+    "fields": [
+      "A1",
+      "E2",
+      "E3",
+      "E11",
+      "F6",
+      "G8"
+    ],
+    "sources": [
+      {
+        "title": "Raise3D: Industrial PPA CF",
+        "url": "https://www.raise3d.com/materials/ppa-cf/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Industrial end-use parts",
+        "text": "Raise3D recommends its PPA-CF for industrial end-use applications requiring rigidity, heat resistance and lower moisture uptake than other nylons. It names automotive, aerospace and electrical/electronics sectors without identifying a specific customer part.",
+        "process": "FDM",
+        "scope": "Raise3D Industrial PPA CF, 15 wt% chopped carbon fibre",
+        "evidence": "manufacturer-application",
+        "url": "https://www.raise3d.com/materials/ppa-cf/",
+        "source_title": "Raise3D: Industrial PPA CF"
+      }
+    ]
+  },
+  "tpu-cf": {
+    "paragraphs": [
+      "Carbon-filled TPU occupies a different role from carbon-filled rigid plastics: it is a firm elastomer for wheels, compliant mounts and parts that need to deform while retaining more shape than soft TPU. Extrudr FLEX Hard CF is rated on the Shore D scale and remains capable of substantial elongation. Extrudr has demonstrated printed longboard wheels with this specific formulation, showing that the material is used as a working elastomer rather than merely for a carbon-like appearance.",
+      "The filler does not make it a rigid structural nylon, nor does it automatically improve every elastomer property. Extrudr publishes the same abrasion loss for FLEX Hard CF and the unfilled FLEX Hard, while the filled version has lower elongation. Creep and dynamic behavior still depend on geometry, load and temperature; a hardness number cannot establish vibration isolation or wheel lifetime."
+    ],
+    "fields": [
+      "E10",
+      "E13",
+      "E3",
+      "E15",
+      "E11",
+      "C2"
+    ],
+    "sources": [
+      {
+        "title": "Extrudr: printed FLEX Hard Carbon longboard wheels",
+        "url": "https://extrudr.com/en/it/news/3-d-printed-longboard-wheels-with-tpu-flex-hard-carbon/"
+      },
+      {
+        "title": "Extrudr product catalogue: FLEX Hard CF",
+        "url": "https://s3.extrudr.com/extrudr-media/product-catalogue/extrudr-Produktkatalog_EN.pdf"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Printed longboard wheels",
+        "text": "Extrudr reports designing and printing longboard wheels in FLEX Hard Carbon and having them tried by a professional longboarder. This is a manufacturer demonstration for that filament, not a general wheel rating for carbon-filled TPU.",
+        "process": "FDM",
+        "scope": "Extrudr FLEX Hard Carbon / FLEX Hard CF, hard carbon-filled TPU",
+        "evidence": "case-study",
+        "url": "https://s3.extrudr.com/extrudr-media/product-catalogue/extrudr-Produktkatalog_EN.pdf",
+        "source_title": "Extrudr product catalogue: FLEX Hard CF"
+      }
+    ]
+  },
+  "e-tpu": {
+    "paragraphs": [
+      "Foaming TPU is chosen when an elastomer part should be lighter or softer than a solid print of the same outline. Expansion creates a cellular structure, so nozzle temperature and extrusion flow affect density and firmness as well as dimensions. Manufacturers use this for cushioning and compliant surfaces: colorFabb lists RC tyres, grips and transport-case inserts, while Siraya Tech develops its Roamr foaming grades specifically for printed footwear.",
+      "Foaming TPU is not interchangeable with a solid 85A or 95A TPU, and different foaming formulations do not have the same rebound. Siraya distinguishes its footwear-tuned Roamr from ordinary TPU Air. The practical limit is process consistency: changing temperature or flow changes expansion, wall thickness and feel. Compression, recovery and durability must be evaluated at the intended deformation; softness alone cannot predict repeated-load performance."
+    ],
+    "fields": [
+      "A1",
+      "A2",
+      "E10",
+      "F6",
+      "I6",
+      "E11"
+    ],
+    "sources": [
+      {
+        "title": "colorFabb: varioShore TPU applications",
+        "url": "https://colorfabb.com/varioshore-tpu"
+      },
+      {
+        "title": "Siraya Tech: Roamr printed-footwear materials",
+        "url": "https://siraya.tech/pages/roamr"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Printed footwear",
+        "text": "Siraya Tech shows printed shoes and slides and positions Roamr TPU Air HR specifically for footwear. Its high-rebound formulations are distinct from ordinary TPU Air; this application should not be attributed to every foaming TPU.",
+        "process": "FDM",
+        "scope": "Siraya Tech Roamr TPU Air HR 80A and 85A foaming formulations",
+        "evidence": "manufacturer-application",
+        "url": "https://siraya.tech/pages/roamr",
+        "source_title": "Siraya Tech: Roamr printed-footwear materials"
+      },
+      {
+        "title": "RC tyres and transport-case inserts",
+        "text": "colorFabb identifies flexible RC tyres and reusable cushioning inserts as applications for varioShore. Controlled expansion offers lower weight and adjustable softness, while the geometry still determines how the part carries load.",
+        "process": "FDM",
+        "scope": "colorFabb varioShore TPU, actively foaming TPU",
+        "evidence": "manufacturer-application",
+        "url": "https://colorfabb.com/varioshore-tpu",
+        "source_title": "colorFabb: varioShore TPU applications"
+      }
+    ]
+  },
+  "tpu-soft": {
+    "paragraphs": [
+      "Very soft TPU is useful where the contact surface should conform readily: gripping sleeves, compliant contact pads, flexible covers and feed-roller surfaces. Rather than maintaining a precise position under load, it spreads contact and accommodates movement. The documented paper-feed roller repair below is a good example of this role: the soft printed sleeve works with the existing rigid roller assembly.",
+      "The softness is also its limitation. A thin flexible wall can feed poorly through an unsuitable extruder, and a compressed part can continue deforming while the load remains applied. Very high elongation at break is not a measurement of usable elastic travel or repeated-flex life. For rollers and grips, surface texture, wear and pressure determine performance alongside hardness; the softest available material is not automatically the best choice."
+    ],
+    "fields": [
+      "A7",
+      "E3",
+      "E10",
+      "E11",
+      "E13",
+      "B13"
+    ],
+    "sources": [],
+    "examples": []
+  },
+  "tpe-sebs": {
+    "paragraphs": [
+      "SEBS-based TPE is a styrenic elastomer used for soft-touch surfaces, grips, flexible covers and seals. It provides rubber-like deformation through a different chemistry from TPU. In conventional manufacturing, KRAIBURG documents SEBS-based THERMOLAST W compounds for wet-grip applications that can be processed by multi-component injection molding or extrusion. That is the role of an elastomer surface over a rigid supporting part, not a rigid structural replacement.",
+      "Ultrafuse TPS 90A filament has very low moisture uptake and does not require the drying routine typical of TPU, which simplifies printing and storage. Its published abrasion loss is substantially worse than the TPU comparisons, so soft feel should not be confused with a durable wheel tread. Molded grip compounds are formulation-specific: their adhesion or wet-grip performance does not automatically transfer to this filament."
+    ],
+    "fields": [
+      "A1",
+      "D1",
+      "E10",
+      "E13",
+      "E15",
+      "E11"
+    ],
+    "sources": [
+      {
+        "title": "KRAIBURG TPE: SEBS-based THERMOLAST W wet-grip technology",
+        "url": "https://pdb.kraiburg-tpe.com/en/news_media/archives/thermolastw"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Wet-grip elastomer surfaces",
+        "text": "KRAIBURG describes SEBS-based THERMOLAST W for grip applications, with wet-grip behavior incorporated in the compound. It supports multi-component injection molding and extrusion; these molded-compound properties do not establish the performance of Ultrafuse TPS 90A filament.",
+        "process": "Injection molding and extrusion",
+        "scope": "KRAIBURG THERMOLAST W, specific SEBS-based molding compounds; family context only",
+        "evidence": "manufacturer-application",
+        "url": "https://pdb.kraiburg-tpe.com/en/news_media/archives/thermolastw",
+        "source_title": "KRAIBURG TPE: SEBS-based THERMOLAST W wet-grip technology"
+      }
+    ]
+  },
+  "tpu-85a": {
+    "paragraphs": [
+      "TPU around 85 Shore A is selected for compliant contact: grips, flexible boots, soft sleeves and parts that must compress around another object. Compared with harder TPU, its main advantage is that a similar wall shape deforms more readily. The flexible device stand below illustrates a part that uses this compliance to fit around equipment rather than hold a rigid dimensional reference.",
+      "The useful question is how the whole part behaves, not just the hardness printed on the spool. Wall thickness and infill can make an 85A print surprisingly firm, while long-term compression can change its shape. Abrasion, tear behavior and layer bonding remain grade-specific. A soft grip needs a different balance from a seal or impact cushion: compression set, recovery and repeated-flex performance matter alongside softness, and softer filament also places greater demands on the feed path."
+    ],
+    "fields": [
+      "A7",
+      "E10",
+      "E13",
+      "E11",
+      "E15",
+      "B13"
+    ],
+    "sources": [],
+    "examples": []
+  },
+  "tpu-95a": {
+    "paragraphs": [
+      "TPU around 95 Shore A is a common choice for phone cases, tyres, protective covers, gaskets and flexible machine parts because it combines useful shape retention with elastic deformation. A case needs to stretch over an edge and then retain the device; a tyre needs a deformable contact surface that can survive rubbing. The listed abrasion data helps explain these uses, but grip and impact protection still depend on the exact part and formulation.",
+      "Compression and retention are the main design limits. A gasket that remains squeezed, a case lip that stays stretched or a loaded wheel can gradually change shape through creep. Moisture and layer bonding also affect the integrity of a printed part. Industrial TPU wheels and rollers use purpose-selected compounds and controlled geometry; in FDM the same engineering job still requires attention to contact pressure, wear, leakage where relevant, and recovery after the load is removed."
+    ],
+    "fields": [
+      "A7",
+      "E10",
+      "E13",
+      "E15",
+      "E11",
+      "E8"
+    ],
+    "sources": [
+      {
+        "title": "BASF: injection-molded Elastollan TPU components",
+        "url": "https://plastics-rubber.basf.com/global/en/performance_polymers/industries/pp_construction/products/elastollan/molding"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Molded industrial wheels and rollers",
+        "text": "BASF identifies wheels and rollers as established injection-molded Elastollan applications, using the combination of wear resistance, elasticity and controlled dynamic behavior. The family covers many chemistries and hardnesses; this is background for the engineering role, not evidence for one printed 95A grade.",
+        "process": "Injection molding",
+        "scope": "BASF Elastollan TPU molding family, multiple hardnesses and chemistries; not an FDM 95A equivalence",
+        "evidence": "manufacturer-application",
+        "url": "https://plastics-rubber.basf.com/global/en/performance_polymers/industries/pp_construction/products/elastollan/molding",
+        "source_title": "BASF: injection-molded Elastollan TPU components"
+      }
+    ]
+  },
+  "tpu-98a": {
+    "paragraphs": [
+      "Hard TPU is used when an elastomer must flex but should not feel floppy: wheels, feed rollers, drive components, bumpers and firm flexible retainers. Its shape retention and abrasion resistance are useful at repeated contact surfaces. The documented simulator-pedal spring below is a different use of the same principle: a firm elastomer deforms to generate resistance over a controlled travel.",
+      "This category extends from nominal 98 Shore A into grades also described on the Shore D scale; those numbers must stay on their stated scales. The harder feel does not eliminate creep or prove fatigue life. A wheel, belt or spring needs its actual load, speed, temperature and deformation considered together. Reinforced commercial timing belts and molded industrial wheels also have structures and processing histories that an unreinforced FDM print does not reproduce."
+    ],
+    "fields": [
+      "A7",
+      "E10",
+      "E13",
+      "E15",
+      "E11",
+      "E12"
+    ],
+    "sources": [],
+    "examples": []
+  },
+  "pp-cf": {
+    "paragraphs": [
+      "PP-CF is useful where chemical resistance and low moisture uptake matter as much as mechanical shape: laboratory supports, chemical-container fittings and lightweight equipment components. Prusa shows vial stands, canister lids and a pool-chlorine dispenser in its introduction to Prusament PP Carbon Fiber. The PP matrix supplies resistance to particular chemicals, while the carbon filler improves printing stability and changes the part from a bendable polypropylene toward a more rigid composite.",
+      "That change brings a cost: Prusa explicitly describes reduced layer adhesion and greater fragility than pure PP. Do not choose it for a living hinge just because the matrix is polypropylene. Chemical compatibility must also include concentration and temperature; the manufacturer's table shows that some solvents attack or strongly permeate it. A printed container example establishes a build, not a pressure or leak-tightness rating."
+    ],
+    "fields": [
+      "A1",
+      "A2",
+      "G3",
+      "D1",
+      "E13",
+      "C2"
+    ],
+    "sources": [
+      {
+        "title": "Prusa: PP Carbon Fiber properties and application examples",
+        "url": "https://blog.prusa3d.com/prusament-pp-carbon-fiber-and-petg-magnetite_107086/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Vial stands and chemical-container fittings",
+        "text": "Prusa presents printed vial stands, a canister lid and a chlorine dispenser as examples of its PP-CF. They illustrate chemical-contact hardware; the article's exhaust-manifold model is explicitly a visual model, not a working exhaust component.",
+        "process": "FDM",
+        "scope": "Prusament PP Carbon Fiber Black",
+        "evidence": "manufacturer-application",
+        "url": "https://blog.prusa3d.com/prusament-pp-carbon-fiber-and-petg-magnetite_107086/",
+        "source_title": "Prusa: PP Carbon Fiber properties and application examples"
+      }
+    ]
+  },
+  "pp-gf": {
+    "paragraphs": [
+      "PP-GF turns polypropylene into a firmer material for chemically resistant fixtures and equipment rather than flexible hinges. The PP matrix retains low water uptake, while the glass reinforcement supplies rigidity and helps printed parts retain their shape. Prusa demonstrates pipette stands and vial racks with Prusament PP Glass Fiber, making laboratory positioning hardware a concrete example of the material's role.",
+      "The benefit is stable support around compatible chemicals without the moisture conditioning changes associated with nylon. The costs include abrasive filament, a rough surface and poorer reproduction of tiny detail. Filled PP should not inherit unfilled PP's hinge behavior, and chemical resistance is not universal: check concentration and temperature for the actual fluid. The manufacturer also shows a printed exhaust-manifold shape solely as a visual example, which must not be mistaken for a service-temperature claim."
+    ],
+    "fields": [
+      "A1",
+      "E13",
+      "D1",
+      "G3",
+      "C2",
+      "F2"
+    ],
+    "sources": [
+      {
+        "title": "Prusa: PP Glass Fiber properties and application examples",
+        "url": "https://blog.prusa3d.com/prusament-pp-glass-fiber-and-prusament-resin-impact-65_118862/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Pipette stands and vial racks",
+        "text": "Prusa shows these as laboratory uses of PP Glass Fiber: rigidity holds the equipment in position while the PP matrix provides resistance to compatible chemicals and low moisture uptake. They are manufacturer application examples rather than a laboratory certification.",
+        "process": "FDM",
+        "scope": "Prusament PP Glass Fiber Natural",
+        "evidence": "manufacturer-application",
+        "url": "https://blog.prusa3d.com/prusament-pp-glass-fiber-and-prusament-resin-impact-65_118862/",
+        "source_title": "Prusa: PP Glass Fiber properties and application examples"
+      }
+    ]
+  },
+  "pe": {
+    "paragraphs": [
+      "Polyethylene is used for chemically resistant containers, wear surfaces and packaging, but Spectrum HDPE filament is a modified low-warp formulation rather than ordinary bottle-grade HDPE. Spectrum recommends machine guides exposed to abrasion, housings and technical laboratory components. The useful combination is low moisture uptake, compatibility with many chemicals and resistance to rubbing; those properties matter more than a generic claim that polyethylene is flexible.",
+      "The formulation distinction changes the design decision. Spectrum's filament is substantially stiffer and less extensible than ordinary unfilled HDPE stock, so a printed squeeze part will not automatically behave like a molded bottle. Shrinkage still matters for broad flat parts. A container shape or chemical-resistant polymer also does not establish leak-tightness: joints, layer paths and the exact fluid exposure must be considered."
+    ],
+    "fields": [
+      "A1",
+      "E2",
+      "E3",
+      "D1",
+      "G3",
+      "I6"
+    ],
+    "sources": [
+      {
+        "title": "Spectrum: HDPE filament applications",
+        "url": "https://spectrumfilaments.com/en/filament/hdpe/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Abrasion-exposed machine guides",
+        "text": "Spectrum lists machine components and guides exposed to abrasion among the intended uses of its HDPE filament. Its low-warp formulation combines rigidity with wear resistance; this recommendation does not imply the friction or lifetime of a particular finished guide.",
+        "process": "FDM",
+        "scope": "Spectrum HDPE Low Warp filament, modified formulation rather than plain HDPE stock",
+        "evidence": "manufacturer-application",
+        "url": "https://spectrumfilaments.com/en/filament/hdpe/",
+        "source_title": "Spectrum: HDPE filament applications"
+      }
+    ]
+  },
+  "pp": {
+    "paragraphs": [
+      "Unfilled polypropylene is used for flexible clips, living hinges, packaging prototypes and chemically resistant equipment. Its distinguishing combination is ductility, repeated bending capability and very low water uptake. A thin hinge can bend while thicker walls provide the body of a container; a mounting clip can yield during assembly without requiring the brittle response of a fibre-filled grade. The documented stereo brackets below explicitly used PP for flexibility.",
+      "That flexibility is a disadvantage when a part must hold a precise position or carry a sustained load: PP has limited stiffness and can creep. It also adheres poorly to many printing surfaces and can shrink or warp substantially, so fit and hinge quality depend on the process. The familiar molded-PP living hinge is useful application context, but its lifetime cannot simply be assigned to a layered print."
+    ],
+    "fields": [
+      "A7",
+      "E3",
+      "E11",
+      "E12",
+      "E13",
+      "B8"
+    ],
+    "sources": [
+      {
+        "title": "Prusa Knowledge Base: polypropylene applications",
+        "url": "https://help.prusa3d.com/article/polypropylene-pp_167126"
+      }
+    ],
+    "examples": []
+  },
+  "pmma": {
+    "paragraphs": [
+      "PMMA is used for optical parts rather than primarily for structural strength: vehicle lamp covers, signal lenses, long light guides, illuminated signs and display covers. Röhm lists these applications for its PLEXIGLAS molding compounds because transparency, controllable light transmission, color stability and weather resistance let the material carry or shape light while preserving its appearance. Different compounds provide diffusion, improved impact resistance or additional heat resistance.",
+      "For printed optical parts, layer interfaces and surface texture scatter light, so transparency depends heavily on the grade, print structure and finishing. A material sold as clear acrylic should not be assumed to reproduce the clarity or heat resistance of a purpose-made optical molding compound. Acrylic also needs careful fastening and cleaning: concentrated stresses and incompatible alcohols or solvents can cause crazing or cracking."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "J1",
+      "J2"
+    ],
+    "sources": [
+      {
+        "title": "Röhm: PLEXIGLAS molding compounds for vehicle exterior lighting",
+        "url": "https://www.plexiglas-polymers.com/en/application-areas/automotive/exterior-lighting"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Automotive lamp covers and light guides",
+        "text": "Röhm identifies taillight covers, turn-signal covers and long light guides as injection-molded PMMA applications; optical quality and weathering resistance are the reasons for selection.",
+        "process": "Injection molding",
+        "scope": "Application-specific PLEXIGLAS PMMA molding compounds; not the catalog filament",
+        "evidence": "manufacturer-application",
+        "url": "https://www.plexiglas-polymers.com/en/application-areas/automotive/exterior-lighting",
+        "source_title": "Röhm: PLEXIGLAS molding compounds for vehicle exterior lighting"
+      }
+    ]
+  },
+  "pom": {
+    "paragraphs": [
+      "POM, or acetal, is widely used for gears, sliding guides, bushings and other moving mechanisms. Its stiffness, dimensional stability, resilience and inherent sliding behavior help components retain their shape while moving against another surface. Celanese markets Hostaform POM for gears; its tribologically modified SlideX compounds are listed for gear-shift mechanisms, furniture slides, roller shutters and stabilizer joints, where wear, friction and noise are central design concerns.",
+      "Grade selection matters: low-wear additives target sliding contacts, impact modifiers change toughness, and antistatic compounds change electrical behavior. POM filament and compatible printing systems are relatively scarce. A printed gear or bushing needs its own wear, fit and load assessment rather than dimensions derived from stock-shape properties alone. Acids and oxidants also restrict service even when oils or bases are compatible."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E2",
+      "G3",
+      "J2"
+    ],
+    "sources": [
+      {
+        "title": "Celanese: Industrial automation and gears",
+        "url": "https://www.celanese.com/applications/industrial-automation-and-gears"
+      },
+      {
+        "title": "Celanese: Hostaform POM product manual",
+        "url": "https://www.celanese.com/-/media/Engineered%20Materials/Files/Product%20Sell%20Sheets/POM-062_HostaformProductManual_EU_EN_0614.pdf"
+      },
+      {
+        "title": "Celanese: Hostaform SlideX acetal copolymer",
+        "url": "https://www.celanese.com/news-and-media/2014/october/celanese-launches-hostaform-slidex-acetal-copolymer"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Gear-shift mechanisms and furniture slides",
+        "text": "Celanese lists these moving-contact applications for the specially modified SlideX POM family because reducing friction and wear can improve operation and reduce noise.",
+        "process": "Process not specified in the application announcement",
+        "scope": "Tribologically modified Hostaform SlideX acetal copolymer; not generic POM filament",
+        "evidence": "manufacturer-application",
+        "url": "https://www.celanese.com/news-and-media/2014/october/celanese-launches-hostaform-slidex-acetal-copolymer",
+        "source_title": "Celanese: Hostaform SlideX acetal copolymer"
+      }
+    ]
+  },
+  "pvdf": {
+    "paragraphs": [
+      "PVDF is used for chemical-process piping, tubing, pumps, tanks, filters and valves because chemical resistance is often the deciding requirement. Arkema describes Kynar PVDF in systems exposed to acids and chlorinated or brominated chemicals, including process equipment that also undergoes chemical or steam cleaning. Selected grades can be injection molded or extruded into smooth fluid-contact surfaces, then welded into larger assemblies.",
+      "Chemical resistance is its main advantage over less resistant plastics and, in some systems, costly corrosion-resistant metals. Select the grade against the actual fluid, concentration and temperature: several organic solvents swell or dissolve PVDF, and strong alkalis can attack it. Fluid-contact prints also need attention to porosity, welds, joints and residual stress; a manufactured piping system's pressure or purity rating does not transfer to an FDM component."
+    ],
+    "fields": [
+      "A7",
+      "G3",
+      "G4",
+      "J1",
+      "J2"
+    ],
+    "sources": [
+      {
+        "title": "Arkema: Kynar PVDF in biopharmaceutical process equipment",
+        "url": "https://hpp.arkema.com/en/markets-and-applications/chemical-industry-and-general-industry/biopharmaceutical-industry/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Chemical-process piping and fluid-handling components",
+        "text": "Arkema lists process piping, pumps, tubing, tanks and filters, citing chemical resistance and compatibility with common cleaning methods; selected grades are designed for molding and extrusion.",
+        "process": "Injection molding, extrusion and fabrication/welding; component-dependent",
+        "scope": "Selected Kynar PVDF resins and conventionally fabricated systems; not a filament pressure rating",
+        "evidence": "manufacturer-application",
+        "url": "https://hpp.arkema.com/en/markets-and-applications/chemical-industry-and-general-industry/biopharmaceutical-industry/",
+        "source_title": "Arkema: Kynar PVDF in biopharmaceutical process equipment"
+      }
+    ]
+  },
+  "peek-cf": {
+    "paragraphs": [
+      "Fiber-filled PEEK is chosen when unfilled PEEK is too compliant or expands too much for the mechanical task. Ensinger describes carbon-filled TECAPEEK CF30 stock for demanding industrial components, including sliding applications: the reinforcement raises stiffness and creep strength, and improved heat conduction can help remove frictional heat from a contact. Carbon and glass fillings serve different needs; glass-filled grades should not inherit carbon-filled electrical or thermal behavior.",
+      "Short fibers make printed PEEK stiffer but less able to accommodate strain, favoring rigid components over resilient clips or hinges. Fiber orientation also makes expansion and stiffness direction-dependent. Filler content, counterface and contact heat matter in sliding service. Long-term load and creep limits need evidence for the actual printed grade and orientation; the properties of extruded CF30 stock do not describe every CF10 or CF15 print."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E2",
+      "E3",
+      "E11",
+      "F7"
+    ],
+    "sources": [
+      {
+        "title": "Ensinger: Carbon-filled TECAPEEK CF30 stock",
+        "url": "https://www.ensingerplastics.com/en-us/shapes/peek-tecapeek-cf30-black"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Sliding components in carbon-filled PEEK",
+        "text": "Ensinger identifies sliding applications for its CF30 stock and relates them to stiffness, creep strength and higher thermal conductivity, which can help dissipate contact heat.",
+        "process": "Stock-shape machining; manufacturer offers machined parts",
+        "scope": "TECAPEEK CF30 black, 30% carbon-filled stock; not the catalog CF10 printed grade",
+        "evidence": "manufacturer-application",
+        "url": "https://www.ensingerplastics.com/en-us/shapes/peek-tecapeek-cf30-black",
+        "source_title": "Ensinger: Carbon-filled TECAPEEK CF30 stock"
+      }
+    ]
+  },
+  "pps-cf": {
+    "paragraphs": [
+      "Carbon-filled PPS is used when PPS chemical resistance must be combined with greater structural stiffness. Xioneer and Polymaker document a concrete printed application: the magnetic-drive impeller in the Typhoon support-removal machines. It operates around heat, water and chemicals, so retaining its geometry and durability matters more than cosmetic appearance. Printing also let the developers iterate the impeller geometry.",
+      "The reported build used Polymaker PPS-CF with Xioneer VXL 150 support and achieved its intended crystalline state without annealing. That illustrates why thermal history and the support pairing matter alongside polymer chemistry. Carbon reinforcement raises stiffness but the low elongation leaves little margin for impacts, tight interference fits or repeated flexing. Glass-filled PPS has a different balance, while sustained-load temperature and chemical compatibility still need checking for the particular grade and printed orientation."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E2",
+      "E3",
+      "F1",
+      "G3"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker and Xioneer: Printed PPS-CF Typhoon impeller",
+        "url": "https://polymaker.com/xioneer-and-polymaker-collaborate-on-next-gen-solutions/page/2/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Xioneer Typhoon magnetic-drive impeller",
+        "text": "Xioneer selected Polymaker PPS-CF for a printed impeller exposed to heated water and chemicals inside its support-removal equipment, reporting durability and successful geometry development.",
+        "process": "FFF/FDM with Xioneer VXL 150 support",
+        "scope": "Polymaker PPS-CF in the documented crystalline-printing process; exact filler content is not stated in the case",
+        "evidence": "case-study",
+        "url": "https://polymaker.com/xioneer-and-polymaker-collaborate-on-next-gen-solutions/page/2/",
+        "source_title": "Polymaker and Xioneer: Printed PPS-CF Typhoon impeller"
+      }
+    ]
+  },
+  "peek": {
+    "paragraphs": [
+      "PEEK is used where heat, repeated mechanical loading, wear and chemical exposure occur together. Victrex describes injection-molded PEEK gear systems for engine and actuation drives, where lower mass and inertia and quieter operation can justify replacing metal. Compressor applications include valve elements, bearing and piston rings, thrust washers and tip seals; the useful property depends on the component, from fatigue resistance to friction and chemical resistance.",
+      "Choose the formulation around the contact and load: a wear grade for a seal or sliding surface is not interchangeable with an unfilled resin or a reinforced structural grade. In FDM, controlling crystallization, chamber conditions and layer bonding is demanding and expensive. Load direction, contact temperature, counterface material and lubrication govern the useful life of a gear or bearing; molded component experience alone does not establish those limits for a print."
+    ],
+    "fields": [
+      "A7",
+      "E3",
+      "E7",
+      "E11",
+      "E12",
+      "G3"
+    ],
+    "sources": [
+      {
+        "title": "Victrex: PEEK and VICTREX HPG gear solutions",
+        "url": "https://www.victrex.com/en/products/peek-parts/gear-solutions"
+      },
+      {
+        "title": "Victrex: Polymer solutions for the compressor industry",
+        "url": "https://www.victrex.com/-/media/downloads/literature/en/victrex-compressor-solutions-2020.pdf"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Injection-molded engine and actuation gears",
+        "text": "Victrex presents its engineered PEEK gear solutions as alternatives to metal, linking lower mass and inertia, chemical resistance and noise reduction to the application.",
+        "process": "Injection molding",
+        "scope": "VICTREX HPG and other specified PEEK gear solutions; not an arbitrary unfilled FDM spool",
+        "evidence": "manufacturer-application",
+        "url": "https://www.victrex.com/en/products/peek-parts/gear-solutions",
+        "source_title": "Victrex: PEEK and VICTREX HPG gear solutions"
+      }
+    ]
+  },
+  "pei-1010": {
+    "paragraphs": [
+      "ULTEM 1010 is used for tooling that has to remain rigid during a heated manufacturing process. A documented example is Dassault Falcon Jet's composite layup tool for aircraft interior panels: the printed tool endured the specified consolidation conditions, while a sparse interior reduced its handling weight. The benefit was a usable production tool with shorter lead time and lower weight and cost than the previous tooling route.",
+      "Compared with ULTEM 9085, 1010 emphasizes thermal rigidity rather than the particular balance used for many interior parts. Producing reliable tooling requires high-temperature hardware, thorough drying, a heated chamber and control of warping. Thin features and loads across the layers need particular attention because printed strength is direction-dependent. A layup tool's geometry, surface preparation, consolidation cycle and repeated thermal exposure determine its working limits."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E1",
+      "F1",
+      "F2",
+      "E14"
+    ],
+    "sources": [
+      {
+        "title": "Stratasys: Dassault Falcon Jet composite layup tool",
+        "url": "https://www.stratasys.com/en/resources/case-studies/dassault-falcon-jet-use-case/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Dassault Falcon Jet composite layup tool",
+        "text": "Dassault used a printed ULTEM 1010 tool to form composite interior panels. Sparse fill reduced weight, and the case reports shorter lead time and lower cost than the previous tooling method.",
+        "process": "FDM with post-print processing",
+        "scope": "ULTEM 1010 production tooling under the documented customer conditions",
+        "evidence": "case-study",
+        "url": "https://www.stratasys.com/en/resources/case-studies/dassault-falcon-jet-use-case/",
+        "source_title": "Stratasys: Dassault Falcon Jet composite layup tool"
+      }
+    ]
+  },
+  "pei-9085": {
+    "paragraphs": [
+      "ULTEM 9085 is used for lightweight interior components where mechanical performance must accompany documented flame, smoke and toxicity behavior. Stratasys lists production parts and demanding tooling, and its Airbus program specifically identifies nonstructural brackets and system-installation parts manufactured by FDM. On-demand production can also reduce the inventory and lead-time burden of low-volume components.",
+      "Interior applications depend on a controlled combination of material, geometry and production process; the Airbus result does not qualify an arbitrary 9085 print. For mechanical design, account for the lower thermal ceiling than 1010 and the substantial difference between in-plane and cross-layer impact behavior. Drying, chamber control and warp management are demanding, and attachment details should distribute loads instead of concentrating them at thin printed features."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E1",
+      "E7",
+      "F1",
+      "F8"
+    ],
+    "sources": [
+      {
+        "title": "Stratasys: Airbus A350 ULTEM 9085 production parts",
+        "url": "https://investors.stratasys.com/news-events/press-releases/detail/411/stratasys-direct-manufacturing-selected-by-airbus-to-3d"
+      },
+      {
+        "title": "Stratasys: ULTEM 9085 material applications",
+        "url": "https://www.stratasys.com/en/materials/materials-catalog/fdm-materials/ultem-9085/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Airbus A350 nonstructural brackets",
+        "text": "Stratasys Direct Manufacturing was selected to supply FDM ULTEM 9085 brackets and other system-installation parts for the A350, using its production controls and quality procedures.",
+        "process": "FDM",
+        "scope": "ULTEM 9085 within the documented Airbus/Stratasys production program",
+        "evidence": "case-study",
+        "url": "https://investors.stratasys.com/news-events/press-releases/detail/411/stratasys-direct-manufacturing-selected-by-airbus-to-3d",
+        "source_title": "Stratasys: Airbus A350 ULTEM 9085 production parts"
+      }
+    ]
+  },
+  "pekk": {
+    "paragraphs": [
+      "PEKK is used for demanding lightweight components where chemical resistance, heat capability and manufacturing control matter together. Arkema shows an aircraft door bracket printed in Kepstan PEKK and discusses industrial FFF and laser-sintering applications. Its controllable crystallization behavior gives manufacturers more freedom to balance processing, interlayer bonding and final properties than a simple comparison of polymer strength would suggest.",
+      "PEKK grades can be selected for different crystallization rates and processed into amorphous or crystalline structures. Crystalline processing and annealing change the balance of chemical, thermal and dimensional behavior; carbon reinforcement trades ductility for stiffness, while ESD grades address charge dissipation. Match the grade and thermal history to the job rather than treating all PEKK as one material. Printed interlayer behavior and residual stress remain important for loaded parts."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E1",
+      "E2",
+      "E3",
+      "G8"
+    ],
+    "sources": [
+      {
+        "title": "Arkema: 3D printing ultra-high-performance polymers with PEKK",
+        "url": "https://www.arkema.com/global/en/resources/post/hpp/3d-printing-ultra-high-performance-polymers/"
+      },
+      {
+        "title": "Arkema: 3D printing using Kepstan PEKK",
+        "url": "https://hpp.arkema.com/en/product-families/kepstan-pekk-polymers/3d-printing/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Aircraft door bracket printed by miniFactory",
+        "text": "Arkema publishes a miniFactory-produced aircraft door bracket in Kepstan PEKK as an example of the polymer's additive-manufacturing applications.",
+        "process": "FFF/FDM context; pictured printed bracket",
+        "scope": "Kepstan PEKK; exact bracket grade and filler content are not specified",
+        "evidence": "case-study",
+        "url": "https://www.arkema.com/global/en/resources/post/hpp/3d-printing-ultra-high-performance-polymers/",
+        "source_title": "Arkema: 3D printing ultra-high-performance polymers with PEKK"
+      }
+    ]
+  },
+  "pps": {
+    "paragraphs": [
+      "PPS is used in chemically resistant and dimensionally demanding components. A specific unfilled example is Ensinger's TECATRON CMP retaining rings for semiconductor-wafer polishing: a controlled stock formulation and machining route are used because wear behavior, impurities and internal stress affect polishing defects. The material is selected for a measured process result, not simply for a high melting point.",
+      "The wider PPS family is also used in injection-molded connectors, sockets, coil bobbins and relay or switch housings, combining thermal capability, electrical performance and chemical resistance. Many use reinforced Ryton compounds rather than unfilled PPS. For printed components, crystallinity and thermal history strongly affect behavior, and printed heat deflection can be much lower than stock data suggests. Match the formulation and process to the actual sustained load and exposure instead of using melting point as the working-temperature limit."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E11",
+      "F1",
+      "G3",
+      "F8"
+    ],
+    "sources": [
+      {
+        "title": "Ensinger: TECATRON CMP natural retaining-ring stock",
+        "url": "https://www.ensingerplastics.com/en-us/shapes/tecatron-cmp-natural"
+      },
+      {
+        "title": "Syensqo: Ryton PPS applications",
+        "url": "https://www.syensqo.com/en/brands/ryton-pps/applications"
+      }
+    ],
+    "examples": [
+      {
+        "title": "CMP wafer-polishing retaining rings",
+        "text": "Ensinger supplies unfilled TECATRON CMP stock tubes for machined retaining rings, with a formulation and quality controls aimed at reducing scratches and wafer defects.",
+        "process": "Machining from stock tubes",
+        "scope": "Unfilled TECATRON CMP natural semiconductor grade; not generic PPS filament",
+        "evidence": "manufacturer-application",
+        "url": "https://www.ensingerplastics.com/en-us/shapes/tecatron-cmp-natural",
+        "source_title": "Ensinger: TECATRON CMP natural retaining-ring stock"
+      }
+    ]
+  },
+  "ppsu": {
+    "paragraphs": [
+      "PPSU is used in reusable instrument trays, sterilization cases and instrument handles because selected grades retain toughness through repeated hot-water, steam and disinfectant exposure. Syensqo also describes injection-molded hot-water plumbing components that replace brass: resistance to corrosion and hot chlorinated water, combined with low creep under load, supports durable fittings. Beverage-equipment fittings and sight windows are other listed uses.",
+      "Repeated hot cleaning is a central reason to choose PPSU over PSU, but the service cycle and formulation still matter. Aircraft-interior R-7000 compounds and hydrogen-system HYRA grades target different requirements from a general-purpose PPSU resin. FDM requires demanding chamber and drying conditions, and some printed grades are far less ductile than stock. Qualifying a printed fitting or reusable device therefore includes its actual cleaning cycles, joints, impact loads and end-use requirements."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E3",
+      "G3",
+      "F1",
+      "F2"
+    ],
+    "sources": [
+      {
+        "title": "Syensqo: Radel PPSU applications",
+        "url": "https://www.syensqo.com/en/brands/radel-ppsu/applications"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Injection-molded hot-water plumbing components",
+        "text": "Syensqo describes PPSU and modified PPSU replacing brass in hot-water systems, with tight molding tolerances, resistance to chlorinated water and low creep under sustained warm loads.",
+        "process": "Injection molding",
+        "scope": "Selected Radel PPSU and Acudel modified PPSU resins; not an FDM pressure qualification",
+        "evidence": "manufacturer-application",
+        "url": "https://www.syensqo.com/en/brands/radel-ppsu/applications",
+        "source_title": "Syensqo: Radel PPSU applications"
+      }
+    ]
+  },
+  "psu": {
+    "paragraphs": [
+      "PSU is used for plumbing manifolds, fitting bodies, balancing valves and faucet cartridges, where resistance to hot chlorinated water and low water uptake help preserve function. Syensqo also lists biopharmaceutical connectors, clamps, valves and sensor housings, where strength, transparency and hydrolytic stability are useful. These roles explain why PSU can be chosen even when the greater repeated-steam capability of PPSU is unnecessary.",
+      "A different major use is filtration: PSU is solution-processed into hollow-fiber, flat-sheet and tubular membranes for water treatment and dialysis. Solvent processing creates the controlled membrane structure; ordinary FDM does not reproduce that function. For solid mechanical parts, PSU offers a lower thermal ceiling than PPSU and is vulnerable to stress cracking from ketones, esters and aromatic solvents. Cleaning chemistry and sustained hot-water loading can therefore decide whether it suits the component."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "E1",
+      "E3",
+      "F1",
+      "G8"
+    ],
+    "sources": [
+      {
+        "title": "Syensqo: Udel PSU applications",
+        "url": "https://www.syensqo.com/en/brands/udel-psu/applications"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Solution-processed filtration membranes",
+        "text": "Syensqo identifies hollow-fiber, flat-sheet and tubular sulfone membranes, using solvent processing and hydrolytic stability to create filtration structures for demanding aqueous service.",
+        "process": "Solution processing; hollow-fiber, flat-sheet or tubular membrane manufacture",
+        "scope": "Application-specific Udel PSU/sulfone membrane grades; not FDM filtration media",
+        "evidence": "manufacturer-application",
+        "url": "https://www.syensqo.com/en/brands/udel-psu/applications",
+        "source_title": "Syensqo: Udel PSU applications"
+      }
+    ]
+  },
+  "sup-breakaway": {
+    "paragraphs": [
+      "Breakaway support is a temporary printing aid for overhangs and supported surfaces that remain reachable after the build. A matched support forms a stable interface during printing and then separates mechanically, reducing the need to tear fused model-material supports from a surface. Its practical attraction is quick dry removal without a dissolution bath.",
+      "The pairing matters more than the category name: Polymaker sells separate PolySupport formulations for PLA-based and PA12-based materials. A support that detaches cleanly from one polymer may bond poorly or fuse to another. Mechanical removal also limits the geometry: a sealed cavity or tortuous internal passage can trap breakaway support permanently. The finished object is made from the model polymer; the support is discarded."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "I5",
+      "J1"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker: PolySupport for PLA",
+        "url": "https://shop.polymaker.com/products/polysupport-for-pla"
+      },
+      {
+        "title": "Polymaker: PolySupport for PA12",
+        "url": "https://shop.polymaker.com/products/polysupport"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Matched PLA and PA12 support interfaces",
+        "text": "Polymaker offers different support formulations for its PLA-based and PA12-based model materials rather than treating breakaway support as universally compatible.",
+        "process": "FFF/FDM sacrificial support",
+        "scope": "Separate PolySupport for PLA and PolySupport for PA12 products",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/polysupport",
+        "source_title": "Polymaker: PolySupport for PA12"
+      }
+    ]
+  },
+  "bvoh": {
+    "paragraphs": [
+      "BVOH is used as sacrificial support for intricate overhangs, internal structures and moving mechanisms where removing rigid support by hand would be difficult or damage the model. Water dissolves the support while the finished model remains, letting the designer support regions beyond a straight tool path. Fiberlogy lists PLA, ABS, ASA and PET-G compatibility for its BVOH product.",
+      "The advantage is removal by dissolution rather than by applying force to delicate surfaces. It still needs water access and an escape route for the dissolved material; a genuinely sealed cavity cannot be cleared this way. The filament is highly moisture-sensitive, so dry storage and feeding are part of reliable use. Compatibility and removal conditions belong to the particular BVOH grade and model material, not to every product with those polymer names."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "D1",
+      "G4",
+      "J1"
+    ],
+    "sources": [
+      {
+        "title": "Fiberlogy: BVOH support filament",
+        "url": "https://fiberlogy.com/filamenty/support/bvoh/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Water-removable support for complex geometry",
+        "text": "Fiberlogy lists intricate structures and moving mechanisms as uses for its BVOH, with stated adhesion to PLA, ABS, ASA and PET-G.",
+        "process": "FFF/FDM sacrificial support",
+        "scope": "Fiberlogy BVOH and its listed model-material pairings",
+        "evidence": "manufacturer-application",
+        "url": "https://fiberlogy.com/filamenty/support/bvoh/",
+        "source_title": "Fiberlogy: BVOH support filament"
+      }
+    ]
+  },
+  "sup-soluble-ht": {
+    "paragraphs": [
+      "High-temperature supports are used when a model polymer's nozzle and chamber conditions would soften or degrade ordinary support. 3DXTech matches MTS1 to PC and PC/ABS, while HTS2 is listed for PEKK, PEEK, PEI, PPSU, PSU and PPS. These THERMAX materials are breakaway supports: they provide a temporary foundation during the hot build and then require mechanical access for removal.",
+      "The category also includes a different removal method. IEMAI identifies HT-SP as alkaline-soluble support for high-performance polymers and their reinforced compounds, with an alkaline bath rather than plain water. That can address geometry that traps breakaway support, provided the model tolerates the bath and liquid can reach the support. Temperature capability, adhesion and removal chemistry must therefore be checked for the exact support grade rather than inferred from the high-temperature label."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "B3",
+      "I5",
+      "J1"
+    ],
+    "sources": [
+      {
+        "title": "3DXTech: THERMAX HTS2",
+        "url": "https://www.3dxtech.com/products/thermax-hts2-1"
+      },
+      {
+        "title": "3DXTech: THERMAX MTS1",
+        "url": "https://www.3dxtech.com/products/thermax-mts1-1"
+      },
+      {
+        "title": "IEMAI: HT-SP alkaline-soluble support",
+        "url": "https://store.iemai3d.com/index.php/product/ht-sp/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Breakaway support for industrial high-temperature builds",
+        "text": "3DXTech lists HTS2 for several high-temperature model polymers and explicitly describes it as a breakaway support for dual-extruder printers.",
+        "process": "FFF/FDM sacrificial support",
+        "scope": "THERMAX HTS2 and the manufacturer-listed model-material pairings",
+        "evidence": "manufacturer-application",
+        "url": "https://www.3dxtech.com/products/thermax-hts2-1",
+        "source_title": "3DXTech: THERMAX HTS2"
+      }
+    ]
+  },
+  "pva": {
+    "paragraphs": [
+      "PVA is used as water-removable support for overhangs, delicate features and internal structures. The support carries geometry during printing and is then dissolved, so it can avoid the force that mechanical removal applies to the finished model. The particular model/support combination matters: Polymaker's current PolyDissolve S1 guidance names its PLA, TPU, PVB and nylon-based filaments; other PVA products have their own compatibility limits.",
+      "This is a sacrificial role rather than a durable part material. Very high moisture uptake makes dry feeding important, and support removal requires water circulation, accessible openings and time. The manufacturer warns that switching between dissimilar materials in one nozzle increases clogging risk. Warmer moving water can accelerate dissolution, but the model must tolerate the bath; enclosed cavities still need a way for water and dissolved support to escape."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "D1",
+      "G4",
+      "I5",
+      "J1"
+    ],
+    "sources": [
+      {
+        "title": "Polymaker: Current PolyDissolve S1 application and handling guide",
+        "url": "https://wiki.polymaker.com/polymaker-products/polymaker-filaments/specialty-filament/polydissolve-tm-s1"
+      }
+    ],
+    "examples": []
+  },
+  "conductive": {
+    "paragraphs": [
+      "Conductive filament lets a printed shape participate in a circuit. Proto-pasta lists touch sensing and low-voltage circuitry for its conductive PLA; Recreus lists pressure-sensitive buttons and interactive controls for Conductive Filaflex. These are useful roles because an electrode or resistive element can follow the part’s shape, rather than being fitted afterwards as a separate metal piece.",
+      "The polymer and grade are central to the choice. Conductive PLA is different from conductive TPU, which can deform with a wearable or button. Printed resistance depends on geometry, layer direction and processing, so the part is not interchangeable with a copper wire. A conductive label also does not establish a controlled ESD protection level or effective EMI shielding for a finished assembly."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "G8",
+      "E9"
+    ],
+    "sources": [
+      {
+        "title": "Electrically Conductive Composite PLA — product page and technical data",
+        "url": "https://proto-pasta.com/products/conductive-pla"
+      },
+      {
+        "title": "Technical Data Sheet: Protopasta Conductive PLA",
+        "url": "https://cdn.shopify.com/s/files/1/0717/9095/files/CDP1xxxx_TDS.pdf"
+      },
+      {
+        "title": "Eel 3D Printing Filament Technical Specifications",
+        "url": "https://ninjatek.com/wp-content/uploads/TDS_EEL-Revision1_26-06_V1.pdf"
+      },
+      {
+        "title": "Proto-pasta — Conductive PLA FAQ",
+        "url": "https://proto-pasta.com/pages/conductive-pla"
+      },
+      {
+        "title": "Recreus — Conductive Filaflex",
+        "url": "https://recreus.com/en-en/products/filaflex-conductivo"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Touch-sensor electrodes",
+        "text": "Proto-pasta specifically lists touch sensors and interaction with touch screens for its conductive PLA. The manufacturer describes it as a resistive conducting composite, making part geometry relevant to circuit design.",
+        "process": "FDM",
+        "scope": "Proto-pasta Electrically Conductive Composite PLA",
+        "evidence": "manufacturer-application",
+        "url": "https://proto-pasta.com/pages/conductive-pla",
+        "source_title": "Proto-pasta — Conductive PLA FAQ"
+      },
+      {
+        "title": "Pressure-sensitive buttons and interactive controls",
+        "text": "Recreus lists conductive circuits, pressure-sensitive buttons, keyboards, trackpads and joysticks for its flexible conductive filament. These applications refer to the TPU grade, rather than conductive PLA.",
+        "process": "FDM",
+        "scope": "Recreus Conductive Filaflex TPU",
+        "evidence": "manufacturer-application",
+        "url": "https://recreus.com/en-en/products/filaflex-conductivo",
+        "source_title": "Recreus — Conductive Filaflex"
+      }
+    ]
+  },
+  "magnetic": {
+    "paragraphs": [
+      "Iron-filled PLA is useful when a printed shape needs to respond to an external magnet or acquire an oxidized iron finish. The particles give it magnetic attraction and added heft; they can also rust at the surface. Proto-pasta lists fixtures and hardware alongside sculpture, emblems and game pieces, reflecting those two distinct functional and decorative roles.",
+      "The printed object is not itself a permanent magnet, and attraction depends on the geometry and amount of iron present. The PLA matrix still limits heat resistance and mechanical performance. For decorative work, rust can be the intended finish; for a functional interface, the same exposed iron can become a drawback. These distinctions matter more than the broad “magnetic filament” name."
+    ],
+    "fields": [
+      "A1",
+      "A2",
+      "A7",
+      "G8",
+      "G2",
+      "E9"
+    ],
+    "sources": [
+      {
+        "title": "Magnetic Iron PLA — product page and technical data",
+        "url": "https://proto-pasta.com/products/magnetic-iron-pla"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Magnet-responsive fixtures and decorative hardware",
+        "text": "Proto-pasta lists fixtures, hardware, knobs and buttons among application ideas for iron-filled PLA. Its documented attraction to magnets and rustable surface explain why it differs from ordinary metallic-colored PLA.",
+        "process": "FDM",
+        "scope": "Proto-pasta Iron-filled Metal Composite PLA",
+        "evidence": "manufacturer-application",
+        "url": "https://proto-pasta.com/products/magnetic-iron-pla",
+        "source_title": "Proto-pasta — Iron-filled Metal Composite PLA"
+      }
+    ]
+  },
+  "pvb": {
+    "paragraphs": [
+      "PVB filaments have two distinct useful roles. Smoothable grades such as PolySmooth and Prusament PVB are appearance materials: isopropyl alcohol can reduce visible layer texture on shapes that are awkward to sand. The benefit is a smoother presentation surface, rather than a claim that the part has become optically precise or mechanically stronger.",
+      "PolyCast is a separate PVB formulation intended for investment-casting patterns. Its low-residue burnout lets a printed pattern become an intermediate in producing a metal part. That application depends on the casting grade and process, not merely the polymer name. Both uses make moisture control important, and alcohol smoothing requires appropriate handling of a flammable solvent. Smoothing and burnout should not be assumed interchangeable across every PVB spool."
+    ],
+    "fields": [
+      "A1",
+      "A7",
+      "D1",
+      "I4",
+      "I6",
+      "J3"
+    ],
+    "sources": [
+      {
+        "title": "PolySmooth Technical Data Sheet V5.4",
+        "url": "https://cdn.shopify.com/s/files/1/0548/7299/7945/files/PolySmooth_TDS_EN_V5.4.pdf"
+      },
+      {
+        "title": "PolyCast Technical Data Sheet V5.4",
+        "url": "https://cdn.shopify.com/s/files/1/0548/7299/7945/files/PolyCast_TDS_EN_V5.4.pdf"
+      },
+      {
+        "title": "Prusament PVB Technical Datasheet v1.1",
+        "url": "https://prusament.com/wp-content/uploads/2022/10/PVB_Prusament_TDS_2021_10_EN.pdf"
+      },
+      {
+        "title": "Polymaker — PolyCast",
+        "url": "https://shop.polymaker.com/products/polycast"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Investment-casting patterns",
+        "text": "Polymaker markets PolyCast for foundries, jewelry making and custom manufacturing. The printed PVB pattern is removed during the casting process; the final working part is cast metal, rather than the filament itself.",
+        "process": "FDM",
+        "scope": "Polymaker PolyCast PVB casting-pattern filament",
+        "evidence": "manufacturer-application",
+        "url": "https://shop.polymaker.com/products/polycast",
+        "source_title": "Polymaker — PolyCast"
+      }
+    ]
+  },
+  "peba": {
+    "paragraphs": [
+      "PEBA is used where a light elastomer should recover energetically after deformation. Arkema attributes the low energy loss of its Pebax family to the polyamide/polyether block structure and documents sports uses including shoe components, foams and ski boots. This is why energy return is part of PEBA's engineering role; it is a different requirement from simply being soft or surviving a large stretch.",
+      "The grade and process boundaries are essential. A commercial foamed midsole is not equivalent to a solid eSUN PEBA-90A print, and tensile elongation does not measure rebound. For FDM, the bouncy-ball build below supplies direct creator evidence of lively bounce in a particular lattice and profile. The eSUN data also shows weaker printed Z strength than its XY lower-bound tensile figure. Geometry, orientation and cyclic testing determine whether that behavior suits a particular flexible part."
+    ],
+    "fields": [
+      "A1",
+      "A2",
+      "A7",
+      "E3",
+      "E8",
+      "E10"
+    ],
+    "sources": [
+      {
+        "title": "Arkema: Pebax technology and energy return",
+        "url": "https://pebaxpowered.arkema.com/en/pebax-technology/"
+      },
+      {
+        "title": "Arkema: Pebax footwear and foam applications",
+        "url": "https://pebaxpowered.arkema.com/en/"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Footwear midsoles and injected sports components",
+        "text": "Arkema documents Pebax in foam midsoles and injected sports components and explains its low energy loss. These are applications of selected industrial PEBA grades and processing routes, not measured energy-return values for the listed eSUN filament.",
+        "process": "Foaming and injection molding",
+        "scope": "Selected Arkema Pebax industrial PEBA grades; polymer-family context, not eSUN PEBA-90A FDM",
+        "evidence": "manufacturer-application",
+        "url": "https://pebaxpowered.arkema.com/en/",
+        "source_title": "Arkema: Pebax footwear and foam applications"
+      }
+    ]
+  }
+}

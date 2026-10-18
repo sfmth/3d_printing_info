@@ -33,7 +33,7 @@ INTRO = {
 FEATURED = ('pla', 'petg', 'asa', 'tpu-95a', 'pc', 'abs')
 _examples = json.loads((Path(__file__).resolve().parents[1]/'data/print-examples.json').read_text())
 EXAMPLES = {cid: entries if isinstance(entries, list) else [entries] for cid, entries in _examples.items()}
-APPLICATIONS = json.loads((Path(__file__).resolve().parents[1]/'data/application-examples.json').read_text())
+APPLICATIONS = json.loads((Path(__file__).resolve().parents[1]/'data/material-applications.json').read_text())
 
 
 def primary_example(cid):
@@ -70,47 +70,44 @@ def card(c, featured=False):
     attrs='' if featured else ' data-material="'+E(c['id'])+'" data-search="'+E(' '.join([c['n'],c.get('aka',''),c['f'],c.get('sum',''),c['sp'].get('A7',{}).get('v','')]))+'"'
     body='<article class="'+cls+(' has-photo' if e and e.get('image') else ' text-only')+'"'+attrs+'><a class="material-card-link" href="'+E(c['id'])+'.html">'
     if e and e.get('image'):body+='<img src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" loading="lazy" width="'+str(e['width'])+'" height="'+str(e['height'])+'">'
-    body+='<div class="material-card-copy"><span class="eyebrow">'+E(c['f'])+'</span><h3>'+E(c['n'])+'</h3><p>'+E(compact(text,128))+'</p><span class="card-bottom">'+count_label(len(APPLICATIONS.get(c['id'],[])),'application example')+' · '+count_label(len(c.get('pr',[])),'product listing')+' <span aria-hidden="true">↗</span></span></div></a>'
+    body+='<div class="material-card-copy"><span class="eyebrow">'+E(c['f'])+'</span><h3>'+E(c['n'])+'</h3><p>'+E(compact(text,128))+'</p><span class="card-bottom">'+count_label(len(c.get('pr',[])),'product listing')+' <span aria-hidden="true">↗</span></span></div></a>'
     if e:body+='<div class="card-example"><a href="'+E(e['url'])+'">View print by '+E(e['creator'])+' ↗</a> · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a></div>'
     return body+'</article>'
 
 
-def application_cards(data,c,refs):
-    fields={f['id']:f for f in data['fields']}
-    body='<p class="section-description application-intro">Each example connects a part’s job to the material properties that can help. Application ideas are reasoned suggestions from the linked data. Documented prints link to a creator’s build; the explanation of material choice is our analysis.</p><div class="application-grid">'
-    for i,e in enumerate(APPLICATIONS.get(c['id'],[]),1):
-        documented=bool(e.get('print_url'))
-        body+='<article class="application-card" id="example-'+str(i)+'" data-application-example="'+E(c['id'])+'-'+str(i)+'" data-example-basis="'+('documented' if documented else 'idea')+'"><div class="application-heading"><span class="application-number" aria-hidden="true">'+f'{i:02d}'+'</span><span class="print-badge">'+('Documented print' if documented else 'Application idea')+'</span></div><h3>'+E(e['title'])+'</h3><p class="application-use">'+E(e['use'])+'</p><dl class="application-reasons">'
-        for key,label in [('why','Why this material'),('advantage','What it provides'),('tradeoff','Tradeoff')]:
-            body+='<div><dt>'+label+'</dt><dd>'+E(e[key])+'</dd></div>'
-        body+='</dl>'
-        if documented:body+='<a class="text-link application-model" href="'+E(e['print_url'])+'">See the creator’s print and notes ↗</a>'
-        body+='<details class="inline-sources application-sources"><summary>Supporting properties and sources</summary><dl class="application-evidence">'
-        source_ids=[]
-        for fid in e['fields']:
-            spec=c['sp'][fid];source_ids.extend(spec.get('s',[]))
-            label=fields[fid]['name']+(' ('+fields[fid]['unit']+')' if fields[fid].get('unit') else '')
-            body+='<div><dt>'+E(label)+'</dt><dd>'+E(spec['v'])+'</dd></div>'
-        body+='</dl>'+refs(data,source_ids)
-        for source in e.get('external_sources',[]):body+='<p><a href="'+E(source['url'])+'">'+E(source['title'])+'</a></p>'
-        body+='</details></article>'
-    return body+'</div>'
+def application_section(data,c,refs):
+    entry=APPLICATIONS[c['id']]
+    body='<section class="guide-section material-applications" id="applications"><div class="section-heading"><h2>Applications</h2></div><div class="application-copy">'
+    body+=''.join('<p>'+E(paragraph)+'</p>' for paragraph in entry['paragraphs'])
+    cases=entry.get('examples',[])
+    if cases:
+        body+='<ul class="engineering-cases">'
+        for case in cases:
+            evidence='Documented case' if case['evidence']=='case-study' else 'Manufacturer-listed applications'
+            context=' · '.join(x for x in [case['process'],case['scope'],evidence] if x)
+            body+='<li data-engineering-example><h3><a href="'+E(case['url'])+'" title="'+E(case['source_title'])+'">'+E(case['title'])+' ↗</a></h3><p class="case-context">'+E(context)+'</p><p>'+E(case['text'])+'</p></li>'
+        body+='</ul>'
+    source_ids=[sid for fid in entry['fields'] for sid in c['sp'][fid].get('s',[])]
+    body+='<details class="inline-sources application-sources"><summary>Sources</summary>'+refs(data,source_ids)
+    if entry.get('sources'):
+        body+='<ul>'+''.join('<li><a href="'+E(source['url'])+'">'+E(source['title'])+'</a></li>' for source in entry['sources'])+'</ul>'
+    body+='</details></div>'
+    if not EXAMPLES.get(c['id']):
+        body+='<details class="inline-sources model-discovery"><summary>Find printable models</summary>'+discovery(c)+'<p>Check the model’s material and process notes before choosing a filament.</p></details>'
+    return body+'</section>'
 
 
 def print_section(data,c,refs):
     examples=EXAMPLES.get(c['id'],[])
+    if not examples:return ''
     primary=primary_example(c['id'])
-    body='<section class="guide-section print-examples" id="prints"><div class="section-heading"><div><span class="eyebrow">Choose a material for a purpose</span><h2>Five examples and why the material fits</h2></div></div>'
-    body+=application_cards(data,c,refs)
-    if examples:body+='<div class="documented-heading"><h3>Documented builds and photos</h3><p>Creator reports show what was actually printed. The application cards above explain the material’s potential benefits.</p></div>'
+    body='<section class="guide-section print-examples" id="prints"><div class="section-heading"><h2>Printed examples</h2></div>'
     for e in examples:
         body+='<article class="print-story">'
         if e.get('image') and e is not primary:
             body+='<a href="'+E(e['url'])+'"><img class="example-photo" src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" width="'+str(e['width'])+'" height="'+str(e['height'])+'" loading="lazy"></a>'
-        body+='<span class="print-badge">Creator-reported '+E(e['material'])+' print</span><h3><a href="'+E(e['url'])+'">'+E(e['title'])+' ↗</a></h3><p>'+E(e['note'])+'</p><a class="text-link" href="'+E(e['url'])+'">Get the model & read the creator’s print notes on '+E(e['platform'])+' ↗</a><details class="inline-sources"><summary>Material evidence & '+('photo credit' if e.get('image') else 'model credit')+'</summary><p>Creator’s note: “'+E(e['evidence'])+'”</p><p>'+('Photo and model' if e.get('image') else 'Model')+': '+E(e['creator'])+' · <a href="'+E(e['url'])+'">Original listing</a> · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a> · Checked '+E(e['checked'])+'. '+('Photo bytes unchanged. Appearance can include paint or other finishing. ' if e.get('image') else '')+'This is a creator report, not an independent material test.</p></details></article>'
-    if not examples:body+='<p class="section-description">No creator-reported build is linked for this exact material yet. The five application ideas above explain potential uses; check grade data and print notes before choosing a filament.</p>'
-    body+='<div class="more-models"><h3>Explore more '+E(c.get('sh') or c['n'])+' models</h3>'+discovery(c)+'<p>Search results are ideas, not verified material matches. A suggested filament is not proof of the material in a photo.</p></div></section>'
-    return body
+        body+='<h3><a href="'+E(e['url'])+'">'+E(e['title'])+' ↗</a></h3><p>'+E(e['note'])+'</p><details class="inline-sources"><summary>Material evidence & '+('photo credit' if e.get('image') else 'model credit')+'</summary><p>Creator’s note: “'+E(e['evidence'])+'”</p><p>'+('Photo and model' if e.get('image') else 'Model')+': '+E(e['creator'])+' · <a href="'+E(e['url'])+'">Original listing</a> · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a> · Checked '+E(e['checked'])+'. '+('Photo bytes unchanged. Appearance can include paint or other finishing. ' if e.get('image') else '')+'This is a creator report, not an independent material test.</p></details></article>'
+    return body+'<details class="inline-sources model-discovery"><summary>Find more models</summary>'+discovery(c)+'</details></section>'
 
 
 def property_table(data,c,section,refs):
@@ -128,14 +125,15 @@ def detail_body(data,c,refs,value):
     family=FAMILIES[c['f']];products=c.get('pr',[]);brands={p['b'] for p in products}
     intro=INTRO.get(c['id']) or compact(c.get('sum',''),190)
     body='<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../">Home</a><span>/</span><a href="./">Material guides</a><span>/</span><span>'+E(c['sh'] if c.get('sh') else c['n'])+'</span></nav>'
-    body+='<header class="guide-hero"><div class="hero-copy"><span class="eyebrow">'+E(family[0])+' · Material guide</span><h1>'+E(c['n'])+'</h1><p class="guide-lede">'+E(intro)+'</p><div class="guide-meta"><span>'+count_label(len(APPLICATIONS.get(c['id'],[])),'application example')+'</span><span>'+count_label(len(products),'product listing')+'</span><span>'+count_label(len(brands),'brand')+'</span></div><a class="primary-action" href="../filaments.html?material='+E(c['id'])+'">Open in interactive comparison <span aria-hidden="true">↗</span></a></div></header>'
-    visual=photograph(primary_example(c['id'])) if (primary_example(c['id']) or {}).get('image') else '<aside class="print-discovery"><span class="eyebrow">Make something with it</span><h2>Find your next print</h2><p>Explore community models and check each creator’s material notes.</p>'+discovery(c)+'<a class="text-link" href="#prints">Explore five application examples ↓</a></aside>'
+    body+='<header class="guide-hero"><div class="hero-copy"><span class="eyebrow">'+E(family[0])+' · Material guide</span><h1>'+E(c['n'])+'</h1><p class="guide-lede">'+E(intro)+'</p><div class="guide-meta"><span>'+count_label(len(products),'product listing')+'</span><span>'+count_label(len(brands),'brand')+'</span></div><a class="primary-action" href="../filaments.html?material='+E(c['id'])+'">Open in interactive comparison <span aria-hidden="true">↗</span></a></div></header>'
+    visual=photograph(primary_example(c['id'])) if (primary_example(c['id']) or {}).get('image') else '<aside class="print-discovery"><span class="eyebrow">Make something with it</span><h2>Find your next print</h2><p>Explore community models and check each creator’s material notes.</p>'+discovery(c)+'<a class="text-link" href="#applications">Read applications ↓</a></aside>'
     body=body.replace('</header>',visual+'</header>',1)
-    body+='<nav class="guide-jumps" aria-label="On this page"><a href="#overview">Overview</a><a href="#prints">Examples and advantages</a><a href="#setup">Print setup</a><a href="#properties">All properties</a><a href="#products">Filaments</a></nav>'
+    body+='<nav class="guide-jumps" aria-label="On this page"><a href="#overview">Overview</a><a href="#applications">Applications</a>'+('<a href="#prints">Printed examples</a>' if EXAMPLES.get(c['id']) else '')+'<a href="#setup">Print setup</a><a href="#properties">All properties</a><a href="#products">Filaments</a></nav>'
     body+='<section class="guide-section" id="overview"><div class="section-heading"><div><span class="eyebrow">Understand the material</span><h2>At a glance</h2></div></div><div class="overview-grid"><article class="overview-card"><span class="mini-icon" aria-hidden="true">↗</span><h3>Where it is used</h3><p>'+E(value(c,'A7'))+'</p><details class="inline-sources"><summary>Sources</summary>'+refs(data,c['sp'].get('A7',{}).get('s',[]))+'</details></article><article class="overview-card"><span class="mini-icon" aria-hidden="true">⌁</span><h3>Before you print</h3><dl>'
     for fid,label in [('B12','Setup difficulty'),('C2','Nozzle wear')]:
         body+='<div><dt>'+label+'</dt><dd>'+E(compact(value(c,fid),110))+'</dd></div>'
     body+='</dl><a class="text-link" href="#properties">Read conditions and sources ↓</a></article></div><details class="catalog-summary"><summary>Read the full material overview</summary><p>'+E(c.get('sum',''))+'</p></details></section>'
+    body+=application_section(data,c,refs)
     body+=print_section(data,c,refs)
     print_anchor='spec-b' if any(f['sec']=='B' and f['id'] in c['sp'] for f in data['fields']) else 'properties'
     body+='<section class="guide-section" id="setup"><div class="section-heading"><div><span class="eyebrow">Plan your printer setup</span><h2>Printing quick reference</h2></div><a class="text-link" href="#'+print_anchor+'">All print settings ↓</a></div><p class="section-description">Representative catalog values. Check the exact grade and its linked conditions before using a setting.</p><div class="setup-grid">'
@@ -171,7 +169,7 @@ def detail_body(data,c,refs,value):
 
 def directory_body(data):
     cs=len(data['cats']);products=sum(len(c.get('pr',[])) for c in data['cats']);brands=len({p['b'].lower() for c in data['cats'] for p in c.get('pr',[])})
-    body='<header class="library-hero"><div><span class="eyebrow">A field guide to 3D printing</span><h1>Material guides</h1><p class="guide-lede">Find the right filament for your next print. Start with the essentials, then explore the settings, properties and sources that matter to you.</p><div class="library-stats"><span><b>'+str(cs)+'</b> materials</span><span><b>'+str(sum(len(x) for x in APPLICATIONS.values()))+'</b> application examples</span><span><b>'+str(products)+'</b> products</span><span><b>'+str(brands)+'</b> brands</span></div><a class="primary-action" href="#browse-materials">Browse material guides <span aria-hidden="true">↓</span></a><a class="text-link library-compare" href="../filaments.html">Open the interactive comparison table ↗</a></div>'+photograph(primary_example('pla'),'library-visual')+'</header>'
+    body='<header class="library-hero"><div><span class="eyebrow">A field guide to 3D printing</span><h1>Material guides</h1><p class="guide-lede">Find the right filament for your next print. Start with the essentials, then explore the settings, properties and sources that matter to you.</p><div class="library-stats"><span><b>'+str(cs)+'</b> materials</span><span><b>'+str(products)+'</b> products</span><span><b>'+str(brands)+'</b> brands</span></div><a class="primary-action" href="#browse-materials">Browse material guides <span aria-hidden="true">↓</span></a><a class="text-link library-compare" href="../filaments.html">Open the interactive comparison table ↗</a></div>'+photograph(primary_example('pla'),'library-visual')+'</header>'
     lookup={c['id']:c for c in data['cats']}
     body+='<section class="guide-section" id="featured-materials"><div class="section-heading"><div><span class="eyebrow">A few familiar starting points</span><h2>Start exploring</h2></div><a class="text-link" href="#browse-materials">Browse all '+str(cs)+' materials ↓</a></div><div class="featured-grid">'+''.join(card(lookup[cid],True) for cid in FEATURED if cid in lookup)+'</div></section>'
     body+='<section class="guide-section" id="browse-materials"><div class="section-heading"><div><span class="eyebrow">The complete library</span><h2>Browse by material family</h2></div></div><div class="material-search" hidden><label for="material-search">Search material guides</label><div class="search-input-wrap"><input id="material-search" type="search" placeholder="Try PLA, carbon fibre, flexible, outdoor…" autocomplete="off"><button type="button" id="clear-material-search">Clear</button></div><div class="family-filters" role="group" aria-label="Filter material family"><button type="button" data-family="" aria-pressed="true">All materials</button>'+''.join('<button type="button" data-family="'+E(f)+'" aria-pressed="false">'+E(f)+'</button>' for f in data['families'])+'</div><p id="material-results" role="status" aria-live="polite">'+str(cs)+' materials</p></div><div class="material-families">'
