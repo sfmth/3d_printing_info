@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 from urllib.parse import quote
+from material_articles import article_links
 
 E = lambda x: escape(str(x), quote=True)
 FAMILIES = {
@@ -161,6 +162,7 @@ def detail_body(data,c,refs,value):
         body+='</div></details>'
     else:body+='<p class="empty-list">No specific product listings are recorded yet. The sourced material properties remain available above.</p>'
     body+='</section>'
+    body+=article_links(c['id'])
     siblings=[x for x in data['cats'] if x['f']==c['f'] and x['id']!=c['id']]
     if siblings:
         body+='<section class="guide-section related-materials"><div class="section-heading"><div><span class="eyebrow">Keep exploring</span><h2>Related materials</h2></div><a class="text-link" href="./?family='+quote(c['f'])+'">All '+E(family[0])+' guides ↗</a></div><div class="featured-grid">'+''.join(card(x,True) for x in siblings[:3])+'</div></section>'
@@ -171,6 +173,7 @@ def directory_body(data):
     cs=len(data['cats']);products=sum(len(c.get('pr',[])) for c in data['cats']);brands=len({p['b'].lower() for c in data['cats'] for p in c.get('pr',[])})
     body='<header class="library-hero"><div><span class="eyebrow">A field guide to 3D printing</span><h1>Material guides</h1><p class="guide-lede">Find the right filament for your next print. Start with the essentials, then explore the settings, properties and sources that matter to you.</p><div class="library-stats"><span><b>'+str(cs)+'</b> materials</span><span><b>'+str(products)+'</b> products</span><span><b>'+str(brands)+'</b> brands</span></div><a class="primary-action" href="#browse-materials">Browse material guides <span aria-hidden="true">↓</span></a><a class="text-link library-compare" href="../filaments.html">Open the interactive comparison table ↗</a></div>'+photograph(primary_example('pla'),'library-visual')+'</header>'
     lookup={c['id']:c for c in data['cats']}
+    body+='<section class="guide-section"><div class="section-heading"><h2>Choose for the job</h2></div><p class="section-description">Read <a href="../articles/">material selection articles</a> to connect specific grade measurements to loads, part geometry and service conditions.</p></section>'
     body+='<section class="guide-section" id="featured-materials"><div class="section-heading"><div><span class="eyebrow">A few familiar starting points</span><h2>Start exploring</h2></div><a class="text-link" href="#browse-materials">Browse all '+str(cs)+' materials ↓</a></div><div class="featured-grid">'+''.join(card(lookup[cid],True) for cid in FEATURED if cid in lookup)+'</div></section>'
     body+='<section class="guide-section" id="browse-materials"><div class="section-heading"><div><span class="eyebrow">The complete library</span><h2>Browse by material family</h2></div></div><div class="material-search" hidden><label for="material-search">Search material guides</label><div class="search-input-wrap"><input id="material-search" type="search" placeholder="Try PLA, carbon fibre, flexible, outdoor…" autocomplete="off"><button type="button" id="clear-material-search">Clear</button></div><div class="family-filters" role="group" aria-label="Filter material family"><button type="button" data-family="" aria-pressed="true">All materials</button>'+''.join('<button type="button" data-family="'+E(f)+'" aria-pressed="false">'+E(f)+'</button>' for f in data['families'])+'</div><p id="material-results" role="status" aria-live="polite">'+str(cs)+' materials</p></div><div class="material-families">'
     for family in data['families']:

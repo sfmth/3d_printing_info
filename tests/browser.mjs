@@ -13,6 +13,9 @@ const catalog = async name => JSON.parse((await fs.readFile(path.join(root,name)
 const printers = await catalog('comparison.html'), materials = await catalog('filaments.html');
 const examples = Object.fromEntries(Object.entries(JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'))).map(([id,entries])=>[id,Array.isArray(entries)?entries:[entries]]));
 const applications = JSON.parse(await fs.readFile(path.join(root,'data/material-applications.json'),'utf8'));
+const articles = JSON.parse(await fs.readFile(path.join(root,'data/material-articles.json'),'utf8')).articles;
+const articleEvidence = JSON.parse(await fs.readFile(path.join(root,'data/article-evidence.json'),'utf8'));
+const genericArticles = articles.filter(article=>article.tables);
 const productCount = materials.cats.reduce((n,c)=>n+c.pr.length,0);
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.xml':'application/xml','.webmanifest':'application/manifest+json'};
 const server = http.createServer(async (req,res) => {
@@ -59,6 +62,7 @@ try {
     });
   }
   async function visit(file) {
+    await page.waitForLoadState('networkidle');
     const before=loads;
     const response=await page.goto(base+file,{waitUntil:'networkidle'});
     assert.equal(response.status(),200,file);
@@ -67,12 +71,87 @@ try {
     assert.equal(await page.evaluate(()=>window.dataLayer.filter(x=>x[0]==='config' && x[1]==='G-12FDG0Z8JB').length),1);
     assert.ok(!(await referenceMetadata()).types.includes('Product'),`no unsupported Product markup: ${file}`);
   }
+  async function verifyGenericTables(target, article) {
+    assert.equal(await target.locator('table[data-evidence-table]').count(),article.tables.length,article.id);
+    for(const table of article.tables) {
+      const rendered=target.locator(`table[data-evidence-table="${table.id}"]`);
+      assert.equal(await rendered.isVisible(),true,table.id);
+      assert.equal(await target.locator('#table-'+table.id).count(),1);
+      assert.equal(await rendered.getAttribute('aria-describedby'),'table-'+table.id+'-caption');
+      assert.equal(await target.locator('#table-'+table.id+'-caption').innerText(),table.caption);
+      if(table.kind==='observations') {
+        assert.equal(await rendered.locator('tr[data-observation]').count(),table.rows.length);
+        for(const row of table.rows) {
+          const shown=rendered.locator(`tr[data-observation="${row.id}"]`);
+          const text=await shown.innerText();
+          for(const value of [row.grade,row.process,row.orientation,row.conditioning,row.observation,...Object.values(row.exposure)]) {
+            assert.ok(text.includes(value===null?'Not reported':value),row.id+' retains observation context');
+          }
+          const source=articleEvidence.sources[articleEvidence.claims[row.refs[0]].source_id];
+          assert.ok(text.toLowerCase().includes(source.kind.replaceAll('-',' ')));
+          for(const ref of row.refs) {
+            assert.equal(await shown.locator(`a.evidence-link[href="#evidence-${ref}"]`).count(),1);
+            assert.ok((await shown.locator('a.claim-citation').allTextContents()).length>0);
+            assert.ok((await shown.locator('a.claim-citation').evaluateAll(links=>links.map(a=>a.href))).includes(source.url));
+          }
+          for(const item of await shown.locator('.result-context').all()) assert.equal(await item.isVisible(),true);
+        }
+        continue;
+      }
+      assert.equal(await rendered.locator('tr[data-test-series]').count(),table.rows.length);
+      for(const column of table.columns) {
+        assert.ok((await rendered.locator('thead').innerText()).includes(column.label),column.label);
+        assert.ok((await rendered.locator('thead').innerText()).includes(column.unit),column.unit);
+      }
+      for(const row of table.rows) {
+        const shown=rendered.locator(`tr[data-test-series="${row.series_id}"]`);
+        const series=articleEvidence.series[row.series_id];
+        const source=articleEvidence.sources[series.source_id];
+        assert.ok((await shown.locator('th').innerText()).includes(series.grade));
+        const detailFields=new Set(['recommended_filament_drying','recommended_chamber','orientation_support','specimen_settings_scope','dry_status_definition','annealing','thermal_state','filler_status','annealing_temperature_c','annealing_duration_h','uptake_condition_is_separate','strength_endpoint']);
+        const adjacentContext=Object.entries(series.context || {}).filter(([key])=>!detailFields.has(key));
+        const context=shown.locator('.result-context');
+        assert.ok(await context.count()>=4+adjacentContext.length,'adjacent specimen and source conditions');
+        const contextText=(await context.allTextContents()).join('\n');
+        assert.ok(contextText.toLowerCase().includes(source.kind.replaceAll('-',' ')),'source evidence type remains visible');
+        for(const value of [series.process,series.conditioning,series.post_processing,...adjacentContext.map(([,value])=>value)]) {
+          assert.ok(contextText.includes(value===null?'Not reported':String(value)),row.series_id+' preserves context: '+value);
+        }
+        for(const item of await context.all()) assert.equal(await item.isVisible(),true,'essential conditions are visible beside results');
+        assert.ok((await shown.innerText()).includes(series.orientation===null?'Not reported':series.orientation));
+        assert.ok((await shown.innerText()).includes(series.test_standard));
+        for(let index=0;index<table.columns.length;index++) {
+          const ref=row.values[table.columns[index].key];
+          const cell=shown.locator('td').nth(index+1);
+          if(ref===null) {
+            assert.equal(await cell.getAttribute('class'),'evidence-gap');
+            assert.equal(await cell.innerText(),'Not reported');
+          } else {
+            assert.equal(await cell.getAttribute('data-result'),ref);
+            const measurement=articleEvidence.measurements[ref];
+            const value=await cell.evaluate(td=>td.firstChild.textContent.trim());
+            const [nominal,spread]=value.split(/\s*±\s*/);
+            assert.equal(Number(nominal.replace(/^(?:>=|<=|>|<|≥|≤|≈|~)\s*/,'')),measurement.value,ref+' value');
+            if(measurement.qualifier!=='=') assert.ok(nominal.startsWith(measurement.qualifier),ref+' bound');
+            assert.equal(spread===undefined?null:Number(spread),measurement.spread,ref+' reported scatter');
+            assert.equal(await cell.locator('a.claim-citation').getAttribute('href'),source.url);
+            assert.equal(await cell.locator('a.evidence-link').getAttribute('href'),'#evidence-'+ref);
+          }
+        }
+        assert.equal(await shown.locator('a[href="#series-'+row.series_id+'"]').count(),1);
+        assert.equal(await target.locator('#series-'+row.series_id).count(),1);
+        const allMethodContext=await target.locator('#series-'+row.series_id).textContent();
+        for(const value of Object.values(series.context || {})) assert.ok(allMethodContext.includes(value===null?'Not reported':String(value)),'complete context retained in specimen record');
+      }
+    }
+  }
   await visit('');
   for (const [key,n] of Object.entries({printers:printers.cats.length,'printer-fields':printers.fields.length,materials:materials.cats.length,products:productCount})) {
     for (const s of await page.locator(`[data-summary="${key}"]`).allTextContents()) assert.equal(Number(s),n);
   }
   await page.screenshot({path:path.join(root,'test-results/home.png')});
   await page.getByRole('link',{name:'Printers',exact:true}).click();
+  await page.locator('#mtbody tr.row').first().waitFor({state:'visible'});
   assert.equal(await page.locator('#mtbody tr.row').count(),printers.cats.length);
   step('Homepage catalog counts and printer navigation');
   await page.getByLabel('Search printers',{exact:true}).fill('Photon P1 Max');
@@ -305,6 +384,99 @@ try {
     assert.equal(article.about.name,c.n,c.id);
   }
   step(`All ${printers.cats.length} printer guides render technical-article metadata without unsupported Product entities, matching canonical URLs and one Analytics tag`);
+  const articlePath='articles/choosing-fdm-material-load-bearing-part.html';
+  const articleTitle='Choosing an FDM material for a load-bearing part';
+  await visit('');
+  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Selection articles',exact:true}).click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+'articles/').pathname);
+  await visit('articles/');
+  assert.equal(await page.locator('[data-article-card]').count(),articles.length,'article hub lists every published article');
+  await page.screenshot({path:path.join(root,'test-results/article-index.png')});
+  await page.locator('a[data-article-card][href="choosing-fdm-material-load-bearing-part.html"]').click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+articlePath).pathname);
+  await visit(articlePath);
+  assert.equal(await page.locator('body.article-page').count(),1);
+  assert.equal(await page.locator('main h1').innerText(),articleTitle);
+  assert.equal(await page.locator('#quick-answer').isVisible(),true);
+  assert.equal(await page.locator('#verification').isVisible(),true);
+  const articleMetadata=(await referenceMetadata()).documents.find(document=>document['@type']==='WebPage');
+  assert.equal(articleMetadata.url,'https://sfmth.github.io/3d_printing_info/'+articlePath);
+  assert.equal(articleMetadata.mainEntity['@type'],'TechArticle');
+  assert.equal(articleMetadata.mainEntity.headline,articleTitle);
+  assert.ok(articleMetadata.mainEntity.author,'article has identified authorship');
+  assert.match(articleMetadata.mainEntity.dateModified,/^\d{4}-\d{2}-\d{2}/);
+  const evidenceTable=page.locator('#measurements table.evidence-table');
+  assert.equal(await evidenceTable.isVisible(),true);
+  assert.ok(await evidenceTable.locator('tr[data-measurement]').count()>=8,'pilot preserves grade-specific measurements');
+  const tableText=await evidenceTable.innerText();
+  for(const polymer of [/PLA/,/PETG/,/ASA/,/PC/]) assert.match(tableText,polymer);
+  assert.match(tableText,/MPa|GPa/,'engineering units are visible in the comparison');
+  for(const row of await evidenceTable.locator('tr[data-measurement]').all()) {
+    assert.ok((await row.innerText()).trim().length>20,'measurement rows retain readable context');
+    assert.ok(await row.locator('a.evidence-link').count()>0,'each measurement links its evidence');
+  }
+  const claims=page.locator('p[data-evidence-refs]');
+  assert.ok(await claims.count()>0,'engineering claims identify their evidence');
+  for(const claim of await claims.all()) {
+    assert.ok(await claim.locator('a.claim-citation[href^="https://"]').count()>0,'claim has a direct primary-source citation');
+    assert.ok(await claim.locator('a.evidence-link[href^="#evidence-"]').count()>0,'claim exposes precise evidence context');
+  }
+  for(const href of await page.locator('a.evidence-link').evaluateAll(links=>links.map(link=>link.getAttribute('href')))) {
+    assert.match(href,/^#evidence-/);
+    assert.equal(await page.locator(href).count(),1,'evidence anchor resolves: '+href);
+  }
+  const methods=page.locator('#methods details[data-series]');
+  assert.ok(await methods.count()>0,'test-series conditions are available');
+  for(const method of await methods.all()) {
+    if(await method.getAttribute('open')===null) await method.locator(':scope > summary').click();
+    assert.equal(await method.getAttribute('open'),'');
+    assert.ok((await method.innerText()).trim().length>80,'expanded method includes specimen and test context');
+  }
+  assert.ok(await page.locator('#sources li[data-source]').count()>0);
+  for(const source of await page.locator('#sources li[data-source]').all()) {
+    assert.ok(await source.locator('a[href^="https://"]').count()>0,'source retains its primary URL');
+  }
+  await page.locator('#measurements').evaluate(el=>el.scrollIntoView({block:'start'}));
+  await page.screenshot({path:path.join(root,'test-results/article-desktop.png')});
+  await page.locator('main a[href="../materials/pla.html"]').first().click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+'materials/pla.html').pathname);
+  await page.locator('#selection-articles a[href="../'+articlePath+'"]').click();
+  assert.equal(await page.locator('main h1').innerText(),articleTitle);
+  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Material guides',exact:true}).click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+'materials/').pathname);
+  for(const id of ['pla','petg','asa','pc']) {
+    await visit('materials/'+id+'.html');
+    assert.equal(await page.locator('#selection-articles a[href="../'+articlePath+'"]').count(),1,id+' links to its selection article');
+  }
+  await visit('filaments.html');
+  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Selection articles',exact:true}).click();
+  assert.equal(new URL(page.url()).pathname,new URL(base+'articles/').pathname);
+  step('Selection article hub and pilot retain grade-specific evidence, conditions, primary citations, technical-article metadata and material-guide round trips');
+  for(const article of genericArticles) {
+    await visit('articles/');
+    await page.locator(`a[data-article-card][href="${article.id}.html"]`).click();
+    await visit('articles/'+article.id+'.html');
+    assert.equal(await page.locator('main h1').innerText(),article.title);
+    const metadata=(await referenceMetadata()).documents.find(document=>document['@type']==='WebPage');
+    assert.equal(metadata.url,'https://sfmth.github.io/3d_printing_info/articles/'+article.id+'.html');
+    assert.equal(metadata.mainEntity['@type'],'TechArticle');
+    assert.equal(metadata.mainEntity.author.name,article.author.name);
+    assert.equal(metadata.mainEntity.dateModified,article.modified);
+    await verifyGenericTables(page,article);
+    const methodLink=page.locator('table[data-evidence-table] a[href^="#series-"]').first();
+    if(await methodLink.count()) {
+      const methodTarget=await methodLink.getAttribute('href');
+      await methodLink.click();
+      assert.equal(await page.locator(methodTarget+' dl').isVisible(),true,'table link opens its specimen conditions');
+    }
+    const evidenceLink=page.locator('table[data-evidence-table] a.evidence-link').first();
+    const evidenceTarget=await evidenceLink.getAttribute('href');
+    await evidenceLink.click();
+    assert.equal(await page.locator(evidenceTarget).isVisible(),true,'result link opens its precise evidence record');
+    await page.locator('#measurements').evaluate(el=>el.scrollIntoView({block:'start'}));
+    await page.screenshot({path:path.join(root,'test-results/'+article.id+'-desktop.png')});
+  }
+  if(genericArticles.length) step(`All ${genericArticles.length} expanded articles retain exact measurements, explicit gaps, adjacent specimen context and source/method navigation`);
   await visit('materials/peba.html');
   await page.screenshot({path:path.join(root,'test-results/peba-guide.png')});
   await page.setViewportSize({width:390,height:844});
@@ -334,6 +506,43 @@ try {
   await page.goto(base+'printers/anycubic-photon-p1-max.html',{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'printer guide mobile width');
   await page.screenshot({path:path.join(root,'test-results/mobile-printer-guide.png')});
+  await visit(articlePath);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'article mobile width');
+  const mobileTable=page.locator('#measurements table.evidence-table');
+  const scrollState=await mobileTable.evaluate(table=>{
+    let wrapper=table.parentElement;
+    while(wrapper && !/^(auto|scroll)$/.test(getComputedStyle(wrapper).overflowX)) wrapper=wrapper.parentElement;
+    if(!wrapper) return null;
+    const original=wrapper.scrollLeft;
+    wrapper.scrollLeft=wrapper.scrollWidth;
+    const result={width:wrapper.clientWidth,contentWidth:wrapper.scrollWidth,scrolled:wrapper.scrollLeft>original};
+    wrapper.scrollLeft=original;
+    return result;
+  });
+  assert.ok(scrollState && scrollState.contentWidth>scrollState.width && scrollState.scrolled,'mobile comparison scrolls inside its own wrapper');
+  await page.locator('#measurements').evaluate(el=>el.scrollIntoView({block:'start'}));
+  await page.screenshot({path:path.join(root,'test-results/article-mobile.png')});
+  await visit('articles/');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'article hub mobile width');
+  step('Article hub and evidence table remain readable at 390 px with horizontal scrolling contained inside the comparison');
+  for(const article of genericArticles) {
+    await visit('articles/'+article.id+'.html');
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,article.id+' mobile width');
+    for(const table of article.tables) {
+      const state=await page.locator(`table[data-evidence-table="${table.id}"]`).evaluate(table=>{
+        const wrapper=table.closest('.table-scroll');
+        if(!wrapper) return null;
+        wrapper.scrollLeft=wrapper.scrollWidth;
+        const result={scrollable:wrapper.scrollWidth>wrapper.clientWidth,scrolled:wrapper.scrollLeft>0};
+        wrapper.scrollLeft=0;
+        return result;
+      });
+      assert.ok(state && state.scrollable && state.scrolled,table.id+' is scrollable inside its mobile wrapper');
+    }
+    await page.locator('#measurements').evaluate(el=>el.scrollIntoView({block:'start'}));
+    await page.screenshot({path:path.join(root,'test-results/'+article.id+'-mobile.png')});
+  }
+  if(genericArticles.length) step('Expanded article comparisons keep horizontal scrolling inside their tables at 390 px');
   step('Mobile navigation, filtering, material and printer guide layouts at 390 px');
   const nojs=await browser.newContext({javaScriptEnabled:false});
   const staticPage=await nojs.newPage();
@@ -371,10 +580,56 @@ try {
   assert.match(await staticPage.locator('h1').innerText(),/PEBA/);
   assert.equal(await staticPage.locator('main table').count()>0,true);
   step('No-JavaScript tables preserve every printer, material and product; guide links work');
+  await staticPage.goto(base);
+  await staticPage.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Selection articles',exact:true}).click();
+  await staticPage.locator('a[data-article-card][href="choosing-fdm-material-load-bearing-part.html"]').click();
+  assert.equal(await staticPage.locator('main h1').innerText(),articleTitle);
+  assert.equal(await staticPage.locator('#quick-answer').isVisible(),true);
+  assert.equal(await staticPage.locator('#measurements table.evidence-table').isVisible(),true);
+  assert.ok(await staticPage.locator('#measurements tr[data-measurement]').count()>=8);
+  const staticMethod=staticPage.locator('#methods details[data-series]').first();
+  if(await staticMethod.getAttribute('open')===null) {
+    await staticMethod.locator(':scope > summary').focus();
+    await staticPage.keyboard.press('Enter');
+  }
+  assert.equal(await staticMethod.getAttribute('open'),'','test conditions expand without JavaScript');
+  assert.ok((await staticMethod.innerText()).length>80);
+  const staticEvidence=staticPage.locator('p[data-evidence-refs] a.evidence-link').first();
+  const evidenceTarget=await staticEvidence.getAttribute('href');
+  await staticEvidence.click();
+  assert.equal(new URL(staticPage.url()).hash,evidenceTarget);
+  assert.equal(await staticPage.locator(evidenceTarget).count(),1);
+  assert.equal(await staticPage.locator(evidenceTarget).isVisible(),true,'fragment navigation reveals its evidence record without JavaScript');
+  assert.ok(await staticPage.locator('#sources li[data-source] a[href^="https://"]').count()>0);
+  assert.equal(await staticPage.locator('#verification').isVisible(),true);
+  await staticPage.locator('main a[href="../materials/pla.html"]').first().click();
+  await staticPage.locator('#selection-articles a[href="../'+articlePath+'"]').click();
+  assert.equal(await staticPage.locator('main h1').innerText(),articleTitle);
+  step('Article navigation, comparison values, native method disclosures, evidence anchors and source links work without JavaScript');
+  for(const article of genericArticles) {
+    await staticPage.goto(base+'articles/');
+    assert.equal(await staticPage.locator('[data-article-card]').count(),articles.length);
+    await staticPage.locator(`a[data-article-card][href="${article.id}.html"]`).click();
+    assert.equal(await staticPage.locator('main h1').innerText(),article.title);
+    await verifyGenericTables(staticPage,article);
+    const methodLink=staticPage.locator('table[data-evidence-table] a[href^="#series-"]').first();
+    if(await methodLink.count()) {
+      const methodTarget=await methodLink.getAttribute('href');
+      await methodLink.click();
+      assert.equal(await staticPage.locator(methodTarget+' dl').isVisible(),true,'specimen context opens through its fragment without JavaScript');
+    }
+    const evidenceLink=staticPage.locator('table[data-evidence-table] a.evidence-link').first();
+    const target=await evidenceLink.getAttribute('href');
+    await evidenceLink.click();
+    assert.equal(await staticPage.locator(target).isVisible(),true,'evidence record opens without JavaScript');
+    assert.ok(await staticPage.locator('#sources li[data-source] a[href^="https://"]').count()>0);
+    assert.equal(await staticPage.locator('#verification').isVisible(),true);
+  }
+  if(genericArticles.length) step('Expanded articles preserve all results, unknown cells, visible test conditions and native source/method navigation without JavaScript');
   assert.deepEqual(errors,[],'uncaught JavaScript errors');
   assert.deepEqual(missing,[],'missing local assets');
   step('No uncaught JavaScript exceptions or missing local assets');
-  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount,detailPages:printers.cats.length+materials.cats.length},analytics:'One loader request and config per checked page; loader intercepted, ingestion not verified',steps};
+  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount,detailPages:printers.cats.length+materials.cats.length,articles:articles.length},analytics:'One loader request and config per checked page; loader intercepted, ingestion not verified',steps};
   await fs.writeFile(path.join(root,'test-results/browser-results.json'),JSON.stringify(result,null,2)+'\n');
 } finally {
   if(browser) await browser.close();
