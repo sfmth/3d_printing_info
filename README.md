@@ -58,11 +58,26 @@ Printer and material guides describe technical reference articles using `WebPage
 
 After deploying this metadata correction, inspect a printer guide's live URL and check that the unsupported Product item is absent. In the Product snippets issue report, use **Validate fix** if offered and allow Google to recrawl. Product item counts may fall as reference articles stop being reported as product rich-result candidates. This correction does not by itself guarantee indexing or rankings.
 
+### IndexNow deployment notifications
+
+After a successful Pages deployment from `main`, `scripts/notify_indexnow.py` verifies the deployed public key and sends one notification to `https://api.indexnow.org/indexnow`. The public ownership file `c6df70c23c3143feab713134fa94bc0f.txt` belongs at the project root; `keyLocation` explicitly points inside `/3d_printing_info/`, so no host-root file or secret is needed. Only canonical HTML URLs in the old or current sitemap are eligible, and every URL must remain under this project path. See the [IndexNow protocol](https://www.indexnow.org/documentation).
+
+The first notification bootstraps the current sitemap. Later deployments compare Git history with the last acknowledged notification: added/removed sitemap URLs and changed public HTML pages are submitted; source-only, documentation and asset-only changes do not trigger a notification. The exact generated page-revision footer date is ignored when it is the only HTML change; content, source dates and other metadata changes remain eligible. Removed pages are included so participating engines can discover their removal. A cached checkpoint outside the deployed site advances only after HTTP 200/202, or when there are no changed pages. Cache keys identify individual workflow attempts, so a rerun of an older deployment still restores the latest acknowledgment and compares rollback changes, including removed URLs. Provider/key/network errors preserve the checkpoint for retry on the next deployment and produce a warning/report without failing the successful Pages deployment. Cache eviction, unavailable history or an unusable prior sitemap triggers another clearly labeled bootstrap. A checkpoint cannot remember deletions that predate its available history. This is a deployment-driven retry, not a background scheduler.
+
+Each notification writes a GitHub Actions job summary and an `indexnow-notification-<commit>-<attempt>` JSON artifact with the exact URLs, selection mode, commit, response code or error. HTTP 200 acknowledges receipt; HTTP 202 also leaves key validation pending. Neither establishes crawling, indexing, rankings or citations in LLM answers. No automatic POST retries are sent within a run. To intentionally resubmit every current page, dispatch the Pages workflow on `main` with **Resubmit all sitemap URLs** checked; this also deploys the selected commit under the release safeguard below.
+
+The command defaults to a network-free dry run. PR checks use local Git fixtures and mocked responses, so they never notify search engines:
+
+```sh
+python3 scripts/notify_indexnow.py --state-file /tmp/indexnow-state/checkpoint.json --report /tmp/indexnow-report.json
+python3 -m unittest discover -s tests -p 'test_indexnow.py' -v
+```
+
 ## Branch and release safeguards
 
 Work in separate branches and draft PRs. **Do not merge or deploy without the owner's explicit approval.** Main automatically deploys to GitHub Pages. After a push, fetch the exact remote commit into a fresh checkout and rerun static checks; inspect the matching commit's Chromium CI result and screenshots. Never declare a PR ready from local tests or matching upload hashes alone.
 
-The existing `.github/workflows/pages.yml` deployment workflow is unchanged. Configure Pages to deploy with GitHub Actions. The added validation workflow has read-only repository permissions and does not deploy.
+Configure Pages to deploy with GitHub Actions using `.github/workflows/pages.yml`. Its IndexNow notification runs only after a successful deployment from `main`. The validation workflow has read-only repository permissions and does not deploy or notify search engines.
 
 ## Material guide presentation
 

@@ -483,7 +483,7 @@ try {
   await page.goto(base,{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'homepage mobile width');
   await page.getByRole('link',{name:'Filaments',exact:true}).click();
-  await page.locator('#mtbody tr.row').first().waitFor({state:'visible'});
+  await page.locator('#mtbody tr.row[data-id="peba"]').waitFor({state:'visible'});
   await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
   assert.equal(await page.locator('#mtbody tr.row').count(),1);
   await page.screenshot({path:path.join(root,'test-results/mobile-filaments.png')});
