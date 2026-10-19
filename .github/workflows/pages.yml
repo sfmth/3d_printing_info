@@ -5,6 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      indexnow_resubmit_all:
+        description: Resubmit all sitemap URLs to IndexNow after deployment
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -24,6 +29,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -37,3 +44,47 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Keep the last acknowledged notification outside the published site.
+      # On provider failure it stays unchanged, so the next deploy retries the diff.
+      - name: Restore IndexNow notification checkpoint
+        id: indexnow-cache
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/indexnow-state
+          key: indexnow-3d-printing-info-v1-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: indexnow-3d-printing-info-v1-
+
+      - name: Notify IndexNow of deployed page changes
+        id: indexnow
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        timeout-minutes: 2
+        env:
+          INDEXNOW_ALL: ${{ inputs.indexnow_resubmit_all || false }}
+        run: |
+          args=()
+          if [ "$INDEXNOW_ALL" = "true" ]; then args+=(--all); fi
+          python3 scripts/notify_indexnow.py --submit "${args[@]}" \
+            --state-file "$RUNNER_TEMP/indexnow-state/checkpoint.json" \
+            --report "$RUNNER_TEMP/indexnow-report.json"
+
+      - name: Save acknowledged IndexNow checkpoint
+        if: steps.indexnow.outputs.checkpoint == 'true' && steps.indexnow-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/indexnow-state
+          key: indexnow-3d-printing-info-v1-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Retain IndexNow receipt and selected URLs
+        if: always() && steps.indexnow.outcome != 'skipped' && github.ref == 'refs/heads/main'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: indexnow-notification-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/indexnow-report.json
+          if-no-files-found: warn
+          retention-days: 30
