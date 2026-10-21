@@ -1,0 +1,530 @@
+{
+  "version": 1,
+  "checked": "2026-10-20",
+  "models": {
+    "voron-02": {
+      "firmware": [
+        {
+          "title": "Organize Klipper configuration with Klippain",
+          "summary": "Klippain provides modular configuration and macros on top of a working Klipper installation. Match the board pins, toolhead and calibration to the actual build instead of replacing printer.cfg with another owner’s complete configuration.",
+          "compatibility": "The maintainer lists Voron V0 among supported builds. This is a configuration framework, not a universal precompiled firmware image.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Klippain — supported builds and configuration approach",
+              "url": "https://github.com/Frix-x/klippain",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Change the skirt appearance and electronics-bay airflow",
+          "summary": "The V0.2 Stealth Skirts replace the lower printed skirts. The two side-grille variants accommodate different fan sizes, with different clearance for an electronics-bay panel.",
+          "compatibility": "V0.2 design. The creator says 4010-fan grilles cannot use the electronics-bay panel, while 3510-fan grilles can. Check your kit’s skirt and fan arrangement.",
+          "evidence": "creator listing",
+          "section": "L",
+          "sources": [
+            {
+              "title": "Maverick / Hartk / Meteyou — V0.2 Stealth Skirts",
+              "url": "https://github.com/VoronDesign/VoronUsers/tree/main/printer_mods/Maverick/V0.2_Stealth_Skirts",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "After a build or wiring change, recheck the startup sequence",
+          "summary": "Voron’s commissioning route separates temperature sensing, endstop states, motor motion and homing checks. Use the correct model’s sequence to isolate an incorrect configuration or connection before tuning print quality.",
+          "compatibility": "Select V0 for the 0.2 build; kit boards and probes vary.",
+          "evidence": "maintainer documentation",
+          "section": "M",
+          "sources": [
+            {
+              "title": "Voron model-specific startup checks",
+              "url": "https://docs.vorondesign.com/build/startup/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Voron initial setup — select the matching model",
+          "url": "https://docs.vorondesign.com/build/startup/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Klippain — supported builds and configuration approach",
+          "url": "https://github.com/Frix-x/klippain",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "voron-24": {
+      "firmware": [
+        {
+          "title": "Organize Klipper configuration with Klippain",
+          "summary": "Klippain provides modular configuration and macros on top of a working Klipper installation. Match the board pins, toolhead and calibration to the actual build instead of replacing printer.cfg with another owner’s complete configuration.",
+          "compatibility": "The maintainer lists Voron V2.4 among supported builds. This is a configuration framework, not a universal precompiled firmware image.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Klippain — supported builds and configuration approach",
+              "url": "https://github.com/Frix-x/klippain",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Use the matching printed parts for the smooth-pin conversion",
+          "summary": "Hartk’s pin modification replaces specified M5 shafts with 5 mm smooth pins and matching printed supports. Use the parts for the correct machine revision; the V2-specific Z idlers are not Trident parts.",
+          "compatibility": "Maintainer explicitly supports V2.4 R2 and Trident; choose the 6 mm or 9 mm belt variant and obtain the accompanying hardware.",
+          "evidence": "maintainer documentation",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Hartk — V2.4 R2 / Trident smooth-pin modification",
+              "url": "https://github.com/VoronDesign/VoronUsers/tree/main/printer_mods/hartk1213/Voron2.4_Trident_Pins_Mod",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Tap replaces the Z-probe mechanism",
+          "summary": "Tap uses nozzle contact with the bed and an optical switch. Adoption involves its mechanical assembly, sensor wiring and Klipper configuration, so check bed rigidity and toolhead compatibility before planning the conversion.",
+          "compatibility": "Voron V2 / Trident with the documented front-mounted extruder, MGN12H rail, rigid bed and compatible power/PCB. Not a V0 modification.",
+          "evidence": "maintainer documentation",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Voron Tap — mechanical and electrical prerequisites",
+              "url": "https://github.com/VoronDesign/Voron-Tap",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "After a build or wiring change, recheck the startup sequence",
+          "summary": "Voron’s commissioning route separates temperature sensing, endstop states, motor motion and homing checks. Use the correct model’s sequence to isolate an incorrect configuration or connection before tuning print quality.",
+          "compatibility": "Select V2 for the 2.4 build; kit boards, probes and Z drives vary.",
+          "evidence": "maintainer documentation",
+          "section": "M",
+          "sources": [
+            {
+              "title": "Voron model-specific startup checks",
+              "url": "https://docs.vorondesign.com/build/startup/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Voron initial setup — select the matching model",
+          "url": "https://docs.vorondesign.com/build/startup/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Klippain — supported builds and configuration approach",
+          "url": "https://github.com/Frix-x/klippain",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "voron-trident": {
+      "firmware": [
+        {
+          "title": "Organize Klipper configuration with Klippain",
+          "summary": "Klippain provides modular configuration and macros on top of a working Klipper installation. Match the board pins, toolhead and calibration to the actual build instead of replacing printer.cfg with another owner’s complete configuration.",
+          "compatibility": "The maintainer lists Voron Trident among supported builds. This is a configuration framework, not a universal precompiled firmware image.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Klippain — supported builds and configuration approach",
+              "url": "https://github.com/Frix-x/klippain",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Use the matching printed parts for the smooth-pin conversion",
+          "summary": "Hartk’s pin modification replaces specified M5 shafts with 5 mm smooth pins and matching printed supports. Use the parts for the correct machine revision; the V2-specific Z idlers are not Trident parts.",
+          "compatibility": "Maintainer explicitly supports V2.4 R2 and Trident; choose the 6 mm or 9 mm belt variant and obtain the accompanying hardware.",
+          "evidence": "maintainer documentation",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Hartk — V2.4 R2 / Trident smooth-pin modification",
+              "url": "https://github.com/VoronDesign/VoronUsers/tree/main/printer_mods/hartk1213/Voron2.4_Trident_Pins_Mod",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Tap replaces the Z-probe mechanism",
+          "summary": "Tap uses nozzle contact with the bed and an optical switch. Adoption involves its mechanical assembly, sensor wiring and Klipper configuration, so check bed rigidity and toolhead compatibility before planning the conversion.",
+          "compatibility": "Voron V2 / Trident with the documented front-mounted extruder, MGN12H rail, rigid bed and compatible power/PCB. Not a V0 modification.",
+          "evidence": "maintainer documentation",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Voron Tap — mechanical and electrical prerequisites",
+              "url": "https://github.com/VoronDesign/Voron-Tap",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "After a build or wiring change, recheck the startup sequence",
+          "summary": "Voron’s commissioning route separates temperature sensing, endstop states, motor motion and homing checks. Use the correct model’s sequence to isolate an incorrect configuration or connection before tuning print quality.",
+          "compatibility": "Select V1/Trident; its three-point bed system differs from V2’s moving gantry.",
+          "evidence": "maintainer documentation",
+          "section": "M",
+          "sources": [
+            {
+              "title": "Voron model-specific startup checks",
+              "url": "https://docs.vorondesign.com/build/startup/",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "A slanted rear bed mesh can indicate frame alignment",
+          "summary": "The Trident guide describes a mesh that is level across the front but slants across the rear when the Y extrusions are not in plane. Check the supporting surface and frame geometry rather than expecting three-point Z tilt to correct every rear-corner discrepancy.",
+          "compatibility": "Trident-specific diagnostic pattern; it is not evidence that every uneven mesh has this cause.",
+          "evidence": "maintainer documentation",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Voron — fixing a wonky Trident bed mesh",
+              "url": "https://docs.vorondesign.com/community/troubleshooting/thor/trident-wonky-bedmesh.html",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Voron initial setup — select the matching model",
+          "url": "https://docs.vorondesign.com/build/startup/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Klippain — supported builds and configuration approach",
+          "url": "https://github.com/Frix-x/klippain",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ratrig-v-core-4": {
+      "firmware": [
+        {
+          "title": "RatOS: configure the Klipper stack for the installed build",
+          "summary": "RatOS supplies the printer configuration and supporting Klipper workflow. Its setup wizard distinguishes V-Core 4.0 and 4.1 and generates supported hardware options, including IDEX. Back up custom configuration and follow the documented migration rather than carrying an old configuration forward wholesale.",
+          "compatibility": "V-Core 4.0 / 4.1. The RC3-to-RC4 migration requires a fresh SD-card installation; custom board wiring needs explicit pin verification.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "RatOS RC3-to-RC4 migration and model selection",
+              "url": "https://os.ratrig.com/docs/upgrading_rc3/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Prepare the printed parts required by the 4.1 conversion",
+          "summary": "The official kit page links its bill of materials and chapter-by-chapter conversion guide. Use that selected build’s printed-part requirements alongside the hardware kit; stock 4.0 parts are not a substitute for every revised assembly.",
+          "compatibility": "V-Core 4.0 to 4.1 conversion, matching size and CoreXY / Hybrid / IDEX route. The purchased upgrade kit does not contain printed parts.",
+          "evidence": "manufacturer documentation",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Rat Rig — V-Core 4.1 upgrade kit and required parts",
+              "url": "https://ratrig.com/products/rat-rig-v-core-4-1-upgrade-kit",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Rat Rig 4.1 upgrade assembly chapters",
+              "url": "https://wiki.ratrig.com/en/build-guides/v-core-41-upgrade-kit",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Convert a V-Core 4.0 using the 4.1 upgrade configuration",
+          "summary": "The manufacturer’s conversion introduces a steel X gantry, full-metal toolhead and Orbitool O2S wiring. Choose the kit by machine size and by both the existing and intended CoreXY, Hybrid or IDEX configuration.",
+          "compatibility": "Existing V-Core 4.0. Printed parts are excluded from the kit and must be obtained separately; Rat Rig pairs the conversion with RatOS 2.1.",
+          "evidence": "manufacturer documentation",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Rat Rig — V-Core 4.1 upgrade kit and required parts",
+              "url": "https://ratrig.com/products/rat-rig-v-core-4-1-upgrade-kit",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "First-layer or configuration trouble after a RatOS migration",
+          "summary": "The migration guide calls out changed pin assignments, duplicate configuration and older Beacon-related customizations. Compare the wiring and generated configuration with the current model’s defaults before restoring custom sections.",
+          "compatibility": "RatOS 2.1 RC3-to-RC4 transition. Stock-wired V-Core 4.0/4.1 kits differ from custom board and accessory layouts.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "RatOS migration diagnostics",
+              "url": "https://os.ratrig.com/docs/upgrading_rc3/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "RatOS upgrade and supported V-Core wiring",
+          "url": "https://os.ratrig.com/docs/upgrading_rc3/",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ratrig-v-core-41": {
+      "firmware": [
+        {
+          "title": "RatOS: configure the Klipper stack for the installed build",
+          "summary": "RatOS supplies the printer configuration and supporting Klipper workflow. Its setup wizard distinguishes V-Core 4.0 and 4.1 and generates supported hardware options, including IDEX. Back up custom configuration and follow the documented migration rather than carrying an old configuration forward wholesale.",
+          "compatibility": "V-Core 4.0 / 4.1. The RC3-to-RC4 migration requires a fresh SD-card installation; custom board wiring needs explicit pin verification.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "RatOS RC3-to-RC4 migration and model selection",
+              "url": "https://os.ratrig.com/docs/upgrading_rc3/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Add a second independent toolhead with the IDEX kit",
+          "summary": "The official 4.1 IDEX upgrade adds the second extrusion path and its associated motion and calibration hardware. Review the full kit bill of materials and the corresponding RatOS commissioning route.",
+          "compatibility": "Use the V-Core 4.1 IDEX upgrade selection for the installed size and starting configuration. Do not substitute a V-Core 4.0 parts list.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Rat Rig V-Core 4.1 IDEX upgrade v1.00",
+              "url": "https://ratrig.com/products/rat-rig-v-core-4-1-idex-upgrade-v1-00",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "First-layer or configuration trouble after a RatOS migration",
+          "summary": "The migration guide calls out changed pin assignments, duplicate configuration and older Beacon-related customizations. Compare the wiring and generated configuration with the current model’s defaults before restoring custom sections.",
+          "compatibility": "RatOS 2.1 RC3-to-RC4 transition. Stock-wired V-Core 4.0/4.1 kits differ from custom board and accessory layouts.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "RatOS migration diagnostics",
+              "url": "https://os.ratrig.com/docs/upgrading_rc3/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "RatOS upgrade and supported V-Core wiring",
+          "url": "https://os.ratrig.com/docs/upgrading_rc3/",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "positron-v32": {
+      "firmware": [
+        {
+          "title": "Use the maintained Positron Klipper configuration",
+          "summary": "The project maintains Klipper, Moonraker and screen configuration separately from the mechanical design. Preserve the machine’s existing calibration and select the installed Z-homing hardware when adopting updates.",
+          "compatibility": "Positron V3.2 by Positron3D / LDO. This is not a configuration for the distinct Positron LT derivative.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "PositronConfig — Klipper configuration and homing notes",
+              "url": "https://github.com/Positron3D/PositronConfig",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Cable-chain conversion parts for the V3.2 assemblies",
+          "summary": "The project publishes a cable-chain modification with revised extruder body/bottom plate, toolboard cover and assembly CAD. Review the complete matched assembly before printing individual parts.",
+          "compatibility": "V3.2 cable-chain mod V0.1 files. The repository does not establish that every older or V3.2.2 extruder variant is interchangeable.",
+          "evidence": "maintainer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Positron — Cable Chain Mod",
+              "url": "https://github.com/Positron3D/Positron/tree/main/Printer%20Mods/Cable%20Chain%20Mod",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Update an early kit’s Z tension-arm assembly",
+          "summary": "The revised tension arm is documented as standard from Batch 3 onward. The project says Batch 1 and 2 kits contain the parts needed to build it and supplies the revised printed components and assembly notes.",
+          "compatibility": "LDO / Positron V3.2 Batch 1 or 2 following the project’s current Z tension-arm documentation; check the specified pivot fasteners and spring arrangement.",
+          "evidence": "maintainer documentation",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Positron — new Z tension arm",
+              "url": "https://github.com/Positron3D/Positron/blob/main/Printed%20Parts%20%26%20CAD%20Models/Current%20Release%20Printed%20Parts/Bed/New%20Z%20Tension%20Arm.md",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Early or hard homing: check the sensor and configuration match",
+          "summary": "The maintainer documents sensitivity-dependent X/Y sensorless homing and two different Z-homing arrangements. It also notes unreliable IR probing with glass beds. Compare the installed switch/probe with the configuration before changing calibration.",
+          "compatibility": "V3.2 configurations. The default Z setup uses a microswitch; some builds have an IR probe and need a different configuration.",
+          "evidence": "maintainer documentation",
+          "section": "J",
+          "sources": [
+            {
+              "title": "PositronConfig — Klipper configuration and homing notes",
+              "url": "https://github.com/Positron3D/PositronConfig",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Positron3D — V3.2 / V3.2.2 source project",
+          "url": "https://github.com/Positron3D/Positron",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "PositronConfig — Klipper configuration and homing notes",
+          "url": "https://github.com/Positron3D/PositronConfig",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "vzbot-330-awd": {
+      "firmware": [
+        {
+          "title": "Start from the Vz330 AWD Klipper configuration",
+          "summary": "The project supplies an AWD printer configuration together with required macro files. Adapt MCU identity, pins and the installed hardware; the example is not a drop-in configuration for every Vz330 controller.",
+          "compatibility": "Documented Mellow Fly Super8 with TMC5160 HV for XY and TMC2209 for E/Z. The maintainer also requires the linked Linux-process MCU setup.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "VzBoT Vz330 — firmware configuration requirements",
+              "url": "https://github.com/VzBoT3D/VzBoT-Vz330/tree/master/Firmware",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Build the project’s exhaust-filter housing",
+          "summary": "VzBoT publishes housing, guard and associated parts for an exhaust-filter assembly. Match the enclosure opening, fan and filter hardware; a printable housing by itself does not establish filtration performance.",
+          "compatibility": "Vz330 enclosure assembly in the project BOM. Check dimensions against the installed Mellow/CNC enclosure before making parts.",
+          "evidence": "maintainer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Vz330 exhaust-filter parts and BOM",
+              "url": "https://github.com/VzBoT3D/VzBoT-Vz330/tree/master/Assemblies%20BOM%20and%20STL/enclosure/Exhaust%20filter%20-%20Fume%20extractor",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Random MCU disconnects on a Super8 Pro H723 build",
+          "summary": "The firmware README identifies random disconnection or shutdown on the STM32H723 Super8 Pro configuration and describes switching the affected TMC5160 sections from hardware to software SPI. Confirm the board/chip and current configuration before applying that specific remedy.",
+          "compatibility": "Super8 Pro with STM32H723 and the documented driver configuration. This does not diagnose unrelated USB or power problems on other boards.",
+          "evidence": "maintainer documentation",
+          "section": "M",
+          "sources": [
+            {
+              "title": "VzBoT Vz330 — firmware configuration requirements",
+              "url": "https://github.com/VzBoT3D/VzBoT-Vz330/tree/master/Firmware",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Driver overheating: verify the external-driver cooling",
+          "summary": "The Mellow electronics guide requires heatsinks and active cooling for the external TMC5160 drivers. Inspect that cooling arrangement when diagnosing temperature-related driver trouble rather than compensating with higher current or speed settings.",
+          "compatibility": "Mellow Vz330 kit with external TMC5160 HV drivers. Other controlboard/driver combinations need their own thermal requirements.",
+          "evidence": "maintainer documentation",
+          "section": "L",
+          "sources": [
+            {
+              "title": "VzBoT — Super8 v1.3 and external-driver cooling",
+              "url": "https://docs.vzbot.org/vz330_mellow/electronics/super_mellow",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "VzBoT — Mellow Vz330 build documentation",
+          "url": "https://docs.vzbot.org/vz330_mellow",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "VzBoT Vz330 — firmware configuration requirements",
+          "url": "https://github.com/VzBoT3D/VzBoT-Vz330/tree/master/Firmware",
+          "checked": "2026-10-20"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,834 @@
+{
+  "version": 1,
+  "checked": "2026-10-20",
+  "models": {
+    "prusa-mk3s-plus": {
+      "firmware": [
+        {
+          "title": "Hotend-specific Prusa firmware variants",
+          "summary": "Prusa documents separate firmware configurations for third-party hotends, including E3D Revo. Match the hotend and heater configuration so the thermal model reflects the installed hardware.",
+          "compatibility": "MK3S+ stock V6 and Revo builds are different; use the exact Revo heater-power variant if that upgrade is installed.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa firmware hotend variants and thermal-model build guidance",
+              "url": "https://github.com/prusa3d/Prusa-Firmware/blob/MK3/Firmware/variants/README.md",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "E3D Revo Six MK3/S/+ installation and firmware requirements",
+              "url": "https://e3d-online.com/pages/revo-support-revo-mk3-six",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Revo Six anti-rotation cover or body",
+          "summary": "The creator’s replacement geometry prevents a fitted Revo Six from turning in its mount; the body and cover are alternatives, so use one.",
+          "compatibility": "MK3S+ with the Revo Six conversion already installed; this is not a stock V6 requirement.",
+          "evidence": "creator listing",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Surfalex2000: MK3S+ Revo Six anti-rotation mount STL",
+              "url": "https://www.printables.com/model/323487-prusa-mk3s-revo-six-anti-turn-mount-body-or-cover-",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "E3D Revo Six hotend conversion",
+          "summary": "The 24 V Revo assembly changes the nozzle/heater system and allows the Revo nozzle-change workflow. Install its matching thermal-model firmware as part of the conversion.",
+          "compatibility": "MK3/MK3S/MK3S+ kit; choose 24 V for a stock MK3S+ and match the actual Revo heater version.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "E3D Revo Six MK3/S/+ installation and firmware requirements",
+              "url": "https://e3d-online.com/pages/revo-support-revo-mk3-six",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "MMU3 with the MK3S+ installation kit",
+          "summary": "The multi-material unit requires printer-specific extruder changes and the Einsy/Rambo cable. Its profiles differ from the CORE/MK4 MMU3 workflow.",
+          "compatibility": "MK3S+ MMU3 kit and matching firmware/profiles; moving the unit to an xBuddy printer requires different parts and wiring.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Prusa MMU3 model, cable, extruder and G-code compatibility",
+              "url": "https://help.prusa3d.com/article/mmu3-compatibility_470808",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Motion continues after extrusion stops",
+          "summary": "The manufacturer separates heat creep from other clogs. Check the feed path, heatsink cooling and enclosure conditions, then follow the relevant unclogging procedure rather than assuming heat creep is the cause.",
+          "compatibility": "MK3S+ is explicitly within the article’s scope; modified hotends require their own assembly and firmware checks.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Prusa MK3S+ extrusion-stoppage and heat-creep diagnosis",
+              "url": "https://help.prusa3d.com/article/extrusion-stopped-mid-print-heat-creep_1948",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa firmware hotend variants and thermal-model build guidance",
+          "url": "https://github.com/prusa3d/Prusa-Firmware/blob/MK3/Firmware/variants/README.md",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "E3D Revo Six MK3/S/+ installation and firmware requirements",
+          "url": "https://e3d-online.com/pages/revo-support-revo-mk3-six",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-mini-plus": {
+      "firmware": [
+        {
+          "title": "Upstream Klipper configuration for MINI+",
+          "summary": "Klipper publishes the MINI+ Buddy-board pin/configuration file. This conversion uses an external host and browser interface; the stock LCD remains on its bootloader screen.",
+          "compatibility": "MINI+ STM32F407 Buddy hardware; first flashing requires breaking the board appendix and using its revision-specific DFU procedure.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Klipper upstream Prusa MINI+ Buddy-board configuration",
+              "url": "https://github.com/Klipper3d/klipper/blob/master/config/printer-prusa-mini-plus-2020.cfg",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "E3D Revo Micro printable mount",
+          "summary": "E3D’s creator files provide the mounting part needed before disassembling the stock hotend for its Revo Micro conversion.",
+          "compatibility": "MINI+ Revo Micro conversion, with the matching fan arrangement and wiring hardware; not a standalone stock-hotend upgrade.",
+          "evidence": "creator listing",
+          "section": "H",
+          "sources": [
+            {
+              "title": "E3D: MINI+ Revo Micro Edition 2 printable mount",
+              "url": "https://www.printables.com/model/151007-prusa-mini-upgrade-edition-2-revo-micro",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "E3D official Prusa MINI+ Revo Micro upgrade guide",
+              "url": "https://www.youtube.com/watch?v=bNhk2x1rdMg",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "E3D Revo Prusa Mini mounting, wiring and final calibration",
+              "url": "https://e3d-online.com/pages/revo-support-prusa-mini-micro",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "E3D official MINI+ conversion and linked printable mount",
+              "url": "https://e3d-online.com/blogs/news/prusaupgrades",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Revo Micro hotend upgrade",
+          "summary": "The manufacturer documents a MINI+ conversion using a printed mount, replacement heater/thermistor connections and renewed first-layer calibration.",
+          "compatibility": "MINI+ E3D kit; follow the fan-voltage regulator and cable-clearance requirements. E3D states this conversion needs no replacement firmware.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "E3D official Prusa MINI+ Revo Micro upgrade guide",
+              "url": "https://www.youtube.com/watch?v=bNhk2x1rdMg",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "E3D Revo Prusa Mini mounting, wiring and final calibration",
+              "url": "https://e3d-online.com/pages/revo-support-prusa-mini-micro",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Clicking extruder or gaps from partial blockage",
+          "summary": "Check whether filament reaches the nozzle, inspect the Bowden/PTFE path and follow the manufacturer’s partial-versus-full-clog diagnosis before replacing parts.",
+          "compatibility": "MINI+ stock hotend/PTFE arrangement; Revo-converted machines have a different hotend assembly.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Prusa MINI/MINI+ clogged-hotend diagnostic guide",
+              "url": "https://help.prusa3d.com/article/clogged-nozzle-hotend-mini-mini_112011?product=mini-2",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Klipper upstream Prusa MINI+ Buddy-board configuration",
+          "url": "https://github.com/Klipper3d/klipper/blob/master/config/printer-prusa-mini-plus-2020.cfg",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "E3D official Prusa MINI+ Revo Micro upgrade guide",
+          "url": "https://www.youtube.com/watch?v=bNhk2x1rdMg",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "E3D Revo Prusa Mini mounting, wiring and final calibration",
+          "url": "https://e3d-online.com/pages/revo-support-prusa-mini-micro",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-mk4": {
+      "firmware": [
+        {
+          "title": "Official MK4 stock firmware",
+          "summary": "The manufacturer’s model page links its supported firmware image and release history.",
+          "compatibility": "Select MK4 and the installed hardware configuration; this is an official update route, not a separate community distribution.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa MK4 model firmware and support",
+              "url": "https://help.prusa3d.com/product/mk4",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Right-side xLCD mounting and USB relocation",
+          "summary": "The creator supplies brackets, ribbon-cable clips and USB-extension supports to move the display where a side-access enclosure needs it.",
+          "compatibility": "MK4 is explicitly listed; select the bracket/USB-extension variant and retain safe cable routing.",
+          "evidence": "creator listing",
+          "section": "O",
+          "sources": [
+            {
+              "title": "ltlowe: MK4/MK4S xLCD right-side mounting kit, STL and STEP",
+              "url": "https://www.printables.com/model/913710-mk4mk4s-xlcd-right-side-mount-kit",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Official MK4-to-MK4S conversion",
+          "summary": "The manufacturer kit changes cooling, high-flow nozzle hardware and related electronics/parts together rather than treating an MK4S slicer profile as a hardware upgrade.",
+          "compatibility": "Stock MK4; choose the kit for its older or newer xLCD version and complete the matching firmware/printer-type setup.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Prusa MK4-to-MK4S kit and xLCD-version compatibility",
+              "url": "https://www.prusa3d.com/product/original-prusa-mk4-to-mk4s-upgrade-kit-2/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Underextrusion after nozzle or profile changes",
+          "summary": "Check nozzle seating and use the matching high-flow or standard-nozzle slicer profile. The official guide also separates material/heat-creep causes from a physical obstruction.",
+          "compatibility": "MK4 Nextruder; use the installed nozzle’s profile rather than assuming MK4 and MK4S defaults match.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Prusa Nextruder clog, nozzle-profile and enclosure checks",
+              "url": "https://help.prusa3d.com/article/clogged-nozzle-core-one-core-one-l-xl-mk4-s-mk3-9-s_411823",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa MK4 model firmware and support",
+          "url": "https://help.prusa3d.com/product/mk4",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-mk4s": {
+      "firmware": [
+        {
+          "title": "Official MK4S stock firmware",
+          "summary": "The manufacturer’s model page links its supported firmware image and release history.",
+          "compatibility": "Select MK4S and the installed hardware configuration; this is an official update route, not a separate community distribution.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa MK4S model firmware and support",
+              "url": "https://help.prusa3d.com/product/mk4s",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Right-side xLCD mounting and USB relocation",
+          "summary": "The creator supplies brackets, ribbon-cable clips and USB-extension supports to move the display where a side-access enclosure needs it.",
+          "compatibility": "MK4S is explicitly listed; the creator requires replacing its rear-cover arrangement with these brackets. Select the matching USB-extension variant.",
+          "evidence": "creator listing",
+          "section": "O",
+          "sources": [
+            {
+              "title": "ltlowe: MK4/MK4S xLCD right-side mounting kit, STL and STEP",
+              "url": "https://www.printables.com/model/913710-mk4mk4s-xlcd-right-side-mount-kit",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "MK4S-specific MMU3 kit",
+          "summary": "Adds automated filament switching using the matching Nextruder conversion, buffer and slicer workflow.",
+          "compatibility": "MK4S kit; use its standard-nozzle recommendation or the specifically supported high-flow profiles and purge settings.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Prusa MMU3 kit for MK4S/MK3.9S and printer selection",
+              "url": "https://www.prusa3d.com/product/original-prusa-mmu3-upgrade-kit-for-mk4s-mk3-9s-7/?country=DK",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Prusa MMU3 model, cable, extruder and G-code compatibility",
+              "url": "https://help.prusa3d.com/article/mmu3-compatibility_470808",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Underextrusion after nozzle or profile changes",
+          "summary": "Check nozzle seating and use the matching high-flow or standard-nozzle slicer profile. The official guide also separates material/heat-creep causes from a physical obstruction.",
+          "compatibility": "MK4S Nextruder; use the installed nozzle’s profile rather than assuming MK4 and MK4S defaults match.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Prusa Nextruder clog, nozzle-profile and enclosure checks",
+              "url": "https://help.prusa3d.com/article/clogged-nozzle-core-one-core-one-l-xl-mk4-s-mk3-9-s_411823",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "MMU3 purge requirements with a high-flow nozzle",
+          "summary": "The installation manual recommends a standard nozzle for MMU3. High-flow nozzles require the dedicated HF profiles and larger purge volumes; keep the selected nozzle and profile aligned.",
+          "compatibility": "MK4S with MMU3; do not reuse MK3S+/MMU3 G-code on the MK4S MMU3 system.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Prusa MMU3 MK4/S Nextruder modification and nozzle conditions",
+              "url": "https://help.prusa3d.com/wp-content/uploads/generated/original-prusa-mmu3-assembly_1757_en_2025-02-23.pdf",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Prusa MMU3 model, cable, extruder and G-code compatibility",
+              "url": "https://help.prusa3d.com/article/mmu3-compatibility_470808",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa MK4S model firmware and support",
+          "url": "https://help.prusa3d.com/product/mk4s",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-core-one": {
+      "firmware": [
+        {
+          "title": "Official CORE One+ (Gen 2) firmware",
+          "summary": "Use the current model page’s stock firmware and release notes when maintaining the supplied controller.",
+          "compatibility": "Select CORE One+ (Gen 2) hardware; INDX requires its separate printer/firmware branch.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa CORE One+ (Gen 2) current support",
+              "url": "https://help.prusa3d.com/product/core-one-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "400°C HT Hotend conversion kit",
+          "summary": "The supported kit changes the hotend, main plate and idler arrangement for the manufacturer’s high-temperature material profiles; finish with its installation and recalibration procedure.",
+          "compatibility": "CORE One+ (Gen 2) is explicitly supported. INDX, MK4S and XL+ are excluded from this kit.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Prusa HT Hotend exact Gen 2/L+ compatibility and kit contents",
+              "url": "https://www.prusa3d.com/product/ht-hotend-upgrade-for-core-one-and-core-one-l/",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Prusa HT Hotend installation, idler/main-plate changes and recalibration",
+              "url": "https://help.prusa3d.com/guide/how-to-install-ht-hotend-upgrade-core-one-core-one-l_1080575",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Generation-matched INDX conversion",
+          "summary": "The official conversion replaces the single Nextruder with the INDX tool system and its dedicated filament paths. Select the kit for the printer generation.",
+          "compatibility": "CORE One+ Gen 2 kit differs from earlier CORE One/+ kits: its GT1.5 belts and expansion joints are already installed.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Prusa INDX conversion kits: Gen 2, earlier CORE One and L/+ selections",
+              "url": "https://www.prusa3d.com/en/product/indx-conversion-kit/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Irregular XY motion or failed belt calibration",
+          "summary": "The official procedure checks gantry squareness before tension adjustment. Follow the selected printer’s belt-tuning wizard rather than copying another model’s frequency target.",
+          "compatibility": "CORE One+ (Gen 2); confirm the installed belt generation and follow its wizard range.",
+          "evidence": "official troubleshooting",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Prusa CORE One/+, INDX and L/+ belt alignment and tuning",
+              "url": "https://help.prusa3d.com/article/adjusting-belt-tension-core-one-core-one-indx-core-one-l_845048",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Selftest fails on fans, loadcell or sensors",
+          "summary": "Use the failed subtest to choose the diagnostic branch: fan obstructions/connections, loadcell mounting/stability or filament-sensor wiring. Repeat that test after addressing its documented cause.",
+          "compatibility": "CORE One+ support links this procedure for Gen 2; INDX has a separate calibration sequence.",
+          "evidence": "official troubleshooting",
+          "section": "M",
+          "sources": [
+            {
+              "title": "Prusa CORE One/+ selftest failure diagnostic branches",
+              "url": "https://help.prusa3d.com/article/selftest-failed-core-one_837189?product=core-one-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa CORE One+ (Gen 2) current support",
+          "url": "https://help.prusa3d.com/product/core-one-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-core-one-l": {
+      "firmware": [
+        {
+          "title": "Official CORE One L+ firmware",
+          "summary": "Use the current model page’s stock firmware and release notes when maintaining the supplied controller.",
+          "compatibility": "Select CORE One L+ hardware; INDX requires its separate printer/firmware branch.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa CORE One L+ current support",
+              "url": "https://help.prusa3d.com/product/core-one-l-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "400°C HT Hotend conversion kit",
+          "summary": "The supported kit changes the hotend, main plate and idler arrangement for the manufacturer’s high-temperature material profiles; finish with its installation and recalibration procedure.",
+          "compatibility": "CORE One L+ is explicitly supported. INDX, MK4S and XL+ are excluded from this kit.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Prusa HT Hotend exact Gen 2/L+ compatibility and kit contents",
+              "url": "https://www.prusa3d.com/product/ht-hotend-upgrade-for-core-one-and-core-one-l/",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Prusa HT Hotend installation, idler/main-plate changes and recalibration",
+              "url": "https://help.prusa3d.com/guide/how-to-install-ht-hotend-upgrade-core-one-core-one-l_1080575",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Irregular XY motion or failed belt calibration",
+          "summary": "The official procedure checks gantry squareness before tension adjustment. Follow the selected printer’s belt-tuning wizard rather than copying another model’s frequency target.",
+          "compatibility": "CORE One L+; confirm the installed belt generation and follow its wizard range.",
+          "evidence": "official troubleshooting",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Prusa CORE One/+, INDX and L/+ belt alignment and tuning",
+              "url": "https://help.prusa3d.com/article/adjusting-belt-tension-core-one-core-one-indx-core-one-l_845048",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa CORE One L+ current support",
+          "url": "https://help.prusa3d.com/product/core-one-l-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-core-one-indx": {
+      "firmware": [
+        {
+          "title": "Official Prusa INDX firmware branch",
+          "summary": "Use the dedicated CORE One INDX image. Its release history includes the 7.0.1 correction for freezing during the tool-offset-sensor startup stage.",
+          "compatibility": "CORE One+ Gen 2 with the production Prusa INDX integration; generic development-kit Klipper macros are a different setup.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa CORE One INDX model firmware and calibration support",
+              "url": "https://help.prusa3d.com/product/core-one-indx",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Prusa official firmware changelog: INDX 7.0.1 startup correction",
+              "url": "https://help.prusa3d.com/downloads/firmware-changelog",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Choose the matching INDX tool/nozzle configuration",
+          "summary": "The Prusa integration supports four or eight dedicated tools and multiple nozzle sizes. Match each installed tool’s nozzle size and material setup to the printer/slicer configuration.",
+          "compatibility": "Production Prusa CORE One+ Gen 2 INDX; conversion-kit generation and tool count must match. The separate HT Hotend kit does not fit INDX.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Prusa INDX conversion kits: Gen 2, earlier CORE One and L/+ selections",
+              "url": "https://www.prusa3d.com/en/product/indx-conversion-kit/",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Prusa HT Hotend exact Gen 2/L+ compatibility and kit contents",
+              "url": "https://www.prusa3d.com/product/ht-hotend-upgrade-for-core-one-and-core-one-l/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Calibration artifacts after INDX installation",
+          "summary": "The manufacturer uses its calibration model to separate belt/gantry, tool-offset, nozzle-cleaner and plate-cleanliness symptoms. After belt changes, repeat the dependent dock, homing, offset and cleaner calibrations.",
+          "compatibility": "CORE One INDX; use the test matching four or eight tools and the printer’s current calibration wizard.",
+          "evidence": "official troubleshooting",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Prusa INDX first-print calibration diagnosis",
+              "url": "https://help.prusa3d.com/article/first-print-troubleshooting-core-one-indx_1089971?product=core-one-indx",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Unsafe XY tool offset error #36133",
+          "summary": "Check nozzle/sensor cleanliness and vibration sources, unload filament as directed and repeat tool-offset calibration. Use the manufacturer’s diagnostic order before changing offsets manually.",
+          "compatibility": "CORE One INDX error #36133; not the Nextruder XL toolchanger calibration procedure.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Prusa INDX unsafe XY tool-offset diagnostic procedure",
+              "url": "https://help.prusa3d.com/article/unsafe-xy-tool-offset-36133-core-one-indx_1136951?product=core-one-indx",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa CORE One INDX model firmware and calibration support",
+          "url": "https://help.prusa3d.com/product/core-one-indx",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Prusa official firmware changelog: INDX 7.0.1 startup correction",
+          "url": "https://help.prusa3d.com/downloads/firmware-changelog",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-xl-1t": {
+      "firmware": [
+        {
+          "title": "Official XL+ firmware",
+          "summary": "Prusa’s current XL+ support page provides stock firmware and configuration-specific setup manuals.",
+          "compatibility": "XL+ with 1 installed tool; preserve its tool count and calibration configuration.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa XL+ exact-model firmware, single/multi-tool and enclosure documentation",
+              "url": "https://help.prusa3d.com/product/xl-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Enclosure designed for XL+",
+          "summary": "The model-specific kit encloses the printer and integrates chamber sensing, lighting and filtration controls.",
+          "compatibility": "XL+ 1-tool configuration; this enclosure is explicitly different from the original XL enclosure.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Prusa XL+ specific enclosure compatibility and assembly kit",
+              "url": "https://www.prusa3d.com/product/enclosure-for-prusa-xl-2/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Older firmware stalls while resuming heating",
+          "summary": "The XL+ release history documents a correction for getting stuck during heating when resuming a print. Check the installed version against current official releases.",
+          "compatibility": "Version-specific XL+ software issue; persistent heater errors still require their own diagnostics.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa XL+ changelog: version-specific resume-heating correction",
+              "url": "https://help.prusa3d.com/changelog/xl-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa XL+ exact-model firmware, single/multi-tool and enclosure documentation",
+          "url": "https://help.prusa3d.com/product/xl-plus",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Prusa XL+ changelog: version-specific resume-heating correction",
+          "url": "https://help.prusa3d.com/changelog/xl-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-xl-2t": {
+      "firmware": [
+        {
+          "title": "Official XL+ firmware",
+          "summary": "Prusa’s current XL+ support page provides stock firmware and configuration-specific setup manuals.",
+          "compatibility": "XL+ with 2 installed tools; preserve its tool count and calibration configuration.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa XL+ exact-model firmware, single/multi-tool and enclosure documentation",
+              "url": "https://help.prusa3d.com/product/xl-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Enclosure designed for XL+",
+          "summary": "The model-specific kit encloses the printer and integrates chamber sensing, lighting and filtration controls.",
+          "compatibility": "XL+ 2-tool configuration; this enclosure is explicitly different from the original XL enclosure.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Prusa XL+ specific enclosure compatibility and assembly kit",
+              "url": "https://www.prusa3d.com/product/enclosure-for-prusa-xl-2/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Older firmware stalls while resuming heating",
+          "summary": "The XL+ release history documents a correction for getting stuck during heating when resuming a print. Check the installed version against current official releases.",
+          "compatibility": "Version-specific XL+ software issue; persistent heater errors still require their own diagnostics.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa XL+ changelog: version-specific resume-heating correction",
+              "url": "https://help.prusa3d.com/changelog/xl-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Tool pickup or parking fails (#17813)",
+          "summary": "The official diagnostic path checks dock security/calibration, belt adjustment and coupler lubrication before considering the tool’s electromechanical coupling board.",
+          "compatibility": "XL+ 2-tool machine, via its model support link; not applicable to the single-tool configuration.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Prusa XL multi-tool error #17813, linked from XL+ support",
+              "url": "https://help.prusa3d.com/article/toolchanger-problem-17813-xl-multi-tool_802566?product=xl-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa XL+ exact-model firmware, single/multi-tool and enclosure documentation",
+          "url": "https://help.prusa3d.com/product/xl-plus",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Prusa XL+ changelog: version-specific resume-heating correction",
+          "url": "https://help.prusa3d.com/changelog/xl-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "prusa-xl-5t": {
+      "firmware": [
+        {
+          "title": "Official XL+ firmware",
+          "summary": "Prusa’s current XL+ support page provides stock firmware and configuration-specific setup manuals.",
+          "compatibility": "XL+ with 5 installed tools; preserve its tool count and calibration configuration.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa XL+ exact-model firmware, single/multi-tool and enclosure documentation",
+              "url": "https://help.prusa3d.com/product/xl-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Enclosure designed for XL+",
+          "summary": "The model-specific kit encloses the printer and integrates chamber sensing, lighting and filtration controls.",
+          "compatibility": "XL+ 5-tool configuration; this enclosure is explicitly different from the original XL enclosure.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Prusa XL+ specific enclosure compatibility and assembly kit",
+              "url": "https://www.prusa3d.com/product/enclosure-for-prusa-xl-2/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Older firmware stalls while resuming heating",
+          "summary": "The XL+ release history documents a correction for getting stuck during heating when resuming a print. Check the installed version against current official releases.",
+          "compatibility": "Version-specific XL+ software issue; persistent heater errors still require their own diagnostics.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Prusa XL+ changelog: version-specific resume-heating correction",
+              "url": "https://help.prusa3d.com/changelog/xl-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Tool pickup or parking fails (#17813)",
+          "summary": "The official diagnostic path checks dock security/calibration, belt adjustment and coupler lubrication before considering the tool’s electromechanical coupling board.",
+          "compatibility": "XL+ 5-tool machine, via its model support link; not applicable to the single-tool configuration.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Prusa XL multi-tool error #17813, linked from XL+ support",
+              "url": "https://help.prusa3d.com/article/toolchanger-problem-17813-xl-multi-tool_802566?product=xl-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Prusa XL+ exact-model firmware, single/multi-tool and enclosure documentation",
+          "url": "https://help.prusa3d.com/product/xl-plus",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Prusa XL+ changelog: version-specific resume-heating correction",
+          "url": "https://help.prusa3d.com/changelog/xl-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    }
+  }
+}

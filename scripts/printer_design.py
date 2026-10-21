@@ -3,6 +3,7 @@ from html import escape
 import json
 from pathlib import Path
 import re
+from printer_resources import load_resources, entries_for, chapter_context, review_notes
 
 ROOT = Path(__file__).resolve().parents[1]
 E = lambda value: escape(str(value), quote=True)
@@ -79,7 +80,7 @@ def overview(data, c, refs):
                       ('B5', 'Enclosure', 'Published enclosure and chamber-heating notes.')]
     selected.extend(next(([entry] for entry in candidates if entry[0] in c['sp']), []))
     selected.append(('A4', 'Price snapshot', 'Dated listing, not a live offer. Read the configuration and region.'))
-    body = '<section class="printer-section" id="overview" aria-labelledby="overview-heading"><div class="printer-section-heading"><div><span class="printer-eyebrow">Start here</span><h2 id="overview-heading">At a glance</h2></div><a class="printer-text-link" href="#specifications">All specifications <span aria-hidden="true">↓</span></a></div><div class="printer-overview-grid">'
+    body = '<section class="printer-section" id="overview" aria-labelledby="overview-heading"><div class="printer-section-heading"><div><span class="printer-eyebrow">Start here</span><h2 id="overview-heading">At a glance</h2></div><a class="printer-text-link" href="#specifications">Explore this printer <span aria-hidden="true">↓</span></a></div><div class="printer-overview-grid">'
     for index, (fid, label, note) in enumerate(selected, 1):
         entry = c['sp'].get(fid)
         body += '<article class="printer-overview-card"><span class="printer-card-index" aria-hidden="true">0' + str(index) + '</span><h3>' + E(label) + '</h3>'
@@ -127,24 +128,31 @@ def detail_body(data, c, refs):
     used = list(dict.fromkeys(sid for entry in c['sp'].values() for sid in entry.get('s', [])))
     family = FAMILIES[c['f']]
     media = images().get(c['id'])
+    ownership = load_resources().get(c['id'])
     body = ('<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../">Home</a><span aria-hidden="true">/</span><a href="./">Printer guides</a><span aria-hidden="true">/</span><span aria-current="page">' + E(c['n']) + '</span></nav>'
             '<header class="printer-hero"><div class="printer-hero-copy"><div class="printer-model-tags"><span class="printer-family-tag">' + E(family[0]) + '</span><span class="printer-eyebrow">' + E(c.get('brand', '')) + '</span></div><h1>' + E(c['n']) +
             '</h1><p class="printer-lede">' + E(c.get('sum', '')) + '</p><div class="printer-hero-actions"><a class="printer-primary-action" href="../comparison.html#' + E(c['id']) + '">Open in interactive comparison <span aria-hidden="true">↗</span></a><a class="printer-secondary-action" href="./">Browse printers</a></div>'
-            '<p class="printer-record-meta">' + count_label(len(c['sp']), 'catalog field') + '<span aria-hidden="true">·</span>' + count_label(len(used), 'linked source') + '</p></div>' + (photo(c, media) if media else diagram(c)) + '</header>'
-            '<nav class="printer-jumps" aria-label="On this page"><a href="#overview">At a glance</a><a href="#specifications">Specifications</a><a href="#sources">Sources & notes</a>' + ('<a href="#related">Related printers</a>' if any(x.get('brand') == c.get('brand') and x['id'] != c['id'] for x in data['cats']) else '') + '</nav>')
+            '<p class="printer-record-meta">' + count_label(len(c['sp']), 'catalog field') + '<span aria-hidden="true">·</span>' + count_label(len(used), 'catalog source') + '</p></div>' + (photo(c, media) if media else diagram(c)) + '</header>'
+            '<nav class="printer-jumps" aria-label="On this page"><a href="#overview">At a glance</a><a href="#specifications">Hardware & ownership</a><a href="#sources">Sources & notes</a>' + ('<a href="#related">Related printers</a>' if any(x.get('brand') == c.get('brand') and x['id'] != c['id'] for x in data['cats']) else '') + '</nav>')
     body += overview(data, c, refs)
-    body += '<section class="printer-section" id="specifications" aria-labelledby="specifications-heading"><div class="printer-section-heading"><div><span class="printer-eyebrow">The complete record</span><h2 id="specifications-heading">Technical specifications</h2></div><span class="printer-quiet-label">Expand a section to explore</span></div><p class="printer-section-intro">Every recorded value stays with its conditions and original sources. Manufacturer claims and independent measurements are kept distinct.</p><div class="printer-spec-layout"><nav class="printer-chapter-nav" aria-label="Specification chapters">'
-    active = [(slug, title, desc, sids) for slug, title, desc, sids in CHAPTERS if any(f['sec'] in sids and f['id'] in c['sp'] for f in data['fields'])]
+    body += '<section class="printer-section" id="specifications" aria-labelledby="specifications-heading"><div class="printer-section-heading"><div><span class="printer-eyebrow">A closer look</span><h2 id="specifications-heading">Hardware, software & ownership</h2></div><span class="printer-quiet-label">Full specifications inside each chapter</span></div><p class="printer-section-intro">Understand the hardware, explore compatible changes and find a diagnostic starting point when something goes wrong. Expand the specification sections for every recorded value, condition and original reference.</p><div class="printer-spec-layout"><nav class="printer-chapter-nav" aria-label="Specification chapters">'
+    active = [(slug, title, desc, sids) for slug, title, desc, sids in CHAPTERS if any(f['sec'] in sids and f['id'] in c['sp'] for f in data['fields']) or (ownership and entries_for(ownership, sids))]
     for slug, title, _, _ in active:
         body += '<a href="#' + slug + '">' + E(title) + '<span aria-hidden="true">↘</span></a>'
     body += '</nav><div class="printer-spec-chapters">'
     for slug, title, desc, sids in active:
-        body += '<section class="printer-spec-chapter" id="' + slug + '"><div class="printer-chapter-heading"><h3>' + E(title) + '</h3><p>' + E(desc) + '</p></div><div class="printer-spec-list">'
+        body += '<section class="printer-spec-chapter" id="' + slug + '"><div class="printer-chapter-heading"><h3>' + E(title) + '</h3><p>' + E(desc) + '</p></div>'
         for sid in sids:
-            body += spec_group(data, c, sid, refs)
-        body += '</div></section>'
+            context = chapter_context(ownership, sid) if ownership else ''
+            specifications = spec_group(data, c, sid, refs)
+            if context or specifications:
+                body += '<div class="printer-topic" data-printer-topic="' + sid + '">' + context + ('<div class="printer-spec-list">' + specifications + '</div>' if specifications else '') + '</div>'
+        body += '</section>'
     body += '</div></div></section>'
-    body += '<section class="printer-section printer-reading-notes" id="sources" aria-labelledby="sources-heading"><div class="printer-section-heading"><div><span class="printer-eyebrow">Read with context</span><h2 id="sources-heading">Sources & notes</h2></div></div><div class="printer-notes-grid"><div><h3>How to read this guide</h3><p>This guide presents the catalog’s sourced record for this exact model. Source dates belong to each reference; a page update does not mean every specification has been rechecked.</p><p>Prices are dated listing snapshots, with configuration, regional and sale conditions. They are not current offers. Unknown values remain unfilled.</p><p>Firmware, variants and available accessories can change. Read the original reference before making a purchase or planning a process.</p></div><details class="printer-source-library"><summary><span>All linked references</span><span>' + count_label(len(used), 'source') + '</span></summary>' + refs(data, used) + '</details></div></section>'
+    body += '<section class="printer-section printer-reading-notes" id="sources" aria-labelledby="sources-heading"><div class="printer-section-heading"><div><span class="printer-eyebrow">Read with context</span><h2 id="sources-heading">Sources & notes</h2></div></div><div class="printer-notes-grid"><div><h3>How to read this guide</h3><p>This guide presents the catalog’s sourced record for this exact model. Source dates belong to each reference; a page update does not mean every specification has been rechecked.</p><p>Prices are dated listing snapshots, with configuration, regional and sale conditions. They are not current offers. Unknown values remain unfilled.</p><p>Firmware, variants and available accessories can change. Read the original reference before making a purchase or planning a process.</p></div><details class="printer-source-library"><summary><span>Catalog references</span><span>' + count_label(len(used), 'source') + '</span></summary>' + refs(data, used) + '</details></div>'
+    if ownership:
+        body += review_notes(ownership)
+    body += '</section>'
     return body + related(data, c)
 
 

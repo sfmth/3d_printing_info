@@ -14,6 +14,8 @@ import tempfile
 import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, PRINTER_DATE, payload, counts
 from material_design import EXAMPLES, APPLICATIONS
+from printer_resources import load_resources, section_for, source_urls, CATEGORIES
+from printer_design import CHAPTERS
 from material_articles import load_articles, load_evidence, measure_value, context_label, DETAIL_CONTEXT_FIELDS
 from check_articles import validate_evidence
 
@@ -150,7 +152,7 @@ def printer_images(catalog):
     return images
 
 
-def check_printer_record(html, catalog, printer, images):
+def check_printer_record(html, catalog, printer, images, resources):
     document = Document(html).root
     printer_id = printer['id']
     body = next(document.find('body'))
@@ -185,10 +187,36 @@ def check_printer_record(html, catalog, printer, images):
     sources = list(document.find(id='sources'))
     assert len(sources) == 1, (printer_id, 'Missing consolidated catalog sources')
     source_ids = {sid for value in printer['sp'].values() for sid in value.get('s', [])}
-    assert len(list(sources[0].find('li'))) == len(source_ids), (printer_id, 'Consolidated catalog sources must be deduplicated')
+    library = next(sources[0].find('details', 'printer-source-library'))
+    assert len(list(library.find('li'))) == len(source_ids), (printer_id, 'Consolidated catalog sources must be deduplicated')
     for source_id in source_ids:
         source = catalog['src'][source_id]
         assert source.get('t', source_id) in sources[0].text, (printer_id, source_id, 'Source omitted from consolidated references')
+    record = resources[printer_id]
+    notes = list(document.find('article', 'printer-context-note'))
+    expected = [(category, entry) for category in CATEGORIES for entry in record[category]]
+    assert len(notes) == len(expected), (printer_id, 'Ownership evidence dropped or duplicated')
+    for category, entry in expected:
+        matches = [note for note in notes if note.attrs.get('data-resource-kind') == category and next(note.find('h4')).text == entry['title']]
+        assert len(matches) == 1, (printer_id, entry['title'], 'Resource identity mismatch')
+        note = matches[0]
+        section = section_for(category, entry)
+        assert note.attrs.get('data-resource-section') == section, (printer_id, 'Resource context changed')
+        topic = note.parent
+        while topic is not None and 'data-printer-topic' not in topic.attrs:
+            topic = topic.parent
+        assert topic is not None and topic.attrs['data-printer-topic'] == section, (printer_id, 'Resource separated from its technical topic')
+        chapter = topic.parent
+        assert chapter.attrs.get('id') == next(slug for slug, _, _, letters in CHAPTERS if section in letters), (printer_id, 'Resource outside its technical chapter')
+        assert entry['summary'] in note.text and entry['compatibility'] in note.text and entry['evidence'].capitalize() in note.text, (printer_id, 'Resource limits or provenance lost')
+        evidence = next(note.find('details', 'printer-resource-evidence'))
+        for source in entry['sources']:
+            assert source['url'] in {link.attrs.get('href') for link in evidence.find('a')}, (printer_id, 'Resource source lost')
+            assert source['title'] in evidence.text and source['checked'] in evidence.text, (printer_id, 'Resource source date lost')
+    review = list(sources[0].find('details', 'printer-resource-review'))
+    assert len(review) == 1 and 'open' not in review[0].attrs, (printer_id, 'Research coverage must be discoverable within sources')
+    for source in record['reviewed_sources']:
+        assert source['url'] in {link.attrs.get('href') for link in review[0].find('a')}, (printer_id, 'Review scope source lost')
     visual = list(document.find('figure', 'printer-visual'))
     assert len(visual) == 1, (printer_id, 'Missing printer visual')
     photos = [image for image in visual[0].find('img') if 'data-printer-image' in image.attrs]
@@ -325,6 +353,7 @@ def run():
         print(f'{name}: {cs}; all original records and sources preserved')
     filaments=datasets['filaments.html']; printers=datasets['comparison.html']
     printer_photos = printer_images(printers)
+    printer_resources = load_resources(expected_ids={c['id'] for c in printers['cats']})
     assert set(APPLICATIONS)=={c['id'] for c in filaments['cats']},'Every material must have an Applications section'
     for c in filaments['cats']:
         entry=APPLICATIONS[c['id']]
@@ -471,7 +500,8 @@ def run():
             if directory=='printers':
                 subject=article['about']
                 assert subject['@type']=='Thing' and subject['name']==c['n'],(c['id'],'printer reference subject')
-                check_printer_record(html, printers, c, printer_photos)
+                check_printer_record(html, printers, c, printer_photos, printer_resources)
+                assert set(source_urls(printer_resources[c['id']])) <= set(article['citation']), (c['id'], 'Ownership sources missing from article metadata')
             assert escape(c['n']) in html,c['id']
             assert 'Published value and conditions' in html and 'Sources and dates' in html,c['id']
             assert directory+'/'+c['id']+'.html' in listing,c['id']

@@ -11,6 +11,9 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const prefix = '/3d_printing_info/';
 const catalog = async name => JSON.parse((await fs.readFile(path.join(root,name),'utf8')).match(/<script[^>]*id="payload"[^>]*>([\s\S]*?)<\/script>/)[1]);
 const printers = await catalog('comparison.html'), materials = await catalog('filaments.html');
+const printerResources = {};
+for (const file of (await fs.readdir(path.join(root,'data'))).filter(name=>/^printer-resources-.*\.json$/.test(name))) Object.assign(printerResources,JSON.parse(await fs.readFile(path.join(root,'data',file),'utf8')).models);
+assert.deepEqual(Object.keys(printerResources).sort(),printers.cats.map(printer=>printer.id).sort(),'ownership evidence covers the catalog');
 const printerPhotos = JSON.parse(await fs.readFile(path.join(root,'data/printer-images.json'),'utf8')).images;
 const examples = Object.fromEntries(Object.entries(JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'))).map(([id,entries])=>[id,Array.isArray(entries)?entries:[entries]]));
 const applications = JSON.parse(await fs.readFile(path.join(root,'data/material-applications.json'),'utf8'));
@@ -170,6 +173,28 @@ try {
         for(const key of ['t','d','k']) if(source[key]) assert.ok(row.sources.includes(source[key]),printer.id+'/'+row.id+' source '+key);
       }
     }
+    const record=printerResources[printer.id];
+    const ownership=await target.locator('.printer-context-note').evaluateAll(nodes=>nodes.map(note=>({
+      kind:note.dataset.resourceKind, section:note.dataset.resourceSection,
+      topic:note.closest('[data-printer-topic]')?.dataset.printerTopic,
+      chapter:note.closest('.printer-spec-chapter')?.id,
+      title:note.querySelector('h4')?.textContent, text:note.textContent,
+      links:[...note.querySelectorAll('a')].map(link=>link.getAttribute('href')),
+      visible:note.getBoundingClientRect().height>0
+    })));
+    const expected=Object.entries(record).filter(([kind])=>kind!=='reviewed_sources').flatMap(([kind,entries])=>entries.map(entry=>({kind,...entry})));
+    assert.equal(ownership.length,expected.length,printer.id+' retains every ownership resource');
+    for(const entry of expected) {
+      const notes=ownership.filter(note=>note.kind===entry.kind && note.title===entry.title);
+      assert.equal(notes.length,1,printer.id+' resource identity');
+      const note=notes[0];
+      assert.equal(note.section,entry.section); assert.equal(note.topic,entry.section);
+      assert.equal(note.chapter,Object.entries({machine:'ABCD',printing:'EFGHIJKLRW',workflow:'MNOPQ',ownership:'STUV'}).find(([,sections])=>sections.includes(entry.section))[0]);
+      assert.ok(note.visible && note.text.includes(entry.summary) && note.text.includes(entry.compatibility),printer.id+' visible diagnostic or modification context');
+      assert.ok(note.text.includes(entry.evidence[0].toUpperCase()+entry.evidence.slice(1)),printer.id+' evidence type');
+      for(const source of entry.sources) assert.ok(note.links.includes(source.url) && note.text.includes(source.checked),printer.id+' dated source');
+    }
+    assert.equal(await target.locator('#sources .printer-resource-review').count(),1,printer.id+' coverage notes remain with guide sources');
     const visual=target.locator('.printer-visual');
     const image=printerPhotos[printer.id];
     if(image) {
@@ -470,6 +495,7 @@ try {
     await verifyPrinterRecord(page,c);
   }
   step(`All ${printers.cats.length} printer guides render technical-article metadata without unsupported Product entities, matching canonical URLs and one Analytics tag`);
+  step(`All ${printers.cats.length} printer guides integrate dated firmware, modifications and diagnostic evidence within the matching technical topics`);
   step(`All ${printers.cats.length} printer guides retain every complete field and its own sources inside native disclosures, with exact-model photos or labeled architecture diagrams`);
   const picturedPrinter=printers.cats.find(printer=>printer.id==='bambu-p1s' && printerPhotos[printer.id]) || printers.cats.find(printer=>printerPhotos[printer.id]);
   await visit('printers/'+picturedPrinter.id+'.html');
@@ -478,6 +504,15 @@ try {
   await page.emulateMedia({colorScheme:'dark'});
   await page.screenshot({path:path.join(root,'test-results/printer-detail-dark.png')});
   await page.emulateMedia({colorScheme:'light'});
+  await visit('printers/bambu-x1c.html');
+  await page.locator('#workflow').scrollIntoViewIfNeeded();
+  const firmwareEvidence=page.locator('[data-resource-kind="firmware"] .printer-resource-evidence');
+  await firmwareEvidence.locator('summary').focus(); await page.keyboard.press('Enter');
+  assert.equal(await firmwareEvidence.locator('a').first().isVisible(),true,'firmware evidence opens from the keyboard');
+  await page.screenshot({path:path.join(root,'test-results/printer-ownership-firmware.png')});
+  await visit('printers/creality-ender-3-v3-se.html');
+  await page.locator('#printing').scrollIntoViewIfNeeded();
+  await page.screenshot({path:path.join(root,'test-results/printer-ownership-hardware.png')});
   await visit('printers/neptune4pro.html');
   const longPrinterRow=await openPrinterField(page,'E5');
   const printerSource=longPrinterRow.locator('.printer-row-sources');
@@ -617,6 +652,10 @@ try {
   assert.ok(printerLabelBox && printerValueBox && printerValueBox.y>=printerLabelBox.y+printerLabelBox.height-1,'mobile printer specification stacks its value below the field label');
   await mobilePrinterRow.evaluate(row=>row.scrollIntoView({block:'start'}));
   await page.screenshot({path:path.join(root,'test-results/mobile-printer-specifications.png')});
+  await visit('printers/bambu-a1.html');
+  await page.locator('#printing').scrollIntoViewIfNeeded();
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'ownership prose and evidence fit mobile width');
+  await page.screenshot({path:path.join(root,'test-results/mobile-printer-ownership.png')});
   await visit('printers/');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'printer library mobile width');
   await page.screenshot({path:path.join(root,'test-results/mobile-printer-library.png')});
@@ -676,6 +715,11 @@ try {
   await staticPage.keyboard.press('Enter');
   assert.equal(await staticPrinterRow.locator('.printer-row-sources li').first().isVisible(),true,'printer field sources work without JavaScript');
   await staticPage.screenshot({path:path.join(root,'test-results/nojs-printer-specifications.png')});
+  const resourceEvidence=staticPage.locator('.printer-resource-evidence').first();
+  await resourceEvidence.locator('summary').focus(); await staticPage.keyboard.press('Enter');
+  assert.equal(await resourceEvidence.locator('a').first().isVisible(),true,'ownership sources work without JavaScript');
+  await staticPage.locator('#printing').scrollIntoViewIfNeeded();
+  await staticPage.screenshot({path:path.join(root,'test-results/nojs-printer-ownership.png')});
   await staticPage.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
   assert.equal(await staticPage.locator('#static tbody tr').count(),printers.cats.length);
   step('Printer directory, exact-model links, keyboard specification/source disclosures and complete comparison fallback work without JavaScript');

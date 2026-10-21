@@ -12,6 +12,7 @@ import re
 from material_design import detail_body, directory_body
 from material_articles import generate_articles, load_articles
 from printer_design import detail_body as printer_detail_body, write_diagrams
+from printer_resources import load_resources, source_urls
 from printer_library import directory_body as printer_directory_body
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -170,15 +171,16 @@ def generate_printers(data, index):
     write_diagrams()
     analytics=re.search(r'<!-- Google tag.*?</script>\s*<script>.*?</script>',index,re.S)[0]
     paths=[]
+    resources=load_resources(expected_ids={c['id'] for c in data['cats']})
     for c in data['cats']:
         path='printers/'+c['id']+'.html'; paths.append(path)
-        desc=c['n']+': hardware specifications, firmware, dated prices and source notes. '+c.get('sum','')
+        desc=c['n']+': hardware, firmware options, modifications, troubleshooting and sourced specifications. '+c.get('sum','')
         body=printer_detail_body(data,c,refs)
         used={sid for e in c['sp'].values() for sid in e.get('s',[])}
         # These are technical reference articles with historical price snapshots,
         # not offer/review records eligible for Google's Product rich results.
         subject={'@type':'Thing','name':c['n'],'description':c.get('brand','')+' '+c['f']+' 3D printer'}
-        schema={'@context':'https://schema.org','@type':'WebPage','name':c['n']+' printer guide','url':BASE+path,'description':desc,'isPartOf':{'@type':'WebSite','url':BASE,'name':'3D Printing Info'},'mainEntity':{'@type':'TechArticle','headline':c['n']+' — hardware, firmware, prices and sources','about':subject,'description':c.get('sum',''),'url':BASE+path,'citation':[s['u'] for k,s in data['src'].items() if s.get('u') and k in used]}}
+        schema={'@context':'https://schema.org','@type':'WebPage','name':c['n']+' printer guide','url':BASE+path,'description':desc,'isPartOf':{'@type':'WebSite','url':BASE,'name':'3D Printing Info'},'mainEntity':{'@type':'TechArticle','headline':c['n']+' — hardware, firmware, modifications and troubleshooting','about':subject,'description':c.get('sum',''),'url':BASE+path,'citation':list(dict.fromkeys([s['u'] for k,s in data['src'].items() if s.get('u') and k in used]+source_urls(resources[c['id']])))}}
         (ROOT/path).write_text(guide_page(c['n']+' printer guide',desc,path,body,analytics,'',schema))
     body=printer_directory_body(data)
     schema={'@context':'https://schema.org','@type':'CollectionPage','name':'3D printer guides','url':BASE+'printers/','mainEntity':{'@type':'ItemList','numberOfItems':len(data['cats']),'itemListElement':[{'@type':'ListItem','position':i,'name':c['n'],'url':BASE+'printers/'+c['id']+'.html'} for i,c in enumerate(data['cats'],1)]}}

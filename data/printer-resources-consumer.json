@@ -1,0 +1,3482 @@
+{
+  "version": 1,
+  "checked": "2026-10-20",
+  "models": {
+    "anycubic-kobra-2": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Removable Kobra 2 hotend cover",
+          "summary": "The creator’s replacement cover makes hotend and fan access easier while retaining the stock fan/duct option. It uses the case hardware plus three M3×10 screws; the listing also links a separate custom duct.",
+          "compatibility": "Creator explicitly lists the Kobra 2 series. Check cover and duct versions together; Neo users additionally need the separate endstop adapter.",
+          "evidence": "creator listing",
+          "section": "H",
+          "sources": [
+            {
+              "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+              "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Uneven first layer: check bed-wheel contact",
+          "summary": "For an uneven first layer, Anycubic directs owners to run leveling and check that the Y-axis bed wheels contact their rails. Its FAQ also describes eccentric-nut and printhead-fastener checks when the bed or head wobbles.",
+          "compatibility": "Original Kobra 2 wheel and printhead assemblies; this is the Kobra 2 FAQ, not a Pro/Plus/Max calibration procedure.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Anycubic Kobra 2: first-layer and wobble FAQ",
+              "url": "https://wiki.anycubic.com/en/fdm-3d-printer/kobra-2/faq",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+          "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic Kobra 2: first-layer and wobble FAQ",
+          "url": "https://wiki.anycubic.com/en/fdm-3d-printer/kobra-2/faq",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-2-max": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Removable Kobra 2 hotend cover",
+          "summary": "The creator’s replacement cover makes hotend and fan access easier while retaining the stock fan/duct option. It uses the case hardware plus three M3×10 screws; the listing also links a separate custom duct.",
+          "compatibility": "Creator explicitly lists the Kobra 2 series. Check cover and duct versions together; Neo users additionally need the separate endstop adapter.",
+          "evidence": "creator listing",
+          "section": "H",
+          "sources": [
+            {
+              "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+              "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Layer shift: inspect belts and pulleys",
+          "summary": "For a shifted model, the Kobra 2 Max FAQ calls for checking loose X/Y belts or pulleys and reducing excessive movement or print speed. Check those mechanical causes before changing dimensional compensation in the slicer.",
+          "compatibility": "Kobra 2 Max stock belt-driven X/Y motion system; the FAQ documents troubleshooting, not the frequency of layer shifts.",
+          "evidence": "official troubleshooting",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Anycubic Kobra 2 Max: layer-shift FAQ",
+              "url": "https://wiki.anycubic.com/de/fdm-3d-printer/kobra-2-max/faq",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+          "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic Kobra 2 Max: layer-shift FAQ",
+          "url": "https://wiki.anycubic.com/de/fdm-3d-printer/kobra-2-max/faq",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-2-neo": {
+      "firmware": [
+        {
+          "title": "Klipper on the original mainboard",
+          "summary": "A model-specific configuration and build route allow the stock mainboard to run Klipper with an external Linux host. The conversion gives access to pressure advance and input shaping, but the original control display no longer operates. Perform the configuration and probe-offset checks before printing.",
+          "compatibility": "Kobra 2 Neo stock GD32F303 mainboard; requires a separate host and the Neo configuration, not the Kobra 2 Pro files.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Kobra2Neo Insights: Klipper conversion",
+              "url": "https://1coderookie.github.io/Kobra2NeoInsights/firmware/fw_klipper/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Endstop adapter for the quick-change cover",
+          "summary": "Removing the original cover for the linked quick-change conversion also removes its X-endstop contact feature. This printed adapter restores that contact and reuses the original M3 screw. It is a companion part for that conversion, not a fix for every homing fault.",
+          "compatibility": "Kobra 2 Neo with the DrewDeeDoo quick-change cover. Use the creator’s revised file and verify endstop actuation before homing.",
+          "evidence": "creator listing",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Techonrye: Kobra 2 Neo endstop adapter",
+              "url": "https://www.printables.com/model/783208-anycubic-kobra-2-neo-end-stop-fix",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+              "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Offset-measurement switch inspection",
+          "summary": "If automatic offset measurement behaves abnormally, Anycubic’s guide checks the measurement switch for dust and poor contact before recalibration. Follow its cleaning and switch-inspection sequence instead of compensating for a faulty trigger with a large Z offset.",
+          "compatibility": "Kobra 2 Neo calibration module; this procedure does not apply to the strain-gauge Kobra 3/X systems.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Anycubic: Kobra 2 Neo offset-measurement switch",
+              "url": "https://wiki.anycubic.com/fr/fdm-3d-printer/kobra-2-neo/maintain-the-offset-measurement-switch",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Kobra2Neo Insights: Klipper conversion",
+          "url": "https://1coderookie.github.io/Kobra2NeoInsights/firmware/fw_klipper/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Techonrye: Kobra 2 Neo endstop adapter",
+          "url": "https://www.printables.com/model/783208-anycubic-kobra-2-neo-end-stop-fix",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+          "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic: Kobra 2 Neo offset-measurement switch",
+          "url": "https://wiki.anycubic.com/fr/fdm-3d-printer/kobra-2-neo/maintain-the-offset-measurement-switch",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-2-plus": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Removable Kobra 2 hotend cover",
+          "summary": "The creator’s replacement cover makes hotend and fan access easier while retaining the stock fan/duct option. It uses the case hardware plus three M3×10 screws; the listing also links a separate custom duct.",
+          "compatibility": "Creator explicitly lists the Kobra 2 series. Check cover and duct versions together; Neo users additionally need the separate endstop adapter.",
+          "evidence": "creator listing",
+          "section": "H",
+          "sources": [
+            {
+              "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+              "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Module abnormal: verify rebound and nozzle position",
+          "summary": "The module-error procedure first checks whether the calibration button returns freely. Run Position Calibration and confirm that the nozzle is centered over the module; save the correction and repeat leveling. Wiring checks follow if positioning is correct.",
+          "compatibility": "Kobra 2 Plus offset-measurement module and its Position Calibration menu. Power down before following the source’s connector-inspection steps.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Anycubic Kobra 2 Plus: calibration-module abnormality",
+              "url": "https://wiki.anycubic.com/en/fdm-3d-printer/kobra-2-plus/kobra-2-plus-prompt-the-module-abnormal",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+          "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic Kobra 2 Plus: calibration-module abnormality",
+          "url": "https://wiki.anycubic.com/en/fdm-3d-printer/kobra-2-plus/kobra-2-plus-prompt-the-module-abnormal",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-2-pro": {
+      "firmware": [
+        {
+          "title": "Rinkhals access to the stock Klipper environment",
+          "summary": "For owners who need configuration access and local frontends, Rinkhals adds SSH, Moonraker and Mainsail/Fluidd while retaining the Kobra 2 Pro stock interface and calibration workflow. Follow the model-specific package and recovery instructions.",
+          "compatibility": "Only Kobra 2 Pro with Trigorilla Spe B v1.0.x mainboard; the tested matrix lists stock 3.1.2.3 and 3.1.4.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Rinkhals maintainer compatibility matrix and installation",
+              "url": "https://github.com/rinkhals-community/Rinkhals/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Removable Kobra 2 hotend cover",
+          "summary": "The creator’s replacement cover makes hotend and fan access easier while retaining the stock fan/duct option. It uses the case hardware plus three M3×10 screws; the listing also links a separate custom duct.",
+          "compatibility": "Creator explicitly lists the Kobra 2 series. Check cover and duct versions together; Neo users additionally need the separate endstop adapter.",
+          "evidence": "creator listing",
+          "section": "H",
+          "sources": [
+            {
+              "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+              "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Poor first layer: separate offset from bed movement",
+          "summary": "The Kobra2Pro Insights guide checks Z offset, plate cleanliness and gantry alignment for an inconsistent first layer. It also directs owners to check vertical bed play and SG15 bearing contact, avoiding excessive bearing preload.",
+          "compatibility": "Kobra 2 Pro stock SG15 bed-bearing arrangement; community maintainer guidance, not an Anycubic failure-rate statement.",
+          "evidence": "maintainer documentation",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Kobra2Pro Insights: first-layer troubleshooting",
+              "url": "https://1coderookie.github.io/Kobra2ProInsights/troubleshooting/#first-layer-problems-print-comes-off",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Rinkhals maintainer compatibility matrix and installation",
+          "url": "https://github.com/rinkhals-community/Rinkhals/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "DrewDeeDoo: Kobra 2 series quick-change hotend cover",
+          "url": "https://www.printables.com/model/699890-anycubic-kobra-2-pro-kobra-2-plus-kobra-2-max-kobr",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Kobra2Pro Insights: first-layer troubleshooting",
+          "url": "https://1coderookie.github.io/Kobra2ProInsights/troubleshooting/#first-layer-problems-print-comes-off",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-3-combo": {
+      "firmware": [
+        {
+          "title": "Rinkhals access to the stock Klipper environment",
+          "summary": "For owners who need configuration access and local frontends, Rinkhals adds SSH, Moonraker and Mainsail/Fluidd while retaining the Kobra 3 Combo stock interface and calibration workflow. Follow the model-specific package and recovery instructions.",
+          "compatibility": "Use the Kobra 3 package and a stock version in the tested matrix; this is a layer on Kobra OS, not a generic Klipper image.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Rinkhals maintainer compatibility matrix and installation",
+              "url": "https://github.com/rinkhals-community/Rinkhals/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Top-beam single-spool holder",
+          "summary": "This holder relocates an external spool from behind the printer to its top beam when rear clearance is limited. The creator revised the mount after an earlier version could contact the extruder motor at the top of travel.",
+          "compatibility": "Kobra 3; choose version 2 and check full Z travel. This is an external single-spool holder, not an ACE Pro mount.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Listudio: Kobra 3 top spool mount",
+              "url": "https://www.printables.com/model/1105277-spool-holder-top-mount-for-anycubic-kobra-3",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Five-port hub for external-spool/ACE switching",
+          "summary": "This replacement hub keeps the four ACE Pro tubes and external-spool tube connected, reducing tube changes when switching feed sources. Choose the standard V2 or PC4-M6 fitting version; the creator supplies inverted files for the Kobra 3 Max.",
+          "compatibility": "Kobra 3, Kobra 3 Max and Kobra S1 Combo are explicitly named; Max needs the inverted geometry. This is not an automatic fifth-color upgrade.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Nordice: five-port hub for Kobra 3/3 Max/S1",
+              "url": "https://www.printables.com/model/1010610-anycubic-kobra-3-k3-max-s1-combo-5-port-filament-i",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Error 11511: inspect the complete feed path",
+          "summary": "For extrusion-abnormality code 11511, the official procedure checks the ACE filament supply, PTFE path, hub and extruder rather than assuming a nozzle clog. Use the checks in order to locate where filament stops moving.",
+          "compatibility": "Kobra 3/Combo with ACE Pro; code-specific troubleshooting, not evidence of a failure rate.",
+          "evidence": "official troubleshooting",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Anycubic: Kobra 3 code 11511",
+              "url": "https://wiki.anycubic.com/en/error-codes/11511-code/kobra-3",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Rinkhals maintainer compatibility matrix and installation",
+          "url": "https://github.com/rinkhals-community/Rinkhals/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Listudio: Kobra 3 top spool mount",
+          "url": "https://www.printables.com/model/1105277-spool-holder-top-mount-for-anycubic-kobra-3",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic: Kobra 3 code 11511",
+          "url": "https://wiki.anycubic.com/en/error-codes/11511-code/kobra-3",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Nordice: five-port hub for Kobra 3/3 Max/S1",
+          "url": "https://www.printables.com/model/1010610-anycubic-kobra-3-k3-max-s1-combo-5-port-filament-i",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-3-max": {
+      "firmware": [
+        {
+          "title": "Rinkhals access to the stock Klipper environment",
+          "summary": "For owners who need configuration access and local frontends, Rinkhals adds SSH, Moonraker and Mainsail/Fluidd while retaining the Kobra 3 Max stock interface and calibration workflow. Follow the model-specific package and recovery instructions.",
+          "compatibility": "Kobra 3 Max and its Combo configuration; use its own package and a tested stock version.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Rinkhals maintainer compatibility matrix and installation",
+              "url": "https://github.com/rinkhals-community/Rinkhals/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Five-port hub for external-spool/ACE switching",
+          "summary": "This replacement hub keeps the four ACE Pro tubes and external-spool tube connected, reducing tube changes when switching feed sources. Choose the standard V2 or PC4-M6 fitting version; the creator supplies inverted files for the Kobra 3 Max.",
+          "compatibility": "Kobra 3, Kobra 3 Max and Kobra S1 Combo are explicitly named; Max needs the inverted geometry. This is not an automatic fifth-color upgrade.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Nordice: five-port hub for Kobra 3/3 Max/S1",
+              "url": "https://www.printables.com/model/1010610-anycubic-kobra-3-k3-max-s1-combo-5-port-filament-i",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Error 11519: tangle and buffer checks",
+          "summary": "For the tangle warning, check spool rotation and the ACE Pro feed/buffer path using the official code-specific procedure. A feed warning can arise before material reaches the hotend, so locate the resistance before dismantling it.",
+          "compatibility": "Kobra 3 Max with ACE Pro; the source does not describe the external single-spool configuration.",
+          "evidence": "official troubleshooting",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Anycubic: Kobra 3 Max code 11519",
+              "url": "https://wiki.anycubic.com/en/error-codes/11519-code/k3-max",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Rinkhals maintainer compatibility matrix and installation",
+          "url": "https://github.com/rinkhals-community/Rinkhals/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic: Kobra 3 Max code 11519",
+          "url": "https://wiki.anycubic.com/en/error-codes/11519-code/k3-max",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Nordice: five-port hub for Kobra 3/3 Max/S1",
+          "url": "https://www.printables.com/model/1010610-anycubic-kobra-3-k3-max-s1-combo-5-port-filament-i",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-4": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Error 11833 with the external spool holder",
+          "summary": "When this warning occurs with the external holder, inspect tangled filament, free spool rotation, the path to the inlet and the filament tip. The official guide starts with these checks before escalating an unresolved warning.",
+          "compatibility": "Kobra 4 using only its filament holder; do not transfer these steps unchanged to an ACE-fed configuration.",
+          "evidence": "official troubleshooting",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Anycubic: Kobra 4 external-holder tangle warning",
+              "url": "https://wiki.anycubic.com/en/error-codes/11833-code/k4",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Anycubic: Kobra 4 external-holder tangle warning",
+          "url": "https://wiki.anycubic.com/en/error-codes/11833-code/k4",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-x": {
+      "firmware": [
+        {
+          "title": "Rinkhals compatibility boundary",
+          "summary": "Rinkhals explicitly excludes Kobra X: its K4 software base and signed update packages differ from the supported Kobra OS machines. Do not install a Kobra 3 or S1 package on this model.",
+          "compatibility": "Kobra X only; this is an explicit project compatibility warning, not a replacement firmware recommendation.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Rinkhals maintainer compatibility matrix and installation",
+              "url": "https://github.com/rinkhals-community/Rinkhals/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Wider external spool-holder extension",
+          "summary": "The creator’s clip-on extension accommodates the 77 mm-wide spools used in their Kobra X setup. An included parametric OpenSCAD file allows the width to be adjusted instead of forcing a wide spool into the original holder.",
+          "compatibility": "Kobra X original external holder; the supplied STL was used with 77 mm spools. Verify retention and spool rotation for other widths.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "dieck: Kobra X wider spool holder",
+              "url": "https://www.printables.com/model/1806822-anycubic-kobra-x-wider-spool-holder",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "TPU cable guide",
+          "summary": "This open-back guide clamps around the cable base and coils around the cable to manage its path. The creator specifies TPU 95A and a flat, support-free print orientation.",
+          "compatibility": "Kobra X; use the V2 design and check the cable path over the full motion range after fitting.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "crimakesthings: Kobra X cable guide V2",
+              "url": "https://www.printables.com/model/1812875-v2-cable-guide-for-anycubic-kobra-x",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Locate the clog before disassembly",
+          "summary": "The official guide distinguishes nozzle blockage, a blocked heatsink/four-hole passage and an internal printhead-path blockage. Start by identifying the location, then follow the matching disassembly route and verification steps.",
+          "compatibility": "Kobra X multi-channel printhead. Other Kobra toolheads have different internal paths and removal procedures.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Anycubic: Kobra X printhead clogging",
+              "url": "https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/kobra-x-abnormal-printhead-clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Rinkhals maintainer compatibility matrix and installation",
+          "url": "https://github.com/rinkhals-community/Rinkhals/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "dieck: Kobra X wider spool holder",
+          "url": "https://www.printables.com/model/1806822-anycubic-kobra-x-wider-spool-holder",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "crimakesthings: Kobra X cable guide V2",
+          "url": "https://www.printables.com/model/1812875-v2-cable-guide-for-anycubic-kobra-x",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic: Kobra X printhead clogging",
+          "url": "https://wiki.anycubic.com/en/fdm-3d-printer/anycubic-kobra-x/kobra-x-abnormal-printhead-clogging",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-vyper": {
+      "firmware": [
+        {
+          "title": "Vyper Community Edition 6.2 motherboard and screen projects",
+          "summary": "The Community Edition adapts Marlin and the DWIN screen interface for the Vyper. Follow both projects together; an arbitrary CR-6 image is not a Vyper release. The screen project cautions against editing its T5LCFG configuration file.",
+          "compatibility": "Anycubic Vyper; match motherboard and LCD firmware. Read the current release/build instructions rather than using the superseded 6.1 branch.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Vyper Community Edition motherboard 6.2",
+              "url": "https://github.com/rommulaner/Anycubic_Vyper_MB_CE_6.2",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Vyper Community Edition LCD 6.2",
+              "url": "https://github.com/rommulaner/Anycubic_Vyper_LCD_CE_6.2",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Failed leveling: test the cold strain gauge",
+          "summary": "With the nozzle unheated, Anycubic’s procedure checks whether gentle nozzle pressure lights the red indicator inside the toolhead. If it does not, inspect the strain-gauge cable for looseness or damage; a persistent failure goes to support for module diagnosis.",
+          "compatibility": "Anycubic Vyper strain-gauge leveling toolhead; perform the indicator check without heating and follow the illustrated shell-access procedure.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Anycubic Vyper: printer cannot level",
+              "url": "https://wiki.anycubic.com/en/fdm-3d-printer/vyper/vyper-printer-cannot-be-level",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Vyper Community Edition motherboard 6.2",
+          "url": "https://github.com/rommulaner/Anycubic_Vyper_MB_CE_6.2",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Vyper Community Edition LCD 6.2",
+          "url": "https://github.com/rommulaner/Anycubic_Vyper_LCD_CE_6.2",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic Vyper: printer cannot level",
+          "url": "https://wiki.anycubic.com/en/fdm-3d-printer/vyper/vyper-printer-cannot-be-level",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-ender-3-v3": {
+      "firmware": [
+        {
+          "title": "SimpleAF for editable Klipper configuration",
+          "summary": "SimpleAF supplies editable Kalico configuration for probe changes. Follow its model-specific installation, probe setup and recalibration steps when replacing the stock software environment.",
+          "compatibility": "Ender-3 V3 is explicitly listed by the project. Match the selected probe and hardware revision.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "SimpleAF supported printers and probe choices",
+              "url": "https://pellcorp.github.io/creality-wiki/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Z-axis Nebula camera bracket",
+          "summary": "This bracket moves the Nebula camera with Z so taller prints remain in view. It attaches at the filament-sensor location and requires the creator’s specified longer or shorter M3 fasteners depending on whether the sensor is retained.",
+          "compatibility": "Ender-3 V3 CoreXZ only. The creator explicitly excludes V3 Plus because its frame dimensions differ.",
+          "evidence": "creator listing",
+          "section": "O",
+          "sources": [
+            {
+              "title": "EBD Design Studio: Ender-3 V3 Z-axis camera mount",
+              "url": "https://www.printables.com/model/856745-ender-3-v3-z-axis-nebula-camera-mount",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3106 kit replaces the Ender-3 V3 / V3 Plus hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "CoreXZ Ender-3 V3 and V3 Plus, explicitly named by the manufacturer; not the V3 SE or KE hotend.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Ender-3 V3 / V3 Plus",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-ender-3-v3",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "First-layer adhesion or infill scraping: verify the setup",
+          "summary": "Creality checks plate contamination, filament/profile mismatch and the print-calibration setting before changing Z offset. For infill scraping, its procedure compares the infill pattern with a supplied pre-sliced file to help separate slicing settings from a machine problem.",
+          "compatibility": "Ender-3 V3 stock leveling workflow; use this exact-model page and treat a live Z-offset change as applying to the current print.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Creality Ender-3 V3: first-layer adhesion and infill scraping",
+              "url": "https://wiki.creality.com/en/ender-series/ender-3-v3/troubleshooting/first-layer-adhesion-issues-model-not-sticking-to-build-plate-nozzle-scraping-infill",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "SimpleAF supported printers and probe choices",
+          "url": "https://pellcorp.github.io/creality-wiki/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Ender-3 V3 / V3 Plus",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-ender-3-v3",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "EBD Design Studio: Ender-3 V3 Z-axis camera mount",
+          "url": "https://www.printables.com/model/856745-ender-3-v3-z-axis-nebula-camera-mount",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality Ender-3 V3: first-layer adhesion and infill scraping",
+          "url": "https://wiki.creality.com/en/ender-series/ender-3-v3/troubleshooting/first-layer-adhesion-issues-model-not-sticking-to-build-plate-nozzle-scraping-infill",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-ender-3-v3-ke": {
+      "firmware": [
+        {
+          "title": "SimpleAF for editable Klipper configuration",
+          "summary": "SimpleAF supplies editable Kalico configuration for probe changes. Follow its model-specific installation, probe setup and recalibration steps when replacing the stock software environment.",
+          "compatibility": "Ender-3 V3 KE is explicitly listed by the project. Match the selected probe and hardware revision.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "SimpleAF supported printers and probe choices",
+              "url": "https://pellcorp.github.io/creality-wiki/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "FatBurner dual-5015 cooling conversion",
+          "summary": "The creator’s slimmer mount carries two 5015 blowers with separate ducts, cable routing and optional covers. Before printing, inspect the extruder motor: this mount requires side screw holes, and the listing directs motors without them to a different remix.",
+          "compatibility": "Ender-3 V3 KE with the specified motor mounting holes and matching fans/fasteners. Not the SE or CoreXZ V3 toolhead.",
+          "evidence": "creator listing",
+          "section": "L",
+          "sources": [
+            {
+              "title": "fatmax: Ender-3 V3 KE FatBurner",
+              "url": "https://www.printables.com/model/887597-fatburner-ender-3-v3-ke-dual-5015-fan-cooling-syst",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3103 kit replaces the Ender-3 V3 KE hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "Ender-3 V3 KE-specific M3103 heater/thermistor assembly; SE and CoreXZ V3 kits are different.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Ender-3 V3 KE",
+              "url": "https://store.micro-swiss.com/products/micro-swiss-flowtech-hotend-for-creality-ender-3-v3-ke",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "No extrusion: distinguish a nozzle clog from an extruder jam",
+          "summary": "Creality separates nozzle/throat blockage, filament trapped inside the extruder and an extruder motor that does not turn. Difficulty both extruding and withdrawing filament directs inspection toward the extruder; the page links separate cleaning and motor-diagnostic procedures.",
+          "compatibility": "Ender-3 V3 KE toolhead and motor wiring; use the KE service videos rather than SE or CoreXZ V3 disassembly instructions.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Creality Ender-3 V3 KE: clogged nozzle diagnosis",
+              "url": "https://wiki.creality.com/en/ender-series/ender-3-v3-ke/troubleshooting/nozzle-clog-or-no-extrusion",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "SimpleAF supported printers and probe choices",
+          "url": "https://pellcorp.github.io/creality-wiki/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Ender-3 V3 KE",
+          "url": "https://store.micro-swiss.com/products/micro-swiss-flowtech-hotend-for-creality-ender-3-v3-ke",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "fatmax: Ender-3 V3 KE FatBurner",
+          "url": "https://www.printables.com/model/887597-fatburner-ender-3-v3-ke-dual-5015-fan-cooling-syst",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality Ender-3 V3 KE: clogged nozzle diagnosis",
+          "url": "https://wiki.creality.com/en/ender-series/ender-3-v3-ke/troubleshooting/nozzle-clog-or-no-extrusion",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-ender-3-v3-plus": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3106 kit replaces the Ender-3 V3 / V3 Plus hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "CoreXZ Ender-3 V3 and V3 Plus, explicitly named by the manufacturer; not the V3 SE or KE hotend.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Ender-3 V3 / V3 Plus",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-ender-3-v3",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "First-layer adhesion or infill scraping: verify the setup",
+          "summary": "Creality checks plate contamination, filament/profile mismatch and the print-calibration setting before changing Z offset. For infill scraping, its procedure compares the infill pattern with a supplied pre-sliced file to help separate slicing settings from a machine problem.",
+          "compatibility": "Ender-3 V3 Plus stock leveling workflow; use this exact-model page and treat a live Z-offset change as applying to the current print.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Creality Ender-3 V3 Plus: first-layer adhesion and infill scraping",
+              "url": "https://wiki.creality.com/en/ender-series/ender-3-v3-plus/troubleshooting/first-layer-adhesion-issues-model-not-sticking-to-build-plate-nozzle-scraping-infill",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Creality: Ender-3 V3 Plus support",
+          "url": "https://wiki.creality.com/en/ender-series/ender-3-v3-plus",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Ender-3 V3 / V3 Plus",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-ender-3-v3",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality Ender-3 V3 Plus: first-layer adhesion and infill scraping",
+          "url": "https://wiki.creality.com/en/ender-series/ender-3-v3-plus/troubleshooting/first-layer-adhesion-issues-model-not-sticking-to-build-plate-nozzle-scraping-infill",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-ender-3-v3-se": {
+      "firmware": [
+        {
+          "title": "SimpleAF for editable Klipper configuration",
+          "summary": "SimpleAF supplies editable Kalico configuration for probe changes. Follow its model-specific installation, probe setup and recalibration steps when replacing the stock software environment.",
+          "compatibility": "Ender-3 V3 SE is explicitly listed by the project. Requires the Nebula Pad conversion; not a standalone stock-Marlin firmware. Match the selected probe and hardware revision.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "SimpleAF supported printers and probe choices",
+              "url": "https://pellcorp.github.io/creality-wiki/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Corrected 5015 duct with more hotend clearance",
+          "summary": "This remix increases clearance between the heater block and the duct outlets, with chamfered tips so the duct can sit lower without hitting the plate-centering screws. The creator reports about 20 hours of initial testing; long-term durability is not established.",
+          "compatibility": "Ender-3 V3 SE and the linked 5015 conversion. Follow the original project’s fan/fastener instructions and verify calibration clearance.",
+          "evidence": "creator listing",
+          "section": "L",
+          "sources": [
+            {
+              "title": "Przemekgda86: corrected Ender-3 V3 SE 5015 duct",
+              "url": "https://www.printables.com/model/1377663-ender-3-v3-se-5015-fan-upgrade-corrected",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "FlowTech conversion with probe spacer and replacement duct",
+          "summary": "The SE kit changes to FlowTech nozzles and includes a CR Touch spacer and part-cooling duct for the longer assembly. Install those geometry changes together, then verify probe/nozzle clearance and leveling before printing.",
+          "compatibility": "Ender-3 V3 SE M3105 kit. Its spacer/duct are required for the documented conversion; the KE and CoreXZ V3 use different kits.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: Ender-3 V3 SE FlowTech kit",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-ender-3-v3-se",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Uneven first layer: distinguish offset error from geometry",
+          "summary": "Creality distinguishes an overall Z-offset error from a first layer that fails only in one region. Fine-tune the offset for the former; for local faults or large leveling deviations, inspect X-axis alignment, bed and slider deformation, and remove nozzle/platform residue first.",
+          "compatibility": "Ender-3 V3 SE auto-height detection and bed assembly; the source also identifies leveling fixes from firmware 1.0.4 onward.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Creality Ender-3 V3 SE: first-layer and leveling-data diagnosis",
+              "url": "https://wiki.creality.com/en/ender-series/ender-3-v3-se/troubleshooting/first-layer-not-adhering-or-compression-layer-or-leveling-data-error",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "SimpleAF supported printers and probe choices",
+          "url": "https://pellcorp.github.io/creality-wiki/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: Ender-3 V3 SE FlowTech kit",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-ender-3-v3-se",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Przemekgda86: corrected Ender-3 V3 SE 5015 duct",
+          "url": "https://www.printables.com/model/1377663-ender-3-v3-se-5015-fan-upgrade-corrected",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality Ender-3 V3 SE: first-layer and leveling-data diagnosis",
+          "url": "https://wiki.creality.com/en/ender-series/ender-3-v3-se/troubleshooting/first-layer-not-adhering-or-compression-layer-or-leveling-data-error",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-ender-3-v4": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Multi-color feeding: inspect the PTFE tube for wear",
+          "summary": "The V1.1 manual links worn PTFE tubing to feeding difficulty and recommends a weekly tube inspection during multi-color use. Section 7.4 illustrates tube replacement; use the V4 routing and connector sequence when wear is found.",
+          "compatibility": "Ender-3 V4 with CFS. Manufacturer manual V1.1, section 7.4, printed page 24; text checked in a mirrored copy alongside the official manual posting.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: Ender-3 V4 manual, official posting, section 7.4",
+              "url": "https://forum.creality.com/t/ender-3-v4-user-manual/47281",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Creality Ender-3 V4 V1.1 manual, mirrored text, page 28 (printed p.24)",
+              "url": "https://www.manualslib.com/manual/4509898/Creality-Ender-3-V4.html",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Creality: Ender-3 V4 user guide",
+          "url": "https://wiki.creality.com/en/ender-series/ender-3-v4",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: Ender-3 V4 manual, official posting, section 7.4",
+          "url": "https://forum.creality.com/t/ender-3-v4-user-manual/47281",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality Ender-3 V4 V1.1 manual, mirrored text, page 28 (printed p.24)",
+          "url": "https://www.manualslib.com/manual/4509898/Creality-Ender-3-V4.html",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-hi": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Printer-tool organizer",
+          "summary": "The two-piece holder keeps the tools supplied with the Hi together and adds a brush hole and scraper hook. Join the pieces with an M3×6 screw and nut or the creator’s alternative glued joint.",
+          "compatibility": "Creality Hi tool set; the listing establishes storage fit, not a structural or motion-system modification.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "43D PRINT: Creality Hi tool holder",
+              "url": "https://www.printables.com/model/1491114-creality-hi-tool-holder",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "FR2836: locate resistance between CFS hub and extruder",
+          "summary": "For this feeding code, inspect spool tangles, deformed spools and the PTFE path between the hub outlet and extruder detector. The official procedure then tests the hub motor and filament detector if the path is clear.",
+          "compatibility": "K2, K2 Pro, K2 Plus and Creality Hi with CFS; these exact models are listed. This is a code-specific procedure, not a frequency claim.",
+          "evidence": "official troubleshooting",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: FR2836 CFS feed-path troubleshooting",
+              "url": "https://wiki.creality.com/en/printers-general-documents/FR2836",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Creality: FR2836 CFS feed-path troubleshooting",
+          "url": "https://wiki.creality.com/en/printers-general-documents/FR2836",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "43D PRINT: Creality Hi tool holder",
+          "url": "https://www.printables.com/model/1491114-creality-hi-tool-holder",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-neptune-3-pro": {
+      "firmware": [
+        {
+          "title": "Manufacturer source and matched display/controller updates",
+          "summary": "ELEGOO publishes firmware and mechanical/electrical files for the Pro. The update instructions pair screen and mainboard versions and require selecting the mainboard file for the exact machine; a shared source tree does not make Pro/Plus/Max binaries interchangeable.",
+          "compatibility": "Neptune 3 Pro-specific firmware; use the stated compatible display/mainboard pair. This is manufacturer source and stock update documentation.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "ELEGOO: Neptune 3 Pro open files",
+              "url": "https://github.com/elegooofficial/neptune3pro",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "ELEGOO support: Neptune 3 Pro/Plus/Max version compatibility",
+              "url": "https://github.com/NARUTOfzr/Neptune_3_Pro_Plus_Max/blob/main/README-en.md",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Stopped extrusion: check the feedstock, fan and PTFE path",
+          "summary": "ELEGOO’s nozzle-clogging procedure starts with filament size and slicer configuration, then checks the heatbreak fan, gearbox and PTFE installation. These checks help separate a nozzle obstruction from heat creep or an upstream feeding fault.",
+          "compatibility": "Neptune 3 Pro/Plus/Max are named by the source; the Pro uses its own replacement parts and configuration.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "ELEGOO: Neptune 3 Pro/Plus/Max nozzle unclogging",
+              "url": "https://wiki.elegoo.com/en/neptune/neptune-3-pro-plus-max-how-to-unclog-3d-printer-nozzle",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: Neptune 3 Pro/Plus/Max nozzle unclogging",
+          "url": "https://wiki.elegoo.com/en/neptune/neptune-3-pro-plus-max-how-to-unclog-3d-printer-nozzle",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: Neptune 3 Pro open files",
+          "url": "https://github.com/elegooofficial/neptune3pro",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO support: Neptune 3 Pro/Plus/Max version compatibility",
+          "url": "https://github.com/NARUTOfzr/Neptune_3_Pro_Plus_Max/blob/main/README-en.md",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-neptune-4": {
+      "firmware": [
+        {
+          "title": "OpenNept4une replacement software stack",
+          "summary": "OpenNept4une replaces the factory software with an updatable Armbian and Klipper stack and supplies printer configurations and calibration tools. Back up the original eMMC image and configuration before following the installation guide.",
+          "compatibility": "Original Neptune 4; choose its exact board/model image. New Plus+ and Max+ revisions require separate confirmation; stock update packages are not interchangeable.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "OpenNept4une maintainer installation and supported models",
+              "url": "https://github.com/OpenNeptune3D/OpenNept4une",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Cable clamp with lead-screw clearance",
+          "summary": "This remixed clamp removes a corner close to the Z lead screw, giving the printhead cable support more clearance. The creator supplies the replacement geometry and its supported print orientation.",
+          "compatibility": "Original Neptune 4/4 Pro cable arrangement. Check clearance and cable slack across the full Z range; not established for the Type-C redesign.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "KKNOPP: Neptune 4/Pro clearance cable clamp",
+              "url": "https://www.printables.com/model/670427-neptune-4pro-cable-clamp-clearance-version",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3107 kit replaces the Neptune 4 / 4 Pro hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "Original Neptune 4/4 Pro; M3107 includes its heater, thermistor and heatsink. Plus/Max use M3108.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Neptune 4 / 4 Pro",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-neptune-4-pro",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Hotend blob: check temperature before removal",
+          "summary": "ELEGOO’s Neptune 4/4 Pro guide checks whether the displayed hotend temperature is plausible before attempting heated blob removal. A below-zero reading takes a separate thermistor-repair path. After repair, re-level and reset Z offset; inspect first-layer adhesion and unsupported geometry to prevent another detached print.",
+          "compatibility": "Neptune 4 and Neptune 4 Pro hotend assemblies; this is not the Plus/Max toolhead-removal procedure. Follow the source’s power-off steps during removal.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "ELEGOO Neptune 4/4 Pro: hotend blobs and filament leakage",
+              "url": "https://wiki.elegoo.com/neptune/Neptune-4-4-pro-blob-of-death-and-filament-leakage",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "OpenNept4une maintainer installation and supported models",
+          "url": "https://github.com/OpenNeptune3D/OpenNept4une",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "KKNOPP: Neptune 4/Pro clearance cable clamp",
+          "url": "https://www.printables.com/model/670427-neptune-4pro-cable-clamp-clearance-version",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Neptune 4 / 4 Pro",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-neptune-4-pro",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO Neptune 4/4 Pro: hotend blobs and filament leakage",
+          "url": "https://wiki.elegoo.com/neptune/Neptune-4-4-pro-blob-of-death-and-filament-leakage",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-neptune-4-max": {
+      "firmware": [
+        {
+          "title": "OpenNept4une replacement software stack",
+          "summary": "OpenNept4une replaces the factory software with an updatable Armbian and Klipper stack and supplies printer configurations and calibration tools. Back up the original eMMC image and configuration before following the installation guide.",
+          "compatibility": "Original Neptune 4 Max; choose its exact board/model image. New Plus+ and Max+ revisions require separate confirmation; stock update packages are not interchangeable.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "OpenNept4une maintainer installation and supported models",
+              "url": "https://github.com/OpenNeptune3D/OpenNept4une",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3108 kit replaces the Neptune 4 Plus / 4 Max hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "Original Neptune 4 Plus/Max; select M3108 rather than the shorter Neptune 4/Pro kit. New Plus+/Max+ revisions are not established here.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Neptune 4 Plus / 4 Max",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-neptune-4-plus-4-max-1",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Unstable first-layer offset: inspect mechanics before compensation",
+          "summary": "For an offset that remains too high or low after leveling, ELEGOO checks axis play, wheel preload, brass-nut screws, gantry parallelism and proximity-switch position. It also includes bed preheating because thermal drift can change the result.",
+          "compatibility": "Original Neptune 4 Max; follow its bed and probe geometry. This is not proof that a firmware replacement is needed.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "ELEGOO: Neptune 4 Max abnormal Z offset",
+              "url": "https://wiki.elegoo.com/neptune/neptune-4-max/abnormal-z-offset",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "OpenNept4une maintainer installation and supported models",
+          "url": "https://github.com/OpenNeptune3D/OpenNept4une",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: Neptune 4 Max abnormal Z offset",
+          "url": "https://wiki.elegoo.com/neptune/neptune-4-max/abnormal-z-offset",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Neptune 4 Plus / 4 Max",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-neptune-4-plus-4-max-1",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-neptune-4-plus": {
+      "firmware": [
+        {
+          "title": "OpenNept4une replacement software stack",
+          "summary": "OpenNept4une replaces the factory software with an updatable Armbian and Klipper stack and supplies printer configurations and calibration tools. Back up the original eMMC image and configuration before following the installation guide.",
+          "compatibility": "Original Neptune 4 Plus; choose its exact board/model image. New Plus+ and Max+ revisions require separate confirmation; stock update packages are not interchangeable.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "OpenNept4une maintainer installation and supported models",
+              "url": "https://github.com/OpenNeptune3D/OpenNept4une",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Cable-chain and spine assembly",
+          "summary": "The creator bundles the printed links, mounting pieces and spine parts used on their Neptune 4 Plus to route the printhead cable. Read the included component origins and installation geometry before combining remixes.",
+          "compatibility": "Neptune 4 Plus setup shown by the creator; not an automatic fit for the Max or machines with aftermarket rail kits.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Tony Currie: Neptune 4 Plus cable chain and spine",
+              "url": "https://www.printables.com/model/1193691-neptune-4-plus-cable-chain-spine",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Y-rail spacing jig for bed wobble work",
+          "summary": "The creator provides paired jigs and a centering reference for setting the bed-rail spacing before adjusting the POM wheels. Measure the printed jig and correct for shrinkage before using it as a dimensional reference.",
+          "compatibility": "Neptune 4 Plus only. The creator explicitly says this geometry does not fit Neptune 4 Max as supplied and has not been verified on Neptune 3 Pro.",
+          "evidence": "creator listing",
+          "section": "C",
+          "sources": [
+            {
+              "title": "true: Neptune 4 Plus Y-rail spacing jig",
+              "url": "https://www.printables.com/model/908007-neptune-4-plus-bed-y-axis-rail-spacing-jig",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3108 kit replaces the Neptune 4 Plus / 4 Max hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "Original Neptune 4 Plus/Max; select M3108 rather than the shorter Neptune 4/Pro kit. New Plus+/Max+ revisions are not established here.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Neptune 4 Plus / 4 Max",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-neptune-4-plus-4-max-1",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Feeding stops: inspect cooling and gearbox before replacing parts",
+          "summary": "The clogging guide checks filament/profile agreement, heat-break fan operation, gearbox debris and worn PTFE/nozzle parts. It specifies that the heat-break fan should start above 50 °C and requires a new Z offset and leveling after nozzle or PTFE replacement.",
+          "compatibility": "Neptune 4 Plus; the source explicitly identifies Plus/Max custom nozzles. Do not substitute a Neptune 4/4 Pro nozzle or assume another hotend’s PTFE dimensions.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "ELEGOO Neptune: nozzle-clogging diagnostic sequence",
+              "url": "https://wiki.elegoo.com/neptune/nozzle-clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "OpenNept4une maintainer installation and supported models",
+          "url": "https://github.com/OpenNeptune3D/OpenNept4une",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Tony Currie: Neptune 4 Plus cable chain and spine",
+          "url": "https://www.printables.com/model/1193691-neptune-4-plus-cable-chain-spine",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Neptune 4 Plus / 4 Max",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-neptune-4-plus-4-max-1",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "true: Neptune 4 Plus Y-rail spacing jig",
+          "url": "https://www.printables.com/model/908007-neptune-4-plus-bed-y-axis-rail-spacing-jig",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO Neptune: nozzle-clogging diagnostic sequence",
+          "url": "https://wiki.elegoo.com/neptune/nozzle-clogging",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "neptune4pro": {
+      "firmware": [
+        {
+          "title": "OpenNept4une replacement software stack",
+          "summary": "OpenNept4une replaces the factory software with an updatable Armbian and Klipper stack and supplies printer configurations and calibration tools. Back up the original eMMC image and configuration before following the installation guide.",
+          "compatibility": "Original Neptune 4 Pro; choose its exact board/model image. New Plus+ and Max+ revisions require separate confirmation; stock update packages are not interchangeable.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "OpenNept4une maintainer installation and supported models",
+              "url": "https://github.com/OpenNeptune3D/OpenNept4une",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Cable clamp with lead-screw clearance",
+          "summary": "This remixed clamp removes a corner close to the Z lead screw, giving the printhead cable support more clearance. The creator supplies the replacement geometry and its supported print orientation.",
+          "compatibility": "Original Neptune 4/4 Pro cable arrangement. Check clearance and cable slack across the full Z range; not established for the Type-C redesign.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "KKNOPP: Neptune 4/Pro clearance cable clamp",
+              "url": "https://www.printables.com/model/670427-neptune-4pro-cable-clamp-clearance-version",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3107 kit replaces the Neptune 4 / 4 Pro hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "Original Neptune 4/4 Pro; M3107 includes its heater, thermistor and heatsink. Plus/Max use M3108.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Neptune 4 / 4 Pro",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-neptune-4-pro",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Distinguish a clog from material leaking around the nozzle",
+          "summary": "The official inspection heats for the actual filament and commands a controlled extrusion, then checks whether flow is absent/restricted or material is collecting around the nozzle. Its illustrated removal and cleaning procedure addresses leakage around the hotend.",
+          "compatibility": "Neptune 4 Pro printhead; the source includes hot operations and separate power-off disassembly steps.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "ELEGOO: Neptune 4 Pro nozzle oozing cleaning",
+              "url": "https://wiki.elegoo.com/neptune/neptune-4-pro/nozzle-oozing-cleaning",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "OpenNept4une maintainer installation and supported models",
+          "url": "https://github.com/OpenNeptune3D/OpenNept4une",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "KKNOPP: Neptune 4/Pro clearance cable clamp",
+          "url": "https://www.printables.com/model/670427-neptune-4pro-cable-clamp-clearance-version",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: Neptune 4 Pro nozzle oozing cleaning",
+          "url": "https://wiki.elegoo.com/neptune/neptune-4-pro/nozzle-oozing-cleaning",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Neptune 4 / 4 Pro",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-neptune-4-pro",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sv06ace": {
+      "firmware": [
+        {
+          "title": "Experimental SV06 ACE mainline migration",
+          "summary": "This personal work-in-progress guide documents moving the ACE to mainline Klipper, including controller identification and SWD/Katapult flashing. Treat it as an advanced migration reference, with a verified backup and recovery plan, rather than a ready-to-install firmware release.",
+          "compatibility": "SV06 ACE only; the guide identifies RK3308 host, GD32F425 mainboard and STM32F103 toolhead. It does not establish compatibility with SV06 Plus ACE.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "alkalint: Mainline Klipper for SV06 ACE",
+              "url": "https://github.com/alkalint/Mainline-Klipper-for-the-Sovol-SV06-ACE",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Reverse-Bowden mount with relocated runout sensor",
+          "summary": "The creator relocates the existing filament sensor to the printhead and adds a threaded Bowden fitting to guide filament from a remote spool. It reuses the sensor and housing screws, with two M3 nuts and an M6-thread tube adapter.",
+          "compatibility": "SV06 ACE and SV06 Plus ACE are both named. Provide the other tube-end support and check cable slack and full toolhead travel.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Sam Antor: SV06 ACE/Plus ACE reverse-Bowden sensor mount",
+              "url": "https://www.printables.com/model/1650325-sv06-ace-and-sv06-plus-ace-reverse-bowden-mod-with",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Camera image missing: verify the Mainsail camera setup",
+          "summary": "Sovol first asks owners to add the camera in Mainsail. If there is still no picture, restart and check its cable connection; then try the camera signal-source selection and restart again. Persistent failure is referred to Sovol support.",
+          "compatibility": "SV06 ACE factory camera workflow. The Plus ACE support index explicitly links this ACE diagnostic; it is not a universal USB-camera compatibility claim.",
+          "evidence": "official troubleshooting",
+          "section": "O",
+          "sources": [
+            {
+              "title": "Sovol SV06 ACE: camera image missing",
+              "url": "https://wiki.sovol3d.com/en/SV06-ACE-Troubleshooting/Unable-to-display-camera-image",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "alkalint: Mainline Klipper for SV06 ACE",
+          "url": "https://github.com/alkalint/Mainline-Klipper-for-the-Sovol-SV06-ACE",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Sam Antor: SV06 ACE/Plus ACE reverse-Bowden sensor mount",
+          "url": "https://www.printables.com/model/1650325-sv06-ace-and-sv06-plus-ace-reverse-bowden-mod-with",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Sovol SV06 ACE: camera image missing",
+          "url": "https://wiki.sovol3d.com/en/SV06-ACE-Troubleshooting/Unable-to-display-camera-image",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ankermake-m5": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Single/double spool-holder print",
+          "summary": "The creator supplies a single/double spool-holder arrangement and a 3MF file for the M5, intended to make manual color changes easier. It stores spools near the printer; it does not automate filament switching.",
+          "compatibility": "AnkerMake M5 listing; no M5C compatibility or large-spool load capacity is established.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Blake Douglas: AnkerMake M5 spool holder",
+              "url": "https://www.printables.com/model/439038-ankermake-m5-spool-holder",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "All-metal hotend conversion",
+          "summary": "Anker documents replacing the M5 hotend and selecting the all-metal configuration in both the app and slicer. The 300 °C setting is conditional on installing that physical hotend; changing the software selector alone is not an upgrade.",
+          "compatibility": "AnkerMake M5 with the official all-metal hotend. The M5C has a different toolhead and is not covered by this conversion.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Anker Japan: M5 all-metal hotend selection and precautions",
+              "url": "https://www.ankerjapan.com/blogs/faq/ankermake-%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Manufacturer hardened-steel nozzle option",
+          "summary": "Anker lists a 0.4 mm hardened-steel nozzle for abrasive filled filaments. This changes the wear surface; it does not raise the hotend, bed or material-processing limits of the underlying printer.",
+          "compatibility": "Manufacturer explicitly lists M5 and M5C for nozzle V7120HA1. Retain the printer’s appropriate hotend profile and material limits.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Anker Japan: M5/M5C hardened-steel nozzle V7120HA1",
+              "url": "https://www.ankerjapan.com/products/v7120ha1",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Interrupted extrusion: distinguish drag, jam and file faults",
+          "summary": "Anker’s M5 troubleshooting checks spool tangles and feed resistance, then nozzle/extruder blockage and throat-fan operation. If extrusion repeatedly stops at the same height in the same file, it recommends re-slicing and testing Easy Mode before treating the fault as mechanical.",
+          "compatibility": "AnkerMake M5 toolhead and AnkerMake Slicer workflow described by Anker Japan; use M5-specific cleaning instructions rather than the different M5C disassembly.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Anker Japan: M5 extrusion and print-file troubleshooting",
+              "url": "https://www.ankerjapan.com/blogs/faq/ankermake-%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Anker Japan: M5 all-metal hotend selection and precautions",
+          "url": "https://www.ankerjapan.com/blogs/faq/ankermake-%E3%83%A1%E3%83%B3%E3%83%86%E3%83%8A%E3%83%B3%E3%82%B9",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anker Japan: M5/M5C hardened-steel nozzle V7120HA1",
+          "url": "https://www.ankerjapan.com/products/v7120ha1",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Blake Douglas: AnkerMake M5 spool holder",
+          "url": "https://www.printables.com/model/439038-ankermake-m5-spool-holder",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anker Japan: M5 extrusion and print-file troubleshooting",
+          "url": "https://www.ankerjapan.com/blogs/faq/ankermake-%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ankermake-m5c": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Clip-on waste box V2",
+          "summary": "This box collects small filament scraps beside the M5C. Version 2 changes the mast grip, adds a taller wall and extends under the build-plate area; the creator specifies a diagonal print orientation to fit the bed.",
+          "compatibility": "AnkerMake M5C mast geometry; verify clearance through the complete bed movement after fitting.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Peter Martin: AnkerMake M5C waste box V2",
+              "url": "https://www.printables.com/model/630637-ankermake-m5c-waste-box-v2",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Manufacturer hardened-steel nozzle option",
+          "summary": "Anker lists a 0.4 mm hardened-steel nozzle for abrasive filled filaments. This changes the wear surface; it does not raise the hotend, bed or material-processing limits of the underlying printer.",
+          "compatibility": "Manufacturer explicitly lists M5 and M5C for nozzle V7120HA1. Retain the printer’s appropriate hotend profile and material limits.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Anker Japan: M5/M5C hardened-steel nozzle V7120HA1",
+              "url": "https://www.ankerjapan.com/products/v7120ha1",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Use extrusion/retraction behavior to locate a jam",
+          "summary": "Anker’s M5C guide distinguishes filament that cannot move either way from filament that retracts but will not extrude. It then gives separate PTFE/extruder access and nozzle-cleaning procedures, helping avoid unnecessary hotend replacement.",
+          "compatibility": "AnkerMake M5C; the M5 toolhead and replacement extruder are different. Follow the M5C removal sequence.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Anker Japan: M5C maintenance and jam removal",
+              "url": "https://www.ankerjapan.com/blogs/faq/ankermake-m5c",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Anker Japan: M5C maintenance and jam removal",
+          "url": "https://www.ankerjapan.com/blogs/faq/ankermake-m5c",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anker Japan: M5/M5C hardened-steel nozzle V7120HA1",
+          "url": "https://www.ankerjapan.com/products/v7120ha1",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Peter Martin: AnkerMake M5C waste box V2",
+          "url": "https://www.printables.com/model/630637-ankermake-m5c-waste-box-v2",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sovol-sv06": {
+      "firmware": [
+        {
+          "title": "SV06 Klipper conversion and calibration macros",
+          "summary": "This configuration supplies an SV06 firmware route, print-start macros and gantry calibration for an external Klipper host. It also documents MCU identification, slicer setup and first configuration checks.",
+          "compatibility": "Stock Sovol SV06 uses the master branch; replacement SKR and Fly boards have different branches. Requires a Linux host and data USB cable.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "bassamanator: Sovol SV06 Klipper configuration",
+              "url": "https://github.com/bassamanator/Sovol-SV06-firmware",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "5015 part-cooling duct conversion",
+          "summary": "This rear-mounted duct adapts a 5015 blower to the SV06 toolhead. The creator supplies CAD and fitting instructions, including longer M3 mounting screws and an adjustable duct height.",
+          "compatibility": "SV06; requires the matching 5015 fan and wiring. Check nozzle clearance and select a documented revision; the creator labels V5 untested.",
+          "evidence": "creator listing",
+          "section": "L",
+          "sources": [
+            {
+              "title": "ScatteredCollectables: SV06 5015 part-cooling duct",
+              "url": "https://www.printables.com/model/361794-sv06-5015-part-cooling-duct",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Klipper print-start failure: check the mesh configuration",
+          "summary": "In this conversion, PRINT_START fails when KAMP is disabled and no default mesh exists. Check that combination before changing hardware; when using KAMP instead, enable object labels in the slicer as the maintainer requires.",
+          "compatibility": "SV06 master branch in bassamanator’s Klipper configuration; this is a conversion-specific macro condition, not a stock Marlin fault.",
+          "evidence": "maintainer documentation",
+          "section": "J",
+          "sources": [
+            {
+              "title": "bassamanator SV06 master branch: KAMP and default-mesh requirements",
+              "url": "https://github.com/bassamanator/Sovol-SV06-firmware",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "bassamanator: Sovol SV06 Klipper configuration",
+          "url": "https://github.com/bassamanator/Sovol-SV06-firmware",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ScatteredCollectables: SV06 5015 part-cooling duct",
+          "url": "https://www.printables.com/model/361794-sv06-5015-part-cooling-duct",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "bassamanator SV06 master branch: KAMP and default-mesh requirements",
+          "url": "https://github.com/bassamanator/Sovol-SV06-firmware",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sovol-sv06-plus": {
+      "firmware": [
+        {
+          "title": "SV06 Plus Klipper configuration",
+          "summary": "The dedicated Plus branch provides the printer configuration and macros for a Klipper conversion. Install Klipper on an external host, flash the matching controller firmware and follow the initial configuration checks before running print macros.",
+          "compatibility": "Sovol SV06 Plus stock controller; use the sv06-plus branch, not the smaller SV06 configuration or an ACE image.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "bassamanator: SV06 Plus branch",
+              "url": "https://github.com/bassamanator/Sovol-SV06-firmware/tree/sv06-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Klipper print-start failure: check the mesh configuration",
+          "summary": "In this conversion, PRINT_START fails when KAMP is disabled and no default mesh exists. Check that combination before changing hardware; when using KAMP instead, enable object labels in the slicer as the maintainer requires.",
+          "compatibility": "SV06 Plus branch in bassamanator’s Klipper configuration; this is a conversion-specific macro condition, not a stock Marlin fault.",
+          "evidence": "maintainer documentation",
+          "section": "J",
+          "sources": [
+            {
+              "title": "bassamanator SV06 Plus branch: KAMP and default-mesh requirements",
+              "url": "https://github.com/bassamanator/Sovol-SV06-firmware/tree/sv06-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "bassamanator: SV06 Plus branch",
+          "url": "https://github.com/bassamanator/Sovol-SV06-firmware/tree/sv06-plus",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "bassamanator SV06 Plus branch: KAMP and default-mesh requirements",
+          "url": "https://github.com/bassamanator/Sovol-SV06-firmware/tree/sv06-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sovol-sv06-plus-ace": {
+      "firmware": [
+        {
+          "title": "Official image and OTA recovery route",
+          "summary": "Sovol provides separate OTA-update and image-flashing instructions for the Plus ACE. Use those files to restore the vendor environment before applying configuration changes; a smaller SV06 ACE mainline guide does not establish this model’s compatibility.",
+          "compatibility": "SV06 Plus ACE only; use its dedicated image and printer configuration. This is an official stock recovery route, not a verified modified release.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Sovol: SV06 Plus ACE firmware and recovery",
+              "url": "https://wiki.sovol3d.com/en/SV06-PLUS-ACE",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Reverse-Bowden mount with relocated runout sensor",
+          "summary": "The creator relocates the existing filament sensor to the printhead and adds a threaded Bowden fitting to guide filament from a remote spool. It reuses the sensor and housing screws, with two M3 nuts and an M6-thread tube adapter.",
+          "compatibility": "SV06 ACE and SV06 Plus ACE are both named. Provide the other tube-end support and check cable slack and full toolhead travel.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Sam Antor: SV06 ACE/Plus ACE reverse-Bowden sensor mount",
+              "url": "https://www.printables.com/model/1650325-sv06-ace-and-sv06-plus-ace-reverse-bowden-mod-with",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Camera image missing: verify the Mainsail camera setup",
+          "summary": "Sovol first asks owners to add the camera in Mainsail. If there is still no picture, restart and check its cable connection; then try the camera signal-source selection and restart again. Persistent failure is referred to Sovol support.",
+          "compatibility": "SV06 Plus ACE factory camera workflow. The Plus ACE support index explicitly links this ACE diagnostic; it is not a universal USB-camera compatibility claim.",
+          "evidence": "official troubleshooting",
+          "section": "O",
+          "sources": [
+            {
+              "title": "Sovol SV06 ACE: camera image missing",
+              "url": "https://wiki.sovol3d.com/en/SV06-ACE-Troubleshooting/Unable-to-display-camera-image",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Sovol SV06 Plus ACE: linked camera troubleshooting",
+              "url": "https://wiki.sovol3d.com/en/SV06-PLUS-ACE",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Sovol: SV06 Plus ACE firmware and recovery",
+          "url": "https://wiki.sovol3d.com/en/SV06-PLUS-ACE",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Sam Antor: SV06 ACE/Plus ACE reverse-Bowden sensor mount",
+          "url": "https://www.printables.com/model/1650325-sv06-ace-and-sv06-plus-ace-reverse-bowden-mod-with",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Sovol SV06 ACE: camera image missing",
+          "url": "https://wiki.sovol3d.com/en/SV06-ACE-Troubleshooting/Unable-to-display-camera-image",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Sovol SV06 Plus ACE: linked camera troubleshooting",
+          "url": "https://wiki.sovol3d.com/en/SV06-PLUS-ACE",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sovol-sv07": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "5015 replacement part-fan duct",
+          "summary": "The creator’s front-mounted duct adapts a 24 V 5015 blower while retaining clearance for the rear auxiliary fan. The listing specifies the fasteners and a connector adapter for the new fan.",
+          "compatibility": "SV07 and SV07 Plus are explicitly listed. Requires four M3×20 screws, two nuts and compatible fan wiring; do not infer SV06 Plus fit from the tentative suggestion.",
+          "evidence": "creator listing",
+          "section": "L",
+          "sources": [
+            {
+              "title": "nixkor: SV07/SV07+ 5015 part-fan duct",
+              "url": "https://www.printables.com/model/717521-sovol-sv07sv07-5015-part-fan-duct",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Screen disappears after a host-system update",
+          "summary": "The recovery maintainer distinguishes a missing screen with working Wi-Fi from a deeper boot failure. For the network-reachable case, the guide describes restoring Sovol’s stock update package from USB; an unreachable host needs a different recovery route.",
+          "compatibility": "SV07 original Sovol/MKS host setup; preserve its printer.cfg because SV07 Plus geometry/configuration differs. This is stock-system recovery, not a replacement operating system.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "fryc88: SV07/SV07 Plus screen-recovery scope and configuration differences",
+              "url": "https://github.com/fryc88/sv07",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Sovol SV07: model-specific official firmware resources",
+              "url": "https://wiki.sovol3d.com/en/SV07",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "nixkor: SV07/SV07+ 5015 part-fan duct",
+          "url": "https://www.printables.com/model/717521-sovol-sv07sv07-5015-part-fan-duct",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "fryc88: SV07/SV07 Plus screen-recovery scope and configuration differences",
+          "url": "https://github.com/fryc88/sv07",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Sovol SV07: model-specific official firmware resources",
+          "url": "https://wiki.sovol3d.com/en/SV07",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sovol-sv07-plus": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "5015 replacement part-fan duct",
+          "summary": "The creator’s front-mounted duct adapts a 24 V 5015 blower while retaining clearance for the rear auxiliary fan. The listing specifies the fasteners and a connector adapter for the new fan.",
+          "compatibility": "SV07 and SV07 Plus are explicitly listed. Requires four M3×20 screws, two nuts and compatible fan wiring; do not infer SV06 Plus fit from the tentative suggestion.",
+          "evidence": "creator listing",
+          "section": "L",
+          "sources": [
+            {
+              "title": "nixkor: SV07/SV07+ 5015 part-fan duct",
+              "url": "https://www.printables.com/model/717521-sovol-sv07sv07-5015-part-fan-duct",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Screen disappears after a host-system update",
+          "summary": "The recovery maintainer distinguishes a missing screen with working Wi-Fi from a deeper boot failure. For the network-reachable case, the guide describes restoring Sovol’s stock update package from USB; an unreachable host needs a different recovery route.",
+          "compatibility": "SV07 Plus original Sovol/MKS host setup; retain its model-specific printer.cfg because the SV07 has different geometry. This is stock-system recovery, not a replacement operating system.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "fryc88: SV07/SV07 Plus screen-recovery scope and configuration differences",
+              "url": "https://github.com/fryc88/sv07",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Sovol SV07 Plus: model-specific official firmware resources",
+              "url": "https://wiki.sovol3d.com/en/SV07PLUS",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "nixkor: SV07/SV07+ 5015 part-fan duct",
+          "url": "https://www.printables.com/model/717521-sovol-sv07sv07-5015-part-fan-duct",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "fryc88: SV07/SV07 Plus screen-recovery scope and configuration differences",
+          "url": "https://github.com/fryc88/sv07",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Sovol SV07 Plus: model-specific official firmware resources",
+          "url": "https://wiki.sovol3d.com/en/SV07PLUS",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-s1": {
+      "firmware": [
+        {
+          "title": "Rinkhals access to the stock Klipper environment",
+          "summary": "For owners who need configuration access and local frontends, Rinkhals adds SSH, Moonraker and Mainsail/Fluidd while retaining the Kobra S1 stock interface and calibration workflow. Follow the model-specific package and recovery instructions.",
+          "compatibility": "Kobra S1, including Combo; use the S1 package and tested stock firmware, not S1 Max files.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Rinkhals maintainer compatibility matrix and installation",
+              "url": "https://github.com/rinkhals-community/Rinkhals/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Purge-waste collection bucket",
+          "summary": "This bucket catches purge material at the S1 waste outlet and mounts using two existing screws. The creator provides a print-oriented 3MF file for the accessory.",
+          "compatibility": "Kobra S1; the listing does not establish S1 Max fit. Keep the outlet unobstructed and confirm the bucket does not interfere with its discharge path.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "FlyingT: Anycubic Kobra S1 purge catch",
+              "url": "https://www.printables.com/model/1206870-anycubic-kobra-s1-poop-bucket-purge-catch",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Five-port hub for external-spool/ACE switching",
+          "summary": "This replacement hub keeps the four ACE Pro tubes and external-spool tube connected, reducing tube changes when switching feed sources. Choose the standard V2 or PC4-M6 fitting version; the creator supplies inverted files for the Kobra 3 Max.",
+          "compatibility": "Kobra 3, Kobra 3 Max and Kobra S1 Combo are explicitly named; Max needs the inverted geometry. This is not an automatic fifth-color upgrade.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Nordice: five-port hub for Kobra 3/3 Max/S1",
+              "url": "https://www.printables.com/model/1010610-anycubic-kobra-3-k3-max-s1-combo-5-port-filament-i",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3114 kit replaces the Anycubic Kobra S1 hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "Kobra S1-specific M3114; do not infer Kobra S1 Max compatibility.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Anycubic Kobra S1",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-anycubic-kobra-s1",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "No extrusion: isolate the blocked section",
+          "summary": "A standalone feed test helps distinguish a print-only problem from a blocked filament path. Anycubic’s sequence then checks buffer return, extruder feeding, the heat sink and the hotend separately; it also asks owners to record recent filament, firmware or profile changes.",
+          "compatibility": "Kobra S1 toolhead; buffer checks apply to the connected ACE Pro or ACE 2 Pro specified in the guide. This does not establish S1 Max compatibility.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Anycubic Kobra S1: abnormal hotend clogging",
+              "url": "https://wiki.anycubic.com/en/fdm-3d-printer/kobra-s1-combo/troubleshooting-abnormal-print-head-clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Rinkhals maintainer compatibility matrix and installation",
+          "url": "https://github.com/rinkhals-community/Rinkhals/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "FlyingT: Anycubic Kobra S1 purge catch",
+          "url": "https://www.printables.com/model/1206870-anycubic-kobra-s1-poop-bucket-purge-catch",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Anycubic Kobra S1",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-anycubic-kobra-s1",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Nordice: five-port hub for Kobra 3/3 Max/S1",
+          "url": "https://www.printables.com/model/1010610-anycubic-kobra-3-k3-max-s1-combo-5-port-filament-i",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic Kobra S1: abnormal hotend clogging",
+          "url": "https://wiki.anycubic.com/en/fdm-3d-printer/kobra-s1-combo/troubleshooting-abnormal-print-head-clogging",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-kobra-s1-max": {
+      "firmware": [
+        {
+          "title": "Rinkhals access to the stock Klipper environment",
+          "summary": "For owners who need configuration access and local frontends, Rinkhals adds SSH, Moonraker and Mainsail/Fluidd while retaining the Kobra S1 Max stock interface and calibration workflow. Follow the model-specific package and recovery instructions.",
+          "compatibility": "Kobra S1 Max, including Combo; use its dedicated package and the tested stock-version matrix.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Rinkhals maintainer compatibility matrix and installation",
+              "url": "https://github.com/rinkhals-community/Rinkhals/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Clip-on purge bucket",
+          "summary": "The creator’s bucket clips to the external spool holder to collect purge waste and provides several sizes. Choose the size for the available clearance and keep the waste outlet free.",
+          "compatibility": "Kobra S1 Max external spool-holder mounting; do not substitute the smaller S1 bucket geometry.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Bane FP: Kobra S1 Max purge bucket",
+              "url": "https://www.printables.com/model/1701757-anycubic-kobra-s1-max-purge-bucket",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Error 10106: local storage is full",
+          "summary": "The official response to insufficient local memory starts by deleting local files. Factory reset is a later option that also removes stored network, calibration and print-history information, so preserve what is needed before that step.",
+          "compatibility": "Kobra S1 Max; use this procedure for code 10106 rather than treating every failed upload as a memory fault.",
+          "evidence": "official troubleshooting",
+          "section": "O",
+          "sources": [
+            {
+              "title": "Anycubic: S1 Max code 10106",
+              "url": "https://wiki.anycubic.com/en/error-codes/10106-code/s1-max",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Rinkhals maintainer compatibility matrix and installation",
+          "url": "https://github.com/rinkhals-community/Rinkhals/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic: S1 Max code 10106",
+          "url": "https://wiki.anycubic.com/en/error-codes/10106-code/s1-max",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Bane FP: Kobra S1 Max purge bucket",
+          "url": "https://www.printables.com/model/1701757-anycubic-kobra-s1-max-purge-bucket",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-ender-5-max": {
+      "firmware": [
+        {
+          "title": "SimpleAF for editable Klipper configuration",
+          "summary": "SimpleAF supplies editable Kalico configuration for probe changes. Follow its model-specific installation, probe setup and recalibration steps when replacing the stock software environment.",
+          "compatibility": "Ender-5 Max is explicitly listed by the project. Match the selected probe and hardware revision.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "SimpleAF supported printers and probe choices",
+              "url": "https://pellcorp.github.io/creality-wiki/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Manufacturer Ender-5 Max enclosure",
+          "summary": "The dedicated enclosure adds panels around the Ender-5 Max frame. Use the model-specific installation and retain service access; this accessory does not itself establish a regulated chamber temperature.",
+          "compatibility": "Ender-5 Max enclosure, not the Ender-5 S1 tent or a generic Ender-3 cover.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Creality: Ender-5 Max enclosure",
+              "url": "https://store.creality.com/uk/products/ender-5-max-enclosure",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Clicking without extrusion: check the feed path first",
+          "summary": "Check the side-mounted spool and PTFE inlet for tangles, then verify that the extruder switch is closed for feeding. Creality’s decision tree uses manual feeding and gear rotation to distinguish a front-cover jam, dirty gears, a nozzle blockage and a motor fault.",
+          "compatibility": "Ender-5 Max extruder and side spool path; follow its illustrated heating and disassembly sequence for the identified blockage.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Creality Ender-5 Max: clogged filament troubleshooting",
+              "url": "https://wiki.creality.com/en/ender-series/ender-5-max/clogged-filament",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "SimpleAF supported printers and probe choices",
+          "url": "https://pellcorp.github.io/creality-wiki/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: Ender-5 Max enclosure",
+          "url": "https://store.creality.com/uk/products/ender-5-max-enclosure",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality Ender-5 Max: clogged filament troubleshooting",
+          "url": "https://wiki.creality.com/en/ender-series/ender-5-max/clogged-filament",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-k1": {
+      "firmware": [
+        {
+          "title": "SimpleAF for editable Klipper configuration",
+          "summary": "SimpleAF supplies editable Kalico configuration for probe changes. Follow its model-specific installation, probe setup and recalibration steps when replacing the stock software environment.",
+          "compatibility": "K1 is explicitly listed by the project. Match the selected probe and hardware revision.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "SimpleAF supported printers and probe choices",
+              "url": "https://pellcorp.github.io/creality-wiki/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "CFS multi-material upgrade kit",
+          "summary": "Creality’s kit changes the toolhead/feed system to support CFS multi-color printing. Check the hotend-identification procedure first and use the kit’s installation, firmware and filament-loading workflow together.",
+          "compatibility": "K1, K1 Max, K1C and K1 SE; manufacturer excludes K1C 2025 and K1 Max 2025. Earlier K1/K1 Max hotend compatibility must be checked.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: K1 series CFS upgrade kit",
+              "url": "https://wiki.creality.com/en/k1-flagship-series/CFSUK",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Idling or clicking extruder: locate the feed obstruction",
+          "summary": "Start at the rear spool and PTFE inlet, then compare manual feeding with automatic feeding. Creality’s decision tree separates tangled filament, an extruder-front-cover jam, debris on the gears and a hotend blockage before considering motor or nozzle replacement.",
+          "compatibility": "K1 stock feed path. The source contains legacy nozzle-replacement references; identify the installed hotend before ordering parts.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Creality K1: filament feeding and clog diagnosis",
+              "url": "https://wiki.creality.com/en/k1-flagship-series/k1/troubleshooting/filament-feeding-issue-clogging-issue",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "SimpleAF supported printers and probe choices",
+          "url": "https://pellcorp.github.io/creality-wiki/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: K1 series CFS upgrade kit",
+          "url": "https://wiki.creality.com/en/k1-flagship-series/CFSUK",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality K1: filament feeding and clog diagnosis",
+          "url": "https://wiki.creality.com/en/k1-flagship-series/k1/troubleshooting/filament-feeding-issue-clogging-issue",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-k1-max": {
+      "firmware": [
+        {
+          "title": "SimpleAF for editable Klipper configuration",
+          "summary": "SimpleAF supplies editable Kalico configuration for probe changes. Follow its model-specific installation, probe setup and recalibration steps when replacing the stock software environment.",
+          "compatibility": "K1 Max is explicitly listed by the project. Match the selected probe and hardware revision.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "SimpleAF supported printers and probe choices",
+              "url": "https://pellcorp.github.io/creality-wiki/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "CFS multi-material upgrade kit",
+          "summary": "Creality’s kit changes the toolhead/feed system to support CFS multi-color printing. Check the hotend-identification procedure first and use the kit’s installation, firmware and filament-loading workflow together.",
+          "compatibility": "K1, K1 Max, K1C and K1 SE; manufacturer excludes K1C 2025 and K1 Max 2025. Earlier K1/K1 Max hotend compatibility must be checked.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: K1 series CFS upgrade kit",
+              "url": "https://wiki.creality.com/en/k1-flagship-series/CFSUK",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Idling or clicking extruder: locate the feed obstruction",
+          "summary": "Start at the rear spool and PTFE inlet, then compare manual feeding with automatic feeding. Creality’s decision tree separates tangled filament, an extruder-front-cover jam, debris on the gears and a hotend blockage before considering motor or nozzle replacement.",
+          "compatibility": "K1 Max stock feed path. Identify the installed original or integrated nozzle before selecting the linked replacement procedure.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Creality K1 Max: filament feeding and clog diagnosis",
+              "url": "https://wiki.creality.com/en/k1-flagship-series/k1-max/troubleshooting/filament-feed-issue",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "SimpleAF supported printers and probe choices",
+          "url": "https://pellcorp.github.io/creality-wiki/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: K1 series CFS upgrade kit",
+          "url": "https://wiki.creality.com/en/k1-flagship-series/CFSUK",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality K1 Max: filament feeding and clog diagnosis",
+          "url": "https://wiki.creality.com/en/k1-flagship-series/k1-max/troubleshooting/filament-feed-issue",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-k1-se": {
+      "firmware": [
+        {
+          "title": "SimpleAF for editable Klipper configuration",
+          "summary": "SimpleAF supplies editable Kalico configuration for probe changes. Follow its model-specific installation, probe setup and recalibration steps when replacing the stock software environment.",
+          "compatibility": "K1 SE is explicitly listed by the project. Match the selected probe and hardware revision.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "SimpleAF supported printers and probe choices",
+              "url": "https://pellcorp.github.io/creality-wiki/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "CFS multi-material upgrade kit",
+          "summary": "Creality’s kit changes the toolhead/feed system to support CFS multi-color printing. Check the hotend-identification procedure first and use the kit’s installation, firmware and filament-loading workflow together.",
+          "compatibility": "K1, K1 Max, K1C and K1 SE; manufacturer excludes K1C 2025 and K1 Max 2025. Earlier K1/K1 Max hotend compatibility must be checked.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: K1 series CFS upgrade kit",
+              "url": "https://wiki.creality.com/en/k1-flagship-series/CFSUK",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Manufacturer enclosure kit",
+          "summary": "Creality offers a model-specific enclosure to surround these open machines. Follow its assembly and clearance instructions; the accessory listing alone does not establish a controlled chamber temperature or a new material rating.",
+          "compatibility": "Creality explicitly names K2 SE and K1 SE. Confirm door, bed and filament-path clearance after assembly.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Creality: K2 SE/K1 SE enclosure",
+              "url": "https://store.creality.com/products/k2-se-k1-se-enclosure",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Idling or clicking extruder: locate the feed obstruction",
+          "summary": "Start at the rear spool and PTFE inlet, then compare manual feeding with automatic feeding. Creality’s decision tree separates tangled filament, an extruder-front-cover jam, debris on the gears and a hotend blockage before considering motor or nozzle replacement.",
+          "compatibility": "K1 SE stock feed path. Use the K1 SE removal sequence and identify the installed nozzle before replacement.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Creality K1 SE: filament feeding and clog diagnosis",
+              "url": "https://wiki.creality.com/en/k1-flagship-series/k1-se/fail-to-output-filamant-clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "SimpleAF supported printers and probe choices",
+          "url": "https://pellcorp.github.io/creality-wiki/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: K1 series CFS upgrade kit",
+          "url": "https://wiki.creality.com/en/k1-flagship-series/CFSUK",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: K2 SE/K1 SE enclosure",
+          "url": "https://store.creality.com/products/k2-se-k1-se-enclosure",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality K1 SE: filament feeding and clog diagnosis",
+          "url": "https://wiki.creality.com/en/k1-flagship-series/k1-se/fail-to-output-filamant-clogging",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-k1c": {
+      "firmware": [
+        {
+          "title": "SimpleAF for editable Klipper configuration",
+          "summary": "SimpleAF supplies editable Kalico configuration for probe changes. Follow its model-specific installation, probe setup and recalibration steps when replacing the stock software environment.",
+          "compatibility": "K1C is explicitly listed by the project. Match the selected probe and hardware revision.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "SimpleAF supported printers and probe choices",
+              "url": "https://pellcorp.github.io/creality-wiki/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "CFS multi-material upgrade kit",
+          "summary": "Creality’s kit changes the toolhead/feed system to support CFS multi-color printing. Check the hotend-identification procedure first and use the kit’s installation, firmware and filament-loading workflow together.",
+          "compatibility": "K1, K1 Max, K1C and K1 SE; manufacturer excludes K1C 2025 and K1 Max 2025. Earlier K1/K1 Max hotend compatibility must be checked.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: K1 series CFS upgrade kit",
+              "url": "https://wiki.creality.com/en/k1-flagship-series/CFSUK",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Idling or clicking extruder: locate the feed obstruction",
+          "summary": "Start at the rear spool and PTFE inlet, then compare manual feeding with automatic feeding. Creality’s decision tree separates tangled filament, an extruder-front-cover jam, debris on the gears and a hotend blockage before considering motor or nozzle replacement.",
+          "compatibility": "K1C stock feed path. The page contains inherited K1 Max part references; do not infer those parts fit K1C or K1C 2025.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Creality K1C: filament feeding and clog diagnosis",
+              "url": "https://wiki.creality.com/en/k1-flagship-series/k1c/troubleshooting/filament-clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "SimpleAF supported printers and probe choices",
+          "url": "https://pellcorp.github.io/creality-wiki/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: K1 series CFS upgrade kit",
+          "url": "https://wiki.creality.com/en/k1-flagship-series/CFSUK",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality K1C: filament feeding and clog diagnosis",
+          "url": "https://wiki.creality.com/en/k1-flagship-series/k1c/troubleshooting/filament-clogging",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-k2": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech with the K2/K2 Pro heater variant",
+          "summary": "This replacement changes to FlowTech cold-change nozzles. Choose the exact model in the manufacturer selector: K2 and K2 Pro use thermistor parameters different from K2 Plus.",
+          "compatibility": "K2 or K2 Pro matching selector option; K2 Plus and K2 SE assemblies are not interchangeable.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: K2/K2 Plus/K2 Pro FlowTech variants",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-k2-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "FR2836: locate resistance between CFS hub and extruder",
+          "summary": "For this feeding code, inspect spool tangles, deformed spools and the PTFE path between the hub outlet and extruder detector. The official procedure then tests the hub motor and filament detector if the path is clear.",
+          "compatibility": "K2, K2 Pro, K2 Plus and Creality Hi with CFS; these exact models are listed. This is a code-specific procedure, not a frequency claim.",
+          "evidence": "official troubleshooting",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: FR2836 CFS feed-path troubleshooting",
+              "url": "https://wiki.creality.com/en/printers-general-documents/FR2836",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "First layer will not adhere or is compressed",
+          "summary": "Creality’s procedure checks plate contamination, material-specific bed temperature, residual filament affecting homing, leveling and strain-gauge operation. Start with cleaning and the documented homing/leveling checks before changing a persistent offset.",
+          "compatibility": "K2 and K2 Pro are explicitly covered; do not transfer their strain-gauge procedure to K2 Plus or K2 SE without a matching guide.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Creality: K2/K2 Pro first-layer adhesion and compression",
+              "url": "https://www.creality.com/blog/k2-series-first-layer-adhesion-and-layer-compression",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Creality: FR2836 CFS feed-path troubleshooting",
+          "url": "https://wiki.creality.com/en/printers-general-documents/FR2836",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: K2/K2 Pro first-layer adhesion and compression",
+          "url": "https://www.creality.com/blog/k2-series-first-layer-adhesion-and-layer-compression",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: K2/K2 Plus/K2 Pro FlowTech variants",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-k2-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-k2-plus": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech with the K2 Plus heater variant",
+          "summary": "This replacement changes to FlowTech cold-change nozzles. Select K2 Plus specifically, because its thermistor parameters differ from the K2 and K2 Pro versions.",
+          "compatibility": "K2 Plus selector option; do not use the K2/K2 Pro heater variant or the K2 SE kit.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: K2/K2 Plus/K2 Pro FlowTech variants",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-k2-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "FR2836: locate resistance between CFS hub and extruder",
+          "summary": "For this feeding code, inspect spool tangles, deformed spools and the PTFE path between the hub outlet and extruder detector. The official procedure then tests the hub motor and filament detector if the path is clear.",
+          "compatibility": "K2, K2 Pro, K2 Plus and Creality Hi with CFS; these exact models are listed. This is a code-specific procedure, not a frequency claim.",
+          "evidence": "official troubleshooting",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: FR2836 CFS feed-path troubleshooting",
+              "url": "https://wiki.creality.com/en/printers-general-documents/FR2836",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Creality: FR2836 CFS feed-path troubleshooting",
+          "url": "https://wiki.creality.com/en/printers-general-documents/FR2836",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: K2/K2 Plus/K2 Pro FlowTech variants",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-k2-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "creality-k2-pro": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech with the K2/K2 Pro heater variant",
+          "summary": "This replacement changes to FlowTech cold-change nozzles. Choose the exact model in the manufacturer selector: K2 and K2 Pro use thermistor parameters different from K2 Plus.",
+          "compatibility": "K2 or K2 Pro matching selector option; K2 Plus and K2 SE assemblies are not interchangeable.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: K2/K2 Plus/K2 Pro FlowTech variants",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-k2-plus",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "FR2836: locate resistance between CFS hub and extruder",
+          "summary": "For this feeding code, inspect spool tangles, deformed spools and the PTFE path between the hub outlet and extruder detector. The official procedure then tests the hub motor and filament detector if the path is clear.",
+          "compatibility": "K2, K2 Pro, K2 Plus and Creality Hi with CFS; these exact models are listed. This is a code-specific procedure, not a frequency claim.",
+          "evidence": "official troubleshooting",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Creality: FR2836 CFS feed-path troubleshooting",
+              "url": "https://wiki.creality.com/en/printers-general-documents/FR2836",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "First layer will not adhere or is compressed",
+          "summary": "Creality’s procedure checks plate contamination, material-specific bed temperature, residual filament affecting homing, leveling and strain-gauge operation. Start with cleaning and the documented homing/leveling checks before changing a persistent offset.",
+          "compatibility": "K2 and K2 Pro are explicitly covered; do not transfer their strain-gauge procedure to K2 Plus or K2 SE without a matching guide.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Creality: K2/K2 Pro first-layer adhesion and compression",
+              "url": "https://www.creality.com/blog/k2-series-first-layer-adhesion-and-layer-compression",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Creality: FR2836 CFS feed-path troubleshooting",
+          "url": "https://wiki.creality.com/en/printers-general-documents/FR2836",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: K2/K2 Pro first-layer adhesion and compression",
+          "url": "https://www.creality.com/blog/k2-series-first-layer-adhesion-and-layer-compression",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: K2/K2 Plus/K2 Pro FlowTech variants",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-k2-plus",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-centauri-2": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Add CANVAS multi-material feeding",
+          "summary": "The manufacturer offers a CANVAS feeder kit to add automatic multi-spool feeding. Select the mounting/cover configuration for the open-frame Centauri 2 and use its installation and filament workflow.",
+          "compatibility": "Centauri 2; the listed CC2/C2 kit is separate from the first-generation Centauri Carbon CANVAS kit. The Combo already includes CANVAS.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "ELEGOO: CANVAS for Centauri Carbon 2/Centauri 2",
+              "url": "https://us.elegoo.com/products/canvas-for-centauri-carbon-2-centauri-2-series",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Nozzle blockage: inspect wear, then test extrusion",
+          "summary": "ELEGOO’s shared guide starts by checking nozzle-tip wear, then uses a controlled extrusion test, cleaning needle and cold-pull route. Follow the illustrated toolhead reassembly and test before returning to a long print.",
+          "compatibility": "Centauri 2/Combo and Centauri Carbon 2/Combo are explicitly named; use the matching toolhead and temperature instructions.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "ELEGOO: Centauri 2 and Carbon 2 nozzle unclogging",
+              "url": "https://wiki.elegoo.com/en/centauri-carbon-2-combo/unclogging-the-nozzle",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: Centauri 2 and Carbon 2 nozzle unclogging",
+          "url": "https://wiki.elegoo.com/en/centauri-carbon-2-combo/unclogging-the-nozzle",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: CANVAS for Centauri Carbon 2/Centauri 2",
+          "url": "https://us.elegoo.com/products/canvas-for-centauri-carbon-2-centauri-2-series",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-centauri-2-combo": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Nozzle blockage: inspect wear, then test extrusion",
+          "summary": "ELEGOO’s shared guide starts by checking nozzle-tip wear, then uses a controlled extrusion test, cleaning needle and cold-pull route. Follow the illustrated toolhead reassembly and test before returning to a long print.",
+          "compatibility": "Centauri 2/Combo and Centauri Carbon 2/Combo are explicitly named; use the matching toolhead and temperature instructions.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "ELEGOO: Centauri 2 and Carbon 2 nozzle unclogging",
+              "url": "https://wiki.elegoo.com/en/centauri-carbon-2-combo/unclogging-the-nozzle",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: Centauri 2 and Carbon 2 nozzle unclogging",
+          "url": "https://wiki.elegoo.com/en/centauri-carbon-2-combo/unclogging-the-nozzle",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: CANVAS for Centauri Carbon 2/Centauri 2",
+          "url": "https://us.elegoo.com/products/canvas-for-centauri-carbon-2-centauri-2-series",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-centauri-carbon": {
+      "firmware": [
+        {
+          "title": "COSMOS on the stock Centauri Carbon controller",
+          "summary": "COSMOS replaces the stock environment with Klipper/Kalico on the original mainboard, exposing a console, bed mesh and calibration controls. The maintainer warns that the controller has little spare memory for extra plugins.",
+          "compatibility": "First-generation Centauri Carbon (CC1). The current FAQ focuses development on CC1 and does not establish CC2 support.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "OpenCentauri: COSMOS scope and installation",
+              "url": "https://docs.opencentauri.cc/klipper-conversion/cosmos/cosmos/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech with the CC1 thermistor variant",
+          "summary": "This replacement changes to the FlowTech cold-change nozzle system. Select the first-generation printer option: the manufacturer explicitly warns that CC1 and CC2 use different thermistor parameters.",
+          "compatibility": "Centauri Carbon 1 option only; the CC2 variant is not an interchangeable heater/thermistor assembly.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: Centauri Carbon 1/2 FlowTech variants",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-centauri-carbon",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Layer shifts: inspect the toolhead and wiping path",
+          "summary": "ELEGOO’s diagnostic sequence checks a deformed hotend, loose 3010 fan, cutter return, wiper-arm movement and nozzle contact with the waste chute. Follow the illustrated checks and escalate if the collision or shift persists.",
+          "compatibility": "Original Centauri Carbon (CC1) factory toolhead and wiping hardware; this is a manufacturer hardware diagnosis, not a COSMOS calibration-macro procedure.",
+          "evidence": "official troubleshooting",
+          "section": "C",
+          "sources": [
+            {
+              "title": "ELEGOO Centauri Carbon: layer-shifting diagnosis",
+              "url": "https://wiki.elegoo.com/en/Centauri-carbon/centauri-carbon-layer-shifting",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "OpenCentauri: COSMOS scope and installation",
+          "url": "https://docs.opencentauri.cc/klipper-conversion/cosmos/cosmos/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: Centauri Carbon 1/2 FlowTech variants",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-centauri-carbon",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO Centauri Carbon: layer-shifting diagnosis",
+          "url": "https://wiki.elegoo.com/en/Centauri-carbon/centauri-carbon-layer-shifting",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-centauri-carbon-2-combo": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech with the CC2 thermistor variant",
+          "summary": "This replacement changes to the FlowTech cold-change nozzle system. Select the Centauri Carbon 2 option because the manufacturer distinguishes its thermistor parameters from the first-generation printer.",
+          "compatibility": "Centauri Carbon 2/Combo; use its CC2 option. The listing does not establish compatibility with the open-frame Centauri 2.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: Centauri Carbon 1/2 FlowTech variants",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-centauri-carbon",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Nozzle blockage: inspect wear, then test extrusion",
+          "summary": "ELEGOO’s shared guide starts by checking nozzle-tip wear, then uses a controlled extrusion test, cleaning needle and cold-pull route. Follow the illustrated toolhead reassembly and test before returning to a long print.",
+          "compatibility": "Centauri 2/Combo and Centauri Carbon 2/Combo are explicitly named; use the matching toolhead and temperature instructions.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "ELEGOO: Centauri 2 and Carbon 2 nozzle unclogging",
+              "url": "https://wiki.elegoo.com/en/centauri-carbon-2-combo/unclogging-the-nozzle",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: Centauri 2 and Carbon 2 nozzle unclogging",
+          "url": "https://wiki.elegoo.com/en/centauri-carbon-2-combo/unclogging-the-nozzle",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: CANVAS for Centauri Carbon 2/Centauri 2",
+          "url": "https://us.elegoo.com/products/canvas-for-centauri-carbon-2-centauri-2-series",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: Centauri Carbon 1/2 FlowTech variants",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-centauri-carbon",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "k2se": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3116 kit replaces the Creality K2 SE hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "K2 SE-specific M3116. This is separate from the K2/K2 Pro/K2 Plus assemblies.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Creality K2 SE",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-k2-se",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Manufacturer enclosure kit",
+          "summary": "Creality offers a model-specific enclosure to surround these open machines. Follow its assembly and clearance instructions; the accessory listing alone does not establish a controlled chamber temperature or a new material rating.",
+          "compatibility": "Creality explicitly names K2 SE and K1 SE. Confirm door, bed and filament-path clearance after assembly.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Creality: K2 SE/K1 SE enclosure",
+              "url": "https://store.creality.com/products/k2-se-k1-se-enclosure",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "BM0111: inspect the toolhead communication path",
+          "summary": "Creality identifies BM0111 as communication failure between the mainboard and nozzle adapter board. Check the nozzle-board indicator and inspect its cable/connectors for damage or poor contact; the procedure escalates unresolved cases to board/cable diagnosis through support.",
+          "compatibility": "K2 SE nozzle adapter board and cable. The source inconsistently abbreviates the code as BM111 in its first step; use the article heading BM0111.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Creality K2 SE: BM0111 hotend connection abnormal",
+              "url": "https://wiki.creality.com/en/k2-flagship-series/k2-se/error-bm0111",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Creality: K2 SE official user manual",
+          "url": "https://wiki.creality.com/products/fully-enclosed/k2se/%E8%AF%B4%E6%98%8E%E4%B9%A6/k2_se-sm-001_user_manual%28en%29.pdf",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Creality K2 SE",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-creality-k2-se",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality: K2 SE/K1 SE enclosure",
+          "url": "https://store.creality.com/products/k2-se-k1-se-enclosure",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Creality K2 SE: BM0111 hotend connection abnormal",
+          "url": "https://wiki.creality.com/en/k2-flagship-series/k2-se/error-bm0111",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "cc2": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech with the CC2 thermistor variant",
+          "summary": "This replacement changes to the FlowTech cold-change nozzle system. Select the Centauri Carbon 2 option because the manufacturer distinguishes its thermistor parameters from the first-generation printer.",
+          "compatibility": "Centauri Carbon 2/Combo; use its CC2 option. The listing does not establish compatibility with the open-frame Centauri 2.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: Centauri Carbon 1/2 FlowTech variants",
+              "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-centauri-carbon",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Nozzle blockage: inspect wear, then test extrusion",
+          "summary": "ELEGOO’s shared guide starts by checking nozzle-tip wear, then uses a controlled extrusion test, cleaning needle and cold-pull route. Follow the illustrated toolhead reassembly and test before returning to a long print.",
+          "compatibility": "Centauri 2/Combo and Centauri Carbon 2/Combo are explicitly named; use the matching toolhead and temperature instructions.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "ELEGOO: Centauri 2 and Carbon 2 nozzle unclogging",
+              "url": "https://wiki.elegoo.com/en/centauri-carbon-2-combo/unclogging-the-nozzle",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: Centauri 2 and Carbon 2 nozzle unclogging",
+          "url": "https://wiki.elegoo.com/en/centauri-carbon-2-combo/unclogging-the-nozzle",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: CANVAS for Centauri Carbon 2/Centauri 2",
+          "url": "https://us.elegoo.com/products/canvas-for-centauri-carbon-2-centauri-2-series",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: Centauri Carbon 1/2 FlowTech variants",
+          "url": "https://store.micro-swiss.com/products/flowtech-hotend-for-elegoo-centauri-carbon",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sovol-sv08": {
+      "firmware": [
+        {
+          "title": "SV08 mainline Klipper conversion",
+          "summary": "The maintainer documents replacing the vendor stack with a BTT CB1 image and a standard Klipper/Moonraker/Mainsail installation. The procedure includes eMMC imaging, configuration backup and flashing both the mainboard and toolhead controllers.",
+          "compatibility": "Original Sovol SV08; this procedure is not verified for SV08 Max. Requires access to the eMMC and separate MCU firmware builds.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Rappetor: Sovol SV08 mainline migration",
+              "url": "https://github.com/Rappetor/Sovol-SV08-Mainline",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "FlowTech hotend alternative",
+          "summary": "The M3110 kit replaces the Sovol SV08 hotend with a matched heater/thermistor assembly and the FlowTech nozzle system, which permits cold nozzle changes. Follow the kit installation and recalibrate for the installed nozzle and filament.",
+          "compatibility": "Original Sovol SV08-specific M3110; the source does not establish SV08 Max or Zero compatibility.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Micro Swiss: FlowTech for Sovol SV08",
+              "url": "https://store.micro-swiss.com/products/microswiss-flowtech-hotend-for-sovol-sv08",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Probe triggered before movement: check sensor and gantry",
+          "summary": "For this QGL/probing error, Sovol checks proximity-switch response to metal, sensor wiring and gantry alignment. The guide then repeats QGL after correction; an unresponsive switch is referred to support rather than bypassed in configuration.",
+          "compatibility": "Original SV08 proximity-switch and QGL arrangement; this does not apply to the SV08 Max eddy-probe firmware matrix.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Sovol SV08: probe triggered prior to movement",
+              "url": "https://wiki.sovol3d.com/en/SV08-Troubleshooting/probe-triggered-prior-to-movement",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Rappetor: Sovol SV08 mainline migration",
+          "url": "https://github.com/Rappetor/Sovol-SV08-Mainline",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Micro Swiss: FlowTech for Sovol SV08",
+          "url": "https://store.micro-swiss.com/products/microswiss-flowtech-hotend-for-sovol-sv08",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Sovol SV08: probe triggered prior to movement",
+          "url": "https://wiki.sovol3d.com/en/SV08-Troubleshooting/probe-triggered-prior-to-movement",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sovol-sv08-max": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Eddy-current probe error: check firmware and gantry alignment",
+          "summary": "The official guide first checks the sensor drive-current reading and firmware version: from 2.1.19, both readings 14 and 15 are accepted. If that reading is valid, it directs owners to gantry/bed alignment checks instead of immediately replacing the probe.",
+          "compatibility": "SV08 Max eddy-current probe and its vendor firmware; thresholds are specific to this documented system.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Sovol: SV08 Max eddy-current sensor errors",
+              "url": "https://wiki.sovol3d.com/en/SV08Max/Eddy-current-sensor-error-message-types",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Sovol: SV08 Max eddy-current sensor errors",
+          "url": "https://wiki.sovol3d.com/en/SV08Max/Eddy-current-sensor-error-message-types",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "sovol-zero": {
+      "firmware": [
+        {
+          "title": "Zero mainline Klipper migration",
+          "summary": "The maintainer documents replacing Sovol’s vendor fork and preserving numeric knob-screen codes through an optional plugin. The knowledge base includes controller pinouts and flashing procedures; its author reports verification on one printer.",
+          "compatibility": "Sovol Zero; one-machine validation, so confirm board and toolhead revisions before following the migration.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "lexfrei: Sovol Zero mainline knowledge base",
+              "url": "https://github.com/lexfrei/sovol-zero-mainline",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Mainline startup error after updating: match MCU builds",
+          "summary": "On the documented mainline conversion, an unknown-command startup error after a host update can mean its MCU applications are out of step. The maintainer requires the host and both MCU applications to use the same Klipper commit.",
+          "compatibility": "Sovol Zero mainline migration documented by lexfrei and verified on one printer; this is not a diagnosis for an unchanged Sovol firmware installation.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "lexfrei Sovol Zero: mainline troubleshooting and MCU version alignment",
+              "url": "https://sovol.lexfrei.dev/zero/troubleshooting/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "lexfrei: Sovol Zero mainline knowledge base",
+          "url": "https://github.com/lexfrei/sovol-zero-mainline",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "lexfrei Sovol Zero: mainline troubleshooting and MCU version alignment",
+          "url": "https://sovol.lexfrei.dev/zero/troubleshooting/",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-photon-mono-m5s": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Split vat lid with handle",
+          "summary": "The creator divides this M5s vat lid into left/right sections, a center connection and handle so it can be printed on a smaller FDM bed. It covers the removed vat during storage; it does not replace the printer’s UV enclosure.",
+          "compatibility": "Photon Mono M5/M5s vat geometry explicitly named. Check fit before putting a printed cover over liquid resin.",
+          "evidence": "creator listing",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Kiril Krastev: Photon Mono M5/M5s vat lid",
+              "url": "https://www.printables.com/model/571713-anycubic-photon-mono-m5-m5s-vat-lid",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Wi-Fi setup: keep the phone on the printer hotspot",
+          "summary": "The M5s guide explains that the printer hotspot initially has no internet access, which can cause the phone to switch networks. Check the selected hotspot and disable automatic network switching during binding before investigating the router connection.",
+          "compatibility": "Photon Mono M5s series and the Anycubic app binding workflow; hotspot association and internet Wi-Fi connection are separate stages.",
+          "evidence": "official troubleshooting",
+          "section": "O",
+          "sources": [
+            {
+              "title": "Anycubic: M5s Wi-Fi troubleshooting",
+              "url": "https://wiki.anycubic.com/en/resin-3d-printer/photon-mono-m5s/wifi-connection-failure-troubleshooting",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Anycubic: M5s Wi-Fi troubleshooting",
+          "url": "https://wiki.anycubic.com/en/resin-3d-printer/photon-mono-m5s/wifi-connection-failure-troubleshooting",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Kiril Krastev: Photon Mono M5/M5s vat lid",
+          "url": "https://www.printables.com/model/571713-anycubic-photon-mono-m5-m5s-vat-lid",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-photon-mono-m7": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Official FPGA update for abnormal exposure switching",
+          "summary": "Anycubic identifies a specific recovery use for the M7 FPGA firmware: abnormal exposure switching during a print. Use the FPGA download under the M7 support page and its update instructions for that symptom.",
+          "compatibility": "Photon Mono M7, not M7 Pro/Max. This is a manufacturer recovery update, not modified motion-control firmware.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Anycubic: Photon Mono M7 FPGA recovery download",
+              "url": "https://wiki.anycubic.com/en/resin-3d-printer/photon-mono-m7",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Anycubic: Photon Mono M7 support and firmware",
+          "url": "https://wiki.anycubic.com/en/resin-3d-printer/photon-mono-m7",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic: Photon Mono M7 FPGA recovery download",
+          "url": "https://wiki.anycubic.com/en/resin-3d-printer/photon-mono-m7",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-photon-mono-m7-pro": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "False “platform not installed” warning",
+          "summary": "The official sequence reseats the platform, runs Advanced → Equipment Self-test → Force Detection, then checks the strain-gauge connection. If the warning remains, it gives a mechanical-calibration procedure with separate platform-removed and platform-installed steps.",
+          "compatibility": "Photon Mono M7 Pro only. Use its clean, empty platform state during calibration; the source is not a failure-frequency study.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Anycubic: M7 Pro platform-not-installed troubleshooting",
+              "url": "https://wiki.anycubic.com/en/resin-3d-printer/photon-mono-m7-pro/the-printing-platform-is-not-installed-please-install-it-troubleshootin",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Anycubic: Photon Mono M7 Pro support and firmware",
+          "url": "https://wiki.anycubic.com/en/resin-3d-printer/photon-mono-m7-pro",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Anycubic: M7 Pro platform-not-installed troubleshooting",
+          "url": "https://wiki.anycubic.com/en/resin-3d-printer/photon-mono-m7-pro/the-printing-platform-is-not-installed-please-install-it-troubleshootin",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-mars-5": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Residue warning at the start of a print",
+          "summary": "The Mars 5 manual first checks that the tank and build plate are secured and that the machine is untouched during self-check. If the warning persists, it directs cleaning the tank or filtering the resin for small cured fragments.",
+          "compatibility": "Mars 5 manufacturer manual V1, FAQ item 5, printed page 11. The cited PDF is a mirrored manufacturer document; this procedure is separate from Ultra tilt-release maintenance.",
+          "evidence": "manufacturer documentation",
+          "section": "W",
+          "sources": [
+            {
+              "title": "ELEGOO Mars 5 V1 manufacturer manual, FAQ p.11 (mirrored PDF)",
+              "url": "https://manuals.plus/m/12f5dacdc4c24cf822a8d36dadaf1fe61b0ce45bbb0a20f546de0cf805b6c693_optim.pdf",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "ELEGOO: Mars 5 mechanical-sensor and self-check description",
+              "url": "https://us.elegoo.com/products/mars-5-4k-6-6inch-monochrome-lcd-resin-3d-printer",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: Mars 5 product and support information",
+          "url": "https://us.elegoo.com/products/mars-5-4k-6-6inch-monochrome-lcd-resin-3d-printer",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: firmware/manual download center",
+          "url": "https://www.elegoo.com/pages/download",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO Mars 5 V1 manufacturer manual, FAQ p.11 (mirrored PDF)",
+          "url": "https://manuals.plus/m/12f5dacdc4c24cf822a8d36dadaf1fe61b0ce45bbb0a20f546de0cf805b6c693_optim.pdf",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: Mars 5 mechanical-sensor and self-check description",
+          "url": "https://us.elegoo.com/products/mars-5-4k-6-6inch-monochrome-lcd-resin-3d-printer",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-mars-5-ultra": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Noise during release: check debris and print conditions",
+          "summary": "Before investigating release noise, ELEGOO checks the tank for failed-print fragments. Its diagnostic sequence also considers resin temperature, model cross-section, exposure and release-wait settings, rather than assuming that the tilt mechanism has failed.",
+          "compatibility": "Mars 5 Ultra and Saturn 4 Ultra/16K are named by the source; use settings for the actual resin and printer.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "ELEGOO: abnormal noise during resin printing",
+              "url": "https://wiki.elegoo.com/en/troubleshooting/lcd-printer/abnormal-noise-during-printing",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: abnormal noise during resin printing",
+          "url": "https://wiki.elegoo.com/en/troubleshooting/lcd-printer/abnormal-noise-during-printing",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-saturn-4-ultra-16k": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Resin-heating anomaly: inspect contacts and the tank circuit",
+          "summary": "For the heating error, the official sequence checks damaged or blocked tank contacts, film interference, board connection and contact cleanliness, then circuit continuity. It distinguishes replacing the tank from replacing the heating adapter board based on those tests.",
+          "compatibility": "Saturn 4 Ultra 16K heated tank and its adapter board; do not transfer the contact arrangement to the unheated Saturn 4 Ultra.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "ELEGOO: Saturn 4 Ultra 16K resin-heating anomaly",
+              "url": "https://wiki.elegoo.com/en/saturn/saturn-4-ultra-16k/resin-heating-anomaly-error",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Noise during release: check debris and print conditions",
+          "summary": "Before investigating release noise, ELEGOO checks the tank for failed-print fragments. Its diagnostic sequence also considers resin temperature, model cross-section, exposure and release-wait settings, rather than assuming that the tilt mechanism has failed.",
+          "compatibility": "Mars 5 Ultra and Saturn 4 Ultra/16K are named by the source; use settings for the actual resin and printer.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "ELEGOO: abnormal noise during resin printing",
+              "url": "https://wiki.elegoo.com/en/troubleshooting/lcd-printer/abnormal-noise-during-printing",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: Saturn 4 Ultra 16K resin-heating anomaly",
+          "url": "https://wiki.elegoo.com/en/saturn/saturn-4-ultra-16k/resin-heating-anomaly-error",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "ELEGOO: abnormal noise during resin printing",
+          "url": "https://wiki.elegoo.com/en/troubleshooting/lcd-printer/abnormal-noise-during-printing",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "elegoo-orangestorm-giga": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Uneven first layer across the four bed plates",
+          "summary": "The Giga procedure checks gantry parallelism, proximity-switch alignment, bed screws and differences between the four PEI plates. It then describes measuring plate offsets and correcting the mesh, so a single global Z-offset change is not the only diagnostic step.",
+          "compatibility": "OrangeStorm Giga four-plate bed. Record the numbered plate measurements before following the mesh correction example.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "ELEGOO: OrangeStorm Giga first-layer troubleshooting",
+              "url": "https://wiki.elegoo.com/orangestorm-giga/first-layer-printing-failed-poor-first-layer-printing-quality",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "ELEGOO: OrangeStorm Giga first-layer troubleshooting",
+          "url": "https://wiki.elegoo.com/orangestorm-giga/first-layer-printing-failed-poor-first-layer-printing-quality",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-photon-p1-max": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Z-limit switch: separate interference from an electrical fault",
+          "summary": "If upward zeroing does not trigger the limit switch, inspect the spring wire for interference and check whether the switch indicator responds to the guide’s manual test. The source then distinguishes wiring/switch replacement from a mechanical adjustment.",
+          "compatibility": "Photon P1 Max top-mounted limit switch; follow the illustrated test sequence and keep the platform clear.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Anycubic: P1 Max Z-limit switch malfunction",
+              "url": "https://wiki.anycubic.com/en/resin-3d-printer/anycubic-photon-p1-max/z-axis-limit-switch-malfunction-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Anycubic: P1 Max Z-limit switch malfunction",
+          "url": "https://wiki.anycubic.com/en/resin-3d-printer/anycubic-photon-p1-max/z-axis-limit-switch-malfunction-guide",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "anycubic-photon-mono-m7-max": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Repeated force-detection warnings",
+          "summary": "If a platform/resin-force warning persists, the official guide checks that the platform is installed, runs Equipment Self-test → Force Detection, and inspects the strain-gauge connection before recalibrating. Calibration requires the platform state shown in the guide.",
+          "compatibility": "Photon Mono M7 Max force sensor; do not substitute M7/M7 Pro calibration files or load states.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Anycubic: M7 Max force-sensor calibration",
+              "url": "https://wiki.anycubic.com/en/resin-3d-printer/anycubic-photon-mono-m7-max/force-sensor-calibration-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Anycubic: M7 Max force-sensor calibration",
+          "url": "https://wiki.anycubic.com/en/resin-3d-printer/anycubic-photon-mono-m7-max/force-sensor-calibration-guide",
+          "checked": "2026-10-20"
+        }
+      ]
+    }
+  }
+}
