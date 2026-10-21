@@ -12,7 +12,7 @@ import subprocess
 import statistics
 import tempfile
 import xml.etree.ElementTree as ET
-from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, payload, counts
+from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, PRINTER_DATE, payload, counts
 from material_design import EXAMPLES, APPLICATIONS
 from material_articles import load_articles, load_evidence, measure_value, context_label, DETAIL_CONTEXT_FIELDS
 from check_articles import validate_evidence
@@ -57,6 +57,189 @@ class Page(HTMLParser):
 
     def attrs(self, tag):
         return [a for t, a in self.tags if t == tag]
+
+
+class Element:
+    """Keep field values and citations attached to their actual rendered row."""
+    def __init__(self, tag='', attrs=None, parent=None):
+        self.tag, self.attrs, self.parent = tag, dict(attrs or []), parent
+        self.children = []
+
+    @property
+    def text(self):
+        return ''.join(child.text if isinstance(child, Element) else child for child in self.children)
+
+    def find(self, tag=None, cls=None, **attrs):
+        for child in self.children:
+            if not isinstance(child, Element):
+                continue
+            if ((tag is None or child.tag == tag)
+                    and (cls is None or cls in child.attrs.get('class', '').split())
+                    and all(child.attrs.get(key) == value for key, value in attrs.items())):
+                yield child
+            yield from child.find(tag, cls, **attrs)
+
+
+class Document(HTMLParser):
+    VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
+
+    def __init__(self, text):
+        super().__init__(convert_charrefs=True)
+        self.root = self.current = Element()
+        self.feed(text)
+
+    def handle_starttag(self, tag, attrs):
+        node = Element(tag, attrs, self.current)
+        self.current.children.append(node)
+        if tag not in self.VOID:
+            self.current = node
+
+    def handle_startendtag(self, tag, attrs):
+        self.current.children.append(Element(tag, attrs, self.current))
+
+    def handle_endtag(self, tag):
+        node = self.current
+        while node.parent is not None:
+            if node.tag == tag:
+                self.current = node.parent
+                return
+            node = node.parent
+
+    def handle_data(self, data):
+        self.current.children.append(data)
+
+
+def webp_dimensions(data):
+    """Read the image's own dimensions without adding a Pillow dependency to CI."""
+    assert data[:4] == b'RIFF' and data[8:12] == b'WEBP', 'Printer photo is not WebP'
+    offset = 12
+    while offset + 8 <= len(data):
+        kind, size = data[offset:offset+4], int.from_bytes(data[offset+4:offset+8], 'little')
+        content = data[offset+8:offset+8+size]
+        if kind == b'VP8X' and len(content) >= 10:
+            return (1+int.from_bytes(content[4:7], 'little'), 1+int.from_bytes(content[7:10], 'little'))
+        if kind == b'VP8 ' and len(content) >= 10 and content[3:6] == b'\x9d\x01\x2a':
+            return (int.from_bytes(content[6:8], 'little') & 0x3fff,
+                    int.from_bytes(content[8:10], 'little') & 0x3fff)
+        if kind == b'VP8L' and len(content) >= 5 and content[0] == 0x2f:
+            bits = int.from_bytes(content[1:5], 'little')
+            return (1+(bits & 0x3fff), 1+((bits >> 14) & 0x3fff))
+        offset += 8 + size + (size % 2)
+    raise AssertionError('Printer photo has no decodable WebP dimensions')
+
+
+def printer_images(catalog):
+    manifest = json.loads((ROOT/'data/printer-images.json').read_text())
+    assert set(manifest) == {'version', 'images'} and type(manifest['version']) is int and manifest['version'] == 1, 'Invalid printer image manifest'
+    images = manifest['images']
+    assert images and set(images) <= {c['id'] for c in catalog['cats']}, 'Printer photos must identify exact catalog models'
+    fields = {'image', 'alt', 'width', 'height', 'source_url', 'image_url', 'credit', 'kind', 'checked', 'sha256'}
+    for printer_id, image in images.items():
+        assert set(image) == fields, (printer_id, 'Incomplete printer image provenance')
+        path = Path(image['image'])
+        assert path.parent.as_posix() == 'assets/printers' and path.suffix == '.webp', (printer_id, 'Photo must be a local printer WebP')
+        assert all(isinstance(image[key], str) and image[key].strip() for key in ('alt', 'credit', 'kind')), printer_id
+        assert all(image[key].startswith('https://') for key in ('source_url', 'image_url')), printer_id
+        assert all(type(image[key]) is int and image[key] > 0 for key in ('width', 'height')), printer_id
+        assert re.fullmatch(r'\d{4}-\d{2}-\d{2}', image['checked']), printer_id
+        assert re.fullmatch(r'[0-9a-f]{64}', image['sha256']), printer_id
+        content = (ROOT/path).read_bytes()
+        assert hashlib.sha256(content).hexdigest() == image['sha256'], (printer_id, 'Photo integrity mismatch')
+        assert webp_dimensions(content) == (image['width'], image['height']), (printer_id, 'Photo dimensions mismatch')
+    assert len({image['image'] for image in images.values()}) == len(images), 'A printer photo must not be assigned to a sibling model'
+    return images
+
+
+def check_printer_record(html, catalog, printer, images):
+    document = Document(html).root
+    printer_id = printer['id']
+    body = next(document.find('body'))
+    assert {'printer-page', 'printer-detail'} <= set(body.attrs.get('class', '').split()), printer_id
+    groups = list(document.find('details', 'printer-spec-group'))
+    expected_groups = {section for section in catalog['sections']
+                       if any(field['sec'] == section and field['id'] in printer['sp'] for field in catalog['fields'])}
+    assert {group.attrs.get('id') for group in groups} == {'spec-'+section.lower() for section in expected_groups}, (printer_id, 'Missing specification disclosure')
+    assert all('open' not in group.attrs for group in groups), (printer_id, 'Technical specifications must start collapsed')
+    rows = [row for row in document.find('tr') if 'data-field' in row.attrs]
+    assert Counter(row.attrs['data-field'] for row in rows) == Counter(printer['sp'].keys()), (printer_id, 'Published fields must appear once in the specification tables')
+    fields = {field['id']: field for field in catalog['fields']}
+    for row in rows:
+        field_id = row.attrs['data-field']; field = fields[field_id]; value = printer['sp'][field_id]
+        group = row.parent
+        while group is not None and 'printer-spec-group' not in group.attrs.get('class', '').split():
+            group = group.parent
+        assert group is not None and group.attrs.get('id') == 'spec-'+field['sec'].lower(), (printer_id, field_id, 'Field outside its native disclosure')
+        label = next(row.find('th')).text
+        assert field['name'] in label and (not field.get('unit') or field['unit'] in label), (printer_id, field_id, 'Field label or unit lost')
+        cells = list(row.find('td', 'printer-property-value'))
+        assert len(cells) == 1 and cells[0].text.strip() == value['v'].strip(), (printer_id, field_id, 'Published value changed or truncated')
+        source_links = {link.attrs.get('href') for link in row.find('a')}
+        for source_id in value.get('s', []):
+            source = catalog['src'][source_id]
+            assert list(row.find('details', 'printer-row-sources')), (printer_id, field_id, 'Missing native source disclosure')
+            if source.get('u'):
+                assert source['u'] in source_links, (printer_id, field_id, source_id, 'Source URL separated from field')
+            for key in ('t', 'd', 'k'):
+                if source.get(key):
+                    assert source[key] in row.text, (printer_id, field_id, source_id, 'Source context lost', key)
+    sources = list(document.find(id='sources'))
+    assert len(sources) == 1, (printer_id, 'Missing consolidated catalog sources')
+    source_ids = {sid for value in printer['sp'].values() for sid in value.get('s', [])}
+    assert len(list(sources[0].find('li'))) == len(source_ids), (printer_id, 'Consolidated catalog sources must be deduplicated')
+    for source_id in source_ids:
+        source = catalog['src'][source_id]
+        assert source.get('t', source_id) in sources[0].text, (printer_id, source_id, 'Source omitted from consolidated references')
+    visual = list(document.find('figure', 'printer-visual'))
+    assert len(visual) == 1, (printer_id, 'Missing printer visual')
+    photos = [image for image in visual[0].find('img') if 'data-printer-image' in image.attrs]
+    if printer_id in images:
+        image = images[printer_id]
+        assert len(photos) == 1 and photos[0].attrs.get('data-printer-image') == printer_id and photos[0].attrs.get('src') == '../'+image['image'], (printer_id, 'Wrong model photograph')
+        assert photos[0].attrs.get('alt') == image['alt'], printer_id
+        assert (photos[0].attrs.get('width'), photos[0].attrs.get('height')) == (str(image['width']), str(image['height'])), printer_id
+        assert image['source_url'] in {link.attrs.get('href') for link in visual[0].find('a')}, (printer_id, 'Missing photo credit link')
+        assert image['credit'] in visual[0].text, (printer_id, 'Missing photo credit')
+    else:
+        assert not photos, (printer_id, 'Unverified model must not borrow a product photograph')
+        diagrams = list(visual[0].find('img', **{'data-printer-diagram': printer['f'].lower()}))
+        assert len(diagrams) == 1 and 'generic' in visual[0].text.lower(), (printer_id, 'Fallback must be a clearly labeled generic architecture diagram')
+
+
+def check_printer_directory(catalog, images):
+    document = Document((ROOT/'printers/index.html').read_text()).root
+    cards = list(document.find('article', 'pl-printer-card'))
+    assert Counter(card.attrs.get('data-printer-id') for card in cards) == Counter(c['id'] for c in catalog['cats']), 'Printer directory dropped or duplicated a model'
+    lookup = {printer['id']: printer for printer in catalog['cats']}
+    families = list(document.find('details', 'pl-family'))
+    assert {family.attrs.get('data-printer-family') for family in families} == set(catalog['families']), 'Printer directory family groups differ from catalog'
+    assert all('open' in family.attrs for family in families), 'Printer families must be browsable without JavaScript'
+    assert 'hidden' in next(document.find(id='printer-search-panel')).attrs, 'Hide inactive printer search without JavaScript'
+    features = list(document.find('article', 'pl-feature-card'))
+    featured_ids = [card.attrs.get('data-featured-printer') for card in features]
+    assert len(features) == len(set(featured_ids)) == 6 and set(featured_ids) <= lookup.keys(), 'Featured printer cards must identify six distinct models'
+    for card in cards:
+        printer_id = card.attrs['data-printer-id']; printer = lookup[printer_id]
+        assert 'data-printer-card' in card.attrs, printer_id
+        group = card.parent
+        while group is not None and 'pl-family' not in group.attrs.get('class', '').split():
+            group = group.parent
+        assert group is not None and group.attrs.get('data-printer-family') == printer['f'], (printer_id, 'Model in wrong directory family')
+        guide_links = list(card.find('a', 'pl-card-link'))
+        assert len(guide_links) == 1 and guide_links[0].attrs.get('href') == printer_id+'.html', (printer_id, 'Wrong guide URL')
+        assert printer['n'] in guide_links[0].text, (printer_id, 'Model name missing from guide link')
+        comparisons = list(card.find('a', 'pl-card-compare'))
+        assert len(comparisons) == 1 and comparisons[0].attrs.get('href') == '../comparison.html#'+printer_id, (printer_id, 'Comparison does not select the exact model')
+    for card in [*cards, *features]:
+        printer_id = card.attrs.get('data-printer-id') or card.attrs['data-featured-printer']
+        photos = [image for image in card.find('img') if 'data-printer-photo' in image.attrs]
+        if printer_id in images:
+            image = images[printer_id]
+            assert len(photos) == 1 and photos[0].attrs.get('data-printer-photo') == printer_id, (printer_id, 'Directory photo model mismatch')
+            assert photos[0].attrs.get('src') == '../'+image['image'] and photos[0].attrs.get('alt') == image['alt'], printer_id
+            assert (photos[0].attrs.get('width'), photos[0].attrs.get('height')) == (str(image['width']), str(image['height'])), printer_id
+            assert image['source_url'] in {link.attrs.get('href') for link in card.find('a')}, (printer_id, 'Directory photo lacks source credit')
+        else:
+            assert not photos, (printer_id, 'Directory borrowed a sibling photograph')
 
 
 def run():
@@ -141,6 +324,7 @@ def run():
         for c in d['cats']: assert c['n'].replace('&','&amp;') in static or c['n'] in static,(name,c['id'])
         print(f'{name}: {cs}; all original records and sources preserved')
     filaments=datasets['filaments.html']; printers=datasets['comparison.html']
+    printer_photos = printer_images(printers)
     assert set(APPLICATIONS)=={c['id'] for c in filaments['cats']},'Every material must have an Applications section'
     for c in filaments['cats']:
         entry=APPLICATIONS[c['id']]
@@ -287,6 +471,7 @@ def run():
             if directory=='printers':
                 subject=article['about']
                 assert subject['@type']=='Thing' and subject['name']==c['n'],(c['id'],'printer reference subject')
+                check_printer_record(html, printers, c, printer_photos)
             assert escape(c['n']) in html,c['id']
             assert 'Published value and conditions' in html and 'Sources and dates' in html,c['id']
             assert directory+'/'+c['id']+'.html' in listing,c['id']
@@ -324,6 +509,7 @@ def run():
                 for a in parsed.attrs('a'):
                     if a.get('href','').startswith('#'):assert a['href'][1:] in parsed.ids,(c['id'],'broken guide anchor',a['href'])
     library=(ROOT/'materials/index.html').read_text()
+    check_printer_directory(printers, printer_photos)
     assert len(re.findall(r'data-material="[^"]+"',library))==len(filaments['cats'])
     assert set(EXAMPLES)<=set(c['id'] for c in filaments['cats'])
     assert not (ROOT/'assets/materials').exists() or not list((ROOT/'assets/materials').glob('*.svg'))
@@ -349,10 +535,13 @@ def run():
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)
     revisions={url.find('s:loc',ns).text:url.find('s:lastmod',ns).text for url in ET.parse(ROOT/'sitemap.xml').findall('s:url',ns)}
     for article in article_data['articles']:assert revisions[BASE+'articles/'+article['id']+'.html']==article['modified']
+    for printer in printers['cats']:assert revisions[BASE+'printers/'+printer['id']+'.html']==PRINTER_DATE
+    assert revisions[BASE+'printers/']==PRINTER_DATE
     robots=(ROOT/'robots.txt').read_text()
     assert 'Disallow:' not in robots and BASE+'sitemap.xml' in robots
     # Staleness test: sync must be idempotent across all generated pages/metadata.
-    files=[*paths,ROOT/'sitemap.xml',ROOT/'assets/materials.css']
+    files=[*paths,ROOT/'sitemap.xml',ROOT/'assets/materials.css',
+           *(ROOT/'assets/printers'/(family.lower()+'.svg') for family in printers['families'])]
     before={p:p.read_bytes() for p in files}
     subprocess.run(['python3',str(ROOT/'scripts/sync_site.py')],check=True,capture_output=True)
     assert all(p.read_bytes()==content for p,content in before.items()),'Generated files out of date: run python scripts/sync_site.py'

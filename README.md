@@ -79,6 +79,14 @@ Work in separate branches and draft PRs. **Do not merge or deploy without the ow
 
 Configure Pages to deploy with GitHub Actions using `.github/workflows/pages.yml`. Its IndexNow notification runs only after a successful deployment from `main`. The validation workflow has read-only repository permissions and does not deploy or notify search engines.
 
+## Printer guide presentation
+
+All 132 printer guides use a visual model overview, three reading cards, chapter navigation and native expandable specification sections. The full catalog values, qualifiers, variant warnings and individual source references remain in the HTML. On phones, specification rows become stacked reading blocks instead of a wide table. The printer library adds model/brand search and combined printer-group filters; its complete linked model collection remains available without JavaScript.
+
+`scripts/printer_design.py` renders detail pages and the six original architecture illustrations; `scripts/printer_library.py` renders the library. Styles live in `assets/printer-guides.css` and `assets/printer-library.css`; optional library filtering lives in `assets/printer-library.js`. Exact-model product images are mapped separately in `data/printer-images.json`, with local file hashes, dimensions, original image and product-page URLs, credits and check dates. See `assets/printers/README.md` for image provenance. Images retain their manufacturers’ rights; no open license is implied. Models without a verified image use an explicitly labeled general illustration, and library cards use typography. An illustration does not establish a particular model’s appearance or construction.
+
+Update `PRINTER_DATE` in `scripts/sync_site.py` when revising printer presentation. Printer footers and their sitemap entries use that date independently of material and article revisions; source and price dates remain unchanged. The generator does not edit either catalog payload. Static and Chromium checks retain every printer field and source, decode every local product image, exercise library filtering and deep comparison links, and check desktop, dark, mobile and no-JavaScript reading.
+
 ## Material guide presentation
 
 ### Material selection articles

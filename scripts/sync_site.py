@@ -11,10 +11,13 @@ import json
 import re
 from material_design import detail_body, directory_body
 from material_articles import generate_articles, load_articles
+from printer_design import detail_body as printer_detail_body, write_diagrams
+from printer_library import directory_body as printer_directory_body
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
 DATE = '2026-10-18'  # Content revision date, not a blanket source/price check date.
+PRINTER_DATE = '2026-10-20'  # Printer presentation only; catalog/source dates are unchanged.
 PAGES = ('comparison.html', 'filaments.html')
 PAYLOAD = re.compile(r'<script[^>]*id="payload"[^>]*>(.*?)</script>', re.S)
 LD = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
@@ -124,16 +127,20 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
         head += '<link rel="stylesheet" href="'+depth+'assets/material-guides.css">'
         if path.endswith('/index.html'): head += '<script defer src="'+depth+'assets/material-guides.js"></script>'
     article = path.startswith('articles/')
-    body_class = 'article-page' if article else 'material-page '+('material-library' if path.endswith('/index.html') else 'material-detail') if path.startswith('materials/') else ''
+    body_class = 'article-page' if article else 'material-page '+('material-library' if path.endswith('/index.html') else 'material-detail') if path.startswith('materials/') else 'printer-page '+('printer-library-page' if path.endswith('/index.html') else 'printer-detail') if path.startswith('printers/') else ''
     head += '<link rel="icon" href="' + depth + 'assets/site-icon.svg"><link rel="stylesheet" href="' + depth + 'assets/materials.css">'
     if article: head += '<link rel="stylesheet" href="'+depth+'assets/material-articles.css">'
+    if path.startswith('printers/'):
+        head += '<link rel="stylesheet" href="'+depth+'assets/printer-guides.css">'
+        if path.endswith('/index.html'):
+            head += '<link rel="stylesheet" href="'+depth+'assets/printer-library.css"><script defer src="'+depth+'assets/printer-library.js"></script>'
     head += analytics + ld(schema) + '</head><body'+(' class="'+body_class+'"' if body_class else '')+'><div class="wrap">'
     nav = '<nav class="nav" aria-label="Primary"><a href="' + depth + '">Home</a><a href="' + depth + 'comparison.html">Printers</a><a href="' + depth + 'filaments.html">Filaments</a><a href="' + depth + 'printers/">Printer guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Material guides</a></nav>'
     if path.startswith('printers/'):
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Printer guides</a><a href="../materials/">Material guides</a></nav>'
     if article:
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="../materials/">Material guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Selection articles</a></nav>'
-    return head + '<div class="topbar"><a class="brand" href="' + depth + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + DATE + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a></footer></div></body></html>\n'
+    return head + '<div class="topbar"><a class="brand" href="' + depth + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + (PRINTER_DATE if path.startswith('printers/') else DATE) + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a></footer></div></body></html>\n'
 
 
 def generate_materials(data, index):
@@ -160,36 +167,20 @@ def generate_materials(data, index):
 def generate_printers(data, index):
     """Render every printer's complete sourced record without a JavaScript dependency."""
     folder=ROOT/'printers'; folder.mkdir(exist_ok=True)
+    write_diagrams()
     analytics=re.search(r'<!-- Google tag.*?</script>\s*<script>.*?</script>',index,re.S)[0]
     paths=[]
     for c in data['cats']:
         path='printers/'+c['id']+'.html'; paths.append(path)
         desc=c['n']+': hardware specifications, firmware, dated prices and source notes. '+c.get('sum','')
-        body='<p class="breadcrumbs"><a href="../">Home</a> / <a href="./">Printer guides</a> / '+E(c['n'])+'</p><header><span class="kicker">'+E(c.get('brand',''))+' · '+E(c['f'])+' · Printer guide</span><h1>'+E(c['n'])+'</h1><p class="deck">'+E(c.get('sum',''))+'</p></header>'
-        body+='<p><a class="pill" href="../comparison.html#'+E(c['id'])+'">Open in interactive comparison</a></p><p class="source-note">This page reproduces the catalog’s sourced record for the exact model. Manufacturer specifications and claims retain their source labels; independent reviews and measurements retain their methods and dates. Unknown values are — or omitted. Prices are dated listing snapshots with configuration, sale/from and regional conditions, not live quotes. Listed features may vary by firmware or variant; read the linked source.</p>'
-        speed=('W4','Resin vertical speed (mm/h)') if c['f']=='RESIN' else ('D1','FDM print speed (mm/s; claimed)')
-        cards=[('A4','Dated street price (USD)'),('B1','Build volume and dimensions'),speed,('N1','Firmware and openness')]
-        body+='<section class="facts" aria-label="Printer quick reference">'+''.join('<div class="fact"><h3>'+E(label)+'</h3><p>'+E(value(c,fid))+'</p><div class="source-note">'+refs(data,c['sp'].get(fid,{}).get('s',[]))+'</div></div>' for fid,label in cards)+'</section>'
-        for sid,section in data['sections'].items():
-            fs=[f for f in data['fields'] if f['sec']==sid and f['id'] in c['sp']]
-            if not fs:continue
-            body+='<section><h2>'+E(section)+'</h2><div class="table-scroll"><table><caption>'+E(c['n']+' — '+section)+'</caption><thead><tr><th scope="col">Property and unit</th><th scope="col">Published value and conditions</th><th scope="col">Sources and dates</th></tr></thead><tbody>'
-            for f in fs:
-                e=c['sp'][f['id']]
-                body+='<tr><th scope="row">'+E(f['name'])+((' ('+E(f['unit'])+')') if f.get('unit') else '')+'</th><td>'+E(e['v'])+'</td><td>'+refs(data,e.get('s',[]))+'</td></tr>'
-            body+='</tbody></table></div></section>'
-        siblings=[x for x in data['cats'] if x.get('brand')==c.get('brand') and x['id']!=c['id']]
-        if siblings:body+='<h2>Other '+E(c.get('brand',''))+' printers</h2><ul class="directory">'+''.join('<li><a href="'+E(x['id'])+'.html">'+E(x['n'])+'</a></li>' for x in siblings)+'</ul>'
+        body=printer_detail_body(data,c,refs)
         used={sid for e in c['sp'].values() for sid in e.get('s',[])}
         # These are technical reference articles with historical price snapshots,
         # not offer/review records eligible for Google's Product rich results.
         subject={'@type':'Thing','name':c['n'],'description':c.get('brand','')+' '+c['f']+' 3D printer'}
         schema={'@context':'https://schema.org','@type':'WebPage','name':c['n']+' printer guide','url':BASE+path,'description':desc,'isPartOf':{'@type':'WebSite','url':BASE,'name':'3D Printing Info'},'mainEntity':{'@type':'TechArticle','headline':c['n']+' — hardware, firmware, prices and sources','about':subject,'description':c.get('sum',''),'url':BASE+path,'citation':[s['u'] for k,s in data['src'].items() if s.get('u') and k in used]}}
         (ROOT/path).write_text(guide_page(c['n']+' printer guide',desc,path,body,analytics,'',schema))
-    body='<header><h1>Printer guides</h1><p class="deck">'+str(len(data['cats']))+' FDM and resin printers with hardware specifications, firmware details, dated prices and sources.</p></header><p><a href="../comparison.html">Use the interactive printer comparison</a> to filter models, inspect fields and compare printers side by side.</p>'
-    for family in data['families']:
-        cats=[c for c in data['cats'] if c['f']==family]
-        if cats:body+='<section><h2>'+E(family)+'</h2><ul class="directory">'+''.join('<li><a href="'+E(c['id'])+'.html">'+E(c['n'])+'</a> · '+E(c.get('brand',''))+'</li>' for c in cats)+'</ul></section>'
+    body=printer_directory_body(data)
     schema={'@context':'https://schema.org','@type':'CollectionPage','name':'3D printer guides','url':BASE+'printers/','mainEntity':{'@type':'ItemList','numberOfItems':len(data['cats']),'itemListElement':[{'@type':'ListItem','position':i,'name':c['n'],'url':BASE+'printers/'+c['id']+'.html'} for i,c in enumerate(data['cats'],1)]}}
     (folder/'index.html').write_text(guide_page('3D printer guides','Browse '+str(len(data['cats']))+' sourced printer guides with hardware, firmware, dated prices and test notes.','printers/index.html',body,analytics,'',schema))
     expected={Path(x).name for x in paths}|{'index.html'}
@@ -238,7 +229,7 @@ def sync():
     urls=['','comparison.html','filaments.html','materials/','printers/',*material_paths,*printer_paths,*article_paths]
     article_dates={'articles/'+a['id']+'.html':a['modified'] for a in load_articles()['articles']}
     article_dates['articles/']=max(article_dates.values())
-    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
+    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,PRINTER_DATE if u.startswith('printers/') else DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
     (ROOT/'sitemap.xml').write_text(sitemap)
     print(json.dumps(summary,sort_keys=True))
 
