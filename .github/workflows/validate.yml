@@ -25,6 +25,8 @@ jobs:
         run: python scripts/check_site.py
       - name: Check article evidence validation regressions
         run: python -m unittest discover -s tests -p 'test_article_evidence.py'
+      - name: Validate printer ownership evidence and contextual rendering
+        run: python -m unittest discover -s tests -p 'test_printer_resources.py' -v
       - name: Test IndexNow selection and failure handling without network requests
         run: python -m unittest discover -s tests -p 'test_indexnow.py' -v
       - run: npm ci --ignore-scripts --no-audit --no-fund

@@ -1,0 +1,2493 @@
+{
+  "version": 1,
+  "checked": "2026-10-20",
+  "models": {
+    "qidiq2": {
+      "firmware": [
+        {
+          "title": "Official Q2 stock firmware",
+          "summary": "Use the manufacturer’s model-specific update instructions and release history when maintaining the factory software.",
+          "compatibility": "Q2 package only; this is an official update route, not verified FreeDi compatibility.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "QIDI Q2 official firmware instructions",
+              "url": "https://wiki.qidi3d.com/en/Q2/firmware-release-history",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Q2 lid riser designs",
+          "summary": "QIDI publishes downloadable Q2 riser designs from identified contributors, providing alternate top-cover spacing and mounting arrangements.",
+          "compatibility": "Q2 physical design only; obtain matching files and any required hardware from the linked listing.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "QIDI Q2 printable components",
+              "url": "https://wiki.qidi3d.com/en/Q2/Printable-Components",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "QIDI BOX material system",
+          "summary": "Adds automated filament changing using the manufacturer’s model-specific connection and setup procedure.",
+          "compatibility": "Q2 connection procedure and current model firmware required.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "QIDI BOX model connections and Plus4 upgrade requirements",
+              "url": "https://wiki.qidi3d.com/en/QIDIBOX",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Local connection or file-transfer failure",
+          "summary": "Check the same-network connection, correct printer IP and slicer selection. A configured Fluidd account also changes the file-transfer authentication requirements.",
+          "compatibility": "Q2; LAN-only mode and cloud connectivity are distinct settings.",
+          "evidence": "official troubleshooting",
+          "section": "O",
+          "sources": [
+            {
+              "title": "QIDI Q2 local network and Wi-Fi troubleshooting",
+              "url": "https://wiki.qidi3d.com/en/Q2/wifi",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI Q2 model documentation",
+          "url": "https://wiki.qidi3d.com/en/Q2",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "qidi-max4": {
+      "firmware": [
+        {
+          "title": "Official Max4 stock firmware",
+          "summary": "Use the manufacturer’s model-specific update instructions and release history when maintaining the factory software.",
+          "compatibility": "Max4 package only; this is an official update route, not verified FreeDi compatibility.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "QIDI Max4 official firmware instructions",
+              "url": "https://wiki.qidi3d.com/en/Max4/firmware-update",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Max4 riser files",
+          "summary": "The model-specific downloadable riser changes the top-cover frame; it does not increase the printer’s build volume.",
+          "compatibility": "Max4 physical design only; obtain matching files and any required hardware from the linked listing.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "QIDI Max4 printable components",
+              "url": "https://wiki.qidi3d.com/en/Max4/Printable-Components",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "QIDI BOX material system",
+          "summary": "Adds automated filament changing using the manufacturer’s model-specific connection and setup procedure.",
+          "compatibility": "Max4 connection procedure and current model firmware required.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "QIDI BOX model connections and Plus4 upgrade requirements",
+              "url": "https://wiki.qidi3d.com/en/QIDIBOX",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Polar extruder cooler",
+          "summary": "The official accessory adds extruder cooling, with model-specific connections and job-start controls documented by QIDI.",
+          "compatibility": "Max4 installation only; use the guide’s required firmware and settings.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "QIDI Polar extruder-cooler connection to Max4",
+              "url": "https://wiki.qidi3d.com/en/extruder-cooler/how-to-connect-extruder-cooler-to-max4",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "First layer fails to adhere",
+          "summary": "Inspect first-layer spacing and plate cleanliness, then follow the model’s Z-offset and calibration procedure. Persistent problems after calibration go to model support.",
+          "compatibility": "Max4 touchscreen and plate procedure; choose cleaning appropriate to the installed surface.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "QIDI Max4 first-layer adhesion troubleshooting",
+              "url": "https://wiki.qidi3d.com/en/Max4/Not-Sticking-to-the-bed",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI Max4 model documentation",
+          "url": "https://wiki.qidi3d.com/en/Max4",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "qidi-plus4": {
+      "firmware": [
+        {
+          "title": "FreeDi community firmware",
+          "summary": "Replaces the stock software stack with a community-maintained Klipper ecosystem and alternative display software.",
+          "compatibility": "Plus4 is explicitly supported; follow its hardware-specific installation and recovery instructions.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "FreeDi supported printers and installation documentation",
+              "url": "https://github.com/Phil1988/FreeDi",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Plus4 purge chute and bin designs",
+          "summary": "Manufacturer-curated creator files collect ejected filament beside the printer. Choose the chute and bin combination whose mounting instructions match your installation.",
+          "compatibility": "Plus4 physical design only; obtain matching files and any required hardware from the linked listing.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "QIDI Plus4 printable components",
+              "url": "https://wiki.qidi3d.com/en/X-Plus4/Printable-Components",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "QIDI BOX material system",
+          "summary": "Adds automated filament changing using the manufacturer’s model-specific connection and setup procedure.",
+          "compatibility": "Plus4 requires the multicolor upgrade kit and its own hub cable; Q2/Max4 cables are different.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "QIDI BOX model connections and Plus4 upgrade requirements",
+              "url": "https://wiki.qidi3d.com/en/QIDIBOX",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Nozzle or extruder blockage",
+          "summary": "Use the manufacturer’s model-specific cleaning instructions to locate the obstruction rather than treating every extrusion failure as a nozzle-only problem.",
+          "compatibility": "Plus4 hotend and extruder arrangement; use material-appropriate loading temperatures.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "QIDI Plus4 extrusion-blockage troubleshooting",
+              "url": "https://wiki.qidi3d.com/en/X-Plus4/Manual/clog",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI Plus4 model documentation",
+          "url": "https://wiki.qidi3d.com/en/X-Plus4",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "qidi-plus5": {
+      "firmware": [
+        {
+          "title": "Official Plus5 stock firmware",
+          "summary": "Use the manufacturer’s model-specific update instructions and release history when maintaining the factory software.",
+          "compatibility": "Plus5 package only; this is an official update route, not verified FreeDi compatibility.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "QIDI Plus5 official firmware instructions",
+              "url": "https://wiki.qidi3d.com/en/Plus5/firmware-update",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Plus5 top-cover extension frame",
+          "summary": "The downloadable Plus5 frame raises the cover arrangement. Treat it as an enclosure modification, not extra Z travel.",
+          "compatibility": "Plus5 physical design only; obtain matching files and any required hardware from the linked listing.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "QIDI Plus5 printable components",
+              "url": "https://wiki.qidi3d.com/en/Plus5/Printable-Components",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "QIDI BOX material system",
+          "summary": "Adds automated filament changing using the manufacturer’s model-specific connection and setup procedure.",
+          "compatibility": "Plus5 connection procedure and current model firmware required.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "QIDI BOX model connections and Plus4 upgrade requirements",
+              "url": "https://wiki.qidi3d.com/en/QIDIBOX",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "First layer fails to adhere",
+          "summary": "Inspect first-layer spacing and plate cleanliness, then follow the model’s Z-offset and calibration procedure. Persistent problems after calibration go to model support.",
+          "compatibility": "Plus5 touchscreen and plate procedure; choose cleaning appropriate to the installed surface.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "QIDI Plus5 first-layer adhesion troubleshooting",
+              "url": "https://wiki.qidi3d.com/en/Plus5/Not-Sticking-to-the-bed",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI Plus5 model documentation",
+          "url": "https://wiki.qidi3d.com/en/Plus5",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "qidi-q1-pro": {
+      "firmware": [
+        {
+          "title": "FreeDi community firmware",
+          "summary": "Replaces the stock software stack with a community-maintained Klipper ecosystem and alternative display software.",
+          "compatibility": "Q1 Pro is explicitly supported; follow its hardware-specific installation and recovery instructions.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "FreeDi supported printers and installation documentation",
+              "url": "https://github.com/Phil1988/FreeDi",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Revision-2 build-plate guides",
+          "summary": "The creator replaces the stock bed shroud with split guides to help locate the removable plate.",
+          "compatibility": "Q1 Pro revision 2 only; the creator distinguishes revision-specific parts and macro configurations.",
+          "evidence": "creator listing",
+          "section": "I",
+          "sources": [
+            {
+              "title": "jrymk Q1 Pro modifications and actual part files",
+              "url": "https://github.com/jrymk/q1pro-mods",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Clogging or hotend heating errors",
+          "summary": "The official guide separates extruder, hotend and nozzle cleaning. For heating errors, its replacement-hotend comparison helps distinguish the hotend from the adapter board.",
+          "compatibility": "Q1 Pro; follow the diagnostic branch for the displayed message before replacing parts.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "QIDI Q1 Pro clog and hotend error diagnosis",
+              "url": "https://wiki.qidi3d.com/en/Q1-Pro/Troubleshooting/clog",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI Q1 Pro model documentation",
+          "url": "https://wiki.qidi3d.com/en/Q1-Pro",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "qidi-x-max-3": {
+      "firmware": [
+        {
+          "title": "FreeDi community firmware",
+          "summary": "Replaces the stock software stack with a community-maintained Klipper ecosystem and alternative display software.",
+          "compatibility": "X-Max3 is explicitly supported; follow its hardware-specific installation and recovery instructions.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "FreeDi supported printers and installation documentation",
+              "url": "https://github.com/Phil1988/FreeDi",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Side-mounted spool-holder brackets",
+          "summary": "Doug’s downloadable brackets relocate the spool holder to the side, changing the filament-access layout.",
+          "compatibility": "X-Max3 is explicitly named; verify side clearance and the creator’s required hardware.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "QIDI external spool-holder creator files",
+              "url": "https://wiki.qidi3d.com/en/Memo/external-spool-holder",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Doug: X-Plus3 and X-Max3 side spool-holder mount files",
+              "url": "https://www.printables.com/model/539878-qidi-x-plus3-x-max3-side-spool-holder-mounts/files",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Nozzle or extruder blockage",
+          "summary": "Use the manufacturer’s model-specific cleaning instructions to locate the obstruction rather than treating every extrusion failure as a nozzle-only problem.",
+          "compatibility": "X-Max3 hotend and extruder arrangement; use material-appropriate loading temperatures.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "QIDI X-Max3 extrusion-blockage troubleshooting",
+              "url": "https://wiki.qidi3d.com/en/X-Max3/Troubleshooting/nozzle-clog",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI X-Max3 model documentation",
+          "url": "https://wiki.qidi3d.com/en/X-Max3",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "qidi-x-plus-3": {
+      "firmware": [
+        {
+          "title": "FreeDi community firmware",
+          "summary": "Replaces the stock software stack with a community-maintained Klipper ecosystem and alternative display software.",
+          "compatibility": "X-Plus3 is explicitly supported; follow its hardware-specific installation and recovery instructions.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "FreeDi supported printers and installation documentation",
+              "url": "https://github.com/Phil1988/FreeDi",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Side-mounted spool-holder brackets",
+          "summary": "Doug’s downloadable brackets relocate the spool holder to the side, changing the filament-access layout.",
+          "compatibility": "X-Plus3 is explicitly named; verify side clearance and the creator’s required hardware.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "QIDI external spool-holder creator files",
+              "url": "https://wiki.qidi3d.com/en/Memo/external-spool-holder",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Doug: X-Plus3 and X-Max3 side spool-holder mount files",
+              "url": "https://www.printables.com/model/539878-qidi-x-plus3-x-max3-side-spool-holder-mounts/files",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Replacement printhead cover with fan",
+          "summary": "The manufacturer offers replacement front/back cover components with a small fan for this printhead.",
+          "compatibility": "X-Plus3 is explicitly listed; front and back cover variants are separate selections.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "QIDI X-Plus3/X-Smart3 printhead cover with small fan",
+              "url": "https://qidi3d.com/collections/x-plus-3-accessories/products/x-plus3-x-smart3-printhead-cover-lncludes-small-fan",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Nozzle or extruder blockage",
+          "summary": "Use the manufacturer’s model-specific cleaning instructions to locate the obstruction rather than treating every extrusion failure as a nozzle-only problem.",
+          "compatibility": "X-Plus3 hotend and extruder arrangement; use material-appropriate loading temperatures.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "QIDI X-Plus3 extrusion-blockage troubleshooting",
+              "url": "https://wiki.qidi3d.com/en/X-Plus3/Troubleshooting/clogged-instruction",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI X-Plus3 model documentation",
+          "url": "https://wiki.qidi3d.com/en/X-Plus3",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "qidi-x-smart-3": {
+      "firmware": [
+        {
+          "title": "FreeDi community firmware",
+          "summary": "Replaces the stock software stack with a community-maintained Klipper ecosystem and alternative display software.",
+          "compatibility": "X-Smart3 is explicitly supported; follow its hardware-specific installation and recovery instructions.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "FreeDi supported printers and installation documentation",
+              "url": "https://github.com/Phil1988/FreeDi",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Bearing spool-holder files",
+          "summary": "QIDI’s curated listing explicitly includes X-Smart3 among the printers supported by C.P.’s bearing spool holder.",
+          "compatibility": "Use the linked bearing-holder design and its hardware list, not a different model’s side-mount bracket.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "QIDI Plus4 printable components: C.P. bearing spool holder and compatibility list",
+              "url": "https://wiki.qidi3d.com/en/X-Plus4/Printable-Components",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Replacement printhead cover with fan",
+          "summary": "The manufacturer offers replacement front/back cover components with a small fan for this printhead.",
+          "compatibility": "X-Smart3 is explicitly listed; front and back cover variants are separate selections.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "QIDI X-Plus3/X-Smart3 printhead cover with small fan",
+              "url": "https://qidi3d.com/collections/x-plus-3-accessories/products/x-plus3-x-smart3-printhead-cover-lncludes-small-fan",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Filament blockage diagnostic routes",
+          "summary": "The X-Smart3 support index links its error, maintenance and filament-clog procedures; select the guide matching the symptom before disassembling the printhead.",
+          "compatibility": "X-Smart3 support routes; a shared linked article does not establish that another printer’s parts fit.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "QIDI X-Smart3 model troubleshooting and maintenance",
+              "url": "https://wiki.qidi3d.com/en/X-Smart3",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI X-Smart3 model documentation",
+          "url": "https://wiki.qidi3d.com/en/X-Smart3",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "qidi-i-fast": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Use the legacy i-Fast slicer workflow",
+          "summary": "QIDI explicitly includes i-Fast in the QIDI Print compatibility list, while separating that slicer from its newer high-speed printers. Confirm the selected printer profile when a transferred job behaves incorrectly.",
+          "compatibility": "i-Fast; the manufacturer lists QIDI Print 6.5.4 for this legacy series, not the X3-generation workflow.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "QIDI official legacy-printer software compatibility",
+              "url": "https://kr.qidi3d.com/pages/software-firmware",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "QIDI official legacy-printer software compatibility",
+          "url": "https://kr.qidi3d.com/pages/software-firmware",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ad5m": {
+      "firmware": [
+        {
+          "title": "Community Klipper replacement stack",
+          "summary": "The beta project runs Klipper, Moonraker and browser interfaces on the printer’s built-in host; installation and uninstall/recovery are documented by its maintainer.",
+          "compatibility": "Adventurer 5M only; observe the project’s hardware and stock-firmware requirements, including limited host memory.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "xblax AD5M/AD5M Pro Klipper mod support and recovery",
+              "url": "https://github.com/xblax/flashforge_ad5m_klipper_mod",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "FlashForge AD5M enclosure files",
+          "summary": "FlashForge supplies the printable enclosure parts, STEP geometry and assembly instructions for enclosing the open AD5M.",
+          "compatibility": "AD5M enclosure design; panels and other nonprinted hardware are also required.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "FlashForge maker-authorized printer modification files",
+              "url": "https://wiki.flashforge.com/en/knowledge_corner/printer-mod-and-diy",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "AD5M enclosure hardware kit",
+          "summary": "The manufacturer’s enclosure kit supplies the nonprinted components used with the downloadable enclosure design.",
+          "compatibility": "Adventurer 5M; match the kit and printed enclosure revision.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "FlashForge AD5M enclosure hardware kit",
+              "url": "https://www.flashforge.com/products/adventurer-5m-enclosure-kit?variant=41518083506254",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Clogging and leveling after nozzle changes",
+          "summary": "The official FAQ provides clog-clearing checks and calls for automatic leveling after nozzle replacement before evaluating the next first layer.",
+          "compatibility": "Adventurer 5M; follow the nozzle-specific replacement procedure.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "FlashForge Adventurer 5M FAQ",
+              "url": "https://www.flashforge.com/a/docs/adventurer-5m-series/faq-for-adventurer-5m",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge Adventurer 5M support",
+          "url": "https://support.flashforge.com/guide/3d-printer/adventurer-5m",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "flashforge-ad5m-pro": {
+      "firmware": [
+        {
+          "title": "Community Klipper replacement stack",
+          "summary": "The beta project runs Klipper, Moonraker and browser interfaces on the printer’s built-in host; installation and uninstall/recovery are documented by its maintainer.",
+          "compatibility": "Adventurer 5M Pro only; observe the project’s hardware and stock-firmware requirements, including limited host memory.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "xblax AD5M/AD5M Pro Klipper mod support and recovery",
+              "url": "https://github.com/xblax/flashforge_ad5m_klipper_mod",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Moshe Zaitman’s Pro tool and spool holders",
+          "summary": "The authorized STL collection includes an AD5M Pro tool holder and replacement lower spool-holder parts.",
+          "compatibility": "AD5M Pro files specifically; select the matching holder version and mounting parts.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "FlashForge maker-authorized printer modification files",
+              "url": "https://wiki.flashforge.com/en/knowledge_corner/printer-mod-and-diy",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Nozzle blockage and first-layer checks",
+          "summary": "Use the Pro manual’s loading/nozzle-clearing procedure, then its prescribed calibration after nozzle replacement.",
+          "compatibility": "Adventurer 5M Pro factory nozzle system.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "FlashForge Adventurer 5M Pro user manual",
+              "url": "https://wiki.flashforge.com/resource/adventurer_series_manual/adventurer_5m_pro_manual.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge Adventurer 5M Pro support",
+          "url": "https://support.flashforge.com/guide/3d-printer/adventurer-5m-pro",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "flashforge-ad5x": {
+      "firmware": [
+        {
+          "title": "Z-Mod stock-system extension",
+          "summary": "Community modifications add web interfaces and calibration functions while retaining the supported stock base.",
+          "compatibility": "AD5X only, using a stock version explicitly listed by Z-Mod; not the AD5M image.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Z-Mod supported printers and stock-firmware version matrix",
+              "url": "https://github.com/ghzserg/zmod",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "AD5X Bowden-tube clip",
+          "summary": "FlashForge publishes the actual downloadable clip model for organizing the AD5X Bowden tubes.",
+          "compatibility": "AD5X physical clip design; printing it on another printer does not establish fit there.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "FlashForge AD5X printable Bowden clip ZIP",
+              "url": "https://wiki.flashforge.com/en/ad5x/AD5XBowdenClip",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Leveling and nozzle-contact errors",
+          "summary": "The manufacturer directs users to remove nozzle residue and clear the bed before retrying leveling; unresolved faults require logs for support diagnosis.",
+          "compatibility": "AD5X factory calibration and support-log workflow.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "FlashForge AD5X hardware troubleshooting",
+              "url": "https://wiki.flashforge.com/en/ad5x/troubleshooting_equipment_hardware_issues",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge AD5X model support",
+          "url": "https://support.flashforge.com/guide/3d-printer/ad5x",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "flashforge-creator-5": {
+      "firmware": [
+        {
+          "title": "Z-Mod stock-system extension",
+          "summary": "Community modifications add web interfaces and calibration functions while retaining the supported stock base.",
+          "compatibility": "Creator 5 with stock firmware 1.9.9 or 2.0.0, as listed by the maintainer.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Z-Mod supported printers and stock-firmware version matrix",
+              "url": "https://github.com/ghzserg/zmod",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Rear waste-filament collection box",
+          "summary": "Manufacturer STEP, 3MF and print files provide a rear-mounted hanger and collection bin. Empty accumulated waste between jobs.",
+          "compatibility": "Creator 5 and Creator 5 Pro; use the specified hanger/adhesive mounting arrangement.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "FlashForge Creator 5/5 Pro waste-bin STEP and print files",
+              "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/waste-filament-box",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Extruder-mount cable separation clip",
+          "summary": "FlashForge supplies a 3MF clip to separate the mount cable from the T4 cable where their paths intersect.",
+          "compatibility": "Creator 5/5 Pro; print in the manufacturer-specified PLA or PETG and follow its seating diagram.",
+          "evidence": "creator listing",
+          "section": "M",
+          "sources": [
+            {
+              "title": "FlashForge Creator 5 series usage troubleshooting and printable cable clip",
+              "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/troubleshooting-equipment-usage-issues",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "First-layer nozzle scraping",
+          "summary": "Clean residue from the nozzle and bed, then repeat automatic leveling. The official escalation path checks firmware and sends logs to support if scraping persists.",
+          "compatibility": "Creator 5 factory leveling workflow.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "FlashForge Creator 5 series usage troubleshooting and printable cable clip",
+              "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/troubleshooting-equipment-usage-issues",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge Creator 5 model support",
+          "url": "https://support.flashforge.com/guide/3d-printer/creator-5",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "flashforge-creator-5-pro": {
+      "firmware": [
+        {
+          "title": "Z-Mod stock-system extension",
+          "summary": "Community modifications add web interfaces and calibration functions while retaining the supported stock base.",
+          "compatibility": "Creator 5 Pro with stock firmware 1.9.9 or 2.0.0, as listed by the maintainer.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Z-Mod supported printers and stock-firmware version matrix",
+              "url": "https://github.com/ghzserg/zmod",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Rear waste-filament collection box",
+          "summary": "Manufacturer STEP, 3MF and print files provide a rear-mounted hanger and collection bin. Empty accumulated waste between jobs.",
+          "compatibility": "Creator 5 and Creator 5 Pro; use the specified hanger/adhesive mounting arrangement.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "FlashForge Creator 5/5 Pro waste-bin STEP and print files",
+              "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/waste-filament-box",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Extruder-mount cable separation clip",
+          "summary": "FlashForge supplies a 3MF clip to separate the mount cable from the T4 cable where their paths intersect.",
+          "compatibility": "Creator 5/5 Pro; print in the manufacturer-specified PLA or PETG and follow its seating diagram.",
+          "evidence": "creator listing",
+          "section": "M",
+          "sources": [
+            {
+              "title": "FlashForge Creator 5 series usage troubleshooting and printable cable clip",
+              "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/troubleshooting-equipment-usage-issues",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "First-layer nozzle scraping",
+          "summary": "Clean residue from the nozzle and bed, then repeat automatic leveling. The official escalation path checks firmware and sends logs to support if scraping persists.",
+          "compatibility": "Creator 5 Pro factory leveling workflow.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "FlashForge Creator 5 series usage troubleshooting and printable cable clip",
+              "url": "https://wiki.flashforge.com/en/creator-series/creator-5-series/troubleshooting-equipment-usage-issues",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge Creator 5 Pro model support",
+          "url": "https://support.flashforge.com/guide/3d-printer/creator-5-pro",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "flashforge-creator-4": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Select the material-specific extruder configuration",
+          "summary": "FlashForge distinguishes flexible-filament F, engineering-material HT and composite-material HS configurations rather than one universally interchangeable extrusion setup.",
+          "compatibility": "Creator 4: F uses 2.85 mm filament; HT and HS use 1.75 mm. Confirm the installed configuration and approved conversion parts.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "FlashForge Creator 4 material-specific extruder configurations",
+              "url": "https://enterprise.flashforge.com/it/pages/creator-4-3d-printer",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Extruder moves but material does not appear",
+          "summary": "The manual first checks whether filament has reached the extruder and directs the operator to repeat Load until material exits. If the nozzle is blocked, it points to the printer’s Maintenance route and the dedicated clearing procedure.",
+          "compatibility": "Creator 4 diagnostic route in the manufacturer’s EN-A01 guide; use the maintenance procedure for the installed F, HT or HS extruder. This is not failure-frequency evidence.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Flashforge Creator 4 User Guide EN-A01, August 2021, §8 Q1/Q4 p32 and §7.2.2 (PentaPrint mirror)",
+              "url": "https://pentaprint3d.fr/wp-content/uploads/2023/12/Creator4-User-Manual_EN.pdf#page=33",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Nozzle gap or first-layer adhesion diagnosis",
+          "summary": "For an incorrect nozzle-to-bed gap, the guide directs the operator to Z calibration. Its separate adhesion checklist covers platform temperature, raft or glue preparation, nozzle clearance and a flat platform, with full automatic leveling among the documented options.",
+          "compatibility": "Creator 4, EN-A01 §8 Q5/Q10; select material-appropriate settings rather than treating every adhesion problem as the same fault. The checklist does not establish prevalence.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "Flashforge Creator 4 User Guide EN-A01, §8 Q5 p32 and Q10 p33 (PentaPrint mirror)",
+              "url": "https://pentaprint3d.fr/wp-content/uploads/2023/12/Creator4-User-Manual_EN.pdf#page=34",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge Creator 4 material-specific extruder configurations",
+          "url": "https://enterprise.flashforge.com/it/pages/creator-4-3d-printer",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "flashforge-guider-3": {
+      "firmware": [
+        {
+          "title": "Official Guider 3 firmware downloads",
+          "summary": "The manufacturer maintains separate stock-firmware packages and manuals for this model.",
+          "compatibility": "Select Guider 3 explicitly; Guider 3 and Guider 3 Plus packages are separate.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "FlashForge Guider series model-specific manuals and stock firmware",
+              "url": "https://www.flashforge.com/blogs/download-center/guider-series",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Motion starts but filament does not extrude",
+          "summary": "First confirm filament reaches the extruder and repeat loading if necessary. If feeding is established, use the manual’s Maintenance clog-clearing route.",
+          "compatibility": "Guider 3 factory extruder; distinguish loading failure from a blocked nozzle.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "FlashForge Guider 3 manufacturer user manual, Q&A",
+              "url": "https://en.fss.flashforge.com/10000/software/300e2ae206fc33fa79735a1cc6f94671.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge Guider series model-specific manuals and stock firmware",
+          "url": "https://www.flashforge.com/blogs/download-center/guider-series",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "flashforge-guider-3-plus": {
+      "firmware": [
+        {
+          "title": "Official Guider 3 Plus firmware downloads",
+          "summary": "The manufacturer maintains separate stock-firmware packages and manuals for this model.",
+          "compatibility": "Select Guider 3 Plus explicitly; Guider 3 and Guider 3 Plus packages are separate.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "FlashForge Guider series model-specific manuals and stock firmware",
+              "url": "https://www.flashforge.com/blogs/download-center/guider-series",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Motion without extrusion: check loading before dismantling the nozzle",
+          "summary": "The Guider 3 Plus manual separates incomplete filament loading from a nozzle clog. Confirm that material reaches the extruder, then use the printer’s maintenance instructions if the nozzle remains blocked.",
+          "compatibility": "Guider 3 Plus user manual, chapter 7 Q1–Q4 (English p.22). Its instructions differ from other Guider models.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "FlashForge Guider 3 Plus official bilingual user manual",
+              "url": "https://en.fss.flashforge.com/10000/software/f5fafa5375839580c33da215b930583a.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge Guider series model-specific manuals and stock firmware",
+          "url": "https://www.flashforge.com/blogs/download-center/guider-series",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "flashforge-guider-3-ultra": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Abnormal Z-calibration data",
+          "summary": "Check nozzle debris, plate seating and debris below the plate, then recalibrate. Persistent abnormal readings follow the manufacturer’s load-cell/adapter-board support diagnosis.",
+          "compatibility": "Guider 3 Ultra; the similarly named wiki path does not describe Guider 3 or Guider 3 Plus.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "FlashForge Guider 3 Ultra troubleshooting",
+              "url": "https://wiki.flashforge.com/en/guider_series/guider_3/troubleshooting-g3u",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "FlashForge Guider 3 Ultra manual and maintenance index",
+          "url": "https://wiki.flashforge.com/en/guider_series/guider_3",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "snapmaker-artisan": {
+      "firmware": [
+        {
+          "title": "Official Artisan controller source",
+          "summary": "Snapmaker publishes its Marlin-based main-controller source for developers; this is manufacturer source availability, not a verified independent firmware distribution.",
+          "compatibility": "Artisan controller and its supplied configuration; ordinary Marlin example configurations are not verified replacements.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Snapmaker official Artisan controller source",
+              "url": "https://github.com/Snapmaker/Artisan-Controller",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Dual-extrusion module fails to feed",
+          "summary": "The diagnostic tree distinguishes a loose extruder buckle from extruder, hotend and nozzle blockages, directing cleaning or replacement according to the observed branch.",
+          "compatibility": "Artisan dual-extrusion 3D-printing module; not the J1/J1s hotend assembly.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Snapmaker dual-extrusion filament-not-extruded diagnosis",
+              "url": "https://wiki.snapmaker.com/en/general/troubleshooting/filament_not_extruded",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Snapmaker official Artisan controller source",
+          "url": "https://github.com/Snapmaker/Artisan-Controller",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "snapmaker-j1s": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Top-panel riser creator files",
+          "summary": "Snapmaker’s J1/J1s modification guide links Wombley’s actual top-panel riser STL and installation resource.",
+          "compatibility": "Manufacturer-curated J1/J1s modification; verify the selected riser revision and rear-fan clearance before assembly.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Snapmaker J1/J1s manufacturer-curated creator STL modifications",
+              "url": "https://wiki.snapmaker.com/en/snapmaker_j1/manual/suggested_modification_for_j1_j1s",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "J1/J1s hotend and nozzle-material options",
+          "summary": "Manufacturer hotend variants change nozzle diameter and wear resistance. The all-metal 0.4 mm hardened-steel version has an interference-fit nozzle rather than an individually replaceable threaded nozzle.",
+          "compatibility": "J1/J1s only; confirm whether the selected assembly uses a threaded or interference-fit nozzle.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Snapmaker J1/J1s official replacement hotend configurations",
+              "url": "https://us.snapmaker.com/products/hot-end-for-snapmaker-j1-3d-printing-module",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "A nozzle blob needs an adhesion check as well as cleanup",
+          "summary": "Snapmaker’s shared blob-removal guide explicitly links the J1/J1s hotend procedure. It connects buildup around the nozzle with first-layer adhesion and filament condition, then describes cleanup and replacement paths with care around heater and thermistor wiring.",
+          "compatibility": "Shared Snapmaker guidance with J1/J1s-specific hotend removal link. Follow the linked model procedure and material conditions rather than applying another module’s disassembly sequence.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Snapmaker nozzle-blob diagnosis and J1/J1s removal links",
+              "url": "https://wiki.snapmaker.com/general/troubleshooting/nozzle_blobs",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Snapmaker J1/J1s manufacturer-curated creator STL modifications",
+          "url": "https://wiki.snapmaker.com/en/snapmaker_j1/manual/suggested_modification_for_j1_j1s",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "snapmaker-u1": {
+      "firmware": [
+        {
+          "title": "Independent U1 extended firmware",
+          "summary": "The project repackages U1 firmware with additional access and interface features. Release and rolling-development channels have different testing status.",
+          "compatibility": "U1 only; follow current installation/recovery instructions and read prerelease labels, rather than assuming a development build is stable.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Paxx12 Snapmaker U1 extended firmware documentation",
+              "url": "https://github.com/paxx12-snapmaker-u1/SnapmakerU1-Extended-Firmware",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "Paxx12 U1 firmware releases and prerelease channel labels",
+              "url": "https://github.com/paxx12-snapmaker-u1/SnapmakerU1-Extended-Firmware/releases",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Srin’s DIY Top Hat enclosure",
+          "summary": "The creator supplies printable frame variants and bills of materials for a removable upper enclosure fitted to the U1 top packing.",
+          "compatibility": "U1-specific design; variants require different panels, dowels and tape. Choose one complete matching design/BOM.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Srin U1 DIY Top Hat actual STL designs and bill of materials",
+              "url": "https://github.com/srinn/Snapmaker-U1-DIY-Top-Hat",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Official Top Cover with controlled circulation and filtration",
+          "summary": "The optional cover provides exhaust and recirculation modes tied to material profiles. The manufacturer documents automatic heat protection, filter service prompts and software fixes for incorrect fan-mode selection.",
+          "compatibility": "Snapmaker U1 official Top Cover; check current firmware and Snapmaker Orca compatibility. Its filtration claims do not apply to an unfiltered printed top-hat enclosure.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Snapmaker U1 Top Cover use, fan behavior and troubleshooting",
+              "url": "https://wiki.snapmaker.com/en/snapmaker_u1/top_cover",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "No toolhead detected: distinguish one faulty head from a shared supply fault",
+          "summary": "The official error-code guide uses the toolhead indicator and one-head-at-a-time checks to distinguish a toolhead failure from a shared power problem. It also documents PCB capacitor damage from incorrect or overtightened cable screws.",
+          "compatibility": "U1 error 0003-0522-0100-0006. Disconnect power before plugging or unplugging cables; follow the manufacturer’s full diagnostic sequence.",
+          "evidence": "official troubleshooting",
+          "section": "M",
+          "sources": [
+            {
+              "title": "Snapmaker U1 no-toolhead-detected diagnosis",
+              "url": "https://wiki.snapmaker.com/en/snapmaker_u1/troubleshooting/no_toolhead_detected",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Paxx12 Snapmaker U1 extended firmware documentation",
+          "url": "https://github.com/paxx12-snapmaker-u1/SnapmakerU1-Extended-Firmware",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Srin U1 DIY Top Hat actual STL designs and bill of materials",
+          "url": "https://github.com/srinn/Snapmaker-U1-DIY-Top-Hat",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "formlabs-form-4": {
+      "firmware": [
+        {
+          "title": "Official Open Material Mode",
+          "summary": "A purchased, per-printer manufacturer activation enables supported third-party 405 nm resin workflows; this is not replacement community firmware.",
+          "compatibility": "Form 4 requires at least firmware 1.6.0 and PreForm 3.38.1, plus activation connectivity.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Formlabs Open Material Mode activation and minimum versions",
+              "url": "https://formlabs.com/support/Setting-up-Open-Material-Mode/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Build-platform wall-mount files",
+          "summary": "Formlabs supplies actual CAD/STL files for storing the build platform on a wall mount between jobs.",
+          "compatibility": "Use the Form 4 generation design and the manufacturer’s material/mounting instructions.",
+          "evidence": "creator listing",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Formlabs actual printable replacement-part CAD/STL files",
+              "url": "https://formlabs.com/support/Printable-parts-for-Formlabs-devices/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Resin Pump for bulk containers",
+          "summary": "The official pump replaces the cartridge supply with a supported 5 L resin-container workflow, reducing cartridge changes.",
+          "compatibility": "Compatible with Form 4; check the specific resin’s pumping-system eligibility and material-change procedure.",
+          "evidence": "manufacturer documentation",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Formlabs Resin Pump Form 4/4L compatibility",
+              "url": "https://formlabs.com/uk/products/resin-pump-form-4/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Resin cartridge is not detected",
+          "summary": "Use the manufacturer’s firmware and cartridge-identification/RFID checks before following the model-specific hardware replacement branch.",
+          "compatibility": "Form 4 generation; do not assume Form 4 and Form 4L cartridge-floor service parts are interchangeable.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Formlabs Form 4/4L resin-cartridge detection troubleshooting",
+              "url": "https://formlabs.com/support/Resin-cartridge-not-detected-properly-Form-4-and-Form-4L-generation/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Formlabs Form 4 support articles",
+          "url": "https://formlabs.com/support/sla-printers/form-4-articles/",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "formlabs-form-4l": {
+      "firmware": [
+        {
+          "title": "Official Open Material Mode",
+          "summary": "A purchased, per-printer manufacturer activation enables supported third-party 405 nm resin workflows; this is not replacement community firmware.",
+          "compatibility": "Form 4L requires at least firmware 1.10.0 and PreForm 3.41.0, plus activation connectivity.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Formlabs Open Material Mode activation and minimum versions",
+              "url": "https://formlabs.com/support/Setting-up-Open-Material-Mode/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Large build-platform mount files",
+          "summary": "The manufacturer’s downloadable mount stores the larger platform; its material guidance accounts for the heavier assembly.",
+          "compatibility": "Form 4L generation; Formlabs recommends a strong, stiff material such as Nylon 12 GF for this mount.",
+          "evidence": "creator listing",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Formlabs actual printable replacement-part CAD/STL files",
+              "url": "https://formlabs.com/support/Printable-parts-for-Formlabs-devices/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Resin Pump for bulk containers",
+          "summary": "The official pump replaces the cartridge supply with a supported 5 L resin-container workflow, reducing cartridge changes.",
+          "compatibility": "Compatible with Form 4L; check the specific resin’s pumping-system eligibility and material-change procedure.",
+          "evidence": "manufacturer documentation",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Formlabs Resin Pump Form 4/4L compatibility",
+              "url": "https://formlabs.com/uk/products/resin-pump-form-4/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Resin cartridge is not detected",
+          "summary": "Use the manufacturer’s firmware and cartridge-identification/RFID checks before following the model-specific hardware replacement branch.",
+          "compatibility": "Form 4L generation; do not assume Form 4 and Form 4L cartridge-floor service parts are interchangeable.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Formlabs Form 4/4L resin-cartridge detection troubleshooting",
+              "url": "https://formlabs.com/support/Resin-cartridge-not-detected-properly-Form-4-and-Form-4L-generation/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Formlabs Form 4L support articles",
+          "url": "https://formlabs.com/support/sla-printers/form-4l-articles/",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "phrozen-sonic-mighty-revo": {
+      "firmware": [
+        {
+          "title": "Official Sonic Mighty Revo 14K firmware",
+          "summary": "The manufacturer publishes stock updates with model-specific file selection and update sequencing.",
+          "compatibility": "Choose the 14K row, not the 16K or 16K-upgrade package; follow its FPGA/app version checks.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Phrozen model-specific stock firmware and release notes",
+              "url": "https://helpcenter.phrozen3d.com/hc/en-us/articles/6369983852569-Firmware-downloads-and-release-notes",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Pump & Fill resin feeder",
+          "summary": "The official accessory adds automated resin filling and pumping for the supported machine.",
+          "compatibility": "Sonic Mighty Revo 14K is explicitly listed; match the required connections and firmware. Mini 8K S is not listed.",
+          "evidence": "manufacturer documentation",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Phrozen Pump & Fill supported printer models",
+              "url": "https://us.phrozen3d.com/products/pump-fill-automated-resin-feeder",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Binding, noise or irregular Z motion",
+          "summary": "Follow the manufacturer’s ballscrew inspection/cleaning and motor-connection diagnostic sequence; unresolved behavior goes to support with the requested evidence.",
+          "compatibility": "Sonic Mighty Revo; verify your 14K hardware against the illustrated procedure.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Phrozen Mighty Revo Z-axis and motor checks",
+              "url": "https://helpcenter.phrozen3d.com/hc/en-us/articles/28051821459097--Sonic-Mighty-Revo-Checking-the-Z-axis-and-Motor",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Phrozen model-specific stock firmware and release notes",
+          "url": "https://helpcenter.phrozen3d.com/hc/en-us/articles/6369983852569-Firmware-downloads-and-release-notes",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "phrozen-sonic-mini-8k-s": {
+      "firmware": [
+        {
+          "title": "Official Sonic Mini 8K S firmware",
+          "summary": "The manufacturer publishes stock updates with model-specific file selection and update sequencing.",
+          "compatibility": "Choose Mini 8K S, not Mini 8K or another mainboard package.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Phrozen model-specific stock firmware and release notes",
+              "url": "https://helpcenter.phrozen3d.com/hc/en-us/articles/6369983852569-Firmware-downloads-and-release-notes",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Unresponsive, white or dark touch panel",
+          "summary": "The official guide separates cable/connection checks from the correct model’s firmware recovery path before escalating a persistent panel fault.",
+          "compatibility": "Sonic Mini 8K S only; perform connection checks with the machine powered off as directed.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "Phrozen Sonic Mini 8K S touch-panel troubleshooting",
+              "url": "https://helpcenter.phrozen3d.com/hc/en-us/articles/18877828396441--Sonic-Mini-8K-S-Checking-the-Touch-Panel",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Phrozen model-specific stock firmware and release notes",
+          "url": "https://helpcenter.phrozen3d.com/hc/en-us/articles/6369983852569-Firmware-downloads-and-release-notes",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "uniformation-gktwo": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Z axis does not move during printing",
+          "summary": "The GK2 FAQ directs a powered-off mechanical check for a jam and then support escalation; it distinguishes this symptom from a touch-panel region that does not respond.",
+          "compatibility": "GKtwo/GK2 section only; GK3 Ultra firmware-error advice on the same page is a different model.",
+          "evidence": "official troubleshooting",
+          "section": "W",
+          "sources": [
+            {
+              "title": "UniFormation GKtwo-specific printing FAQ",
+              "url": "https://uniformation3d.com/pages/printing-faq",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "UniFormation GKtwo-specific printing FAQ",
+          "url": "https://uniformation3d.com/pages/printing-faq",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "UniFormation GKtwo user-guide support center",
+          "url": "https://uniformation3d.com/pages/uniformation-support-center",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "raise3d-pro3": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Official HyperSpeed upgrade kit",
+          "summary": "The kit combines compatible hotends, firmware activation and matched material/profile workflows; it is more than increasing a slicer speed setting.",
+          "compatibility": "Pro3/Pro3 Plus kit only; serial-bound activation and motion-controller firmware 1.3.0411 are installation prerequisites.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Raise3D Pro3 HyperSpeed kit official installation prerequisites",
+              "url": "https://support.raise3d.com/Hyper-FFF%E2%84%A2/hyper-speed-upgrade-kit-pro3-series-only-user-manual-34-1680.html",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Filament jam or interrupted extrusion",
+          "summary": "The official sequence tests unloading and locates the obstruction along the feed path, distinguishing a hotend blockage from an upper extruder obstruction before replacing parts.",
+          "compatibility": "Pro3 interchangeable-hotend system; the guide advises support rather than forced removal of a blocked assembly.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Raise3D Pro3 jam diagnosis and clearing procedure",
+              "url": "https://support.raise3d.com/Pro3-Series/how-to-clear-a-jam-26-1440.html",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Raise3D Pro3 HyperSpeed kit official installation prerequisites",
+          "url": "https://support.raise3d.com/Hyper-FFF%E2%84%A2/hyper-speed-upgrade-kit-pro3-series-only-user-manual-34-1680.html",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ultimaker-factor-4": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Print-core restriction or inconsistent flow",
+          "summary": "Use the manufacturer’s guided print-core cleaning and hot/cold-pull procedure when diagnosis indicates a restriction.",
+          "compatibility": "Factor 4 is within the article’s S-series/Factor 4 scope; use its supported cleaning material.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "UltiMaker S-series/Factor 4 print-core cleaning",
+              "url": "https://support.ultimaker.com/articles/Knowledge/1667410778237",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "UltiMaker S-series/Factor 4 print-core cleaning",
+          "url": "https://support.ultimaker.com/articles/Knowledge/1667410778237",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ultimaker-s5": {
+      "firmware": [
+        {
+          "title": "Official stock-firmware recovery",
+          "summary": "The manufacturer documents recovery for startup faults; select the exact hardware branch before service.",
+          "compatibility": "S5: standard S-series image; S5 R1/2018–2020 recovery requires support.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "UltiMaker S-series firmware recovery model and board restrictions",
+              "url": "https://support.ultimaker.com/s/article/1877434822572",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Material Station add-on",
+          "summary": "The compatible accessory adds multi-spool loading and automated material-change workflows.",
+          "compatibility": "UltiMaker S5 is explicitly supported; material profiles must also support the Station.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "UltiMaker Material Station model compatibility",
+              "url": "https://support.ultimaker.com/articles/Knowledge/1667337922455",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Print-core restriction or inconsistent flow",
+          "summary": "Use the manufacturer’s guided print-core cleaning and hot/cold-pull procedure when diagnosis indicates a restriction.",
+          "compatibility": "S5 is within the article’s S-series/Factor 4 scope; use its supported cleaning material.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "UltiMaker S-series/Factor 4 print-core cleaning",
+              "url": "https://support.ultimaker.com/articles/Knowledge/1667410778237",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "UltiMaker S-series/Factor 4 print-core cleaning",
+          "url": "https://support.ultimaker.com/articles/Knowledge/1667410778237",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ultimaker-s7": {
+      "firmware": [
+        {
+          "title": "Official stock-firmware recovery",
+          "summary": "The manufacturer documents recovery for startup faults; select the exact hardware branch before service.",
+          "compatibility": "S7: standard S-series image, not the S8 high-speed image.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "UltiMaker S-series firmware recovery model and board restrictions",
+              "url": "https://support.ultimaker.com/s/article/1877434822572",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Material Station add-on",
+          "summary": "The compatible accessory adds multi-spool loading and automated material-change workflows.",
+          "compatibility": "UltiMaker S7 is explicitly supported; material profiles must also support the Station.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "UltiMaker Material Station model compatibility",
+              "url": "https://support.ultimaker.com/articles/Knowledge/1667337922455",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Print-core restriction or inconsistent flow",
+          "summary": "Use the manufacturer’s guided print-core cleaning and hot/cold-pull procedure when diagnosis indicates a restriction.",
+          "compatibility": "S7 is within the article’s S-series/Factor 4 scope; use its supported cleaning material.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "UltiMaker S-series/Factor 4 print-core cleaning",
+              "url": "https://support.ultimaker.com/articles/Knowledge/1667410778237",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "UltiMaker S-series/Factor 4 print-core cleaning",
+          "url": "https://support.ultimaker.com/articles/Knowledge/1667410778237",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "ultimaker-s8": {
+      "firmware": [
+        {
+          "title": "Official stock-firmware recovery",
+          "summary": "The manufacturer documents recovery for startup faults; select the exact hardware branch before service.",
+          "compatibility": "S8: high-speed S6/S8 image, not the S5/S7 image.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "UltiMaker S-series firmware recovery model and board restrictions",
+              "url": "https://support.ultimaker.com/s/article/1877434822572",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Material Station add-on",
+          "summary": "The compatible accessory adds multi-spool loading and automated material-change workflows.",
+          "compatibility": "UltiMaker S8 is explicitly supported; material profiles must also support the Station.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "UltiMaker Material Station model compatibility",
+              "url": "https://support.ultimaker.com/articles/Knowledge/1667337922455",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Print-core restriction or inconsistent flow",
+          "summary": "Use the manufacturer’s guided print-core cleaning and hot/cold-pull procedure when diagnosis indicates a restriction.",
+          "compatibility": "S8 is within the article’s S-series/Factor 4 scope; use its supported cleaning material.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "UltiMaker S-series/Factor 4 print-core cleaning",
+              "url": "https://support.ultimaker.com/articles/Knowledge/1667410778237",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Filament stops above the feeder on firmware 11.2.0",
+          "summary": "The manufacturer documents this version-specific loading problem and its correction in firmware 11.2.1; consult the current release channel and guided loading-recovery steps.",
+          "compatibility": "S8 on affected firmware; this is not a claim that all S8 loading failures have this cause.",
+          "evidence": "official troubleshooting",
+          "section": "N",
+          "sources": [
+            {
+              "title": "UltiMaker material-loading failure and S8 11.2.0 correction",
+              "url": "https://support.ultimaker.com/articles/Knowledge/1667337946470",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "UltiMaker S-series/Factor 4 print-core cleaning",
+          "url": "https://support.ultimaker.com/articles/Knowledge/1667410778237",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "markforged-mark-two": {
+      "firmware": [
+        {
+          "title": "Official cloud or USB firmware updates",
+          "summary": "The manufacturer’s Update Manager provides cloud updates and a documented Eiger USB-update route.",
+          "compatibility": "Mark Two Gen 2; this manual does not establish Gen 1 part compatibility.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Markforged Desktop Gen 2 manufacturer user guide",
+              "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Desktop_Printer_UserGuide.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Underextrusion diagnostic utility",
+          "summary": "Use the guided extrusion checks, beginning with drybox spool routing, tangles, desiccant placement and bent feed tubing before moving to component checks.",
+          "compatibility": "Mark Two Gen 2; this manual does not establish Gen 1 part compatibility.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Markforged Desktop Gen 2 manufacturer user guide",
+              "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Desktop_Printer_UserGuide.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Markforged Desktop Gen 2 manufacturer user guide",
+          "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Desktop_Printer_UserGuide.pdf",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "markforged-onyx-one": {
+      "firmware": [
+        {
+          "title": "Official cloud or USB firmware updates",
+          "summary": "The manufacturer’s Update Manager provides cloud updates and a documented Eiger USB-update route.",
+          "compatibility": "Onyx One Gen 2; this manual does not establish Gen 1 part compatibility.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Markforged Desktop Gen 2 manufacturer user guide",
+              "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Desktop_Printer_UserGuide.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Underextrusion diagnostic utility",
+          "summary": "Use the guided extrusion checks, beginning with drybox spool routing, tangles, desiccant placement and bent feed tubing before moving to component checks.",
+          "compatibility": "Onyx One Gen 2; this manual does not establish Gen 1 part compatibility.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Markforged Desktop Gen 2 manufacturer user guide",
+              "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Desktop_Printer_UserGuide.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Markforged Desktop Gen 2 manufacturer user guide",
+          "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Desktop_Printer_UserGuide.pdf",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "markforged-x7": {
+      "firmware": [
+        {
+          "title": "Official cloud or USB firmware updates",
+          "summary": "The manufacturer’s Update Manager provides cloud updates and a documented Eiger USB-update route.",
+          "compatibility": "X7 within the industrial guide’s supported generation.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Markforged industrial-series manufacturer user guide",
+              "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Industrial_Printer_UserGuide.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "X7 Turbo upgrade by generation",
+          "summary": "Markforged distinguishes a Gen 1 plastic-extruder hardware upgrade from Gen 2’s firmware-enabled Turbo capability.",
+          "compatibility": "X7 Gen 1 requires the A3648 extruder upgrade; Gen 2 requires firmware dated 2020-03-24 or newer.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Markforged X7 Turbo hardware-generation requirements",
+              "url": "https://support.markforged.com/portal/s/article/X7-Turbo-Upgrade",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Underextrusion diagnostic utility",
+          "summary": "Use the guided extrusion checks, beginning with drybox spool routing, tangles, desiccant placement and bent feed tubing before moving to component checks.",
+          "compatibility": "X7 within the industrial guide’s supported generation.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Markforged industrial-series manufacturer user guide",
+              "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Industrial_Printer_UserGuide.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Markforged industrial-series manufacturer user guide",
+          "url": "https://s3.amazonaws.com/mf.product.doc.images/PDF_Manuals/Industrial_Printer_UserGuide.pdf",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "stratasys-f120": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Reseller-supplied material-tube elbow bracket",
+          "summary": "For a material-detection fault associated with an improperly seated blue tube elbow, the manufacturer directs owners to a reseller for the retaining bracket.",
+          "compatibility": "F120 documented service remedy; confirm the actual elbow fault and correct bracket with the reseller.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Stratasys F120 official troubleshooting chapter",
+              "url": "https://support.stratasys.com/SupportCenter/HTML5UserGuides/F120_UG_April_2021/Responsive%20HTML5/F120_User_Guide-HTML/Troubleshooting/Troubleshooting.htm",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Material will not load or coil box is not recognized",
+          "summary": "Check the F120-specific coil-box type and filament-key seating. The official sequence reconnects the box, substitutes a new box if needed and escalates persistent loading timeouts.",
+          "compatibility": "F120 uses a different material memory chip from other Stratasys printers; other series’ boxes are not substitutes.",
+          "evidence": "official troubleshooting",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Stratasys F120 official troubleshooting chapter",
+              "url": "https://support.stratasys.com/SupportCenter/HTML5UserGuides/F120_UG_April_2021/Responsive%20HTML5/F120_User_Guide-HTML/Troubleshooting/Troubleshooting.htm",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Stratasys F120 model support and current manuals",
+          "url": "https://support.stratasys.com/en/printers/fdm-legacy/f120",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Stratasys F120 official troubleshooting chapter",
+          "url": "https://support.stratasys.com/SupportCenter/HTML5UserGuides/F120_UG_April_2021/Responsive%20HTML5/F120_User_Guide-HTML/Troubleshooting/Troubleshooting.htm",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "stratasys-f170": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Extrusion stops or support removal changes",
+          "summary": "The guide distinguishes plugged tips from tip-offset calibration: verify purge, then follow head-replacement/recalibration or offset-calibration instructions as appropriate.",
+          "compatibility": "F170 original F123-series guide; verify current service instructions for your hardware revision.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Stratasys F170/F270/F370 manufacturer user guide, troubleshooting",
+              "url": "https://www.stratasys.com/siteassets/3dlc/getting-started/f123_series_user_guide.pdf?v=48f313",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Stratasys F170 model support",
+          "url": "https://support.stratasys.com/en/Printers/FDM/F123-Series",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Stratasys F170/F270/F370 manufacturer user guide, troubleshooting",
+          "url": "https://www.stratasys.com/siteassets/3dlc/getting-started/f123_series_user_guide.pdf?v=48f313",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "stratasys-f270": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Extrusion stops or support removal changes",
+          "summary": "The guide distinguishes plugged tips from tip-offset calibration: verify purge, then follow head-replacement/recalibration or offset-calibration instructions as appropriate.",
+          "compatibility": "F270 original F123-series guide; verify current service instructions for your hardware revision.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Stratasys F170/F270/F370 manufacturer user guide, troubleshooting",
+              "url": "https://www.stratasys.com/siteassets/3dlc/getting-started/f123_series_user_guide.pdf?v=48f313",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Stratasys F270 model support",
+          "url": "https://support.stratasys.com/en/printers/fdm-legacy/f270",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Stratasys F170/F270/F370 manufacturer user guide, troubleshooting",
+          "url": "https://www.stratasys.com/siteassets/3dlc/getting-started/f123_series_user_guide.pdf?v=48f313",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "stratasys-f370": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Extrusion stops or support removal changes",
+          "summary": "The guide distinguishes plugged tips from tip-offset calibration: verify purge, then follow head-replacement/recalibration or offset-calibration instructions as appropriate.",
+          "compatibility": "F370 original F123-series guide; verify current service instructions for your hardware revision.",
+          "evidence": "official troubleshooting",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Stratasys F170/F270/F370 manufacturer user guide, troubleshooting",
+              "url": "https://www.stratasys.com/siteassets/3dlc/getting-started/f123_series_user_guide.pdf?v=48f313",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Stratasys F370 model support",
+          "url": "https://support.stratasys.com/en/Printers/FDM/F123-Series",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "Stratasys F170/F270/F370 manufacturer user guide, troubleshooting",
+          "url": "https://www.stratasys.com/siteassets/3dlc/getting-started/f123_series_user_guide.pdf?v=48f313",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "intamsys-funmat-ht-enhanced": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "NEO slicing support does not imply remote printing",
+          "summary": "The manufacturer includes FUNMAT HT in NEO slicing support but excludes it from remote printing. Use the documented local file workflow rather than troubleshooting an unsupported remote feature.",
+          "compatibility": "FUNMAT HT family, including the Enhanced model; other INTAMSYS remote-printing requirements do not add this capability.",
+          "evidence": "manufacturer documentation",
+          "section": "O",
+          "sources": [
+            {
+              "title": "INTAMSYS NEO official printer and remote-printing compatibility FAQ",
+              "url": "https://help.intamsys.com/en/home/INTAMSUITE_NEO/NEO_FAQs",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "INTAMSYS FUNMAT HT Enhanced manufacturer product documentation",
+          "url": "https://www.intamsys.com/funmat-ht-3d-printer/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "INTAMSYS NEO official printer and remote-printing compatibility FAQ",
+          "url": "https://help.intamsys.com/en/home/INTAMSUITE_NEO/NEO_FAQs",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "intamsys-funmat-pro-410": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Feeding resistance or calibration interference",
+          "summary": "The manufacturer’s maintenance and calibration chapters cover debris in the feeding gear and correct plate orientation/seating; inspect these before repeating the relevant calibration.",
+          "compatibility": "FUNMAT PRO 410; follow its feed-system and plate illustrations rather than another FUNMAT model’s procedure.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "INTAMSYS FUNMAT PRO 410 official user manual",
+              "url": "https://help.intamsys.com/en/INTAMSYSPRINTERS/FUNMATPRO410UserManual",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "INTAMSYS FUNMAT PRO 410 official user manual",
+          "url": "https://help.intamsys.com/en/INTAMSYSPRINTERS/FUNMATPRO410UserManual",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "intamsys-funmat-pro-610ht": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Remote printing needs the matching control-software version",
+          "summary": "NEO’s FAQ separates ordinary sliced-file compatibility from remote features, which require supported printer control software. Confirm the INTAMTOUCH version before diagnosing a failed remote connection.",
+          "compatibility": "FUNMAT PRO 610HT; NEO’s compatibility list does not authorize firmware from another printer model.",
+          "evidence": "manufacturer documentation",
+          "section": "O",
+          "sources": [
+            {
+              "title": "INTAMSYS NEO official printer and remote-printing compatibility FAQ",
+              "url": "https://help.intamsys.com/en/home/INTAMSUITE_NEO/NEO_FAQs",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "INTAMSYS model-specific documentation index",
+          "url": "https://help.intamsys.com/en/INTAMSYSPRINTERS",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "INTAMSYS NEO official printer and remote-printing compatibility FAQ",
+          "url": "https://help.intamsys.com/en/home/INTAMSUITE_NEO/NEO_FAQs",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "roboze-argo-350": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Match the ARGO extruder to the material",
+          "summary": "Roboze’s matrix distinguishes the ARGO Tip2/Tip3 configurations and materials rather than treating all extruders as interchangeable.",
+          "compatibility": "ARGO 350 legacy matrix; confirm the installed revision and material-specific tip with authorized service.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Roboze manufacturer extruder matrix EO.AS.03, ARGO 350/500",
+              "url": "https://thinklaser.s3.amazonaws.com/uploads/2020/08/Roboze-Extruder-Overview-All-Series-EO.AS_.03.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Cross-material extruder contamination",
+          "summary": "The manufacturer specifies a dedicated material for each extruder to avoid clogging. Check material history before treating poor flow as a firmware problem.",
+          "compatibility": "ARGO 350 matching extruder configuration; the matrix is not a generic cleaning procedure.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Roboze manufacturer extruder matrix EO.AS.03, ARGO 350/500",
+              "url": "https://thinklaser.s3.amazonaws.com/uploads/2020/08/Roboze-Extruder-Overview-All-Series-EO.AS_.03.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Roboze manufacturer extruder matrix EO.AS.03, ARGO 350/500",
+          "url": "https://thinklaser.s3.amazonaws.com/uploads/2020/08/Roboze-Extruder-Overview-All-Series-EO.AS_.03.pdf",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "roboze-argo-500": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Match the ARGO extruder to the material",
+          "summary": "Roboze’s matrix distinguishes the ARGO Tip2/Tip3 configurations and materials rather than treating all extruders as interchangeable.",
+          "compatibility": "ARGO 500 legacy matrix; confirm the installed revision and material-specific tip with authorized service.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Roboze manufacturer extruder matrix EO.AS.03, ARGO 350/500",
+              "url": "https://thinklaser.s3.amazonaws.com/uploads/2020/08/Roboze-Extruder-Overview-All-Series-EO.AS_.03.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Cross-material extruder contamination",
+          "summary": "The manufacturer specifies a dedicated material for each extruder to avoid clogging. Check material history before treating poor flow as a firmware problem.",
+          "compatibility": "ARGO 500 matching extruder configuration; the matrix is not a generic cleaning procedure.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "Roboze manufacturer extruder matrix EO.AS.03, ARGO 350/500",
+              "url": "https://thinklaser.s3.amazonaws.com/uploads/2020/08/Roboze-Extruder-Overview-All-Series-EO.AS_.03.pdf",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Roboze manufacturer extruder matrix EO.AS.03, ARGO 350/500",
+          "url": "https://thinklaser.s3.amazonaws.com/uploads/2020/08/Roboze-Extruder-Overview-All-Series-EO.AS_.03.pdf",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "3dgence-industry-f350": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Material-specific M-series printing modules",
+          "summary": "The manufacturer’s interchangeable module system changes the extrusion configuration for different material classes. Select the module and its approved material/profile combination together.",
+          "compatibility": "INDUSTRY F350/F421 M-series list; F340 HF/HT/HTmax modules elsewhere on the page are a different platform.",
+          "evidence": "manufacturer documentation",
+          "section": "H",
+          "sources": [
+            {
+              "title": "3DGence M-series module compatibility and materials",
+              "url": "https://3dgence.com/america/accessories/m-series-printing-modules/",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Supported UPS accessory",
+          "summary": "The manufacturer lists a UPS specifically for the F350/F421 accessory system. Confirm the approved installation when planning power continuity.",
+          "compatibility": "INDUSTRY F350-compatible UPS, not an assumed generic mains or firmware modification.",
+          "evidence": "manufacturer documentation",
+          "section": "M",
+          "sources": [
+            {
+              "title": "3DGence manufacturer F350/F421 accessory compatibility",
+              "url": "https://3dgence.com/america/accessories/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Authenticated F350 diagnostic escalation",
+          "summary": "Use the manufacturer’s manual index to select INDUSTRY F350, then the problem-reporting portal for unresolved faults. The portal requires an account with a device added for full access; the F350 manual itself is available after login.",
+          "compatibility": "Support route for INDUSTRY F350. The public pages checked do not establish a specific recurring defect or a fault-specific repair procedure; instructions for ONE, F340 or F421 are not substituted.",
+          "evidence": "manufacturer documentation",
+          "section": "U",
+          "sources": [
+            {
+              "title": "3DGence support manual index: INDUSTRY F350 manual requires login",
+              "url": "https://support.3dgence.com/instrukcje.html",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "3DGence authenticated problem-reporting portal and device access requirement",
+              "url": "https://support.3dgence.com/requests.html",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "3DGence M-series module compatibility and materials",
+          "url": "https://3dgence.com/america/accessories/m-series-printing-modules/",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "3DGence manufacturer F350/F421 accessory compatibility",
+          "url": "https://3dgence.com/america/accessories/",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "lulzbot-taz-pro": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Official printable spool-arm replacement",
+          "summary": "The open-hardware archive supplies the spool-arm STL and CAD source for repair or a carefully checked derivative; this is a stock replacement design, not a claimed performance upgrade.",
+          "compatibility": "TAZ Pro v1.0.7 archive; compare the installed part revision and fasteners before printing. Long Bed fit is not established.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "LulzBot TAZ Pro v1.0.7 spool-arm STL and CAD files",
+              "url": "https://download.lulzbot.com/TAZ/TAZ_Pro/v1.0.7/production_parts/printed_parts/spool_arm/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "M175 1.75 mm toolhead conversion",
+          "summary": "The official M175 option changes the filament diameter and extrusion system; use a matching printer/toolhead profile rather than reusing the stock dual-head settings.",
+          "compatibility": "TAZ Pro is explicitly listed; select the appropriate universal mount, firmware and Cura configuration.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "LulzBot M175 toolhead explicit TAZ Pro compatibility",
+              "url": "https://lulzbot.com/learn/new-m175-tool-head-brings-1-dot-75-mm-filament-to-lulzbot-customers",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Owner-reported head/firmware configuration mismatch",
+          "summary": "In this individual report, a Pro Dual machine had Universal Single firmware. The discussion directs checking the selected physical toolhead and matching firmware/profile before further calibration.",
+          "compatibility": "TAZ Pro with the reported dual-head configuration; an owner report, not measured defect prevalence or a Long Bed diagnosis.",
+          "evidence": "owner report",
+          "section": "N",
+          "sources": [
+            {
+              "title": "LulzBot owner report: Pro Dual crashes with Single toolhead firmware",
+              "url": "https://forum.lulzbot.com/t/taz-pro-pro-dual-crashing/27769",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "LulzBot official firmware, printer profiles and part downloads",
+          "url": "https://lulzbot.com/content/downloads",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "lulzbot-taz-pro-long-bed": {
+      "firmware": [
+        {
+          "title": "Official Long Bed toolhead/probe firmware selection",
+          "summary": "The manufacturer’s installation guide specifies Cura LulzBot Edition, Long Bed selection and matching toolhead/probe firmware after the mechanical conversion.",
+          "compatibility": "Documented TAZ Pro S Long Bed with BLTouch adapter and HS+ setup; Cura LE 3.6.38 or newer.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "LulzBot official TAZ Pro S Long Bed installation and firmware profile",
+              "url": "https://ohai.lulzbot.com/project/lulzbot-taz-pro-s-long-bed-installation/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Universal toolhead swap for feature detail",
+          "summary": "LulzBot documents changing a Long Bed from an Asteroid 285 1.2 mm toolhead to a Meteor 285 0.5 mm toolhead for finer detail.",
+          "compatibility": "TAZ Pro Long Bed universal toolhead system; update the selected toolhead, diameter and slicing setup together.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "LulzBot Long Bed Asteroid-to-Meteor toolhead example",
+              "url": "https://lulzbot.com/learn/from-bytes-to-bones-how-we-3-d-printed-a-life-sized-human-femur",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Diagnostic starting point after a Long Bed conversion",
+          "summary": "For problems beginning after the documented conversion, verify that Cura LulzBot Edition selects the Long Bed and HS+ configuration, that the BLTouch adapter is installed, and that the flashed firmware and LCD toolhead selection match. These manufacturer setup checks provide a diagnostic starting point.",
+          "compatibility": "Scoped to the TAZ Pro S Long Bed conversion with BLTouch adapter and HS+ 1.20 mm toolhead; the guide specifies Cura LE 3.6.38 or newer. Other probe/toolhead packages need their own instructions. No recurring defect is established.",
+          "evidence": "manufacturer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "LulzBot TAZ Pro S Long Bed installation, steps 22–27: firmware, profile and toolhead checks",
+              "url": "https://ohai.lulzbot.com/project/lulzbot-taz-pro-s-long-bed-installation/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "LulzBot official TAZ Pro S Long Bed installation and firmware profile",
+          "url": "https://ohai.lulzbot.com/project/lulzbot-taz-pro-s-long-bed-installation/",
+          "checked": "2026-10-20"
+        }
+      ]
+    }
+  }
+}

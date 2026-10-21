@@ -11,6 +11,10 @@ const root = path.resolve(new URL('..', import.meta.url).pathname);
 const prefix = '/3d_printing_info/';
 const catalog = async name => JSON.parse((await fs.readFile(path.join(root,name),'utf8')).match(/<script[^>]*id="payload"[^>]*>([\s\S]*?)<\/script>/)[1]);
 const printers = await catalog('comparison.html'), materials = await catalog('filaments.html');
+const printerResources = {};
+for (const file of (await fs.readdir(path.join(root,'data'))).filter(name=>/^printer-resources-.*\.json$/.test(name))) Object.assign(printerResources,JSON.parse(await fs.readFile(path.join(root,'data',file),'utf8')).models);
+assert.deepEqual(Object.keys(printerResources).sort(),printers.cats.map(printer=>printer.id).sort(),'ownership evidence covers the catalog');
+const printerPhotos = JSON.parse(await fs.readFile(path.join(root,'data/printer-images.json'),'utf8')).images;
 const examples = Object.fromEntries(Object.entries(JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'))).map(([id,entries])=>[id,Array.isArray(entries)?entries:[entries]]));
 const applications = JSON.parse(await fs.readFile(path.join(root,'data/material-applications.json'),'utf8'));
 const articles = JSON.parse(await fs.readFile(path.join(root,'data/material-articles.json'),'utf8')).articles;
@@ -145,6 +149,87 @@ try {
       }
     }
   }
+  async function verifyPrinterRecord(target, printer) {
+    assert.equal(await target.locator('body.printer-page.printer-detail').count(),1,printer.id);
+    assert.equal(await target.locator('details.printer-spec-group[open]').count(),0,printer.id+' specifications start collapsed');
+    const rows=await target.locator('tr[data-field]').evaluateAll(nodes=>nodes.map(row=>({
+      id:row.dataset.field,
+      label:row.querySelector('th')?.textContent,
+      value:row.querySelector('.printer-property-value')?.textContent.trim(),
+      group:row.closest('details.printer-spec-group')?.id,
+      sources:row.querySelector('.printer-row-sources')?.textContent || '',
+      urls:[...row.querySelectorAll('a[href]')].map(link=>link.getAttribute('href'))
+    })));
+    assert.deepEqual(rows.map(row=>row.id).sort(),Object.keys(printer.sp).sort(),printer.id+' retains every published field once');
+    for(const row of rows) {
+      const field=printers.fields.find(field=>field.id===row.id),value=printer.sp[row.id];
+      assert.equal(row.value,value.v.trim(),printer.id+'/'+row.id+' preserves complete conditions and qualifiers');
+      assert.ok(row.label.includes(field.name),printer.id+'/'+row.id+' field name');
+      if(field.unit) assert.ok(row.label.includes(field.unit),printer.id+'/'+row.id+' unit');
+      assert.equal(row.group,'spec-'+field.sec.toLowerCase(),printer.id+'/'+row.id+' native disclosure');
+      for(const id of value.s || []) {
+        const source=printers.src[id];
+        if(source.u) assert.ok(row.urls.includes(source.u),printer.id+'/'+row.id+' source URL');
+        for(const key of ['t','d','k']) if(source[key]) assert.ok(row.sources.includes(source[key]),printer.id+'/'+row.id+' source '+key);
+      }
+    }
+    const record=printerResources[printer.id];
+    const ownership=await target.locator('.printer-context-note').evaluateAll(nodes=>nodes.map(note=>({
+      kind:note.dataset.resourceKind, section:note.dataset.resourceSection,
+      topic:note.closest('[data-printer-topic]')?.dataset.printerTopic,
+      chapter:note.closest('.printer-spec-chapter')?.id,
+      title:note.querySelector('h4')?.textContent, text:note.textContent,
+      links:[...note.querySelectorAll('a')].map(link=>link.getAttribute('href')),
+      visible:note.getBoundingClientRect().height>0
+    })));
+    const expected=Object.entries(record).filter(([kind])=>kind!=='reviewed_sources').flatMap(([kind,entries])=>entries.map(entry=>({kind,...entry})));
+    assert.equal(ownership.length,expected.length,printer.id+' retains every ownership resource');
+    for(const entry of expected) {
+      const notes=ownership.filter(note=>note.kind===entry.kind && note.title===entry.title);
+      assert.equal(notes.length,1,printer.id+' resource identity');
+      const note=notes[0];
+      assert.equal(note.section,entry.section); assert.equal(note.topic,entry.section);
+      assert.equal(note.chapter,Object.entries({machine:'ABCD',printing:'EFGHIJKLRW',workflow:'MNOPQ',ownership:'STUV'}).find(([,sections])=>sections.includes(entry.section))[0]);
+      assert.ok(note.visible && note.text.includes(entry.summary) && note.text.includes(entry.compatibility),printer.id+' visible diagnostic or modification context');
+      assert.ok(note.text.includes(entry.evidence[0].toUpperCase()+entry.evidence.slice(1)),printer.id+' evidence type');
+      for(const source of entry.sources) assert.ok(note.links.includes(source.url) && note.text.includes(source.checked),printer.id+' dated source');
+    }
+    assert.equal(await target.locator('#sources .printer-resource-review').count(),1,printer.id+' coverage notes remain with guide sources');
+    const visual=target.locator('.printer-visual');
+    const image=printerPhotos[printer.id];
+    if(image) {
+      const photo=visual.locator('img[data-printer-image]');
+      assert.equal(await photo.count(),1,printer.id);
+      assert.equal(await photo.getAttribute('data-printer-image'),printer.id);
+      assert.equal(await photo.getAttribute('src'),'../'+image.image);
+      assert.equal(await photo.getAttribute('alt'),image.alt);
+      await photo.evaluate(img=>img.decode());
+      assert.deepEqual(await photo.evaluate(img=>[img.naturalWidth,img.naturalHeight]),[image.width,image.height],printer.id+' exact model photo decodes');
+      assert.equal(await visual.locator(`a[href="${image.source_url}"]`).count(),1,printer.id+' source credit');
+      assert.ok((await visual.innerText()).includes(image.credit));
+    } else {
+      assert.equal(await visual.locator('img[data-printer-image]').count(),0,printer.id+' does not borrow a sibling photo');
+      assert.equal(await visual.locator(`img[data-printer-diagram="${printer.f.toLowerCase()}"]`).count(),1,printer.id+' has its actual architecture fallback');
+      assert.match(await visual.innerText(),/generic/i);
+    }
+  }
+  async function openPrinterField(target, fieldId) {
+    const row=target.locator(`tr[data-field="${fieldId}"]`);
+    const group=row.locator('xpath=ancestor::details[contains(concat(" ",normalize-space(@class)," ")," printer-spec-group ")]');
+    if(await group.getAttribute('open')===null) {
+      await group.locator(':scope > summary').focus();
+      await target.keyboard.press('Enter');
+    }
+    assert.equal(await row.isVisible(),true,'native printer specification opens from keyboard');
+    const value=row.locator('.printer-property-value');
+    const layout=await value.evaluate(cell=>{
+      const style=getComputedStyle(cell);
+      return {horizontal:cell.scrollWidth<=cell.clientWidth+1,vertical:cell.scrollHeight<=cell.clientHeight+1,
+        ellipsis:style.textOverflow==='ellipsis',lineClamp:style.webkitLineClamp};
+    });
+    assert.ok(layout.horizontal && layout.vertical && !layout.ellipsis && ['none','0',''].includes(layout.lineClamp),'full printer property text wraps without clipping');
+    return row;
+  }
   await visit('');
   for (const [key,n] of Object.entries({printers:printers.cats.length,'printer-fields':printers.fields.length,materials:materials.cats.length,products:productCount})) {
     for (const s of await page.locator(`[data-summary="${key}"]`).allTextContents()) assert.equal(Number(s),n);
@@ -198,8 +283,33 @@ try {
   await page.locator('.site-nav').getByRole('link',{name:'Printer guides',exact:true}).click();
   assert.match(page.url(),/printers\/$/);
   await page.getByRole('heading',{name:'Printer guides',exact:true}).waitFor({state:'visible'});
-  assert.equal(await page.locator('main li a').count(),printers.cats.length);
+  assert.equal(await page.locator('[data-printer-card]').count(),printers.cats.length);
+  assert.deepEqual((await page.locator('[data-printer-card]').evaluateAll(cards=>cards.map(card=>card.dataset.printerId))).sort(),printers.cats.map(printer=>printer.id).sort());
+  assert.equal(await page.locator('.pl-feature-card').count(),6);
+  await page.screenshot({path:path.join(root,'test-results/printer-directory-desktop.png')});
+  await page.getByLabel('Search by brand or model',{exact:true}).fill('Photon P1 Max');
+  assert.equal(await page.locator('[data-printer-card]:not([hidden])').count(),1);
+  assert.equal(await page.locator('#printer-starting-points').isVisible(),false,'featured suggestions hide when searching the complete library');
+  await page.locator('[data-printer-id="anycubic-photon-p1-max"] .pl-card-compare').click();
+  await page.locator('#mtbody tr.row.open').waitFor({state:'visible'});
+  assert.equal(await page.locator('#q').inputValue(),'Anycubic Photon P1 Max');
+  await visit('printers/');
+  await page.locator('[data-printer-filter="RESIN"]').click();
+  assert.equal(await page.locator('#printer-starting-points').isVisible(),false,'featured suggestions respect family filters');
+  assert.equal(await page.locator('[data-printer-card]:not([hidden])').count(),printers.cats.filter(printer=>printer.f==='RESIN').length);
+  assert.equal(await page.locator('[data-printer-filter="RESIN"]').getAttribute('aria-pressed'),'true');
+  await page.getByLabel('Search by brand or model',{exact:true}).fill('Anycubic');
+  assert.equal(await page.locator('[data-printer-card]:not([hidden])').count(),printers.cats.filter(printer=>printer.f==='RESIN' && /anycubic/i.test(printer.brand+' '+printer.n)).length);
+  await page.screenshot({path:path.join(root,'test-results/printer-directory-filtered.png')});
+  await page.getByLabel('Search by brand or model',{exact:true}).fill('no-such-printer-xyz');
+  assert.equal(await page.locator('#printer-no-results').isVisible(),true);
+  assert.equal(await page.locator('[data-printer-card]:not([hidden])').count(),0);
+  await page.locator('#clear-printer-search').click();
+  assert.equal(await page.getByLabel('Search by brand or model',{exact:true}).inputValue(),'');
+  assert.equal(await page.locator('[data-printer-card]:not([hidden])').count(),printers.cats.length);
+  assert.equal(await page.locator('#printer-starting-points').isVisible(),true,'clearing filters restores the full library and suggestions');
   step('Printer detail-page round trip and complete crawlable printer directory');
+  step('Printer library search, combined family/brand filtering, empty/reset states and exact-model comparison links');
   await visit('filaments.html');
   assert.equal(await page.locator('#mtbody tr.row').count(),materials.cats.length);
   await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
@@ -382,8 +492,36 @@ try {
     assert.equal(article['@type'],'TechArticle',c.id);
     assert.equal(article.about['@type'],'Thing',c.id);
     assert.equal(article.about.name,c.n,c.id);
+    await verifyPrinterRecord(page,c);
   }
   step(`All ${printers.cats.length} printer guides render technical-article metadata without unsupported Product entities, matching canonical URLs and one Analytics tag`);
+  step(`All ${printers.cats.length} printer guides integrate dated firmware, modifications and diagnostic evidence within the matching technical topics`);
+  step(`All ${printers.cats.length} printer guides retain every complete field and its own sources inside native disclosures, with exact-model photos or labeled architecture diagrams`);
+  const picturedPrinter=printers.cats.find(printer=>printer.id==='bambu-p1s' && printerPhotos[printer.id]) || printers.cats.find(printer=>printerPhotos[printer.id]);
+  await visit('printers/'+picturedPrinter.id+'.html');
+  await page.locator('.printer-visual img').evaluate(img=>img.decode());
+  await page.screenshot({path:path.join(root,'test-results/printer-detail-overview.png')});
+  await page.emulateMedia({colorScheme:'dark'});
+  await page.screenshot({path:path.join(root,'test-results/printer-detail-dark.png')});
+  await page.emulateMedia({colorScheme:'light'});
+  await visit('printers/bambu-x1c.html');
+  await page.locator('#workflow').scrollIntoViewIfNeeded();
+  const firmwareEvidence=page.locator('[data-resource-kind="firmware"] .printer-resource-evidence');
+  await firmwareEvidence.locator('summary').focus(); await page.keyboard.press('Enter');
+  assert.equal(await firmwareEvidence.locator('a').first().isVisible(),true,'firmware evidence opens from the keyboard');
+  await page.screenshot({path:path.join(root,'test-results/printer-ownership-firmware.png')});
+  await visit('printers/creality-ender-3-v3-se.html');
+  await page.locator('#printing').scrollIntoViewIfNeeded();
+  await page.screenshot({path:path.join(root,'test-results/printer-ownership-hardware.png')});
+  await visit('printers/neptune4pro.html');
+  const longPrinterRow=await openPrinterField(page,'E5');
+  const printerSource=longPrinterRow.locator('.printer-row-sources');
+  await printerSource.locator(':scope > summary').focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await printerSource.locator('li').first().isVisible(),true,'keyboard reveals source citations beside their field');
+  await longPrinterRow.evaluate(row=>row.scrollIntoView({block:'start'}));
+  await page.screenshot({path:path.join(root,'test-results/printer-detail-specifications.png')});
+  step('Printer detail photographs, full long-form properties, source disclosures, keyboard focus and dark theme remain readable');
   const articlePath='articles/choosing-fdm-material-load-bearing-part.html';
   const articleTitle='Choosing an FDM material for a load-bearing part';
   await visit('');
@@ -506,6 +644,26 @@ try {
   await page.goto(base+'printers/anycubic-photon-p1-max.html',{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'printer guide mobile width');
   await page.screenshot({path:path.join(root,'test-results/mobile-printer-guide.png')});
+  await visit('printers/neptune4pro.html');
+  const mobilePrinterRow=await openPrinterField(page,'E5');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'long printer property does not overflow mobile page');
+  const printerLabelBox=await mobilePrinterRow.locator('th').boundingBox();
+  const printerValueBox=await mobilePrinterRow.locator('.printer-property-value').boundingBox();
+  assert.ok(printerLabelBox && printerValueBox && printerValueBox.y>=printerLabelBox.y+printerLabelBox.height-1,'mobile printer specification stacks its value below the field label');
+  await mobilePrinterRow.evaluate(row=>row.scrollIntoView({block:'start'}));
+  await page.screenshot({path:path.join(root,'test-results/mobile-printer-specifications.png')});
+  await visit('printers/bambu-a1.html');
+  await page.locator('#printing').scrollIntoViewIfNeeded();
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'ownership prose and evidence fit mobile width');
+  await page.screenshot({path:path.join(root,'test-results/mobile-printer-ownership.png')});
+  await visit('printers/');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'printer library mobile width');
+  await page.screenshot({path:path.join(root,'test-results/mobile-printer-library.png')});
+  await page.getByLabel('Search by brand or model',{exact:true}).fill('Photon P1 Max');
+  assert.equal(await page.locator('[data-printer-card]:not([hidden])').count(),1);
+  await page.locator('[data-printer-id="anycubic-photon-p1-max"] .pl-card-link').click();
+  assert.equal(await page.locator('main h1').innerText(),'Anycubic Photon P1 Max');
+  step('Printer library search, guide navigation and complete stacked specification values work at 390 px');
   await visit(articlePath);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'article mobile width');
   const mobileTable=page.locator('#measurements table.evidence-table');
@@ -546,11 +704,37 @@ try {
   step('Mobile navigation, filtering, material and printer guide layouts at 390 px');
   const nojs=await browser.newContext({javaScriptEnabled:false});
   const staticPage=await nojs.newPage();
+  await staticPage.goto(base+'printers/');
+  assert.equal(await staticPage.locator('[data-printer-card]').count(),printers.cats.length);
+  assert.equal(await staticPage.locator('#printer-search-panel').isVisible(),false,'inactive printer filters are hidden without JavaScript');
+  assert.equal(await staticPage.locator('details.pl-family[open]').count(),printers.families.length);
+  await staticPage.locator('[data-printer-id="neptune4pro"] .pl-card-link').click();
+  await verifyPrinterRecord(staticPage,printers.cats.find(printer=>printer.id==='neptune4pro'));
+  const staticPrinterRow=await openPrinterField(staticPage,'E5');
+  await staticPrinterRow.locator('.printer-row-sources > summary').focus();
+  await staticPage.keyboard.press('Enter');
+  assert.equal(await staticPrinterRow.locator('.printer-row-sources li').first().isVisible(),true,'printer field sources work without JavaScript');
+  await staticPage.screenshot({path:path.join(root,'test-results/nojs-printer-specifications.png')});
+  const resourceEvidence=staticPage.locator('.printer-resource-evidence').first();
+  await resourceEvidence.locator('summary').focus(); await staticPage.keyboard.press('Enter');
+  assert.equal(await resourceEvidence.locator('a').first().isVisible(),true,'ownership sources work without JavaScript');
+  await staticPage.locator('#printing').scrollIntoViewIfNeeded();
+  await staticPage.screenshot({path:path.join(root,'test-results/nojs-printer-ownership.png')});
+  await staticPage.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
+  assert.equal(await staticPage.locator('#static tbody tr').count(),printers.cats.length);
+  step('Printer directory, exact-model links, keyboard specification/source disclosures and complete comparison fallback work without JavaScript');
   await staticPage.goto(base+'comparison.html');
   assert.equal(await staticPage.locator('#static tbody tr').count(),printers.cats.length);
   await staticPage.locator('#static a[href="printers/anycubic-photon-p1-max.html"]').click();
   assert.equal(await staticPage.locator('h1').innerText(),'Anycubic Photon P1 Max');
   assert.equal(await staticPage.locator('main table').count()>0,true);
+  assert.equal(await staticPage.locator('.printer-spec-group table:visible').count(),0,'fresh printer sections start collapsed');
+  await staticPage.emulateMedia({media:'print'});
+  assert.equal(await staticPage.locator('.printer-spec-group table:visible').count(),await staticPage.locator('.printer-spec-group table').count(),'printing includes specifications from closed native sections');
+  assert.ok(await staticPage.locator('.printer-row-sources li:visible').count()>0,'printing includes field citations without JavaScript');
+  await staticPage.emulateMedia({media:'screen'});
+  assert.equal(await staticPage.locator('.printer-spec-group table:visible').count(),0,'printing leaves screen reading sections collapsed');
+  step('Printer print layout includes all specifications and citations without changing native screen disclosure state');
   await staticPage.getByRole('link',{name:'Open in interactive comparison',exact:true}).click();
   assert.equal(await staticPage.locator('#static tbody tr').count(),printers.cats.length);
   await staticPage.goto(base+'materials/');

@@ -9,6 +9,7 @@ The complete JSON in `#payload` in `comparison.html` and `filaments.html` is the
 ```sh
 python3 scripts/sync_site.py
 python3 scripts/check_site.py
+python3 -m unittest discover -s tests -p 'test_printer_resources.py'
 ```
 
 The sync command derives homepage totals, WebPage/Dataset/ItemList metadata, fallback tables, every `materials/<catalog-id>.html` and `printers/<catalog-id>.html` guide, both directories, store-brand shortcuts and the sitemap from the catalogs. Generated files are committed so GitHub Pages has no runtime build dependency. Update `DATE` in `scripts/sync_site.py` when revising generated content; it is a page revision date, not a replacement for existing source or price dates. The check command fails on stale generated output. The rollback integrity manifest remains unchanged; `data/catalog-checkpoint.json` also protects all records from main commit `089a5708fd4689068e10f4792002969fdbc21a3e`. Category specifications and every existing product/source object must remain intact. Product lists may grow and derived `px` summaries may be recalculated. Both manifests are checked against complete Git objects when history is available.
@@ -78,6 +79,16 @@ python3 -m unittest discover -s tests -p 'test_indexnow.py' -v
 Work in separate branches and draft PRs. **Do not merge or deploy without the owner's explicit approval.** Main automatically deploys to GitHub Pages. After a push, fetch the exact remote commit into a fresh checkout and rerun static checks; inspect the matching commit's Chromium CI result and screenshots. Never declare a PR ready from local tests or matching upload hashes alone.
 
 Configure Pages to deploy with GitHub Actions using `.github/workflows/pages.yml`. Its IndexNow notification runs only after a successful deployment from `main`. The validation workflow has read-only repository permissions and does not deploy or notify search engines.
+
+## Printer guide presentation
+
+All 132 printer guides use a visual model overview, three reading cards, chapter navigation and native expandable specification sections. Firmware options, printable parts, hardware changes and diagnostic routes are interleaved with their matching hardware or workflow topic, rather than appended as a separate resource directory. The full catalog values, qualifiers, variant warnings and individual source references remain in the HTML. On phones, specification rows become stacked reading blocks instead of a wide table. The printer library adds model/brand search and combined printer-group filters; its complete linked model collection remains available without JavaScript.
+
+`scripts/printer_resources.py` loads the model-specific ownership records from `data/printer-resources-*.json`. Each entry explains the change or diagnostic starting point, names its exact model/board/firmware limits, labels the evidence type and links dated primary sources. Official stock firmware, source-build routes, community replacements, stock repair parts and optional upgrades remain explicitly distinguished in the prose. An official troubleshooting procedure is not evidence of failure frequency; owner reports remain labeled. Missing categories are documented as research gaps in the guide’s source notes. Never infer physical fit from a model-hosting site’s supported-printer/profile dropdown. Tag entries with the matching catalog section A–W so the renderer places them beside the relevant specifications. Schema checks reject missing model coverage, duplicate records/keys, invalid provenance and dates, or missing compatibility context.
+
+`scripts/printer_design.py` renders detail pages and the six original architecture illustrations; `scripts/printer_library.py` renders the library. Styles live in `assets/printer-guides.css` and `assets/printer-library.css`; optional library filtering lives in `assets/printer-library.js`. Exact-model product images are mapped separately in `data/printer-images.json`, with local file hashes, dimensions, original image and product-page URLs, credits and check dates. See `assets/printers/README.md` for image provenance. Images retain their manufacturers’ rights; no open license is implied. Models without a verified image use an explicitly labeled general illustration, and library cards use typography. An illustration does not establish a particular model’s appearance or construction.
+
+Update `PRINTER_DATE` in `scripts/sync_site.py` when revising printer presentation. Printer footers and their sitemap entries use that date independently of material and article revisions; source and price dates remain unchanged. The generator does not edit either catalog payload. Static and Chromium checks retain every printer field and source, verify the placement and complete context of every ownership entry, decode every local product image, exercise library filtering and deep comparison links, and check desktop, dark, mobile and no-JavaScript reading.
 
 ## Material guide presentation
 

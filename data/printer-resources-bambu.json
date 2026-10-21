@@ -1,0 +1,713 @@
+{
+  "version": 1,
+  "checked": "2026-10-20",
+  "models": {
+    "bambu-a1": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Cable guide for the moving toolhead",
+          "summary": "PrintSureCA’s clip guides the X-axis cable as the toolhead moves. Check its installed clearance over the full travel before keeping it in service.",
+          "compatibility": "The creator explicitly names A1 and A1 mini; this does not establish A2L fit.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "PrintSureCA — Cable Guide for A1 Mini / A1",
+              "url": "https://makerworld.com/en/models/614988-cable-guide-for-a1-mini",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Add an enclosed AMS through the A1 Series hub",
+          "summary": "The dedicated hub adds assisted filament feeding for AMS, AMS 2 Pro or AMS HT. The installation also uses a printed bracket specific to the printer. This is a separate connection route from the original AMS lite.",
+          "compatibility": "A1 / A1 mini firmware 01.07.00.00 or later, A1 Series AMS Hub and matching bracket. Up to four supported AMS units; AMS lite cannot be mixed with them on this series. Select the printed A1 bracket, not its sibling’s bracket.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "A1 Series AMS connection and bracket files",
+              "url": "https://wiki.bambulab.com/en/a1/manual/ams-connection-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Under-extrusion: locate the restriction before replacing parts",
+          "summary": "If extrusion becomes thin or stops, first check the material profile, temperature and speed. Bambu’s diagnostic guide then separates a feed-path restriction, extruder blockage and hotend clog so cleaning targets the affected part.",
+          "compatibility": "A1 and A1 mini. Follow the A1 Series procedure and the matching disassembly guide.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "A1 Series abnormal extrusion diagnosis",
+              "url": "https://wiki.bambulab.com/en/a1-mini/troubleshooting/how-to-check-which-part-is-clogged",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Check the recall remedy on an early used A1",
+          "summary": "Bambu recalled the A1 units then on the market in February 2024 because of possible heatbed cable damage. When assessing an early used machine, confirm that the manufacturer’s remedy was completed. Follow Bambu’s recall instructions for an affected, unremedied unit.",
+          "compatibility": "Historical A1 recall; Bambu explicitly excluded A1 mini. This is not a statement that every later A1 remains affected.",
+          "evidence": "manufacturer documentation",
+          "section": "S",
+          "sources": [
+            {
+              "title": "Bambu Lab — A1 recall update (February 2024)",
+              "url": "https://blog.bambulab.com/a1-recall-update/",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/a1",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-a1-mini": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Cable guide for the moving toolhead",
+          "summary": "PrintSureCA’s clip guides the X-axis cable as the toolhead moves. Check its installed clearance over the full travel before keeping it in service.",
+          "compatibility": "The creator explicitly names A1 and A1 mini; this does not establish A2L fit.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "PrintSureCA — Cable Guide for A1 Mini / A1",
+              "url": "https://makerworld.com/en/models/614988-cable-guide-for-a1-mini",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Add an enclosed AMS through the A1 Series hub",
+          "summary": "The dedicated hub adds assisted filament feeding for AMS, AMS 2 Pro or AMS HT. The installation also uses a printed bracket specific to the printer. This is a separate connection route from the original AMS lite.",
+          "compatibility": "A1 / A1 mini firmware 01.07.00.00 or later, A1 Series AMS Hub and matching bracket. Up to four supported AMS units; AMS lite cannot be mixed with them on this series. Select the printed A1 mini bracket, not its sibling’s bracket.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "A1 Series AMS connection and bracket files",
+              "url": "https://wiki.bambulab.com/en/a1/manual/ams-connection-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Under-extrusion: locate the restriction before replacing parts",
+          "summary": "If extrusion becomes thin or stops, first check the material profile, temperature and speed. Bambu’s diagnostic guide then separates a feed-path restriction, extruder blockage and hotend clog so cleaning targets the affected part.",
+          "compatibility": "A1 and A1 mini. Follow the A1 Series procedure and the matching disassembly guide.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "A1 Series abnormal extrusion diagnosis",
+              "url": "https://wiki.bambulab.com/en/a1-mini/troubleshooting/how-to-check-which-part-is-clogged",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/a1-mini",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-a2l": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Organize the PTFE tubes and toolhead cable",
+          "summary": "The official accessory files include a tube/cable organizer, an AMS lite top-mount cable organizer and a PTFE positioning guide. Their purpose is to keep the feed path from interfering with the moving toolhead.",
+          "compatibility": "A2L accessory models. The main cable organizer is intended for AMS setups and is not recommended by Bambu for the external spool holder.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "A2L accessory models and installation",
+              "url": "https://wiki.bambulab.com/en/a2l/manual/internal-print-files",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Expand AMS capacity using the A2L connection layout",
+          "summary": "The A2L has its own documented wiring and tube layout for combining AMS devices, including a configuration with four AMS units and one AMS lite. The guide supplies the adapter requirements and printed routing aids.",
+          "compatibility": "A2L only. Follow its specific cable, PTFE coupler and 4-in-1 adapter requirements; do not transfer the older A1 Series hub rules.",
+          "evidence": "manufacturer documentation",
+          "section": "K",
+          "sources": [
+            {
+              "title": "A2L AMS connection guide",
+              "url": "https://wiki.bambulab.com/en/a2l/manual/a2l-ams-connection-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Air printing or extruder overload: separate nozzle and extruder clogs",
+          "summary": "Bambu’s A2L guide distinguishes a blocked nozzle from material lodged in the extruder. Use that sequence when filament stops flowing rather than applying disassembly instructions from the smaller A1 toolhead.",
+          "compatibility": "A2L; the guide starts with a cooled hotend and cut filament. Use its model-specific cleaning links.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "A2L clog inspection",
+              "url": "https://wiki.bambulab.com/en/a2l/troubleshooting/clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/a2l",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-h2c": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Extrusion stops: follow the H2C feed-path diagnosis",
+          "summary": "The H2C guide traces missing or weak extrusion, clicking and layer gaps through its own extruder and hotend system. Follow the Vortek-specific checks rather than treating this as the H2D’s original toolhead.",
+          "compatibility": "H2C only; match the installed toolhead and hotend. This documented diagnostic route does not establish failure frequency.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "H2C clog inspection",
+              "url": "https://wiki.bambulab.com/en/h2c/troubleshooting/clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "A clumping alert may need both a physical check and a software check",
+          "summary": "Owners have reported nozzle-clumping alerts on prints without an obvious clump. Check the nozzle and print first, record the exact firmware and retain logs for support. The report is evidence of an observed symptom, not proof that every alert is false or that a current release still has the issue.",
+          "compatibility": "H2C owner comments in the linked issue. Firmware versions differ between reports; no universal fix is established here.",
+          "evidence": "owner report",
+          "section": "O",
+          "sources": [
+            {
+              "title": "Bambu Studio issue #10137 — nozzle-clumping detection reports",
+              "url": "https://github.com/bambulab/BambuStudio/issues/10137",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/h2c",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-h2d": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Collect purge waste behind the printer",
+          "summary": "Henryk’s slim purge-bin design provides a removable container behind the H2D. Check rear clearance and access to the outlet before adopting the part.",
+          "compatibility": "Creator identifies H2D. This listing does not establish H2S or H2C compatibility.",
+          "evidence": "creator listing",
+          "section": "K",
+          "sources": [
+            {
+              "title": "Henryk — H2D slim purge bin",
+              "url": "https://makerworld.com/en/models/1330125-h2d-slim-purge-bin",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Convert the toolhead system with the H2C upgrade kit",
+          "summary": "Bambu documents a substantial Vortek conversion involving the toolhead/X-axis assembly, heatbed, AP board and hotend rack. It requires the model’s complete compatibility pack and device registration; this is a hardware rebuild rather than a firmware-only unlock.",
+          "compatibility": "H2D compatibility pack only. Follow the H2D guide, including its laser-version differences and current firmware prerequisite.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "H2D to H2C conversion — Part A",
+              "url": "https://wiki.bambulab.com/en/h2c/maintenance/upgrade-from-h2d-to-h2c",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "H2D to H2C conversion — Part B",
+              "url": "https://wiki.bambulab.com/en/h2c/maintenance/upgrade-from-h2d-to-h2c-part-b",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Calibrate motion with the Vision Encoder accessory",
+          "summary": "The encoder plate is a calibration accessory used with the toolhead camera, not a build surface. Follow the prescribed calibration conditions and keep the markers clean; the calibration does not replace mechanical inspection when a motion problem appears.",
+          "compatibility": "The checked product documentation specifies H2D. A functioning toolhead camera is required.",
+          "evidence": "manufacturer documentation",
+          "section": "C",
+          "sources": [
+            {
+              "title": "Bambu Vision Encoder for H2D",
+              "url": "https://eu.store.bambulab.com/products/vision-encoder",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Extrusion stops: follow the H2D feed-path diagnosis",
+          "summary": "The H2D guide checks the hotend and dual-extruder feed path separately when overload or air-printing appears. TPU has a separate diagnostic route because its behavior in the mechanism differs.",
+          "compatibility": "H2D only; match the installed toolhead and hotend. This documented diagnostic route does not establish failure frequency.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "H2D clog inspection",
+              "url": "https://wiki.bambulab.com/en/h2/troubleshooting/clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "A clumping alert may need both a physical check and a software check",
+          "summary": "Owners have reported nozzle-clumping alerts on prints without an obvious clump. Check the nozzle and print first, record the exact firmware and retain logs for support. The report is evidence of an observed symptom, not proof that every alert is false or that a current release still has the issue.",
+          "compatibility": "H2D owner comments in the linked issue. Firmware versions differ between reports; no universal fix is established here.",
+          "evidence": "owner report",
+          "section": "O",
+          "sources": [
+            {
+              "title": "Bambu Studio issue #10137 — nozzle-clumping detection reports",
+              "url": "https://github.com/bambulab/BambuStudio/issues/10137",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/h2d",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-h2s": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [
+        {
+          "title": "Convert the toolhead system with the H2C upgrade kit",
+          "summary": "Bambu documents a substantial Vortek conversion involving the toolhead/X-axis assembly, heatbed, AP board and hotend rack. It requires the model’s complete compatibility pack and device registration; this is a hardware rebuild rather than a firmware-only unlock.",
+          "compatibility": "H2S compatibility pack only. H2S firmware must be 01.02.00.00 or later before conversion.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "H2S to H2C conversion — Part A",
+              "url": "https://wiki.bambulab.com/en/h2c/maintenance/upgrade-from-h2s-to-h2c",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "H2S to H2C conversion — Part B",
+              "url": "https://wiki.bambulab.com/en/h2c/maintenance/upgrade-from-h2s-to-h2c-part-b",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Extrusion stops: follow the H2S feed-path diagnosis",
+          "summary": "The H2S guide separates the hotend from the extruder as potential blockage locations. Its removal sequence matters: the filament sensor must be removed before opening the extruder cover to avoid pulling its wiring.",
+          "compatibility": "H2S only; match the installed toolhead and hotend. This documented diagnostic route does not establish failure frequency.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "H2S clog inspection",
+              "url": "https://wiki.bambulab.com/en/h2s/troubleshooting/clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "A clumping alert may need both a physical check and a software check",
+          "summary": "Owners have reported nozzle-clumping alerts on prints without an obvious clump. Check the nozzle and print first, record the exact firmware and retain logs for support. The report is evidence of an observed symptom, not proof that every alert is false or that a current release still has the issue.",
+          "compatibility": "H2S owner comments in the linked issue. Firmware versions differ between reports; no universal fix is established here.",
+          "evidence": "owner report",
+          "section": "O",
+          "sources": [
+            {
+              "title": "Bambu Studio issue #10137 — nozzle-clumping detection reports",
+              "url": "https://github.com/bambulab/BambuStudio/issues/10137",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/h2s",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-p1p": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Raise the glass top beneath an AMS",
+          "summary": "Jericho’s riser provides a printed support between a glass top and the AMS. Confirm the surrounding enclosure, clearance and chosen print material for your setup rather than treating a printed riser as temperature-certified hardware.",
+          "compatibility": "Creator lists P1P and P1S with a glass top. An open, stock P1P needs the corresponding enclosure/top arrangement.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Jericho — P1P/P1S AMS riser for glass top",
+              "url": "https://www.printables.com/model/532944-bambu-p1pp1s-ams-riser-for-glass-top",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Use hardened drive gears when moving to abrasive filament",
+          "summary": "Bambu lists a hardened extruder gear assembly for the P1 series as an alternative to the stock stainless assembly. Pair the drive-path change with a suitable hardened nozzle and the material’s requirements; the gears alone do not make every abrasive filament suitable.",
+          "compatibility": "P1P / P1S gear assembly. Select the matching P1 hotend components; do not assume the P2S uses this assembly.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Bambu hardened-steel extruder gear assembly",
+              "url": "https://eu.store.bambulab.com/products/hardened-steel-extruder-gear-assembly",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Convert the open P1P with the official enclosure kit",
+          "summary": "The kit adds the enclosure and the cooling components specified in Bambu’s installation sequence. The documented firmware accessory flag lets a converted P1P use the corresponding P1S profiles.",
+          "compatibility": "P1P enclosure conversion. The accessory flag requires P1 firmware 01.05.00.00 or later and Bambu Studio 1.8.1 or later; complete the hardware sequence first.",
+          "evidence": "manufacturer documentation",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Official P1P to P1S enclosure conversion",
+              "url": "https://wiki.bambulab.com/en/p1/manual/p1p-to-p1s",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Inconsistent extrusion: inspect the gears and feed path",
+          "summary": "Filament debris and wear in the extruder can contribute to clogs and inconsistent flow. Bambu documents inspection, cleaning and lubrication for the P1 extruder, with reassembly checks before printing again.",
+          "compatibility": "P1P / P1S. Use the P1 electrical connectors and cleaning procedure; the X1 complete hotend is a different assembly.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "P1 extruder cleaning and lubrication",
+              "url": "https://wiki.bambulab.com/en/p1/maintenance/extruder-cleaning-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/p1",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-p1s": {
+      "firmware": [],
+      "printed_mods": [
+        {
+          "title": "Raise the glass top beneath an AMS",
+          "summary": "Jericho’s riser provides a printed support between a glass top and the AMS. Confirm the surrounding enclosure, clearance and chosen print material for your setup rather than treating a printed riser as temperature-certified hardware.",
+          "compatibility": "Creator lists P1P and P1S with a glass top. An open, stock P1P needs the corresponding enclosure/top arrangement.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "Jericho — P1P/P1S AMS riser for glass top",
+              "url": "https://www.printables.com/model/532944-bambu-p1pp1s-ams-riser-for-glass-top",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [
+        {
+          "title": "Use hardened drive gears when moving to abrasive filament",
+          "summary": "Bambu lists a hardened extruder gear assembly for the P1 series as an alternative to the stock stainless assembly. Pair the drive-path change with a suitable hardened nozzle and the material’s requirements; the gears alone do not make every abrasive filament suitable.",
+          "compatibility": "P1P / P1S gear assembly. Select the matching P1 hotend components; do not assume the P2S uses this assembly.",
+          "evidence": "manufacturer documentation",
+          "section": "G",
+          "sources": [
+            {
+              "title": "Bambu hardened-steel extruder gear assembly",
+              "url": "https://eu.store.bambulab.com/products/hardened-steel-extruder-gear-assembly",
+              "checked": "2026-10-20"
+            },
+            {
+              "title": "P1S abrasive-filament extruder upgrade",
+              "url": "https://wiki.bambulab.com/en/p1/manual/p1s-extruder-upgrade",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "title": "Inconsistent extrusion: inspect the gears and feed path",
+          "summary": "Filament debris and wear in the extruder can contribute to clogs and inconsistent flow. Bambu documents inspection, cleaning and lubrication for the P1 extruder, with reassembly checks before printing again.",
+          "compatibility": "P1P / P1S. Use the P1 electrical connectors and cleaning procedure; the X1 complete hotend is a different assembly.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "P1 extruder cleaning and lubrication",
+              "url": "https://wiki.bambulab.com/en/p1/maintenance/extruder-cleaning-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/p1",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-p2s": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Filament reaches the toolhead but will not extrude",
+          "summary": "The official diagnostic sequence uses unloading behavior to separate an extruder restriction from a hotend blockage. Check the matching toolhead procedure before removing components.",
+          "compatibility": "P2S only. Do not substitute the P1 extruder removal sequence.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "P2S clog troubleshooting",
+              "url": "https://wiki.bambulab.com/en/p2s/troubleshooting/clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Uneven first layer: start with the model’s optimization guide",
+          "summary": "Use the manufacturer’s checks for the build surface, nozzle and first-layer behavior before adding mechanical spacers or changing firmware offsets. Preserve the material and plate context when comparing results.",
+          "compatibility": "P2S model-specific procedure; a diagnostic article alone does not show how often the problem occurs.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "P2S first-layer optimization",
+              "url": "https://wiki.bambulab.com/en/p2s/troubleshooting/first-layer-printing-optimization-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Check firmware context when investigating a first-layer report",
+          "summary": "In an owner-reported first-layer issue, a reply recommends P2S firmware 01.02.00.00 and the first-layer optimization guide. Compare the report’s version with the installed version rather than treating an older report as a permanent hardware defect.",
+          "compatibility": "P2S report; no claim that all P2S machines or newer firmware reproduce it.",
+          "evidence": "owner report",
+          "section": "N",
+          "sources": [
+            {
+              "title": "Bambu Studio issue #8851 — P2S first-layer report",
+              "url": "https://github.com/bambulab/BambuStudio/issues/8851",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/p2s",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-x1c": {
+      "firmware": [
+        {
+          "title": "X1Plus: community firmware for the X1 Carbon",
+          "summary": "X1Plus adds community-developed controls and diagnostics on the supported X1 platform. Read the installation guide’s base-firmware, SD-card and official rootable-firmware requirements before deciding whether the extra capabilities fit your workflow.",
+          "compatibility": "X1 / X1 Carbon only; the project explicitly excludes X1E. This is not firmware for P1, A1, H2, P2S or X2D printers.",
+          "evidence": "maintainer documentation",
+          "section": "N",
+          "sources": [
+            {
+              "title": "X1Plus installation and supported printers",
+              "url": "https://github.com/X1Plus/X1Plus/wiki/Installation-Guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "printed_mods": [
+        {
+          "title": "Vented glass-top riser and AMS support",
+          "summary": "FatTony’s vented riser remix provides a raised support for the top glass and AMS. Check the creator’s parts and assembly notes as well as the resulting clearance and material choice.",
+          "compatibility": "The listing explicitly names P1P, P1S and X1-C. It does not establish X1E fit.",
+          "evidence": "creator listing",
+          "section": "B",
+          "sources": [
+            {
+              "title": "FatTony — vented P1P/P1S/X1-C riser remix",
+              "url": "https://www.printables.com/model/557492-v2-vented-remix-updated-bambu-lab-ultimate-p1p-x1-",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Clicking gears or deformed filament near the drive",
+          "summary": "Bambu’s X1/X1C maintenance guide covers toolhead heat, gear debris and extruder cleaning. Inspect the feed mechanism when clicking or grinding accompanies extrusion trouble, then use the documented reassembly and extrusion checks.",
+          "compatibility": "X1 / X1 Carbon procedure. The guide illustrates some gear lubrication using P1S parts, but electrical assemblies still differ.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "X1/X1C extruder maintenance",
+              "url": "https://wiki.bambulab.com/en/x1/troubleshooting/extruder-clog",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/x1",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-x1e": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Enterprise Wi-Fi setup and unexpected network priority",
+          "summary": "The X1E prioritizes Ethernet when wired and wireless links are both connected. Certificate-based enterprise Wi-Fi must be configured after initial setup; the guide explains certificate formats, physical network switches and IP/DNS settings.",
+          "compatibility": "X1E networking only. Obtain the appropriate enterprise certificates from the network administrator; X1C connection instructions do not cover these controls.",
+          "evidence": "official troubleshooting",
+          "section": "O",
+          "sources": [
+            {
+              "title": "Official X1E network connection guide",
+              "url": "https://wiki.bambulab.com/en/x1/manual/x1e-network-connection-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/x1",
+          "checked": "2026-10-20"
+        },
+        {
+          "title": "X1Plus installation and supported printers",
+          "url": "https://github.com/X1Plus/X1Plus/wiki/Installation-Guide",
+          "checked": "2026-10-20"
+        }
+      ]
+    },
+    "bambu-x2d": {
+      "firmware": [],
+      "printed_mods": [],
+      "hardware_mods": [],
+      "issues": [
+        {
+          "title": "Filament reaches the toolhead but will not extrude",
+          "summary": "The official diagnostic sequence uses unloading behavior to separate an extruder restriction from a hotend blockage. Check the matching toolhead procedure before removing components.",
+          "compatibility": "X2D only. X2D also has a separate auxiliary-extruder cleaning guide; its dual-path toolhead differs from P2S.",
+          "evidence": "official troubleshooting",
+          "section": "G",
+          "sources": [
+            {
+              "title": "X2D clog troubleshooting",
+              "url": "https://wiki.bambulab.com/en/x2d/troubleshooting/clogging",
+              "checked": "2026-10-20"
+            }
+          ]
+        },
+        {
+          "title": "Uneven first layer: start with the model’s optimization guide",
+          "summary": "Use the manufacturer’s checks for the build surface, nozzle and first-layer behavior before adding mechanical spacers or changing firmware offsets. Preserve the material and plate context when comparing results.",
+          "compatibility": "X2D model-specific procedure; a diagnostic article alone does not show how often the problem occurs.",
+          "evidence": "official troubleshooting",
+          "section": "J",
+          "sources": [
+            {
+              "title": "X2D first-layer optimization",
+              "url": "https://wiki.bambulab.com/en/x2d/troubleshooting/first-layer-printing-optimization-guide",
+              "checked": "2026-10-20"
+            }
+          ]
+        }
+      ],
+      "reviewed_sources": [
+        {
+          "title": "Bambu Lab model documentation",
+          "url": "https://wiki.bambulab.com/en/x2d",
+          "checked": "2026-10-20"
+        }
+      ]
+    }
+  }
+}
