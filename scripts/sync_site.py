@@ -18,7 +18,10 @@ from printer_library import directory_body as printer_directory_body
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
 DATE = '2026-10-18'  # Content revision date, not a blanket source/price check date.
+CATALOG_DATE = '2026-10-24'  # Comparison pages, including their Dataset metadata.
 PRINTER_DATE = '2026-10-20'  # Printer presentation only; catalog/source dates are unchanged.
+DATASET_CREATOR = {'@type': 'Organization', 'name': '3D Printing Info', 'url': BASE}
+DATASET_LICENSE = 'https://www.gnu.org/licenses/gpl-3.0.html'
 PAGES = ('comparison.html', 'filaments.html')
 PAYLOAD = re.compile(r'<script[^>]*id="payload"[^>]*>(.*?)</script>', re.S)
 LD = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
@@ -210,6 +213,7 @@ def sync():
                 x.update(name='3D printers' if printer else '3D printing filament materials',numberOfItems=cs['items'],url=BASE+filename,itemListElement=[{'@type':'ListItem','position':i,'name':c['n'],'url':BASE+('printers/' if printer else 'materials/')+c['id']+'.html'} for i,c in enumerate(data['cats'],1)])
             elif typ=='Dataset':
                 x.update(description=desc,url=BASE+filename,variableMeasured=[f['name']+((' ('+f['unit']+')') if f.get('unit') else '') for f in data['fields']])
+                x.update(creator=DATASET_CREATOR,license=DATASET_LICENSE)
                 # Catalog row counts are explicit machine-readable properties.
                 x['additionalProperty']=[{'@type':'PropertyValue','name':k,'value':v} for k,v in cs.items()]
             return ld(x)
@@ -220,6 +224,8 @@ def sync():
         content='<details class="material-directory"><summary>Browse all '+str(cs['items'])+' '+label+' guides</summary><ul>'+''.join('<li><a href="'+directory+'/'+E(c['id'])+'.html">'+E(c['n'])+'</a></li>' for c in data['cats'])+'</ul></details>'
         page=marker(page,label+'-links',content)
         if not printer: page=marker(page,'retail-brands',retail_links(data))
+        attribution='<p class="muted" id="dataset-attribution">Catalog compiled by <a href="'+BASE+'">'+E(DATASET_CREATOR['name'])+'</a>. Dataset compilation: <a href="'+DATASET_LICENSE+'" rel="license">GNU GPL v3.0</a> (<a href="https://github.com/sfmth/3d_printing_info/blob/main/LICENSE">repository license</a>). Individual source documents and images retain their respective rights and terms.</p>'
+        page=marker(page,'dataset-attribution',attribution)
         path.write_text(page)
     summary={'printers':len(datasets[PAGES[0]]['cats']),'printer-fields':len(datasets[PAGES[0]]['fields']),'materials':len(datasets[PAGES[1]]['cats']),'products':counts(datasets[PAGES[1]])['products']}
     path=ROOT/'index.html';index=path.read_text()
@@ -231,7 +237,7 @@ def sync():
     urls=['','comparison.html','filaments.html','materials/','printers/',*material_paths,*printer_paths,*article_paths]
     article_dates={'articles/'+a['id']+'.html':a['modified'] for a in load_articles()['articles']}
     article_dates['articles/']=max(article_dates.values())
-    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,PRINTER_DATE if u.startswith('printers/') else DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
+    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,CATALOG_DATE if u in PAGES else PRINTER_DATE if u.startswith('printers/') else DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
     (ROOT/'sitemap.xml').write_text(sitemap)
     print(json.dumps(summary,sort_keys=True))
 

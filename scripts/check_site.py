@@ -12,7 +12,7 @@ import subprocess
 import statistics
 import tempfile
 import xml.etree.ElementTree as ET
-from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, PRINTER_DATE, payload, counts
+from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, CATALOG_DATE, PRINTER_DATE, payload, counts
 from material_design import EXAMPLES, APPLICATIONS
 from printer_resources import load_resources, section_for, source_urls, CATEGORIES
 from printer_design import CHAPTERS
@@ -346,6 +346,13 @@ def run():
         ds=next(x for x in structured if x['@type']=='Dataset')
         assert ds['url']==BASE+name and {x['name']:x['value'] for x in ds['additionalProperty']}==cs,name
         assert len(ds['variableMeasured'])==len(fields),name
+        assert ds.get('creator') == {'@type':'Organization','name':'3D Printing Info','url':BASE}, (name,'Dataset creator is missing or inconsistent')
+        assert ds.get('license') == 'https://www.gnu.org/licenses/gpl-3.0.html', (name,'Dataset must retain the repository GPL v3.0 license')
+        attribution=list(Document(text).root.find(id='dataset-attribution'))
+        assert len(attribution)==1 and ds['creator']['name'] in attribution[0].text, (name,'Dataset attribution must be visible')
+        license_links=[link for link in attribution[0].find('a') if link.attrs.get('rel')=='license']
+        assert len(license_links)==1 and license_links[0].attrs.get('href')==ds['license'], (name,'Visible and structured licenses must agree')
+        assert 'Individual source documents and images retain their respective rights and terms.' in attribution[0].text, name
         static=re.search(r'<noscript>(.*?)</noscript>',text,re.S)[1]
         expected=cs['items']+(cs['products'] if name=='filaments.html' else 0)
         assert static.count('<th scope="row">')==expected,(name,'fallback rows')
@@ -564,6 +571,7 @@ def run():
     urls=[x.text for x in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)]
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)
     revisions={url.find('s:loc',ns).text:url.find('s:lastmod',ns).text for url in ET.parse(ROOT/'sitemap.xml').findall('s:url',ns)}
+    for name in PAGES:assert revisions[BASE+name]==CATALOG_DATE
     for article in article_data['articles']:assert revisions[BASE+'articles/'+article['id']+'.html']==article['modified']
     for printer in printers['cats']:assert revisions[BASE+'printers/'+printer['id']+'.html']==PRINTER_DATE
     assert revisions[BASE+'printers/']==PRINTER_DATE
