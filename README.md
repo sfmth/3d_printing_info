@@ -1,5 +1,7 @@
 # 3D Printing Info
 
+## [Visit the 3D Printing Info website →](https://sfmth.github.io/3d_printing_info/)
+
 Static GitHub Pages reference for printer hardware and filament materials. Existing interactive comparisons, family filters, field guides, theme controls and slicer exports are retained. Every material and printer has an individual guide that works without JavaScript.
 
 ## Catalog maintenance
