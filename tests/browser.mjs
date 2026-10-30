@@ -115,6 +115,11 @@ try {
       await assertOff('Persistent decline on '+file);
       assert.equal(await target.locator('#analytics-consent').isVisible(),false,'decline survives navigation');
       assert.equal(await target.locator('footer [data-analytics-settings]').isVisible(),true,file+' has settings');
+      if(file==='privacy.html') {
+        await target.getByRole('link',{name:'3D Printing Info',exact:true}).click();
+        assert.equal(target.url(),base,'privacy brand returns to the project home');
+        await assertOff('Privacy-to-home navigation preserves decline');
+      }
     }
     assert.equal(requests.length,0,'declining and navigating sends nothing to Google');
     await target.locator('footer [data-analytics-settings]').click();

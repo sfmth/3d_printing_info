@@ -476,6 +476,9 @@ def run():
             for key in ('itemtype','typeof'):
                 assert not any(schema_type(t)=='Product' for t in attrs.get(key,'').split()),(name,'Unsupported Product microdata/RDFa')
         assert 'bytes omitted' not in text and '[... omitted' not in text, name
+        if name == 'privacy.html':
+            brand_links = [a for a in parsed.attrs('a') if 'brand' in a.get('class', '').split()]
+            assert len(brand_links) == 1 and brand_links[0].get('href') == './', 'Privacy brand must link to the site home'
         depth='../' if '/' in name else ''
         scripts=parsed.attrs('script')
         assert len([script for script in scripts if script.get('src')==depth+'assets/analytics-consent.js' and 'defer' in script])==1,(name,'Missing local analytics consent gate')

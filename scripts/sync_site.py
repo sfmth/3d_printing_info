@@ -167,7 +167,7 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="../materials/">Material guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Selection articles</a></nav>'
     if path == 'privacy.html':
         nav = '<nav class="nav" aria-label="Primary"><a href="./">Home</a><a href="printers/">Printer guides</a><a href="materials/">Material guides</a><a href="articles/">Selection articles</a></nav>'
-    return head + '<div class="topbar"><a class="brand" href="' + depth + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + (PRINTER_DATE if path.startswith('printers/') else DATE) + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a>'+privacy_links(depth)+'</footer></div></body></html>\n'
+    return head + '<div class="topbar"><a class="brand" href="' + (depth or './') + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + (PRINTER_DATE if path.startswith('printers/') else DATE) + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a>'+privacy_links(depth)+'</footer></div></body></html>\n'
 
 
 def generate_materials(data, index):
