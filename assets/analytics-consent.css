@@ -1,0 +1,21 @@
+.privacy-links { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 12px; }
+.privacy-links button { color: inherit; border: 0; padding: 0; background: transparent; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.analytics-consent, .analytics-settings { color: #18231e; background: #fff; border: 1px solid #6f7e72; border-radius: 10px; padding: 20px; font: 14px/1.6 system-ui, sans-serif; box-shadow: 0 8px 32px #0003; }
+.analytics-consent { position: fixed; z-index: 1000; bottom: 16px; left: 16px; right: 16px; max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 24px; max-height: calc(100dvh - 32px); overflow: auto; }
+.analytics-consent [hidden], .analytics-consent[hidden], [data-analytics-settings][hidden] { display: none !important; }
+.analytics-consent h2, .analytics-settings h2 { color: inherit; font-size: 18px; line-height: 1.3; margin: 0 0 8px; letter-spacing: normal; }
+.analytics-consent p, .analytics-settings p { color: inherit; margin: 0 0 12px; max-width: 74ch; font-size: 14px; }
+.analytics-consent p:last-child { margin-bottom: 0; }
+.analytics-consent a, .analytics-settings a { color: #8c3016; text-decoration: underline; }
+.analytics-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.analytics-consent .analytics-actions { flex: 0 0 190px; }
+.analytics-actions button { min-height: 44px; border: 1px solid #526057; border-radius: 6px; padding: 10px 14px; color: #18231e; background: #f2f5ee; font: 600 13px/1.4 system-ui, sans-serif; cursor: pointer; }
+.analytics-actions button:hover { background: #dce7d5; }
+.analytics-consent :focus-visible, .analytics-settings :focus-visible, .privacy-links :focus-visible { outline: 3px solid #b13d1a; outline-offset: 3px; }
+.analytics-settings { width: min(540px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto; }
+.analytics-settings::backdrop { background: #0008; }
+.privacy-page main { max-width: 78ch; margin: 0 auto; }
+.privacy-page h2 { font-size: 1.3rem; }
+.privacy-page p { line-height: 1.8; }
+@media (max-width: 600px) { .analytics-consent { align-items: start; flex-direction: column; gap: 16px; padding: 16px; } .analytics-consent .analytics-actions { flex-basis: auto; } }
+@media print { .analytics-consent, .analytics-settings, [data-analytics-settings] { display: none !important; } }

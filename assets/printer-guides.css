@@ -48,7 +48,7 @@
 .printer-visual img { width: 100%; height: 100%; min-height: 0; object-fit: contain; display: block; }
 .printer-visual.has-product-image .printer-image-stage { background: #fff; }
 .printer-visual.has-product-image img { padding: 44px 22px 20px; }
-.printer-visual figcaption { padding: 10px 2px 0; font-size: 10px; color: var(--muted); line-height: 1.6; }
+.printer-visual figcaption { padding: 10px 2px 0; font-size: 12px; color: var(--ink-2); line-height: 1.6; overflow-wrap: anywhere; }
 .printer-visual figcaption a { color: var(--ink-2); }
 .printer-jumps { display: flex; gap: 30px; flex-wrap: wrap; border-top: 1px solid var(--grid); border-bottom: 1px solid var(--grid); padding: 18px 0; font-size: 12px; }
 .printer-jumps a { text-decoration: none; color: var(--ink-2); }
@@ -189,7 +189,7 @@
   .printer-image-stage { aspect-ratio: 1.4; }
   .printer-image-label { left: 14px; top: 12px; font-size: 8px; }
   .printer-visual.has-product-image img { padding: 32px 16px 14px; }
-  .printer-visual figcaption { font-size: 9px; }
+  .printer-visual figcaption { font-size: 12px; }
   .printer-jumps { column-gap: 20px; row-gap: 10px; padding: 16px 0; font-size: 10px; }
   .printer-section { margin-top: 38px; }
   .printer-section-heading { align-items: start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }

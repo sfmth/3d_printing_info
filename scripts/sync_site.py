@@ -17,9 +17,9 @@ from printer_library import directory_body as printer_directory_body
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
-DATE = '2026-10-18'  # Content revision date, not a blanket source/price check date.
-CATALOG_DATE = '2026-10-24'  # Comparison pages, including their Dataset metadata.
-PRINTER_DATE = '2026-10-20'  # Printer presentation only; catalog/source dates are unchanged.
+DATE = '2026-10-29'  # Content/policy revision, not a blanket source/price check date.
+CATALOG_DATE = '2026-10-29'  # Comparison pages, including their Dataset metadata.
+PRINTER_DATE = '2026-10-29'  # Printer presentation only; catalog/source dates are unchanged.
 DATASET_CREATOR = {'@type': 'Organization', 'name': '3D Printing Info', 'url': BASE}
 DATASET_LICENSE = 'https://www.gnu.org/licenses/gpl-3.0.html'
 PAGES = ('comparison.html', 'filaments.html')
@@ -91,6 +91,27 @@ def value(cat, fid):
     return cat.get('sp', {}).get(fid, {}).get('v', '—')
 
 
+def consent_head(depth=''):
+    return '<link rel="stylesheet" href="'+depth+'assets/analytics-consent.css"><script defer src="'+depth+'assets/analytics-consent.js"></script>'
+
+
+def privacy_links(depth=''):
+    return '<span class="privacy-links"><a href="'+depth+'privacy.html">Privacy</a><button type="button" data-analytics-settings hidden>Analytics settings</button></span>'
+
+
+def add_consent_controls(page):
+    """Replace the former unconditional tag without touching either catalog payload."""
+    page = re.sub(r'<!-- Google tag.*?</script>\s*<script>.*?</script>', '', page, flags=re.S)
+    page = re.sub(r'<link rel="stylesheet" href="assets/analytics-consent.css"><script defer src="assets/analytics-consent.js"></script>', '', page)
+    page = page.replace('</head>', consent_head()+'</head>', 1)
+    page = re.sub(r'<span class="privacy-links">.*?</span>', '', page, flags=re.S)
+    if '</footer>' in page:
+        page = page.replace('</footer>', privacy_links()+'</footer>', 1)
+    else:
+        page = page.replace('</main>', '</main><footer>'+privacy_links()+'</footer>', 1)
+    return page
+
+
 def fallback(data, printer):
     cs = counts(data)
     headers = (['Printer', 'Class', 'Street price (USD; dated snapshot)', 'Build volume (catalog dimensions)',
@@ -131,27 +152,29 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
         head += '<link rel="stylesheet" href="'+depth+'assets/material-guides.css">'
         if path.endswith('/index.html'): head += '<script defer src="'+depth+'assets/material-guides.js"></script>'
     article = path.startswith('articles/')
-    body_class = 'article-page' if article else 'material-page '+('material-library' if path.endswith('/index.html') else 'material-detail') if path.startswith('materials/') else 'printer-page '+('printer-library-page' if path.endswith('/index.html') else 'printer-detail') if path.startswith('printers/') else ''
+    body_class = 'article-page' if article else 'material-page '+('material-library' if path.endswith('/index.html') else 'material-detail') if path.startswith('materials/') else 'printer-page '+('printer-library-page' if path.endswith('/index.html') else 'printer-detail') if path.startswith('printers/') else 'privacy-page' if path == 'privacy.html' else ''
     head += '<link rel="icon" href="' + depth + 'assets/site-icon.svg"><link rel="stylesheet" href="' + depth + 'assets/materials.css">'
     if article: head += '<link rel="stylesheet" href="'+depth+'assets/material-articles.css">'
     if path.startswith('printers/'):
         head += '<link rel="stylesheet" href="'+depth+'assets/printer-guides.css">'
         if path.endswith('/index.html'):
             head += '<link rel="stylesheet" href="'+depth+'assets/printer-library.css"><script defer src="'+depth+'assets/printer-library.js"></script>'
-    head += analytics + ld(schema) + '</head><body'+(' class="'+body_class+'"' if body_class else '')+'><div class="wrap">'
+    head += consent_head(depth) + ld(schema) + '</head><body'+(' class="'+body_class+'"' if body_class else '')+'><div class="wrap">'
     nav = '<nav class="nav" aria-label="Primary"><a href="' + depth + '">Home</a><a href="' + depth + 'comparison.html">Printers</a><a href="' + depth + 'filaments.html">Filaments</a><a href="' + depth + 'printers/">Printer guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Material guides</a></nav>'
     if path.startswith('printers/'):
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Printer guides</a><a href="../materials/">Material guides</a></nav>'
     if article:
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="../materials/">Material guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Selection articles</a></nav>'
-    return head + '<div class="topbar"><a class="brand" href="' + depth + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + (PRINTER_DATE if path.startswith('printers/') else DATE) + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a></footer></div></body></html>\n'
+    if path == 'privacy.html':
+        nav = '<nav class="nav" aria-label="Primary"><a href="./">Home</a><a href="printers/">Printer guides</a><a href="materials/">Material guides</a><a href="articles/">Selection articles</a></nav>'
+    return head + '<div class="topbar"><a class="brand" href="' + depth + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + (PRINTER_DATE if path.startswith('printers/') else DATE) + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a>'+privacy_links(depth)+'</footer></div></body></html>\n'
 
 
 def generate_materials(data, index):
     styles = re.search(r'<style>(.*?)</style>', index, re.S)[1]
     styles += '\nheader { display:block; } h1 { font-size:clamp(1.8rem,5vw,3rem); line-height:1.08; } h2 { margin-top:28px; } .facts { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); } .fact { border:1px solid var(--grid); border-radius:8px; background:var(--surface); padding:16px; } .fact h3 { margin:0 0 6px; font-size:1rem; } .fact p { margin:0; } .source-note, .price-note { color:var(--ink-2); font-size:13px; } .table-scroll { overflow:auto; } table { width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; } td,th { border:1px solid var(--grid); padding:10px; vertical-align:top; text-align:left; } th { background:var(--surface); } td ul { margin:0; padding-left:18px; } .directory { columns:3 230px; } .directory li { padding:5px; break-inside:avoid; } details { border:1px solid var(--grid); border-radius:8px; padding:14px; margin-top:16px; } summary { cursor:pointer; font-weight:600; } .breadcrumbs { font-size:13px; color:var(--ink-2); margin-bottom:16px; } p { max-width:88ch; } .topbar { margin-bottom:32px; }\n'
     (ROOT/'assets/materials.css').write_text(styles)
-    analytics = re.search(r'<!-- Google tag.*?</script>\s*<script>.*?</script>', index, re.S)[0]
+    analytics = ''  # guide_page supplies the local consent gate.
     paths = []
     for c in data['cats']:
         path = 'materials/' + c['id'] + '.html'; paths.append(path)
@@ -172,7 +195,7 @@ def generate_printers(data, index):
     """Render every printer's complete sourced record without a JavaScript dependency."""
     folder=ROOT/'printers'; folder.mkdir(exist_ok=True)
     write_diagrams()
-    analytics=re.search(r'<!-- Google tag.*?</script>\s*<script>.*?</script>',index,re.S)[0]
+    analytics=''  # guide_page supplies the local consent gate.
     paths=[]
     resources=load_resources(expected_ids={c['id'] for c in data['cats']})
     for c in data['cats']:
@@ -192,6 +215,19 @@ def generate_printers(data, index):
     for existing in folder.glob('*.html'):
         if existing.name not in expected:raise ValueError('Unexpected printer page: '+str(existing))
     return paths
+
+
+def generate_privacy():
+    body = '''<header><h1>Privacy</h1><p>Updated 29 October 2026. This notice describes the 3D Printing Info website published from <a href="https://github.com/sfmth/3d_printing_info">sfmth/3d_printing_info</a>.</p></header>
+<section><h2>Hosting and ordinary requests</h2><p>This is a static site hosted by GitHub Pages. Your browser sends GitHub the information needed to request pages and local assets, including your IP address. GitHub states that visitor IP addresses are logged and stored for security purposes, whether or not visitors are signed in. These hosting requests happen independently of your analytics choice. Read <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">GitHub Pages data collection</a> and the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a>.</p></section>
+<section id="analytics"><h2>Optional Google Analytics</h2><p>We use Google Analytics 4, measurement ID <code>G-12FDG0Z8JB</code>, to understand visits and improve this reference. It is off until you select <strong>Allow analytics</strong>. Before consent, or after you decline, this site does not load Google's analytics script, configure Analytics, or send analytics or consent pings to Google.</p><p>If you allow analytics, your browser contacts Google to load its code and send usage information. This can include page visits and interactions, referrer information, browser/device information and cookie identifiers; Google receives the network information needed for those requests. Our page-location configuration excludes this site's query strings and fragments. Analytics cookies are scoped to this site's path, use the <code>3dpi</code> prefix and are configured to expire after up to one year. Google signals and advertising personalization are disabled by this site's configuration; advertising consent remains denied.</p><p>Read <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use its services</a> and <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>. Google's processing and storage also depend on its service and the Analytics account settings; this page does not promise a particular server-side retention period.</p></section>
+<section id="choices"><h2>Your choice and withdrawal</h2><p><strong>Analytics settings</strong> in every footer lets you allow or decline analytics at any time. Declining after a grant withdraws consent, disables Analytics collection, attempts to remove this site's accessible analytics cookies, and reloads the page to unload Google's running code. It cannot undo requests already sent or delete data already held by Google. Browser controls can also remove cookies and site data.</p><p>Your choice is stored in this browser's local storage under <code>3dpi.analyticsConsent.v1</code> until you change it or clear site data. It is not sent to our own server. Another browser or device has a separate choice. If storage is blocked, the choice applies to the current page and may be requested again on later pages. Without JavaScript, analytics stays off and the settings control is unavailable.</p></section>
+<section><h2>Theme, filters and external links</h2><p>The comparison theme follows your browser's color preference unless you change it on that page. That selection is kept in page memory, not a theme cookie or local-storage preference. Comparison controls process catalog data in your browser; some selections can appear in the page URL.</p><p>Links to manufacturers, source documents, creator platforms and other services take you to third-party sites with their own privacy practices. Following a link sends a request to that site and may include referrer information according to your browser's policy. Declining analytics here does not control those other sites.</p></section>
+<section><h2>Questions</h2><p>You can contact the site maintainer through the <a href="https://github.com/sfmth/3d_printing_info/issues">repository issue tracker</a>. Issues are public and GitHub's privacy terms apply; avoid posting personal or sensitive information.</p></section>'''
+    schema = {'@context':'https://schema.org', '@type':'WebPage', 'name':'Privacy', 'url':BASE+'privacy.html', 'description':'Privacy, optional analytics and browser choices for 3D Printing Info.'}
+    html = guide_page('Privacy', schema['description'], 'privacy.html', body, '', '', schema)
+    html = re.sub(r'Catalog values retain their original source dates\. Page revision: [\d-]+\.', 'Privacy notice revision: '+DATE+'.', html)
+    (ROOT/'privacy.html').write_text(html)
 
 
 def sync():
@@ -226,15 +262,16 @@ def sync():
         if not printer: page=marker(page,'retail-brands',retail_links(data))
         attribution='<p class="muted" id="dataset-attribution">Catalog compiled by <a href="'+BASE+'">'+E(DATASET_CREATOR['name'])+'</a>. Dataset compilation: <a href="'+DATASET_LICENSE+'" rel="license">GNU GPL v3.0</a> (<a href="https://github.com/sfmth/3d_printing_info/blob/main/LICENSE">repository license</a>). Individual source documents and images retain their respective rights and terms.</p>'
         page=marker(page,'dataset-attribution',attribution)
-        path.write_text(page)
+        path.write_text(add_consent_controls(page))
     summary={'printers':len(datasets[PAGES[0]]['cats']),'printer-fields':len(datasets[PAGES[0]]['fields']),'materials':len(datasets[PAGES[1]]['cats']),'products':counts(datasets[PAGES[1]])['products']}
     path=ROOT/'index.html';index=path.read_text()
     for key,n in summary.items(): index=re.sub(r'(data-summary="'+key+r'">)\d+',lambda m:m[1]+str(n),index)
-    path.write_text(index)
+    path.write_text(add_consent_controls(index))
     material_paths=generate_materials(datasets[PAGES[1]],index)
     printer_paths=generate_printers(datasets[PAGES[0]],index)
     article_paths=generate_articles(BASE,index,guide_page,{c['id'] for c in datasets[PAGES[1]]['cats']})
-    urls=['','comparison.html','filaments.html','materials/','printers/',*material_paths,*printer_paths,*article_paths]
+    generate_privacy()
+    urls=['','comparison.html','filaments.html','privacy.html','materials/','printers/',*material_paths,*printer_paths,*article_paths]
     article_dates={'articles/'+a['id']+'.html':a['modified'] for a in load_articles()['articles']}
     article_dates['articles/']=max(article_dates.values())
     sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,CATALOG_DATE if u in PAGES else PRINTER_DATE if u.startswith('printers/') else DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'

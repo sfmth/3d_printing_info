@@ -25,6 +25,10 @@ jobs:
         run: python scripts/check_site.py
       - name: Check article evidence validation regressions
         run: python -m unittest discover -s tests -p 'test_article_evidence.py'
+      - name: Check image reuse decisions and individual photo licence handling
+        run: |
+          python -m unittest discover -s tests -p 'test_image_rights.py' -v
+          python -m unittest discover -s tests -p 'test_print_photo_licenses.py' -v
       - name: Validate printer ownership evidence and contextual rendering
         run: python -m unittest discover -s tests -p 'test_printer_resources.py' -v
       - name: Test IndexNow selection and failure handling without network requests

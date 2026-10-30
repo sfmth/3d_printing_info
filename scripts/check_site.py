@@ -131,13 +131,19 @@ def webp_dimensions(data):
 
 
 def printer_images(catalog):
+    from image_rights import validate_reuse, decisions
     manifest = json.loads((ROOT/'data/printer-images.json').read_text())
-    assert set(manifest) == {'version', 'images'} and type(manifest['version']) is int and manifest['version'] == 1, 'Invalid printer image manifest'
+    assert set(manifest) == {'version', 'images'} and type(manifest['version']) is int and manifest['version'] == 2, 'Invalid printer image manifest'
     images = manifest['images']
     assert images and set(images) <= {c['id'] for c in catalog['cats']}, 'Printer photos must identify exact catalog models'
-    fields = {'image', 'alt', 'width', 'height', 'source_url', 'image_url', 'credit', 'kind', 'checked', 'sha256'}
+    records = decisions()
+    assert set(records) == {c['id'] for c in catalog['cats']}, 'Every printer needs its recorded image disposition'
+    assert {p.relative_to(ROOT).as_posix() for p in (ROOT/'assets/printers').glob('*.webp')} == {i['image'] for i in images.values()}, 'Unreferenced product photographs remain publicly served'
+    fields = {'image', 'alt', 'width', 'height', 'source_url', 'image_url', 'credit', 'kind', 'checked', 'sha256', 'reuse'}
     for printer_id, image in images.items():
         assert set(image) == fields, (printer_id, 'Incomplete printer image provenance')
+        validate_reuse(image)
+        assert records[printer_id]['decision'] in {'retained-publisher-grant', 'retained-no-explicit-restriction-found', 'replaced-with-licensed-photo'}, (printer_id, 'Photo conflicts with recorded rights decision')
         path = Path(image['image'])
         assert path.parent.as_posix() == 'assets/printers' and path.suffix == '.webp', (printer_id, 'Photo must be a local printer WebP')
         assert all(isinstance(image[key], str) and image[key].strip() for key in ('alt', 'credit', 'kind')), printer_id
@@ -227,10 +233,15 @@ def check_printer_record(html, catalog, printer, images, resources):
         assert (photos[0].attrs.get('width'), photos[0].attrs.get('height')) == (str(image['width']), str(image['height'])), printer_id
         assert image['source_url'] in {link.attrs.get('href') for link in visual[0].find('a')}, (printer_id, 'Missing photo credit link')
         assert image['credit'] in visual[0].text, (printer_id, 'Missing photo credit')
+        if image['reuse'].get('license_url'):
+            assert image['reuse']['license_url'] in {link.attrs.get('href') for link in visual[0].find('a')}, (printer_id, 'Missing image licence link')
+            assert image['reuse']['changes'] in visual[0].text, (printer_id, 'Missing image modification disclosure')
     else:
         assert not photos, (printer_id, 'Unverified model must not borrow a product photograph')
         diagrams = list(visual[0].find('img', **{'data-printer-diagram': printer['f'].lower()}))
         assert len(diagrams) == 1 and 'generic' in visual[0].text.lower(), (printer_id, 'Fallback must be a clearly labeled generic architecture diagram')
+        from image_rights import decisions
+        assert decisions()[printer_id]['original_source_url'] in {link.attrs.get('href') for link in visual[0].find('a')}, (printer_id, 'Fallback lacks product-photo source link')
 
 
 def check_printer_directory(catalog, images):
@@ -266,6 +277,8 @@ def check_printer_directory(catalog, images):
             assert photos[0].attrs.get('src') == '../'+image['image'] and photos[0].attrs.get('alt') == image['alt'], printer_id
             assert (photos[0].attrs.get('width'), photos[0].attrs.get('height')) == (str(image['width']), str(image['height'])), printer_id
             assert image['source_url'] in {link.attrs.get('href') for link in card.find('a')}, (printer_id, 'Directory photo lacks source credit')
+            if image['reuse'].get('license_url'):
+                assert image['reuse']['license_url'] in {link.attrs.get('href') for link in card.find('a')}, (printer_id, 'Directory photo lacks licence link')
         else:
             assert not photos, (printer_id, 'Directory borrowed a sibling photograph')
 
@@ -396,7 +409,7 @@ def run():
     for key,n in summary.items():
         found=re.findall('data-summary="'+key+r'">(\d+)',index)
         assert found and all(int(x)==n for x in found),(key,found,n)
-    paths=[ROOT/'index.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html'),*(ROOT/'articles').glob('*.html')]
+    paths=[ROOT/'index.html',ROOT/'privacy.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html'),*(ROOT/'articles').glob('*.html')]
     assert len(list((ROOT/'materials').glob('*.html')))==len(filaments['cats'])+1
     assert len(list((ROOT/'printers').glob('*.html')))==len(printers['cats'])+1
     article_data, evidence = load_articles(), load_evidence()
@@ -463,8 +476,18 @@ def run():
             for key in ('itemtype','typeof'):
                 assert not any(schema_type(t)=='Product' for t in attrs.get(key,'').split()),(name,'Unsupported Product microdata/RDFa')
         assert 'bytes omitted' not in text and '[... omitted' not in text, name
-        assert text.count('https://www.googletagmanager.com/gtag/js?id=G-12FDG0Z8JB')==1,name
-        assert text.count("gtag('config', 'G-12FDG0Z8JB')")==1,name
+        depth='../' if '/' in name else ''
+        scripts=parsed.attrs('script')
+        assert len([script for script in scripts if script.get('src')==depth+'assets/analytics-consent.js' and 'defer' in script])==1,(name,'Missing local analytics consent gate')
+        assert not any(urlsplit(script.get('src','')).netloc for script in scripts),(name,'Remote scripts must not load before analytics consent')
+        assert not re.search(r'\bgtag\s*\(',text),(name,'Unconditional analytics configuration in page HTML')
+        assert len([link for link in parsed.attrs('link') if link.get('href')==depth+'assets/analytics-consent.css' and link.get('rel')=='stylesheet'])==1,name
+        footer=Document(text).root
+        footers=list(footer.find('footer'))
+        assert len(footers)==1,(name,'Missing unique privacy footer')
+        assert len([link for link in footers[0].find('a') if link.attrs.get('href')==depth+'privacy.html'])==1,(name,'Missing footer privacy link')
+        settings=[button for button in footers[0].find('button') if 'data-analytics-settings' in button.attrs]
+        assert len(settings)==1 and 'hidden' in settings[0].attrs,(name,'Settings must be available through the local gate, hidden without JavaScript')
         assert len(re.findall('<title>.*?</title>',text))==1,name
         canonical=[a['href'] for a in parsed.attrs('link') if a.get('rel')=='canonical']
         url=BASE+('' if name=='index.html' else name[:-10] if name.endswith('/index.html') else name)

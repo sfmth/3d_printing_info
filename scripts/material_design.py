@@ -61,8 +61,40 @@ def discovery(c):
     return '<div class="model-search-links">'+''.join('<a href="'+E(url+quote(query))+'">'+label+' <span aria-hidden="true">↗</span></a>' for label,url in [('Printables','https://www.printables.com/search/models?q='),('MakerWorld','https://makerworld.com/en/search/models?keyword='),('Thingiverse','https://www.thingiverse.com/search?q=')])+'</div>'
 
 
+def photo_class(e, base=''):
+    """Keep the source licence attached to every display of the same image."""
+    return ' '.join(x for x in [base, 'print-source-photo',
+                    'photo-no-derivatives' if '-ND ' in e['license'] else ''] if x)
+
+
+def model_credits(e):
+    credits=[]
+    for credit in e.get('model_credits', []):
+        credits.append(E(credit['role'])+': '+E(credit['name'])+
+                       ' (<a href="'+E(credit['source_url'])+'">credit source</a>)')
+    return '<span class="model-credits">'+' · '.join(credits)+'</span>' if credits else ''
+
+
+def listing_attribution(e):
+    # The legacy creator field records the listing's uploader, not a verified photographer.
+    body='<span class="listing-attribution">'+E(e['platform'])+' listing uploaded by '+E(e['creator'])+' · <a rel="license" href="'+E(e['license_url'])+'">'+E(e['license'])+'</a></span>'
+    if e.get('photo_author'):
+        body+='<span class="photo-author">Image author: '+E(e['photo_author'])+'</span>'
+    body+=model_credits(e)
+    body+=''.join('<span class="credit-notice">'+E(notice)+'</span>' for notice in e.get('credit_notices', []))
+    return body
+
+
+def photo_terms(e):
+    conditions=[]
+    if '-NC' in e['license']:conditions.append('Noncommercial reuse only.')
+    if '-SA ' in e['license']:conditions.append('ShareAlike applies to adaptations.')
+    if '-ND ' in e['license']:conditions.append('No derivatives may be shared.')
+    return '<span class="photo-terms"><a href="'+E(e['image_url'])+'">Source image</a> · Image bytes unchanged; displayed in full.'+(' '+E(' '.join(conditions)) if conditions else '')+'</span>'
+
+
 def photograph(e, cls='material-visual'):
-    return '<figure class="'+cls+'" data-print-example><a class="print-photo-link" href="'+E(e['url'])+'" aria-label="View '+E(e['title'])+' on '+E(e['platform'])+'"><img src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" width="'+str(e['width'])+'" height="'+str(e['height'])+'" fetchpriority="high"></a><figcaption><span class="eyebrow">Printed in '+E(e['material'])+'</span><a class="print-title" href="'+E(e['url'])+'">'+E(e['title'])+' <span aria-hidden="true">↗</span></a><span>Photo & model by '+E(e['creator'])+' · '+E(e['platform'])+' · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a></span></figcaption></figure>'
+    return '<figure class="'+cls+'" data-print-example><a class="print-photo-link" href="'+E(e['url'])+'" aria-label="View '+E(e['title'])+' on '+E(e['platform'])+'"><img class="'+photo_class(e)+'" src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" width="'+str(e['width'])+'" height="'+str(e['height'])+'" fetchpriority="high"></a><figcaption><span class="eyebrow">Reported material: '+E(e['material'])+'</span><a class="print-title" href="'+E(e['url'])+'">'+E(e['title'])+' <span aria-hidden="true">↗</span></a>'+listing_attribution(e)+photo_terms(e)+'</figcaption></figure>'
 
 
 def card(c, featured=False):
@@ -70,9 +102,9 @@ def card(c, featured=False):
     text=INTRO.get(c['id']) or c.get('sum','');e=primary_example(c['id'])
     attrs='' if featured else ' data-material="'+E(c['id'])+'" data-search="'+E(' '.join([c['n'],c.get('aka',''),c['f'],c.get('sum',''),c['sp'].get('A7',{}).get('v','')]))+'"'
     body='<article class="'+cls+(' has-photo' if e and e.get('image') else ' text-only')+'"'+attrs+'><a class="material-card-link" href="'+E(c['id'])+'.html">'
-    if e and e.get('image'):body+='<img src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" loading="lazy" width="'+str(e['width'])+'" height="'+str(e['height'])+'">'
+    if e and e.get('image'):body+='<img class="'+photo_class(e)+'" src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" loading="lazy" width="'+str(e['width'])+'" height="'+str(e['height'])+'">'
     body+='<div class="material-card-copy"><span class="eyebrow">'+E(c['f'])+'</span><h3>'+E(c['n'])+'</h3><p>'+E(compact(text,128))+'</p><span class="card-bottom">'+count_label(len(c.get('pr',[])),'product listing')+' <span aria-hidden="true">↗</span></span></div></a>'
-    if e:body+='<div class="card-example"><a href="'+E(e['url'])+'">View print by '+E(e['creator'])+' ↗</a> · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a></div>'
+    if e:body+='<div class="card-example"><a class="example-listing" href="'+E(e['url'])+'">'+E(e['title'])+' ↗</a>'+listing_attribution(e)+(photo_terms(e) if e.get('image') else '')+'</div>'
     return body+'</article>'
 
 
@@ -106,8 +138,10 @@ def print_section(data,c,refs):
     for e in examples:
         body+='<article class="print-story">'
         if e.get('image') and e is not primary:
-            body+='<a href="'+E(e['url'])+'"><img class="example-photo" src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" width="'+str(e['width'])+'" height="'+str(e['height'])+'" loading="lazy"></a>'
-        body+='<h3><a href="'+E(e['url'])+'">'+E(e['title'])+' ↗</a></h3><p>'+E(e['note'])+'</p><details class="inline-sources"><summary>Material evidence & '+('photo credit' if e.get('image') else 'model credit')+'</summary><p>Creator’s note: “'+E(e['evidence'])+'”</p><p>'+('Photo and model' if e.get('image') else 'Model')+': '+E(e['creator'])+' · <a href="'+E(e['url'])+'">Original listing</a> · <a href="'+E(e['license_url'])+'">'+E(e['license'])+'</a> · Checked '+E(e['checked'])+'. '+('Photo bytes unchanged. Appearance can include paint or other finishing. ' if e.get('image') else '')+'This is a creator report, not an independent material test.</p></details></article>'
+            body+='<a href="'+E(e['url'])+'"><img class="'+photo_class(e,'example-photo')+'" src="../'+E(e['image'])+'" alt="'+E(e['alt'])+'" width="'+str(e['width'])+'" height="'+str(e['height'])+'" loading="lazy"></a>'
+        body+='<h3><a href="'+E(e['url'])+'">'+E(e['title'])+' ↗</a></h3><p>'+E(e['note'])+'</p><details class="inline-sources"><summary>Material evidence & '+('image attribution' if e.get('image') else 'listing attribution')+'</summary><p>Listing note: “'+E(e['evidence'])+'”</p><p>'+listing_attribution(e)+'<span><a href="'+E(e['url'])+'">Original listing</a> · Checked '+E(e['checked'])+'. This is an uploader report, not an independent material test.</span>'+(photo_terms(e) if e.get('image') else '')+'</p>'
+        if e.get('image_omission_reason'):body+='<p class="image-omission">'+E(e['image_omission_reason'])+'</p>'
+        body+='</details></article>'
     return body+'<details class="inline-sources model-discovery"><summary>Find more models</summary>'+discovery(c)+'</details></section>'
 
 

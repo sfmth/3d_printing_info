@@ -1,5 +1,5 @@
 /** Real Chromium integration checks. Serve under the GitHub Pages project prefix.
- * Analytics is intercepted: we verify the loader request/config queue, not ingestion.
+ * Analytics stays off by default. Consent tests intercept Google's loader/collection, not ingestion.
  */
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
@@ -42,6 +42,7 @@ const step = (message) => { steps.push(message); console.log('PASS',message); };
 try {
   browser = await chromium.launch();
   const context = await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
+  await context.addInitScript(() => localStorage.setItem('3dpi.analyticsConsent.v1','denied'));
   let loads=0; const errors=[], missing=[];
   await context.route('https://**/*', async route => {
     if (route.request().url().startsWith('https://www.googletagmanager.com/gtag/js')) {
@@ -70,11 +71,130 @@ try {
     const before=loads;
     const response=await page.goto(base+file,{waitUntil:'networkidle'});
     assert.equal(response.status(),200,file);
-    assert.equal(loads-before,1,`one Analytics loader request: ${file}`);
-    assert.equal(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count(),1);
-    assert.equal(await page.evaluate(()=>window.dataLayer.filter(x=>x[0]==='config' && x[1]==='G-12FDG0Z8JB').length),1);
+    assert.equal(loads-before,0,`no Analytics loader after decline: ${file}`);
+    assert.equal(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count(),0);
+    assert.equal(await page.evaluate(()=>(window.dataLayer || []).filter(x=>x[0]==='config').length),0);
+    assert.equal(await page.locator('footer [data-analytics-settings]').count(),1);
+    assert.equal(await page.locator('script[src$="analytics-consent.js"]').count(),1);
     assert.ok(!(await referenceMetadata()).types.includes('Product'),`no unsupported Product markup: ${file}`);
   }
+  async function verifyAnalyticsConsent() {
+    const consent = await browser.newContext({viewport:{width:390,height:844}});
+    const requests = [], consentErrors = [];
+    const google = url => /https:\/\/[^/]*(?:google-analytics\.com|googletagmanager\.com)\//.test(url);
+    consent.on('request', request => { if(google(request.url())) requests.push(request.url()); });
+    consent.on('page', target => target.on('pageerror', error => consentErrors.push(error.message)));
+    await consent.route('https://**/*', async route => {
+      if(route.request().url().startsWith('https://www.googletagmanager.com/gtag/js')) {
+        await route.fulfill({contentType:'application/javascript',body:`
+          if (!window['ga-disable-G-12FDG0Z8JB']) {
+            document.cookie='3dpi_ga=fixture; path=${prefix}; SameSite=Lax';
+            window.__analyticsProbe=()=>window['ga-disable-G-12FDG0Z8JB'] ? undefined : fetch('https://www.google-analytics.com/g/collect?fixture=1');
+            window.__analyticsProbe();
+          }`});
+      } else if(google(route.request().url())) await route.fulfill({status:204,headers:{'access-control-allow-origin':'*'}});
+      else await route.abort();
+    });
+    const target=await consent.newPage();
+    async function assertOff(message) {
+      await target.waitForLoadState('networkidle');
+      assert.equal(await target.locator('script[src*="googletagmanager.com/gtag/js"]').count(),0,message);
+      assert.equal(await target.evaluate(()=>(window.dataLayer || []).filter(entry=>entry[0]==='config').length),0,message+' has no config');
+      assert.equal(await target.evaluate(()=>window.__analyticsProbe===undefined),true,message+' has no running library');
+    }
+    await target.goto(base,{waitUntil:'networkidle'});
+    await assertOff('Analytics starts off before a choice');
+    assert.equal(requests.length,0,'no Google script, collection or consent request before opt-in');
+    assert.equal(await target.locator('#analytics-consent').isVisible(),true);
+    assert.equal(await target.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'consent controls fit 390px');
+    await target.screenshot({path:path.join(root,'test-results/analytics-consent-mobile.png')});
+    await target.getByRole('button',{name:'Decline analytics',exact:true}).click();
+    assert.equal(await target.evaluate(()=>localStorage.getItem('3dpi.analyticsConsent.v1')),'denied');
+    for(const file of ['comparison.html','filaments.html','materials/pla.html','printers/bambu-x1c.html','articles/','privacy.html']) {
+      await target.goto(base+file,{waitUntil:'networkidle'});
+      await assertOff('Persistent decline on '+file);
+      assert.equal(await target.locator('#analytics-consent').isVisible(),false,'decline survives navigation');
+      assert.equal(await target.locator('footer [data-analytics-settings]').isVisible(),true,file+' has settings');
+    }
+    assert.equal(requests.length,0,'declining and navigating sends nothing to Google');
+    await target.locator('footer [data-analytics-settings]').click();
+    assert.equal(await target.locator('#analytics-settings').isVisible(),true);
+    await target.keyboard.press('Escape');
+    assert.equal(await target.locator('#analytics-settings').isVisible(),false);
+    assert.equal(await target.locator('footer [data-analytics-settings]').evaluate(element=>element===document.activeElement),true,'closing settings restores focus');
+    await target.locator('footer [data-analytics-settings]').click();
+    // A previously idle document can still report networkidle before the newly
+    // inserted async loader executes. Observe the mock's collection response.
+    await Promise.all([
+      target.waitForResponse(response=>response.url()==='https://www.google-analytics.com/g/collect?fixture=1' && response.status()===204),
+      target.locator('#analytics-settings [data-analytics-allow]').click()
+    ]);
+    assert.equal(requests.filter(url=>url.includes('googletagmanager.com/gtag/js')).length,1,'explicit grant loads one tag');
+    assert.equal(requests.filter(url=>url.includes('google-analytics.com/g/collect')).length,1,'mock collection only after grant');
+    const queue=await target.evaluate(()=>window.dataLayer.map(entry=>Array.from(entry)));
+    const configurations=queue.filter(entry=>entry[0]==='config');
+    assert.equal(configurations.length,1,'one config after grant');
+    assert.equal(configurations[0][1],'G-12FDG0Z8JB');
+    assert.equal(configurations[0][2].allow_google_signals,false);
+    assert.equal(configurations[0][2].allow_ad_personalization_signals,false);
+    assert.deepEqual(queue.filter(entry=>entry[0]==='consent').map(entry=>[entry[1],entry[2].analytics_storage,entry[2].ad_storage,entry[2].ad_user_data,entry[2].ad_personalization]),[
+      ['default','denied','denied','denied','denied'],['update','granted','denied','denied','denied']
+    ]);
+    await Promise.all([
+      target.waitForResponse(response=>response.url()==='https://www.google-analytics.com/g/collect?fixture=1' && response.status()===204),
+      target.goto(base+'comparison.html?private=do-not-forward#bambu-x1c',{waitUntil:'networkidle'})
+    ]);
+    assert.equal(await target.evaluate(()=>window.dataLayer.filter(entry=>entry[0]==='config').length),1,'grant persists on next page');
+    assert.equal(await target.evaluate(()=>window.dataLayer.find(entry=>entry[0]==='config')[2].page_location),base+'comparison.html','page location excludes query and fragment');
+    assert.equal(requests.filter(url=>url.includes('googletagmanager.com/gtag/js')).length,2);
+    await target.evaluate(()=>{document.cookie='_ga=legacy; path=/';document.cookie='unrelated=keep; path=/';});
+    const beforeWithdrawal=requests.length;
+    await target.locator('footer [data-analytics-settings]').click();
+    await Promise.all([target.waitForNavigation({waitUntil:'networkidle'}),target.locator('#analytics-settings [data-analytics-decline]').click()]);
+    await assertOff('Withdrawing reloads without the running tag');
+    assert.equal(requests.length,beforeWithdrawal,'withdrawal sends no further Google requests');
+    const cookies=await consent.cookies();
+    assert.ok(!cookies.some(cookie=>/^(?:_ga(?:_|$)|3dpi_ga(?:_|$))/.test(cookie.name)),'withdrawal removes accessible old and current Analytics cookies');
+    assert.ok(cookies.some(cookie=>cookie.name==='unrelated'),'withdrawal preserves unrelated cookies');
+    await target.goto(base+'materials/pla.html',{waitUntil:'networkidle'});
+    await assertOff('Withdrawal persists across navigation');
+    assert.equal(requests.length,beforeWithdrawal);
+    await target.locator('footer [data-analytics-settings]').click();
+    await Promise.all([
+      target.waitForResponse(response=>response.url()==='https://www.google-analytics.com/g/collect?fixture=1' && response.status()===204),
+      target.locator('#analytics-settings [data-analytics-allow]').click()
+    ]);
+    await target.locator('footer [data-analytics-settings]').click();
+    await target.locator('#analytics-settings [data-analytics-allow]').click();
+    assert.equal(await target.evaluate(()=>window.dataLayer.filter(entry=>entry[0]==='config').length),1,'repeated grant does not duplicate config');
+    const other=await consent.newPage();
+    await Promise.all([
+      other.waitForResponse(response=>response.url()==='https://www.google-analytics.com/g/collect?fixture=1' && response.status()===204),
+      other.goto(base+'privacy.html',{waitUntil:'networkidle'})
+    ]);
+    await other.locator('footer [data-analytics-settings]').click();
+    const beforeOtherWithdrawal=requests.length;
+    await Promise.all([target.waitForNavigation({waitUntil:'networkidle'}),other.waitForNavigation({waitUntil:'networkidle'}),other.locator('#analytics-settings [data-analytics-decline]').click()]);
+    await assertOff('Withdrawal in another tab stops an existing grant');
+    assert.equal(requests.length,beforeOtherWithdrawal);
+    assert.deepEqual(consentErrors,[],'consent flow has no browser errors');
+    await consent.close();
+    const blocked=await browser.newContext();
+    const blockedRequests=[];
+    blocked.on('request',request=>{if(google(request.url()))blockedRequests.push(request.url());});
+    await blocked.route('https://**/*',route=>route.abort());
+    await blocked.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new Error('Storage unavailable');}}));
+    const blockedPage=await blocked.newPage();
+    await blockedPage.goto(base,{waitUntil:'networkidle'});
+    await blockedPage.locator('[data-analytics-decline]').first().click();
+    assert.equal(await blockedPage.locator('#analytics-consent').isVisible(),false,'decline works on the current page when storage is blocked');
+    await blockedPage.reload({waitUntil:'networkidle'});
+    assert.equal(await blockedPage.locator('#analytics-consent').isVisible(),true,'storage failure returns to unchosen, never granted');
+    assert.equal(blockedRequests.length,0);
+    await blocked.close();
+    step('Analytics sends zero Google requests before consent/after decline; explicit grant, persistent choices, withdrawal/cookie cleanup, cross-tab withdrawal and blocked storage work');
+  }
+  await verifyAnalyticsConsent();
   async function verifyGenericTables(target, article) {
     assert.equal(await target.locator('table[data-evidence-table]').count(),article.tables.length,article.id);
     for(const table of article.tables) {
@@ -207,6 +327,10 @@ try {
       assert.deepEqual(await photo.evaluate(img=>[img.naturalWidth,img.naturalHeight]),[image.width,image.height],printer.id+' exact model photo decodes');
       assert.equal(await visual.locator(`a[href="${image.source_url}"]`).count(),1,printer.id+' source credit');
       assert.ok((await visual.innerText()).includes(image.credit));
+      if(image.reuse.license_url) {
+        assert.equal(await visual.locator(`a[href="${image.reuse.license_url}"]`).count(),1,printer.id+' licence is adjacent to photo');
+        assert.ok((await visual.innerText()).includes(image.reuse.changes),printer.id+' photo changes disclosed');
+      }
     } else {
       assert.equal(await visual.locator('img[data-printer-image]').count(),0,printer.id+' does not borrow a sibling photo');
       assert.equal(await visual.locator(`img[data-printer-diagram="${printer.f.toLowerCase()}"]`).count(),1,printer.id+' has its actual architecture fallback');
@@ -445,12 +569,16 @@ try {
         await photo.evaluate(img=>img.decode());
         assert.equal(await photo.getAttribute('alt'),e.alt);
         assert.deepEqual(await photo.evaluate(img=>[img.naturalWidth,img.naturalHeight]),[e.width,e.height]);
+        assert.equal(await photo.evaluate(img=>getComputedStyle(img).objectFit),'contain',id+' full source image is shown');
       }
       assert.equal(await story.locator('h3 a').getAttribute('href'),e.url);
       await story.locator('.inline-sources > summary').click();
       assert.ok((await story.innerText()).includes(e.evidence));
       assert.ok((await story.innerText()).includes(e.creator));
+      assert.match(await story.innerText(),/listing uploaded by/i);
+      assert.doesNotMatch(await story.innerText(),/Photo & model by|Photo and model:/);
       assert.ok(await story.locator(`a[href="${e.license_url}"]`).count()>0);
+      if(e.image) assert.ok(await story.locator(`a[href="${e.image_url}"]`).count()>0,'original image remains linked');
     }
     assert.equal(await page.locator('#prints .model-search-links a').count(),3);
     if(id==='pla')await page.screenshot({path:path.join(root,'test-results/printed-pla-guide.png')});
@@ -485,7 +613,7 @@ try {
     assert.equal(response.status(),200,c.id);
     assert.equal(await page.locator('h1').innerText(),c.n);
     assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://sfmth.github.io/3d_printing_info/printers/'+c.id+'.html');
-    assert.equal(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count(),1);
+    assert.equal(await page.locator('script[src*="googletagmanager.com/gtag/js"]').count(),0);
     const metadata=await referenceMetadata();
     assert.ok(!metadata.types.includes('Product'),c.id);
     const article=metadata.documents.find(document=>document['@type']==='WebPage').mainEntity;
@@ -494,7 +622,7 @@ try {
     assert.equal(article.about.name,c.n,c.id);
     await verifyPrinterRecord(page,c);
   }
-  step(`All ${printers.cats.length} printer guides render technical-article metadata without unsupported Product entities, matching canonical URLs and one Analytics tag`);
+  step(`All ${printers.cats.length} printer guides render technical-article metadata without unsupported Product entities, matching canonical URLs and a local opt-in analytics gate`);
   step(`All ${printers.cats.length} printer guides integrate dated firmware, modifications and diagnostic evidence within the matching technical topics`);
   step(`All ${printers.cats.length} printer guides retain every complete field and its own sources inside native disclosures, with exact-model photos or labeled architecture diagrams`);
   const picturedPrinter=printers.cats.find(printer=>printer.id==='bambu-p1s' && printerPhotos[printer.id]) || printers.cats.find(printer=>printerPhotos[printer.id]);
@@ -637,6 +765,7 @@ try {
   await page.screenshot({path:path.join(root,'test-results/mobile-printed-guide.png')});
   await page.goto(base+'materials/',{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'material library mobile width');
+  assert.equal(await page.locator('[data-material="tpu-85a"] img').evaluate(img=>getComputedStyle(img).objectFit),'contain','ND directory image is never cropped on mobile');
   await page.screenshot({path:path.join(root,'test-results/mobile-material-library.png')});
   await page.getByLabel('Search material guides',{exact:true}).fill('nylon');
   assert.ok(await page.locator('[data-material]:not([hidden])').count()>0);
@@ -705,6 +834,9 @@ try {
   const nojs=await browser.newContext({javaScriptEnabled:false});
   const staticPage=await nojs.newPage();
   await staticPage.goto(base+'printers/');
+  assert.equal(await staticPage.locator('script[src*="googletagmanager.com/gtag/js"]').count(),0,'no remote analytics script without JavaScript');
+  assert.equal(await staticPage.locator('footer [data-analytics-settings]').isVisible(),false,'inactive settings control stays hidden without JavaScript');
+  assert.equal(await staticPage.locator('footer a[href="../privacy.html"]').isVisible(),true,'privacy disclosure remains available without JavaScript');
   assert.equal(await staticPage.locator('[data-printer-card]').count(),printers.cats.length);
   assert.equal(await staticPage.locator('#printer-search-panel').isVisible(),false,'inactive printer filters are hidden without JavaScript');
   assert.equal(await staticPage.locator('details.pl-family[open]').count(),printers.families.length);
@@ -813,7 +945,7 @@ try {
   assert.deepEqual(errors,[],'uncaught JavaScript errors');
   assert.deepEqual(missing,[],'missing local assets');
   step('No uncaught JavaScript exceptions or missing local assets');
-  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount,detailPages:printers.cats.length+materials.cats.length,articles:articles.length},analytics:'One loader request and config per checked page; loader intercepted, ingestion not verified',steps};
+  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount,detailPages:printers.cats.length+materials.cats.length,articles:articles.length},analytics:'Zero Google requests before consent/after decline; grant, withdrawal, cookie cleanup and cross-tab/storage behavior checked with intercepted loader/collection; ingestion not verified',steps};
   await fs.writeFile(path.join(root,'test-results/browser-results.json'),JSON.stringify(result,null,2)+'\n');
 } finally {
   if(browser) await browser.close();

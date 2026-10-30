@@ -12,3 +12,6 @@
 /* Keep search ahead of the editorial starting points, and compact the mobile hero. */
 .pl-browse>.pl-featured{margin:30px 0 34px}
 @media(max-width:620px){.pl-browse>.pl-featured{margin:27px 0 29px}.pl-stats{gap:24px}.pl-stats>div{flex-direction:row-reverse;align-items:baseline;gap:7px}.pl-stats dd{font-size:19px}.pl-stats dt{font-size:9px}.pl-hero-image{height:190px;padding:15px 25px}.pl-hero-visual figcaption{padding:13px 16px}.pl-hero-type{min-height:225px;padding:22px}.pl-display-type{font-size:31px}.pl-hero-type>.pl-eyebrow{font-size:8px}.pl-type-caption{font-size:8px}}
+
+/* Publisher credit must remain conspicuous beside every reused image. */
+.pl-image-credit{font-size:12px;line-height:1.6;overflow-wrap:anywhere}.pl-image-credit a{text-decoration:underline;text-underline-offset:2px}

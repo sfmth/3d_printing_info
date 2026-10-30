@@ -1,0 +1,2045 @@
+{
+  "version": 1,
+  "reviewed": "2026-10-29",
+  "policy": "Keep images when no explicit applicable restriction was established, per owner instruction; do not describe that as permission or an open licence. Follow explicit grants and replace images with explicit restrictions when their conditions cannot be met. Each photo retains its own terms outside the compilation licence.",
+  "sources": [
+    {
+      "id": "bambu-eu",
+      "publisher": "Bambu Lab EU storefront",
+      "url": "https://bambulab-eu.myshopify.com/policies/terms-of-service",
+      "section": "2",
+      "finding": "Express written permission required for copying/reproducing portions of the Service.",
+      "scope": "Seven EU-source assets; do not apply the EU contract automatically to US-source files."
+    },
+    {
+      "id": "bambu-us",
+      "publisher": "Bambu Lab US",
+      "url": "https://bambulab.com/en/policies/terms",
+      "finding": "Linked corporate policy could not be read (403/402); applicable image-specific grant unverified.",
+      "scope": "Five US-store-source files."
+    },
+    {
+      "id": "prusa-websites",
+      "publisher": "Prusa Research",
+      "url": "https://www.prusa3d.com/page/general-terms-and-conditions-of-use-of-the-prusa-websites_231226/",
+      "section": "9.1-9.5",
+      "finding": "General graphic-content restrictions; no exact-file republication/modification licence verified."
+    },
+    {
+      "id": "prusa-media",
+      "publisher": "Prusa Research",
+      "url": "https://www.prusa3d.com/page/media-assets_987/",
+      "finding": "Model press ZIPs available; visible page did not establish a licence for the current retail/blog-source images."
+    },
+    {
+      "id": "creality-legal",
+      "publisher": "Creality",
+      "url": "https://www.creality.com/legal/legal-information",
+      "finding": "Written permission required to use website text or graphics."
+    },
+    {
+      "id": "creality-store",
+      "publisher": "Creality store",
+      "url": "https://store.creality.com/pages/terms-conditions",
+      "finding": "Express permission requirement for reproducing/copying Service content."
+    },
+    {
+      "id": "anycubic-disclaimer",
+      "publisher": "Anycubic",
+      "url": "https://store.anycubic.com/pages/disclaimer",
+      "section": "Intellectual right-of-ownership",
+      "finding": "Images and illustrations covered; express written permission required for reproduction/publication."
+    },
+    {
+      "id": "elegoo-user",
+      "publisher": "ELEGOO",
+      "url": "https://www.elegoo.com/pages/elegoo-user-agreement",
+      "section": "VI",
+      "effective": "2026-09-18",
+      "finding": "Personal-use access; excludes republication, display, editing and redistribution except expressly designated content."
+    },
+    {
+      "id": "flashforge-shop",
+      "publisher": "FlashForge",
+      "url": "https://www.flashforge.com/pages/terms-of-service",
+      "finding": "Express written permission required for copying/reproducing Service portions. Applicability to separate enterprise source not established."
+    },
+    {
+      "id": "qidi-us",
+      "publisher": "QIDI US",
+      "url": "https://us.qidi3d.com/pages/terms-of-service",
+      "section": "2",
+      "finding": "Express written permission required to reproduce/copy portions of the Service."
+    },
+    {
+      "id": "qidi-global",
+      "publisher": "QIDI global",
+      "url": "https://qidi3d.com/pages/terms-of-service",
+      "section": "2",
+      "finding": "Express written permission required to reproduce/copy portions of the Service."
+    },
+    {
+      "id": "qidi-eu",
+      "publisher": "QIDI EU",
+      "url": "https://eu.qidi3d.com/pages/terms-of-service",
+      "section": "2",
+      "finding": "Express written permission required to reproduce/copy portions of the Service."
+    },
+    {
+      "id": "sovol-terms",
+      "publisher": "Sovol",
+      "url": "https://www.sovol3d.com/pages/terms-and-conditions",
+      "section": "2",
+      "finding": "Express written permission required to reproduce/copy portions of the Service."
+    },
+    {
+      "id": "formlabs",
+      "url": "https://formlabs.com/terms-of-service/",
+      "finding": "Express permission needed for reproduction/exploitation; press-kit availability does not establish an exact-current-file grant.",
+      "asset_ids": [
+        "formlabs-form-4",
+        "formlabs-form-4l"
+      ]
+    },
+    {
+      "id": "lulzbot-press",
+      "url": "https://lulzbot.com/press",
+      "finding": "TAZ Pro press photos are CC BY-SA4.0 with FAME3D attribution. Exact existing file not matched to collection; current press collection links were unavailable.",
+      "asset_ids": [
+        "lulzbot-taz-pro"
+      ]
+    },
+    {
+      "id": "phrozen",
+      "url": "https://eu.phrozen3d.com/policies/terms-of-service",
+      "finding": "No affirmative image grant verified; central policy access was limited.",
+      "asset_ids": [
+        "phrozen-sonic-mini-8k-s",
+        "phrozen-sonic-mighty-revo"
+      ]
+    },
+    {
+      "id": "ratrig-design",
+      "url": "https://ratrig.com/products/rat-rig-v-core-4-1",
+      "finding": "Product CC BY-NC-SA statement addresses design. Scope for downloaded promotional render unverified; website terms restrict copying.",
+      "asset_ids": [
+        "ratrig-v-core-41"
+      ]
+    },
+    {
+      "id": "snapmaker",
+      "url": "https://shop.snapmaker.com/pages/terms-of-service",
+      "finding": "Commercial copying/modification/distribution needs permission; no affirmative public-photo grant verified for current assets.",
+      "asset_ids": [
+        "snapmaker-artisan",
+        "snapmaker-j1s",
+        "snapmaker-u1"
+      ]
+    },
+    {
+      "id": "uniformation",
+      "url": "https://uniformation3d.com/policies/terms-of-service",
+      "finding": "Express permission required for copying/reproduction/exploitation.",
+      "asset_ids": [
+        "uniformation-gktwo"
+      ]
+    },
+    {
+      "id": "voron-photo",
+      "url": "https://forum.vorondesign.com/pages/links/",
+      "finding": "GPLv3 design licensing does not establish scope for the specific website photograph.",
+      "asset_ids": [
+        "voron-02"
+      ]
+    },
+    {
+      "id": "formbot",
+      "url": "https://www.formbot3d.com/",
+      "finding": "All-rights-reserved notice; no affirmative photo grant located. Voron design licence does not license the dealer build photograph.",
+      "asset_ids": [
+        "voron-24"
+      ]
+    },
+    {
+      "id": "matterhackers",
+      "url": "https://www.matterhackers.com/policies/terms",
+      "finding": "Personal noncommercial informational downloads unmodified with notices retained; public transformed republication not clearly covered.",
+      "asset_ids": [
+        "positron-v32",
+        "ankermake-m5",
+        "lulzbot-taz-pro-long-bed",
+        "ultimaker-s5",
+        "ultimaker-s8"
+      ]
+    },
+    {
+      "id": "fabreeko",
+      "url": "https://www.fabreeko.com/policies/terms-of-service",
+      "finding": "Express written permission required for copying/reproduction/exploitation.",
+      "asset_ids": [
+        "voron-trident"
+      ]
+    },
+    {
+      "id": "mellow",
+      "url": "https://3dmellow.com/pages/terms-and-conditions",
+      "finding": "Express written permission required for copying/reproduction/exploitation.",
+      "asset_ids": [
+        "vzbot-330-awd"
+      ]
+    },
+    {
+      "id": "raise3d",
+      "url": "https://www.raise3d.com/legal/terms-of-use/",
+      "finding": "Section4 limited service use retains unmodified content/notices; no clear licence for the transformed product-image republication.",
+      "asset_ids": [
+        "raise3d-pro3"
+      ]
+    },
+    {
+      "id": "eufymake",
+      "url": "https://www.eufymake.com/policies/terms-of-service",
+      "finding": "Section6 personal access excludes redistribution/republication except content specifically designated for it.",
+      "asset_ids": [
+        "ankermake-m5c"
+      ]
+    },
+    {
+      "id": "intamsys",
+      "url": "https://www.intamsys.com/privacy-policy",
+      "finding": "Privacy policy/product pages supplied no image-reuse licence; permission remains unverified.",
+      "asset_ids": [
+        "intamsys-funmat-pro-410",
+        "intamsys-funmat-pro-610ht"
+      ]
+    },
+    {
+      "id": "stratasys",
+      "url": "https://www.stratasys.com/en/legal/website-terms-and-conditions/",
+      "finding": "Prior written consent required for public copying/display/publication; redistribution/modification restricted.",
+      "asset_ids": [
+        "stratasys-f120",
+        "stratasys-f170",
+        "stratasys-f370"
+      ]
+    },
+    {
+      "id": "3djake",
+      "url": "https://www.3djake.com/info/imprint",
+      "finding": "Copyright-relevant reproduction/reuse is expressly restricted.",
+      "asset_ids": [
+        "flashforge-guider-3",
+        "flashforge-guider-3-plus"
+      ]
+    },
+    {
+      "id": "exbuild",
+      "url": "https://www.exbuild.com/privacy-policy",
+      "finding": "No photo-reproduction grant verified. Dealer relationship establishes source, not sublicensing authority; Markforged main site access limited.",
+      "asset_ids": [
+        "markforged-mark-two",
+        "markforged-x7",
+        "markforged-onyx-one"
+      ]
+    },
+    {
+      "id": "top3dshop",
+      "url": "https://top3dshop.com/terms",
+      "finding": "Section11 permits reproducing site content, including images and commercial use, with conspicuous credit and do-follow source link; no removal of notices or implied endorsement. Current captions/anchors meet visible credit/link conditions. Underlying authority and transformation scope not independently settled.",
+      "asset_ids": [
+        "roboze-argo-350",
+        "roboze-argo-500",
+        "intamsys-funmat-ht-enhanced"
+      ]
+    },
+    {
+      "id": "ultimaker",
+      "url": "https://ultimaker.com/legal/terms-of-use/",
+      "finding": "Section1.2 restricts copying/modification/distribution/public display; no separate Factor4 datasheet-image extraction grant established.",
+      "asset_ids": [
+        "ultimaker-s7",
+        "ultimaker-factor-4"
+      ]
+    },
+    {
+      "id": "bfi3d",
+      "url": "https://shop.bfi-it.de/en/information-on/imprint/",
+      "finding": "Shop legal information did not establish image-reuse permission.",
+      "asset_ids": [
+        "3dgence-industry-f350"
+      ]
+    },
+    {
+      "id": "ricoh-jp",
+      "url": "https://www.ricoh.com/terms-of-use",
+      "finding": "Global restrictions found, but governing scope for Japanese source host not established; Japanese product graphic uncleared.",
+      "asset_ids": [
+        "stratasys-f270"
+      ]
+    },
+    {
+      "id": "tosey-design",
+      "url": "https://shop.toseyinnovation.com/collections/3d-printer/products/v-core-4-standard-dual-motor-single-toolhead",
+      "finding": "Design CC BY-NC-SA terms do not clearly identify the downloaded promotional render as covered.",
+      "asset_ids": [
+        "ratrig-v-core-4"
+      ]
+    }
+  ],
+  "records": {
+    "ad5m": {
+      "original_source_url": "https://www.flashforge.com/products/adventurer-5m-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0591/8641/3646/files/1_20af666d-49f8-4819-bbcd-ed868b64cc21.png?v=1778234609",
+      "original_image": "assets/printers/ad5m.webp",
+      "original_sha256": "f62dd05e81553208a64c8cfc84097b3ca258f4bff359152700489c77ef161c18",
+      "policy_refs": [
+        "flashforge-shop"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/flashforge-adventurer-5m-3d-printer"
+    },
+    "anycubic-kobra-2": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-2",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/AnycubicKobra2-_6_FDM3D_ANYCUBIC-US-1.jpg?v=1725243648",
+      "original_image": "assets/printers/anycubic-kobra-2.webp",
+      "original_sha256": "2fdd577deb54f87ed6acdc0b23abf5c6bd50c4b2eb534070078c7e8602779014",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-2-max": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-2-max",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/Kobra2Max_5.jpg?v=1764578419",
+      "original_image": "assets/printers/anycubic-kobra-2-max.webp",
+      "original_sha256": "f065140aef5bd5a71565d98fb5cba9ddc91f1b85bfd948b16316c950ea3820e1",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-2-neo": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-2-neo",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/Kobra2Neo_2.jpg?v=1742526691",
+      "original_image": "assets/printers/anycubic-kobra-2-neo.webp",
+      "original_sha256": "556d78c847dc568515baacecfc8dd671cbaac055dcafec384587ae4aabe5ced3",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-2-plus": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-2-plus",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/Kobra2Plus_2.jpg?v=1748419225",
+      "original_image": "assets/printers/anycubic-kobra-2-plus.webp",
+      "original_sha256": "268bbc0ef58b484e53e9e4dd7d8573efc6c40e2e9138daaa80fca26d49ca5c61",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-2-pro": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-2-pro",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/AnycubicKobra2Pro-5.jpg?v=1743671996",
+      "original_image": "assets/printers/anycubic-kobra-2-pro.webp",
+      "original_sha256": "4310c266cbfaba56889c3c976db636abe0dd9d19921c4fc95d6d63a3b7d9dc73",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-3-combo": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-3-combo",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/Kobra3Combo_2.jpg?v=1761838128",
+      "original_image": "assets/printers/anycubic-kobra-3-combo.webp",
+      "original_sha256": "33a411058919b3c8ec9a472f9575ae8fc63ff8f369975ea95309b3e787c1b116",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-3-max": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-3-max",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/K3MC-3.jpg?v=1755656633",
+      "original_image": "assets/printers/anycubic-kobra-3-max.webp",
+      "original_sha256": "6a2987f1abf817fdaa20b914c9847d73473f7c06ed41141ea20017e6d62f703d",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-4": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-4-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/K4_e1aa4e34-f02c-4b83-80b8-611023ad8a56.jpg?v=1780454214",
+      "original_image": "assets/printers/anycubic-kobra-4.webp",
+      "original_sha256": "dcb19cc5d5a4b0d833ca64ab6ac4562ccfe9283679432959ea7da7605a4caf04",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-s1": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-s1",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/kobra-s1_90be8ef0-0d93-4693-aaa0-8734cec93f80.jpg?v=1753858670",
+      "original_image": "assets/printers/anycubic-kobra-s1.webp",
+      "original_sha256": "88a6962800e6de4c87d94f28f682019a3db7dad62dc6796000621fb0ad2b286e",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-s1-max": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-s1-max",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/S1M_3ff45c1a-59a6-4188-9ac8-8755658a6a06.jpg?v=1775641762",
+      "original_image": "assets/printers/anycubic-kobra-s1-max.webp",
+      "original_sha256": "da4da302bc01d783690a3dcc85e26b10e8c1e1fa9f7f0eefb8d28f3214633914",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-kobra-x": {
+      "original_source_url": "https://store.anycubic.com/products/kobra-x",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/1500x1500-KX.jpg?v=1774231369",
+      "original_image": "assets/printers/anycubic-kobra-x.webp",
+      "original_sha256": "5141789fff2dd064d4a0fce074ffeead35669e0c5a6f2cb2c06049c2af0fdb61",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-photon-mono-m5s": {
+      "original_source_url": "https://store.anycubic.com/products/photon-mono-m5s",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/photon-mono-m5s-main-2.jpg?v=1769997982",
+      "original_image": "assets/printers/anycubic-photon-mono-m5s.webp",
+      "original_sha256": "b2d6342ceca49618c0b38184a2e6a8fa47fa9eb33fb782e1ded65bd113e5d63d",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-photon-mono-m7": {
+      "original_source_url": "https://store.anycubic.com/products/photon-mono-m7",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/PhotonMonoM7_8.jpg?v=1760525699",
+      "original_image": "assets/printers/anycubic-photon-mono-m7.webp",
+      "original_sha256": "2f09935b21390d79c404e7662d80fe13ac668bbb6f5475e348824fba4416e7e8",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-photon-mono-m7-max": {
+      "original_source_url": "https://store.anycubic.com/products/photon-mono-m7-max",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/PhotonMonoM7Max_1.jpg?v=1772182865",
+      "original_image": "assets/printers/anycubic-photon-mono-m7-max.webp",
+      "original_sha256": "7eb531fb40996dc6b6c1bdb02cf2538bc000f5ef030484724bc04d281f60e4d1",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-photon-mono-m7-pro": {
+      "original_source_url": "https://store.anycubic.com/products/photon-mono-m7-pro",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/PhotonMonoM7Pro_4.jpg?v=1761208755",
+      "original_image": "assets/printers/anycubic-photon-mono-m7-pro.webp",
+      "original_sha256": "a33fcb27cb87e7c3c3af72dbe6ff79f6db15f9a41516d2441da6c14e60fc0808",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-photon-p1-max": {
+      "original_source_url": "https://store.anycubic.com/products/photon-p1-max-best-large-resin-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/6391ace427ade714b70fb966024ae804_cfdff6be-e36d-4699-8bc1-d302ed580387.jpg?v=1783787372",
+      "original_image": "assets/printers/anycubic-photon-p1-max.webp",
+      "original_sha256": "ede23a95765d5dc26606f1a285d3dda494463c62e6f1b4050679752aa3a12fd0",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "anycubic-vyper": {
+      "original_source_url": "https://store.anycubic.com/products/anycubic-vyper",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0245/5519/2380/files/Vyper.png?v=1712649635",
+      "original_image": "assets/printers/anycubic-vyper.webp",
+      "original_sha256": "6e74d94e9f633bf1a09e0324d225046f959fcb49d12a1d802eca97ee5f1cccde",
+      "policy_refs": [
+        "anycubic-disclaimer"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "bambu-a1": {
+      "original_source_url": "https://bambulab-eu.myshopify.com/products/a1",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/20241218-105022.jpg?v=1743993298",
+      "original_image": "assets/printers/bambu-a1.webp",
+      "original_sha256": "4d0e1349cddeafe2a9421fcb45e38a489f2750063053824582ff432750c3dfad",
+      "policy_refs": [
+        "bambu-eu"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the previous image with a verified exact-model CC0 1.0 image. Creator/source/license credit and changes accompany every display.",
+      "replacement_source_url": "https://commons.wikimedia.org/wiki/File:DG_%E6%9D%B1%E8%8E%9E_DongGuan_%E5%8D%97%E5%9F%8E%E5%8D%80_Nancheng_%E9%B4%BB%E7%A6%8F%E8%B7%AF_HongFu_Road_%E6%9D%B1%E8%8E%9E%E4%BA%AC%E6%9D%B1%E5%95%86%E5%A0%B4_JD_Mall_Electronics_Showroom_3D_printers_December_2024_R12S_09.jpg"
+    },
+    "bambu-a1-mini": {
+      "original_source_url": "https://bambulab-eu.myshopify.com/products/a1-mini",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/A1-mini.png?v=1743993336",
+      "original_image": "assets/printers/bambu-a1-mini.webp",
+      "original_sha256": "f14203d1c39e016c3a290b3163b4d6b4746180615ad717dd88e535591cfb6277",
+      "policy_refs": [
+        "bambu-eu"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/bambu-lab-a1-mini-3d-printer"
+    },
+    "bambu-p1p": {
+      "original_source_url": "https://bambulab-eu.myshopify.com/products/p1p",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/20230712-092822.jpg?v=1700919997",
+      "original_image": "assets/printers/bambu-p1p.webp",
+      "original_sha256": "01e4dd7b0ccd19ac7664d220f8e345efc52139dba2e326bacd311987e678199d",
+      "policy_refs": [
+        "bambu-eu"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/bambu-lab-p1p-3d-printer"
+    },
+    "bambu-p1s": {
+      "original_source_url": "https://bambulab-eu.myshopify.com/products/p1s",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/2_bb5ca5ee-11f8-466c-8c39-ace73c014be3.jpg?v=1743565751",
+      "original_image": "assets/printers/bambu-p1s.webp",
+      "original_sha256": "643e06429e0798210f4048cba1ed633b8ccca376f9034a27792660dd92e07d7a",
+      "policy_refs": [
+        "bambu-eu"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the previous image with a verified exact-model CC BY-SA 4.0 image. Creator/source/license credit and changes accompany every display.",
+      "replacement_source_url": "https://commons.wikimedia.org/wiki/File:P1s_with_ams.jpg"
+    },
+    "bambu-x1c": {
+      "original_source_url": "https://bambulab-eu.myshopify.com/products/x1-carbon",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/X1C.jpg?v=1743565061",
+      "original_image": "assets/printers/bambu-x1c.webp",
+      "original_sha256": "8265d6147f17330593be44b114ebd23ac9146403150347b9550eb772c293c9b3",
+      "policy_refs": [
+        "bambu-eu"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/bambu-lab-x1-carbon-3d-printer"
+    },
+    "bambu-x1e": {
+      "original_source_url": "https://bambulab-eu.myshopify.com/products/x1e",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/X1E.jpg?v=1730723548",
+      "original_image": "assets/printers/bambu-x1e.webp",
+      "original_sha256": "218c92a6f8f1c5d3ad93f0bfaa39ef2b6c32dc4984d8b864c418e61d0c3ec5d8",
+      "policy_refs": [
+        "bambu-eu"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/bambu-lab-x1e-3d-printer"
+    },
+    "cc2": {
+      "original_source_url": "https://us.elegoo.com/products/centauri-carbon-2-combo",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/01._8ea84f2b-fc8a-4d2b-b9ff-83d536d4aa80.png?v=1791945132",
+      "original_image": "assets/printers/cc2.webp",
+      "original_sha256": "7f159882701c1443f214b04c8a3e2b734170cc2e7bc1bf1db8650fb32a8651f1",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-ender-3-v3": {
+      "original_source_url": "https://www.creality.com/products/creality-ender-3-v3",
+      "original_image_url": "https://img.fantaskycdn.com/35b43cffaee63a5d2ef1441d88469a1e.jpg",
+      "original_image": "assets/printers/creality-ender-3-v3.webp",
+      "original_sha256": "6eef65c7912732a1e03610d422437a87d9ec690bdb7d19f1df8a85f4748a1ff3",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-ender-3-v3-ke": {
+      "original_source_url": "https://www.creality.com/products/creality-ender-3-v3-ke",
+      "original_image_url": "https://img.fantaskycdn.com/d28801ce030ec4c8ca324be7f205d3d2.jpg",
+      "original_image": "assets/printers/creality-ender-3-v3-ke.webp",
+      "original_sha256": "5a5d834e35e6b532de936dc94c556ca645df1a31d8d2969cbc19c855f8b1dc84",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-ender-3-v3-plus": {
+      "original_source_url": "https://www.creality.com/products/creality-ender-3-v3-plus",
+      "original_image_url": "https://img.fantaskycdn.com/9ddabe049518414cd87ac2b24d427a1c.jpg",
+      "original_image": "assets/printers/creality-ender-3-v3-plus.webp",
+      "original_sha256": "bafac125381e1e38e4d3832608523083b16e48cc3ade431bb18fece363077438",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-ender-3-v3-se": {
+      "original_source_url": "https://www.creality.com/products/creality-ender-3-v3-se",
+      "original_image_url": "https://img.fantaskycdn.com/631c48493d25940a9f6857a67f451314.png",
+      "original_image": "assets/printers/creality-ender-3-v3-se.webp",
+      "original_sha256": "f236c6e39aac8e933bd3499c977a10e7f9f603011a45c2e5a3e0f27c48f30f96",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-ender-5-max": {
+      "original_source_url": "https://www.creality.com/products/creality-ender-5-max",
+      "original_image_url": "https://img.fantaskycdn.com/4c3cac850e02195cc2f383fb698cd42d.jpg",
+      "original_image": "assets/printers/creality-ender-5-max.webp",
+      "original_sha256": "a9eb2faa2a957707d6c2bdaf4fa0e684171f201452660e1664e7d4c06c070f67",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-hi": {
+      "original_source_url": "https://www.creality.com/products/creality-hi-combo",
+      "original_image_url": "https://img.fantaskycdn.com/444d0ea46ecef39cab8d913680304291.jpg",
+      "original_image": "assets/printers/creality-hi.webp",
+      "original_sha256": "f55c51d57a4829e5113833c24f35ab3258886d0bdf60ef8472782d4bcb09f36b",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-k1c": {
+      "original_source_url": "https://www.creality.com/products/k1c-carbon-3d-printer",
+      "original_image_url": "https://img.fantaskycdn.com/809d5e24aa5e3e6b99547836e081e190.jpeg",
+      "original_image": "assets/printers/creality-k1c.webp",
+      "original_sha256": "087a642568a52809019bd6ca70f2d20985a0bfde3be2e605dac56d56c3f624b3",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-k2-plus": {
+      "original_source_url": "https://www.creality.com/products/k2-series-3d-printer",
+      "original_image_url": "https://cdn.creality.com/ow/product-info/468eca76-0947-4537-9795-1e9c0a6f4469.png",
+      "original_image": "assets/printers/creality-k2-plus.webp",
+      "original_sha256": "222f2a4a0f02e70bdaa4b11a7507fe94906730386d98cb3136d4206a05209672",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/creality-k2-plus-combo-3d-printer"
+    },
+    "elegoo-centauri-2": {
+      "original_source_url": "https://us.elegoo.com/products/centauri-2",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/C2-_-260811.jpg?v=1787637271",
+      "original_image": "assets/printers/elegoo-centauri-2.webp",
+      "original_sha256": "453bf1c9d397a3484892c57016c969c33f5839abacbc61165f48ca3a8e6e1a8a",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-neptune-4": {
+      "original_source_url": "https://us.elegoo.com/products/elegoo-neptune-4-fdm-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/N4-1_1.jpg?v=1787635280",
+      "original_image": "assets/printers/elegoo-neptune-4.webp",
+      "original_sha256": "683332bbc07aa243ba0b06e08b496c6d6eb89defa448c16ce3419d840befe171",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-neptune-4-max": {
+      "original_source_url": "https://us.elegoo.com/products/neptune-4-max-fdm-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/Neptune-4-Max-1_1.jpg?v=1787637344",
+      "original_image": "assets/printers/elegoo-neptune-4-max.webp",
+      "original_sha256": "7fa2402b49a69beab909e9643c222a1ca855f2104612a0ef05d2cd832515f933",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-neptune-4-plus": {
+      "original_source_url": "https://us.elegoo.com/products/neptune-4-plus-fdm-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/N4PL-1_1.jpg?v=1787635297",
+      "original_image": "assets/printers/elegoo-neptune-4-plus.webp",
+      "original_sha256": "54a68871ccb9932633026325e63671be1bef2ec4cead9102e21f35c853caa352",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-orangestorm-giga": {
+      "original_source_url": "https://us.elegoo.com/products/orangestorm-giga",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/1--OrangeStorm_Giga_frontview-1024x1024_574984c4-8886-4a15-b030-4a17ab2be6f3.jpg?v=1787634575",
+      "original_image": "assets/printers/elegoo-orangestorm-giga.webp",
+      "original_sha256": "0aabc1ffabf9585504d88d7f168a46df45fa933cc80adbb538052d2d32437b95",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/elegoo-orangestorm-giga-3d-printer"
+    },
+    "elegoo-saturn-4-ultra-16k": {
+      "original_source_url": "https://us.elegoo.com/products/saturn-4-ultra-16k-10inch-monochrome-lcd-resin-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/01._953f4390-fe48-42dd-9bd7-cb64dc8757d4.png?v=1792397665",
+      "original_image": "assets/printers/elegoo-saturn-4-ultra-16k.webp",
+      "original_sha256": "c3128ec6b9c92d95952743067970ddccc4c41fb6531514c5f8eb9252f739643c",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "flashforge-ad5m-pro": {
+      "original_source_url": "https://www.flashforge.com/products/adventurer-5m-pro-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0591/8641/3646/files/2_2ff3d42c-771f-4d68-baf0-f59d16fd606c.png?v=1778234537",
+      "original_image": "assets/printers/flashforge-ad5m-pro.webp",
+      "original_sha256": "e5df996948c4f8d6666f824dca5a1e5ccbc4ec84637e0e534cd30daf4edf6fe4",
+      "policy_refs": [
+        "flashforge-shop"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/flashforge-adventurer-5m-pro-3d-printer"
+    },
+    "flashforge-ad5x": {
+      "original_source_url": "https://www.flashforge.com/products/flashforge-ad5x-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0591/8641/3646/files/20260509-093938.png?v=1778291961",
+      "original_image": "assets/printers/flashforge-ad5x.webp",
+      "original_sha256": "9063cabf48572feb48a9053a035353f3284b8b12fbb15098c3d6b1404fa6a016",
+      "policy_refs": [
+        "flashforge-shop"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/flashforge-ad5x-3d-printer"
+    },
+    "flashforge-creator-5": {
+      "original_source_url": "https://www.flashforge.com/products/flashforge-creator-5",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0591/8641/3646/files/C5_4.png?v=1778299244",
+      "original_image": "assets/printers/flashforge-creator-5.webp",
+      "original_sha256": "6240ada20c9b7cc2bb4053184b0c40f06a60e7a25b91e39b966c48af9f30c03b",
+      "policy_refs": [
+        "flashforge-shop"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "flashforge-creator-5-pro": {
+      "original_source_url": "https://www.flashforge.com/products/flashforge-creator-5-pro",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0591/8641/3646/files/4_--234.png?v=1778291853",
+      "original_image": "assets/printers/flashforge-creator-5-pro.webp",
+      "original_sha256": "982b1d1e3bed5ae7f4f231b6cd326a96094405f10ee6132d931819231e69ab89",
+      "policy_refs": [
+        "flashforge-shop"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "flashforge-guider-3-ultra": {
+      "original_source_url": "https://www.flashforge.com/products/flashforge-guider-3-ultra-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0591/8641/3646/files/01-1000x1000_b6f7ac7d-0cfd-4dd2-ab11-65d3d50a1b8c.png?v=1758535372",
+      "original_image": "assets/printers/flashforge-guider-3-ultra.webp",
+      "original_sha256": "7d6da180c8479aa914bddb90998f26346c8895c431b6f9b99f365868f6b9c8cc",
+      "policy_refs": [
+        "flashforge-shop"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/flashforge-guider-3-ultra-3d-printer"
+    },
+    "formlabs-form-4": {
+      "original_source_url": "https://formlabs.com/3d-printers/form-4/",
+      "original_image_url": "https://formlabs-media.formlabs.com/filer_public_thumbnails/filer_public/85/9e/859ed97e-9f47-42b5-9a57-f0daa2b5ad51/form4_seo.jpg__640x0_q85_subsampling-2.jpg",
+      "original_image": "assets/printers/formlabs-form-4.webp",
+      "original_sha256": "ba226c20779cc18ed8e65130f0300bd19adf4a8c2bb7c12db9338e9bb2bba979",
+      "policy_refs": [
+        "formlabs"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "formlabs-form-4l": {
+      "original_source_url": "https://formlabs.com/3d-printers/form-4l/",
+      "original_image_url": "https://formlabs-media.formlabs.com/filer_public/84/01/8401b565-cfbe-48ac-860e-5480e7e608ce/f4l_perspr_dark_core_v4_ik_240829.png",
+      "original_image": "assets/printers/formlabs-form-4l.webp",
+      "original_sha256": "28288444079c2444f489134d371b97a4797072716fb174b5de6cbd735956973b",
+      "policy_refs": [
+        "formlabs"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "lulzbot-taz-pro": {
+      "original_source_url": "https://buy.lulzbot.com/products/lulzbot-3d-printer-taz-pro-boxed-for-retail-na",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0872/6514/9242/files/fullprinter_drill_front_transparent_2000x1500_0-248.png?v=1740618360",
+      "original_image": "assets/printers/lulzbot-taz-pro.webp",
+      "original_sha256": "f545a9588a244f7cc1cfcd790d72bce574fce3e69572cb4deaa98df11575bf91",
+      "policy_refs": [
+        "lulzbot-press"
+      ],
+      "audit_finding": "licensed_press_candidate",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the previous image with a verified exact-model CC BY-SA 4.0 image. Creator/source/license credit and changes accompany every display.",
+      "replacement_source_url": "https://download.lulzbot.com/TAZ/TAZ_Pro/QSG/TAZProQSG_2_10_23.pdf"
+    },
+    "neptune4pro": {
+      "original_source_url": "https://us.elegoo.com/products/elegoo-neptune-4-pro-fdm-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/Neptune-4-Pro-1_1.jpg?v=1787636517",
+      "original_image": "assets/printers/neptune4pro.webp",
+      "original_sha256": "0f0adf622549e8a7158c57573019f839a8f755efbf770606ed2a8edf7aaf822e",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "phrozen-sonic-mini-8k-s": {
+      "original_source_url": "https://us.phrozen3d.com/products/sonic-mini-8k-s",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0758/4337/1286/products/718KS_1400x1600_01_f99af043-b3a0-4144-9b4d-8ab4dadeb9f5.png?v=1700035559",
+      "original_image": "assets/printers/phrozen-sonic-mini-8k-s.webp",
+      "original_sha256": "0223b363b79364569af0f5e4f8d2ca93c20d83dcc4ee37bf6f4622cb73f224dc",
+      "policy_refs": [
+        "phrozen"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "prusa-core-one": {
+      "original_source_url": "https://www.prusa3d.com/product/prusa-core-one/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/ff1c68f1-64b8-4573-af3f-4a61d4f4a198.jpg",
+      "original_image": "assets/printers/prusa-core-one.webp",
+      "original_sha256": "c29ab043cc0189614d092694162822dbd94f8fe246df6a0bcdb0901972ed9922",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "prusa-core-one-l": {
+      "original_source_url": "https://www.prusa3d.com/product/prusa-core-one-l-2/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/29e113c0-c219-4ec0-ad69-3de60713e741.jpg",
+      "original_image": "assets/printers/prusa-core-one-l.webp",
+      "original_sha256": "c1f82210a496d97bf6af3db3860d9d11c43f497fc15d1276c787bc7188ee7dfe",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "prusa-mini-plus": {
+      "original_source_url": "https://www.prusa3d.com/product/original-prusa-mini-semi-assembled-3d-printer-9/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/26657e9f-4bc2-430f-944b-225dc9f5baaf.jpg",
+      "original_image": "assets/printers/prusa-mini-plus.webp",
+      "original_sha256": "3b4c15a789be5a03925a381697fe0228ee5608abc515cc1430d39f66c3fdf5f5",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the previous image with a verified exact-model CC0 1.0 image. Creator/source/license credit and changes accompany every display.",
+      "replacement_source_url": "https://commons.wikimedia.org/wiki/File:Prusa_Mini%2B.jpg"
+    },
+    "prusa-mk4": {
+      "original_source_url": "https://blog.prusa3d.com/announcing-original-prusa-mk4_76585/",
+      "original_image_url": "https://blog.prusa3d.com/wp-content/uploads/2023/03/mk4_blog_otvirak_bigger.jpg",
+      "original_image": "assets/printers/prusa-mk4.webp",
+      "original_sha256": "d6662b3db73005007ab9e4f83c0a9edcd755f3078e52123327c7ece275d084cf",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "prusa-mk4s": {
+      "original_source_url": "https://www.prusa3d.com/product/original-prusa-mk4s-3d-printer-5/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/c40a6a9a-915e-4d37-ac8d-1c4aa7fe0a42.jpg",
+      "original_image": "assets/printers/prusa-mk4s.webp",
+      "original_sha256": "5934a717fc4643d52256a0681e01935e2ecb1e9957761675c2c0965cf6998263",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/original-prusa-mk4-3d-printer"
+    },
+    "prusa-xl-1t": {
+      "original_source_url": "https://www.prusa3d.com/product/original-prusa-xl-assembled-single-toolhead-3d-printer/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/c94764f4-c6bf-4083-a1c7-b39cff06a971.jpg",
+      "original_image": "assets/printers/prusa-xl-1t.webp",
+      "original_sha256": "a352fe5fdaa8a93f11fc2a78c95c3fbb0e09417b45fcd634df3789c94e82b65b",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "qidi-max4": {
+      "original_source_url": "https://us.qidi3d.com/products/max4",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0941/4629/8176/files/m4_89f77595-9ee9-405a-a4bc-eb1094a68be0.png?v=1773471277",
+      "original_image": "assets/printers/qidi-max4.webp",
+      "original_sha256": "efa8d73bfdfaf6de90a51883abbad2cfeefef004497d5e49e7d75b39e448aec7",
+      "policy_refs": [
+        "qidi-us"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "qidi-plus4": {
+      "original_source_url": "https://qidi3d.com/products/plus4-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0587/5282/7532/files/PLUS4_a838191a-7fc5-49d6-a245-4fb88c793490.png?v=1773372605",
+      "original_image": "assets/printers/qidi-plus4.webp",
+      "original_sha256": "854ddc63ba46e0ae9792446a51b8d414aca4b26da2f110a2c5ce9eb621fa6377",
+      "policy_refs": [
+        "qidi-global"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/qidi-plus4-fdm-3d-printer"
+    },
+    "qidi-plus5": {
+      "original_source_url": "https://us.qidi3d.com/products/plus5",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0941/4629/8176/files/qidi-Plus5-main-image1_a028fa80-0a9a-49c0-b792-c28fd88d4222.png?v=1788502317",
+      "original_image": "assets/printers/qidi-plus5.webp",
+      "original_sha256": "546e1c8e777824026d9ee2ebaebf4bb64376390a07939cbfb44f7a044e26c84f",
+      "policy_refs": [
+        "qidi-us"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "qidi-x-max-3": {
+      "original_source_url": "https://us.qidi3d.com/products/qidi-x-max-3",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0941/4629/8176/files/X-MAX3-3D-Printer-02.png?v=1773471312",
+      "original_image": "assets/printers/qidi-x-max-3.webp",
+      "original_sha256": "61cc723e92d2aeb900d79055108e9688c9f2626f534c044bc1e38d149d087c5e",
+      "policy_refs": [
+        "qidi-us"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/qidi-tech-x-max-3-3d-printer"
+    },
+    "ratrig-v-core-41": {
+      "original_source_url": "https://ratrig.com/products/rat-rig-v-core-4-1",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0988/6315/3492/files/V-Core4-1_render1.jpg?v=1765800661",
+      "original_image": "assets/printers/ratrig-v-core-41.webp",
+      "original_sha256": "aec54ad01f7c05d129c30fcb8499e387b287909a10d390e094e04a449741c108",
+      "policy_refs": [
+        "ratrig-design"
+      ],
+      "audit_finding": "design_license_scope_unclear",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "snapmaker-artisan": {
+      "original_source_url": "https://us.snapmaker.com/products/snapmaker-artisan-3-in-1-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0585/1499/7435/files/Artisan-3-in-1-3D-Printer_1.jpg?v=1775138101",
+      "original_image": "assets/printers/snapmaker-artisan.webp",
+      "original_sha256": "f2cacf465d4fa42683f5c3137c1f2779eb8abacedbe862543f79df635052e678",
+      "policy_refs": [
+        "snapmaker"
+      ],
+      "audit_finding": "limited_use_not_cleared",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "snapmaker-j1s": {
+      "original_source_url": "https://www.snapmaker.com/en-US/j1s-idex-3d-printer",
+      "original_image_url": "https://ditfjx9w4x3vl.cloudfront.net/assets/j1s/j1s-banner.jpg",
+      "original_image": "assets/printers/snapmaker-j1s.webp",
+      "original_sha256": "5b241948a62e07b647dc68ca85f0c10fa67b08127c516c0b2c165ddc37284441",
+      "policy_refs": [
+        "snapmaker"
+      ],
+      "audit_finding": "limited_use_not_cleared",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "sovol-sv06-plus-ace": {
+      "original_source_url": "https://sovol3d.com/products/sovol-sv06-plus-ace-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/SV06PLUSace3dprinter_12.png?v=1768890688",
+      "original_image": "assets/printers/sovol-sv06-plus-ace.webp",
+      "original_sha256": "90f96376865f29a1204c73f4717e3f8e060631be513230250e4569af50d4c2ed",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "sovol-sv08": {
+      "original_source_url": "https://sovol3d.com/products/sovol-sv08-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/Sovol_SV08_CoreXY_3D_Printer_Main_Image.jpg?v=1782978460",
+      "original_image": "assets/printers/sovol-sv08.webp",
+      "original_sha256": "626f3af5e8352629a51e8e968cc28d5c69557eb4843bb33d862ea5e56d3b404f",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "sovol-sv08-max": {
+      "original_source_url": "https://sovol3d.com/products/sovol-sv08-max-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/SV08MAX_4.jpg?v=1768890670",
+      "original_image": "assets/printers/sovol-sv08-max.webp",
+      "original_sha256": "543bfe6413a621e236697a8e728886445a4b70b7bb7569461aa22d322bec3e66",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "sovol-zero": {
+      "original_source_url": "https://sovol3d.com/products/sovol-zero-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/Sovol_Zero_3D_Printer_1200mm-s.jpg?v=1767165715",
+      "original_image": "assets/printers/sovol-zero.webp",
+      "original_sha256": "baf752e03a5cd77cd457c8dd1d45fafad49b981657ed54d1dfe0b8f844885bcb",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "uniformation-gktwo": {
+      "original_source_url": "https://uniformation3d.com/products/uniformation-gktwo-10-3-8k-resin-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0644/1949/6153/files/uniformation_GK2_3d_printer.png?v=1753539422",
+      "original_image": "assets/printers/uniformation-gktwo.webp",
+      "original_sha256": "358000b2b9c923ff9386d0fbd55ed3d0115f3a58b08da4a3171d783b9cdc9887",
+      "policy_refs": [
+        "uniformation"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "voron-02": {
+      "original_source_url": "https://vorondesign.com/voron0.2",
+      "original_image_url": "https://vorondesign.com/images/voron0.2_bg.jpg",
+      "original_image": "assets/printers/voron-02.webp",
+      "original_sha256": "e98632e723f11572c157bda29876be092b6594277a28e80499588b6d7d99f1a6",
+      "policy_refs": [
+        "voron-photo"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "voron-24": {
+      "original_source_url": "https://www.formbot3d.com/products/voron-24-r2-ultra-corexy-3d-printer-kit-with-eddy-leveling-sensor-and-canbus-wiring-system",
+      "original_image_url": "https://ueeshop.ly200-cdn.com/u_file/UPAY/UPAY131/2609/09/products/IMG_7913_.jpg",
+      "original_image": "assets/printers/voron-24.webp",
+      "original_sha256": "92d0089c0c12579bb1900d50dfcb029a67f5f4e0468e9f2417dd710bfd8dd61f",
+      "policy_refs": [
+        "formbot"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "bambu-a2l": {
+      "original_source_url": "https://us.store.bambulab.com/products/a2l",
+      "original_image_url": "https://store.bblcdn.com/s7/default/15ba0776b16640cbb9e8a3b7427bb118/A2L-compressed.jpg",
+      "original_image": "assets/printers/bambu-a2l.webp",
+      "original_sha256": "bb1453a87b8d0fff0a0e0aef666289813f09bce474f50ec87e46a080e19223cf",
+      "policy_refs": [
+        "bambu-us"
+      ],
+      "audit_finding": "permission_unverified_policy_access_limited",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "bambu-h2c": {
+      "original_source_url": "https://us.store.bambulab.com/products/h2c",
+      "original_image_url": "https://store.bblcdn.com/s7/default/26244e919174400ba25012f89f06abbb/H2CC-compressed.jpg",
+      "original_image": "assets/printers/bambu-h2c.webp",
+      "original_sha256": "d893937ee8c378350959f5151634151695777e57c172d98012ebc6abffa15f1b",
+      "policy_refs": [
+        "bambu-us"
+      ],
+      "audit_finding": "permission_unverified_policy_access_limited",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "bambu-h2d": {
+      "original_source_url": "https://bambulab-eu.myshopify.com/products/h2d",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0645/5876/0155/files/b132375525426369d3a875da2cbbdf45_093b53c9-c209-40e9-81f3-44d715f41335.jpg?v=1742960449",
+      "original_image": "assets/printers/bambu-h2d.webp",
+      "original_sha256": "dbefa76a58c993c3f44743436a86fde18d9553f15cc18db68ba5c8882f16ce68",
+      "policy_refs": [
+        "bambu-eu"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/bambu-h2d-3d-printer"
+    },
+    "bambu-h2s": {
+      "original_source_url": "https://us.store.bambulab.com/products/h2s",
+      "original_image_url": "https://store.bblcdn.com/s7/default/0de3d0b45e7d43adbd9c39e8a7f098b1/H2S-compressed.jpg",
+      "original_image": "assets/printers/bambu-h2s.webp",
+      "original_sha256": "2a63da1c787cf4ee7096dbf1ea987f12333b5458233e529b6c11605a4819f5de",
+      "policy_refs": [
+        "bambu-us"
+      ],
+      "audit_finding": "permission_unverified_policy_access_limited",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "bambu-p2s": {
+      "original_source_url": "https://us.store.bambulab.com/products/p2s",
+      "original_image_url": "https://store.bblcdn.com/s7/default/8b5e77334d6d4e358ca739e6ab9dbd84/P2S-compressed.jpg",
+      "original_image": "assets/printers/bambu-p2s.webp",
+      "original_sha256": "170147e00485873bc098f414e9ae31fdfd63d3cedced0ea9eb9e6fdffd8ffad8",
+      "policy_refs": [
+        "bambu-us"
+      ],
+      "audit_finding": "permission_unverified_policy_access_limited",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "bambu-x2d": {
+      "original_source_url": "https://us.store.bambulab.com/products/x2d",
+      "original_image_url": "https://store.bblcdn.com/s7/default/4774cfe5573645078138625a36a57a95/X2D-compressed.jpg",
+      "original_image": "assets/printers/bambu-x2d.webp",
+      "original_sha256": "a0bc6a4ae04818e6994282cd76d5ce610ab1458c9dc3d31d91fd40c312c9d43c",
+      "policy_refs": [
+        "bambu-us"
+      ],
+      "audit_finding": "permission_unverified_policy_access_limited",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "sv06ace": {
+      "original_source_url": "https://sovol3d.com/products/sovol-sv06-ace",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/Sovol_SV06_ACE_3D_Printer.jpg?v=1768890795",
+      "original_image": "assets/printers/sv06ace.webp",
+      "original_sha256": "777defb313605196a304d3362a65478d0eac5584d2c8f76e28b376a4637bf8be",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-centauri-carbon": {
+      "original_source_url": "https://www.elegoo.com/products/centauri-carbon",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0296/9026/5648/files/CC-_-260811.jpg?v=1786594335",
+      "original_image": "assets/printers/elegoo-centauri-carbon.webp",
+      "original_sha256": "3de15d907cc566db63680310f857e30b284f9a0d421c5122c0f835ba8a6835db",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-centauri-carbon-2-combo": {
+      "original_source_url": "https://us.elegoo.com/products/centauri-carbon-2-combo",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/01._8ea84f2b-fc8a-4d2b-b9ff-83d536d4aa80.png?v=1791945132",
+      "original_image": "assets/printers/elegoo-centauri-carbon-2-combo.webp",
+      "original_sha256": "c050ffb1829ecfcc6a881c1da9f4a089153bd06893a49c719ac01533d8da0535",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "qidi-q1-pro": {
+      "original_source_url": "https://us.qidi3d.com/products/q1-pro-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0941/4629/8176/files/Q1_cd196c13-db1d-4b93-921a-c55f867996ce.png?v=1773471305",
+      "original_image": "assets/printers/qidi-q1-pro.webp",
+      "original_sha256": "26e130b1d4718e1a529ac5e92a0d7d2a3960f36d6521f5ec4c63b65957a296cb",
+      "policy_refs": [
+        "qidi-us"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/qidi-tech-q1-pro-fdm-3d-printer"
+    },
+    "positron-v32": {
+      "original_source_url": "https://www.matterhackers.com/store/l/ldo-positron-3d-printer-kit",
+      "original_image_url": "https://img.matterhackers.com/g/Z3M6Ly9taC1wcm9kdWN0LWltYWdlcy9wcm9kLzNmMmU2YjA4LTNkM2UtNDIzMi1iNDE0LTBkZmYyODI4MGYwMA=e365-w1200-h630-c0xffffff-rj-pd",
+      "original_image": "assets/printers/positron-v32.webp",
+      "original_sha256": "a7d9d4e6f8d0d8d1108ec9c4b35f7a50563dbac5f12b2fd4001353b2267ac50a",
+      "policy_refs": [
+        "matterhackers"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "voron-trident": {
+      "original_source_url": "https://www.fabreeko.com/products/ldo-voron-trident-kit-300mm",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0266/5001/7990/files/UAKE7LYg.jpg?v=1715794842",
+      "original_image": "assets/printers/voron-trident.webp",
+      "original_sha256": "93b477093f2b7fc4391ad057039f1747c070fdf694b428421afbac6abe888f78",
+      "policy_refs": [
+        "fabreeko"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "vzbot-330-awd": {
+      "original_source_url": "https://3dmellow.com/products/vzbot-awd-330-kit",
+      "original_image_url": "https://ueeshop.ly200-cdn.com/u_file/UPBE/UPBE311/2604/30/products/c0b31e6889.jpg",
+      "original_image": "assets/printers/vzbot-330-awd.webp",
+      "original_sha256": "ac01874201dab6e846b97f532c8778d30aeed7adbc41cd0bac52b72aefa46484",
+      "policy_refs": [
+        "mellow"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "prusa-xl-2t": {
+      "original_source_url": "https://www.prusa3d.com/product/original-prusa-xl-assembled-2-toolhead-3d-printer/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/a9ff6068-9049-4f37-a401-a2424a7afd04.jpg",
+      "original_image": "assets/printers/prusa-xl-2t.webp",
+      "original_sha256": "765c2a5ea295ccbc906564c67f5899147a5e745d373222d212fc0265651a14af",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "prusa-xl-5t": {
+      "original_source_url": "https://www.prusa3d.com/product/original-prusa-xl-assembled-5-toolhead-3d-printer/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/4b32f227-b2ed-4ea7-8f9d-bef4c771aad5.jpg",
+      "original_image": "assets/printers/prusa-xl-5t.webp",
+      "original_sha256": "2e8b5af954736e383c9b144131b732140e01e95a0531cfd5b241794c25e7c0a0",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "prusa-mk3s-plus": {
+      "original_source_url": "https://www.prusa3d.com/product/original-prusa-i3-mk3s-10th-anniversary-edition-3d-printer/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/4352.jpg",
+      "original_image": "assets/printers/prusa-mk3s-plus.webp",
+      "original_sha256": "62147480dc3a90c889cd672d8823399647348781b48992c9ad2cb0f1e84f7297",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-neptune-3-pro": {
+      "original_source_url": "https://us.elegoo.com/products/elegoo-neptune-3-pro-fdm-3d-printer-225x225x280mm",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/ELEGOO-Neptune-3-Pro-1-With-Model.jpg?v=1787632330",
+      "original_image": "assets/printers/elegoo-neptune-3-pro.webp",
+      "original_sha256": "419f83f5ed7452cf7ed927536bb0c4da83b65d65fbe8cb72d1f7a5b4f065a182",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-mars-5": {
+      "original_source_url": "https://us.elegoo.com/products/mars-5-4k-6-6inch-monochrome-lcd-resin-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/M5-all3dp-award-logo.jpg?v=1787635184",
+      "original_image": "assets/printers/elegoo-mars-5.webp",
+      "original_sha256": "4ba53b980cb53f50b560bc70ebf814d127d6756b27044e03583f57775376e11a",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-mars-5-ultra": {
+      "original_source_url": "https://us.elegoo.com/products/mars-5-ultra-9k-7inch-monochrome-lcd-resin-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/f91c887f39b07095c6453b328b4b84cd.jpg?v=1787635338",
+      "original_image": "assets/printers/elegoo-mars-5-ultra.webp",
+      "original_sha256": "07420627d5e6a61619e2a110cbded831d9b18a17fac1ec218028db95a19e46a7",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "elegoo-centauri-2-combo": {
+      "original_source_url": "https://us.elegoo.com/products/centauri-2-combo",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0684/4792/8423/files/C2C-_-260811.jpg?v=1787637268",
+      "original_image": "assets/printers/elegoo-centauri-2-combo.webp",
+      "original_sha256": "a5f31d36272a80575efa42914bc401a95b4e5fa7ec7bcf6e7096708f40de0ff6",
+      "policy_refs": [
+        "elegoo-user"
+      ],
+      "audit_finding": "redistribution_restriction_no_exception_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "qidiq2": {
+      "original_source_url": "https://us.qidi3d.com/products/qidi-q2",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0941/4629/8176/files/Q2.png?v=1773471287",
+      "original_image": "assets/printers/qidiq2.webp",
+      "original_sha256": "51eecb3ae7e0236b0eb5b7d32949868a465b5a329e48f96579fbb0fd007decea",
+      "policy_refs": [
+        "qidi-us"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/qidi-q2-3d-printer"
+    },
+    "snapmaker-u1": {
+      "original_source_url": "https://shop.snapmaker.com/products/snapmaker-u1-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0063/3552/9029/files/SnapmakerU13DPrinter_1.webp?v=1784886369",
+      "original_image": "assets/printers/snapmaker-u1.webp",
+      "original_sha256": "a1f0469413f639307737d51378222e83b15b208471c61c980f341e515cb341c9",
+      "policy_refs": [
+        "snapmaker"
+      ],
+      "audit_finding": "limited_use_not_cleared",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/snapmaker-u1-3d-printer"
+    },
+    "raise3d-pro3": {
+      "original_source_url": "https://shop.raise3d.com/products/raise3d-pro3-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/1069/4816/products/Raise3D_Shop_inside_Pro3_1.jpg?v=1676427450",
+      "original_image": "assets/printers/raise3d-pro3.webp",
+      "original_sha256": "eef286c38952b40fd0b75f5632ac133f8824d415f2605c639ef718f60a6bd366",
+      "policy_refs": [
+        "raise3d"
+      ],
+      "audit_finding": "limited_use_not_cleared",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/raise3d-pro3-3d-printer"
+    },
+    "ankermake-m5c": {
+      "original_source_url": "https://www.eufymake.com/blogs/buying-guides/ankermake-m5c-3d-printer-review",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0606/0323/6501/files/ankermake-m5c-3d-printer_f4109147-b344-432f-b6c6-063466130e73.jpg?v=1705374140",
+      "original_image": "assets/printers/ankermake-m5c.webp",
+      "original_sha256": "a5b6517389ad3ca9ec9a3d187462fb1871993eae7238c7893edaa5bdf163cfb1",
+      "policy_refs": [
+        "eufymake"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "ankermake-m5": {
+      "original_source_url": "https://www.matterhackers.com/store/l/ankermake-m5-3d-printer/sk/MZA3NQVC",
+      "original_image_url": "https://img.matterhackers.com/g/Z3M6Ly9taC1wcm9kdWN0LWltYWdlcy9wcm9kLzQyZDlkNWFkLTU5YzgtNDA4ZS1hNjRmLWZiOTU5ZDAxNTg5Mg=e365-w1200-h630-c0xffffff-rj-pd",
+      "original_image": "assets/printers/ankermake-m5.webp",
+      "original_sha256": "0e3f974fcd8d416c5e4270b38538343c00a5c43530e8f6ea9a3ddbd44d45124e",
+      "policy_refs": [
+        "matterhackers"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "lulzbot-taz-pro-long-bed": {
+      "original_source_url": "https://www.matterhackers.com/store/l/lulzbot-taz-pro-long-bed-3d-printer/sk/MMG0D9TL",
+      "original_image_url": "https://img.matterhackers.com/g/Z3M6Ly9taC1wcm9kdWN0LWltYWdlcy9wcm9kL2NiOTAxOWUyLWI1MjItNGQ5MS1hM2UzLTg3NjY0OTIwYmQ5Mw=e365-w1200-h630-c0xffffff-rj-pd",
+      "original_image": "assets/printers/lulzbot-taz-pro-long-bed.webp",
+      "original_sha256": "5839c5c36513975345e6f679d09bfd1172fc41f9d55a50aae3f7b01fe670af4d",
+      "policy_refs": [
+        "matterhackers"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-k1": {
+      "original_source_url": "https://store.creality.com/products/k1-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0893/0603/8637/files/K1-_02-2.png?v=1762200477",
+      "original_image": "assets/printers/creality-k1.webp",
+      "original_sha256": "538c9d79184f19fdc2db6c0f87fbd01f95a7ab5bfb7b55b128d461f3381271a2",
+      "policy_refs": [
+        "creality-store"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/creality-k1-speedy-3d-printer"
+    },
+    "intamsys-funmat-pro-410": {
+      "original_source_url": "https://www.intamsys.com/funmat-pro-410-3d-printer/",
+      "original_image_url": "https://www.intamsys.com/static/cms/images/410.png",
+      "original_image": "assets/printers/intamsys-funmat-pro-410.webp",
+      "original_sha256": "09d9cf4101227c55284c89e03d5a327ebb8daaf2f7ea7b9e6ccb7c972b674c90",
+      "policy_refs": [
+        "intamsys"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "intamsys-funmat-pro-610ht": {
+      "original_source_url": "https://www.intamsys.com/funmat-pro-610-ht-3d-printer/",
+      "original_image_url": "https://www.intamsys.com/static/cms/images/pro610p2.png",
+      "original_image": "assets/printers/intamsys-funmat-pro-610ht.webp",
+      "original_sha256": "84f540b7701425f37be15b5f9888e72d928949b70b0a71d0bf68adf945bcfded",
+      "policy_refs": [
+        "intamsys"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "stratasys-f170": {
+      "original_source_url": "https://www.stratasys.com/en/3d-printers/printer-catalog/fdm-printers/f170/",
+      "original_image_url": "https://www.stratasys.com/siteassets/3d-printers/printer-catalog/fdm-printers/f123-series-printers/redesign-f123/f170_with-part-2.png?v=49369e",
+      "original_image": "assets/printers/stratasys-f170.webp",
+      "original_sha256": "763c95da6134548ec5a32ea9fc85abf1f9310635789fe437b2fd54570ce44b08",
+      "policy_refs": [
+        "stratasys"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-k1-max": {
+      "original_source_url": "https://store.creality.com/products/k1-max-3d-printer",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0893/0603/8637/files/k1MAX-01-01.png?v=1773728799",
+      "original_image": "assets/printers/creality-k1-max.webp",
+      "original_sha256": "adba941a37664bdbba18c06331b29ad7e324c5a6325ecc99d4da245b6ef0d8cb",
+      "policy_refs": [
+        "creality-store"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/creality-k1-max-3d-printer"
+    },
+    "flashforge-guider-3": {
+      "original_source_url": "https://www.3djake.com/flashforge/guider-3",
+      "original_image_url": "https://3d.nice-cdn.com/upload/image/product/large/default/flashforge-guider-3-624914-en.png",
+      "original_image": "assets/printers/flashforge-guider-3.webp",
+      "original_sha256": "b9cbd3d10606f695fe72e22f7253ed15a402afb462e3a4005827257a66cc85fe",
+      "policy_refs": [
+        "3djake"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/flashforge-guider-3-3d-printer"
+    },
+    "flashforge-guider-3-plus": {
+      "original_source_url": "https://www.3djake.com/flashforge/guider-3-plus",
+      "original_image_url": "https://3d.nice-cdn.com/upload/image/product/large/default/flashforge-guider-3-plus-528205-en.png",
+      "original_image": "assets/printers/flashforge-guider-3-plus.webp",
+      "original_sha256": "708b70c94c5824d99c8f103b1f253dcca4c05ccf6103813152f50f7729efa868",
+      "policy_refs": [
+        "3djake"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/flashforge-guider-3-plus-3d-printer"
+    },
+    "ultimaker-s5": {
+      "original_source_url": "https://www.matterhackers.com/store/l/ultimaker-s5",
+      "original_image_url": "https://img.matterhackers.com/g/Z3M6Ly9taC1wcm9kdWN0LWltYWdlcy9wcm9kL2QxOGI5MWYzLWM0YzgtNDIzNy05ZjI5LTJiZTc3OTBjN2NkMA=e365-w1200-h630-c0xffffff-rj-pd",
+      "original_image": "assets/printers/ultimaker-s5.webp",
+      "original_sha256": "df5a8dd34f07d5ed6243c0101c0f0ca23b924329bb21dca732022eb62cc573c4",
+      "policy_refs": [
+        "matterhackers"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/ultimaker-s5"
+    },
+    "ultimaker-s8": {
+      "original_source_url": "https://www.matterhackers.com/store/l/ultimaker-s8-3d-printer",
+      "original_image_url": "https://img.matterhackers.com/g/Z3M6Ly9taC1wcm9kdWN0LWltYWdlcy9wcm9kLzc1OTIyMGEzLTMzZTItNDgzYi1hNzMzLWRiNDkzMzE0YmZiZg=e365-w1200-h630-c0xffffff-rj-pd",
+      "original_image": "assets/printers/ultimaker-s8.webp",
+      "original_sha256": "c064e9a326fd34865efa49d6bfde7da02fabb92d4e54602b296adfb9a224b6a8",
+      "policy_refs": [
+        "matterhackers"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "sovol-sv07-plus": {
+      "original_source_url": "https://www.sovol3d.com/products/sovol-refurbished-3d-printer?variant=47470076002613",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/Sovol_Refurbished_3D_Printer.png?v=1732086192",
+      "original_image": "assets/printers/sovol-sv07-plus.webp",
+      "original_sha256": "07a5a0aff32548ed1dc11a613c27918c87db364c174c9920cb995f6068d0771b",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "flashforge-creator-4": {
+      "original_source_url": "https://enterprise.flashforge.com/pages/creator-4-3d-printer",
+      "original_image_url": "https://enterprise.flashforge.com/cdn/shop/files/01_web_1x_eb2aa6be-b045-4878-8c89-ce29424d6b87.webp?v=1733391647&width=3840",
+      "original_image": "assets/printers/flashforge-creator-4.webp",
+      "original_sha256": "1a7be760e87c9096e0e31fafc20f496fdb73eea6dec84e9c1108999227ea3fe4",
+      "policy_refs": [],
+      "audit_finding": "permission_unverified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "markforged-mark-two": {
+      "original_source_url": "https://www.exbuild.com/markforged-mark-two",
+      "original_image_url": "https://www.exbuild.com/hs-fs/hubfs/MF-MARKTWO-337_FINAL.png?width=2000&height=1304&name=MF-MARKTWO-337_FINAL.png",
+      "original_image": "assets/printers/markforged-mark-two.webp",
+      "original_sha256": "05a678d1da1d46915e4c4a24d42ec4f737a06bfa1f7aa86779bbc8ccb9af0440",
+      "policy_refs": [
+        "exbuild"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "markforged-x7": {
+      "original_source_url": "https://www.exbuild.com/markforged-x7",
+      "original_image_url": "https://www.exbuild.com/hs-fs/hubfs/Markforged-X7-NewLogo.png?width=1232&height=2000&name=Markforged-X7-NewLogo.png",
+      "original_image": "assets/printers/markforged-x7.webp",
+      "original_sha256": "575d286c8414cfb2094497a0b8986348c2a6bed56811967d845dfdacd08f7a88",
+      "policy_refs": [
+        "exbuild"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "prusa-core-one-indx": {
+      "original_source_url": "https://www.prusa3d.com/product/prusa-core-one-gen-2-indx-8-tool/",
+      "original_image_url": "https://www.prusa3d.com/content/images/product/e1b9050f-737f-4598-879c-d3635cf8c2ff.jpg",
+      "original_image": "assets/printers/prusa-core-one-indx.webp",
+      "original_sha256": "552c5cf983f42cb8fd013e2a058ab397638ba5c459b687dd2d628584e0768ae5",
+      "policy_refs": [
+        "prusa-websites",
+        "prusa-media"
+      ],
+      "audit_finding": "exact_asset_grant_unverified_media_route_available",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "roboze-argo-350": {
+      "original_source_url": "https://top3dshop.com/product/roboze-argo-350-3d-printer",
+      "original_image_url": "https://top3dshop.com/image/cache/catalog/products/3d_printers/roboze/argo_350/roboze_argo_350_image9-800x600.jpg",
+      "original_image": "assets/printers/roboze-argo-350.webp",
+      "original_sha256": "14ca169abe3e9dafc4b498f4d5ee3c8b46762dd43c33dbab1eb4538620a8e9db",
+      "policy_refs": [
+        "top3dshop"
+      ],
+      "audit_finding": "conditional_publisher_grant",
+      "reviewed": "2026-10-29",
+      "decision": "retained-publisher-grant",
+      "reason": "Top 3D Shop section 11 permits reproducing images with conspicuous credit, a do-follow source link, retained notices and no implied endorsement."
+    },
+    "roboze-argo-500": {
+      "original_source_url": "https://top3dshop.com/product/roboze-argo-500-3d-printer",
+      "original_image_url": "https://top3dshop.com/image/cache/catalog/products/3d_printers/roboze/argo_500/roboze_argo_500_3d_printer_roboze_argo_500_1-800x600.jpg",
+      "original_image": "assets/printers/roboze-argo-500.webp",
+      "original_sha256": "648b5e61f8ddbdd32a97fb8fa82ee196370b1503a86212580f3e7e0c1b34f1bd",
+      "policy_refs": [
+        "top3dshop"
+      ],
+      "audit_finding": "conditional_publisher_grant",
+      "reviewed": "2026-10-29",
+      "decision": "retained-publisher-grant",
+      "reason": "Top 3D Shop section 11 permits reproducing images with conspicuous credit, a do-follow source link, retained notices and no implied endorsement."
+    },
+    "creality-k1-se": {
+      "original_source_url": "https://www.creality.com/compare/compare-k1-flagship-series",
+      "original_image_url": "https://cdn.creality.com/pages/us/compare-k1-flagship-series/95a3cbaa42db4c8c92bd180f1be226d7_1920x.png",
+      "original_image": "assets/printers/creality-k1-se.webp",
+      "original_sha256": "026591c68d1b7098224e92b9b129621e0b86a2b0df226b919520cc99c6261850",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "k2se": {
+      "original_source_url": "https://www.creality.com/products/k2-series-3d-printer",
+      "original_image_url": "https://cdn.creality.com/ow/product-info/d94d27e0-90db-453d-9567-06a386da6282.webp",
+      "original_image": "assets/printers/k2se.webp",
+      "original_sha256": "c6d67dcb4a212082cf4e0c32ca214b834b505f2efa578e9ac7024ca3f5bdff52",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "markforged-onyx-one": {
+      "original_source_url": "https://www.exbuild.com/markforged-onyx-one",
+      "original_image_url": "https://www.exbuild.com/hubfs/EXBuild/EXBuild-Images/Onyx-One-XSmall.png",
+      "original_image": "assets/printers/markforged-onyx-one.webp",
+      "original_sha256": "5702fba27ef36890d7f641e4628a94eb48420a584684c977bdd6fd07216d562c",
+      "policy_refs": [
+        "exbuild"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "ultimaker-s7": {
+      "original_source_url": "https://store.ultimaker.com/ultimaker-s7-3d-printer",
+      "original_image_url": "https://store.ultimaker.com/media/catalog/product/cache/54158f9756bc7c53d54dda5a9d451c87/s/7/s7_post_promo_1.png",
+      "original_image": "assets/printers/ultimaker-s7.webp",
+      "original_sha256": "6195694081a687a6f9be3acd6bdd6618993eef2a32b770387c7b7a4b455a681c",
+      "policy_refs": [
+        "ultimaker"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "3dgence-industry-f350": {
+      "original_source_url": "https://shop.bfi-it.de/en/3dgence-industry-f350-3d-printer/",
+      "original_image_url": "https://shop.bfi-it.de/media/49/66/e0/1693570739/3dgence_industry_f350_front_komplett.png?ts=1693570739",
+      "original_image": "assets/printers/3dgence-industry-f350.webp",
+      "original_sha256": "7dffe3fa1397e46fa18689b27c962a51777e6c9eab5d087042e127e1e38f2759",
+      "policy_refs": [
+        "bfi3d"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "qidi-x-plus-3": {
+      "original_source_url": "https://us.qidi3d.com/pages/x-plus3-1",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0587/5282/7532/files/Xplus3-3dprinter-01.jpg?v=1678872331",
+      "original_image": "assets/printers/qidi-x-plus-3.webp",
+      "original_sha256": "2f9ade402a7bebde69d0f200ccb2bac5c64b9214073c2e320c3489b0cbe64221",
+      "policy_refs": [
+        "qidi-us"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/qidi-tech-x-plus-3-3d-printer"
+    },
+    "qidi-x-smart-3": {
+      "original_source_url": "https://us.qidi3d.com/pages/x-smart3",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0652/1792/1242/files/SMART3_1.png?v=1679547811",
+      "original_image": "assets/printers/qidi-x-smart-3.webp",
+      "original_sha256": "b3473b7e33032bc6e89ee8102389d87e26850b445fe879e584618453d2406d5c",
+      "policy_refs": [
+        "qidi-us"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/qidi-tech-x-smart-3-3d-printer"
+    },
+    "stratasys-f120": {
+      "original_source_url": "https://support.stratasys.com/en/Printers/FDM-Legacy/F120",
+      "original_image_url": "https://support.stratasys.com/-/media/Stratasys-Portal/Customer-Images/Support-Center-Redesign/New-Printer-Images/FDM-F120---Support-Center-Printer-Page-Image.jpg?rev=e2bca2d2b1784320956fec3142bcd8d8&la=en&h=283&w=400&hash=EC6C6C213B5D9A16AD8BBCB34486166E",
+      "original_image": "assets/printers/stratasys-f120.webp",
+      "original_sha256": "9ebfc2903b834f7704538ee481eac6556b65402fd8ce19d8dd660c8f45e713db",
+      "policy_refs": [
+        "stratasys"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "stratasys-f370": {
+      "original_source_url": "https://www.stratasys.com/en/3d-printers/printer-catalog/fdm-printers/f370/",
+      "original_image_url": "https://www.stratasys.com/siteassets/3d-printers/printer-catalog/fdm-printers/f123-series-printers/redesign-f123/f370_with-part-1.png?v=4936b2",
+      "original_image": "assets/printers/stratasys-f370.webp",
+      "original_sha256": "7bbb32831ac788ecef70b7eabd1c9783d77cf711dd8bbf56a59f720fbda0dc85",
+      "policy_refs": [
+        "stratasys"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "stratasys-f270": {
+      "original_source_url": "https://www.ricoh.co.jp/3dp/lineup/fdm/stratasys_f270",
+      "original_image_url": "https://www.ricoh.co.jp/-/Media/Ricoh/Sites/co_jp/3dp/lineup/fdm/stratasys_f270/images/product.jpg?d=180802",
+      "original_image": "assets/printers/stratasys-f270.webp",
+      "original_sha256": "edd3caa523d9b7f36c7a71a931a38afcd332f401f1050cea591231b4fdd20e4e",
+      "policy_refs": [
+        "ricoh-jp"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "intamsys-funmat-ht-enhanced": {
+      "original_source_url": "https://top3dshop.com/product/intamsys-funmat-ht-enhanced-3d-printer",
+      "original_image_url": "https://top3dshop.com/image/cache/catalog/products/image/intamsys-funmat-ht-gallery-1-800x600.webp",
+      "original_image": "assets/printers/intamsys-funmat-ht-enhanced.webp",
+      "original_sha256": "26b7a12cc8d2066e223222aa94cc7efe5634dfb5852aa2657f1445fa146fc159",
+      "policy_refs": [
+        "top3dshop"
+      ],
+      "audit_finding": "conditional_publisher_grant",
+      "reviewed": "2026-10-29",
+      "decision": "retained-publisher-grant",
+      "reason": "Top 3D Shop section 11 permits reproducing images with conspicuous credit, a do-follow source link, retained notices and no implied endorsement."
+    },
+    "phrozen-sonic-mighty-revo": {
+      "original_source_url": "https://eu.phrozen3d.com/products/sonic-mighty-revo",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0548/7873/2376/files/SonicMighty14KRevo_1400x1600_1.png?v=1708568768",
+      "original_image": "assets/printers/phrozen-sonic-mighty-revo.webp",
+      "original_sha256": "b492d986514d17d9463c137b0ae95973e9f76445fc4542812e1abe948599f769",
+      "policy_refs": [
+        "phrozen"
+      ],
+      "audit_finding": "no_asset_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "retained-no-explicit-restriction-found",
+      "reason": "Retained under the owner’s instruction where no explicit applicable image-reuse restriction was established. This is a risk decision, not an open licence or verified permission; policy access/scope limits remain recorded."
+    },
+    "creality-ender-3-v4": {
+      "original_source_url": "https://www.creality.com/products/ender-3-v4-3d-printer",
+      "original_image_url": "https://compress-file.creality.com/images/yangliming/881104a2-6963-4e95-bcde-8af8dd091f80.webp",
+      "original_image": "assets/printers/creality-ender-3-v4.webp",
+      "original_sha256": "3cdeae1fd0d37e23d088a207dbcef120b714a90d22a440008ea43efa82f951f4",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "sovol-sv06": {
+      "original_source_url": "https://www.sovol3d.com/products/sovol-refurbished-3d-printer?variant=44342234186037",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/Pre-owned_3D_Printers_Sovol.png?v=1732086340",
+      "original_image": "assets/printers/sovol-sv06.webp",
+      "original_sha256": "276e1376245b807e3e12ac680d06c0bc26b83ad9b6e7a2fb7b2c59bbbf026a15",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "sovol-sv06-plus": {
+      "original_source_url": "https://www.sovol3d.com/products/sovol-refurbished-3d-printer?variant=45150897701173",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/Sovol_used_3d_printer_fully_functional.png?v=1732086284",
+      "original_image": "assets/printers/sovol-sv06-plus.webp",
+      "original_sha256": "90717cdeb6be151341b4cd6df0137bec852477eba2d2c0fb9fa8e2561d9fc9b4",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "sovol-sv07": {
+      "original_source_url": "https://www.sovol3d.com/products/sovol-refurbished-3d-printer?variant=46621914431797",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0051/5548/7832/files/Sovol_Refurbished_SV07_3D_Printer.png?v=1732086517",
+      "original_image": "assets/printers/sovol-sv07.webp",
+      "original_sha256": "84cdb2e2c785d01c5c91d2c6229a5525d5aa930a623752a85274589a8fef9abc",
+      "policy_refs": [
+        "sovol-terms"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "qidi-i-fast": {
+      "original_source_url": "https://eu.qidi3d.com/products/qidi-i-fast-a-pioneer-in-solving-complex-printing",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0561/3201/0067/products/i-fast2_1.jpg?v=1703817253",
+      "original_image": "assets/printers/qidi-i-fast.webp",
+      "original_sha256": "858013c6c37ffbd069fd79aa8a83095336b9354caa1ffc5c0b219a6b456f951e",
+      "policy_refs": [
+        "qidi-eu"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-licensed-photo",
+      "reason": "Replaced the restricted source image with an exact-model image published under Top 3D Shop section 11 reproduction permission. All visible marks and notices are retained; credit and source/terms links accompany every display.",
+      "replacement_source_url": "https://top3dshop.com/product/qidi-tech-i-fast-3d-printer"
+    },
+    "ratrig-v-core-4": {
+      "original_source_url": "https://shop.toseyinnovation.com/collections/3d-printer/products/v-core-4-standard-dual-motor-single-toolhead",
+      "original_image_url": "https://cdn.shopify.com/s/files/1/0837/4170/4507/files/render_1_300.jpg?v=1724666998",
+      "original_image": "assets/printers/ratrig-v-core-4.webp",
+      "original_sha256": "f80b8c2b11777d9fe351f1047776d55d1671ebe1a8802d2999c0fe79221a00ae",
+      "policy_refs": [
+        "tosey-design"
+      ],
+      "audit_finding": "design_license_scope_unclear",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-k2": {
+      "original_source_url": "https://www.creality.com/products/k2-series-3d-printer",
+      "original_image_url": "https://cdn.creality.com/ow/official/49e73ab6-9f1d-4a32-9438-dd4acff6f919.png",
+      "original_image": "assets/printers/creality-k2.webp",
+      "original_sha256": "eaa0dfcc30601b4e4915a74f5c99449f4e3a72fff155732fdbf92accfd1c457e",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "creality-k2-pro": {
+      "original_source_url": "https://www.creality.com/products/k2-series-3d-printer",
+      "original_image_url": "https://cdn.creality.com/ow/official/39372408-8328-4181-9aef-7b941dd46779.png",
+      "original_image": "assets/printers/creality-k2-pro.webp",
+      "original_sha256": "8acbd0b84f99e387352cc56ac0bbb24fac8645a1e6f0a357fdbd5206426ca9cb",
+      "policy_refs": [
+        "creality-legal"
+      ],
+      "audit_finding": "express_permission_requirement_no_grant_verified",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    },
+    "ultimaker-factor-4": {
+      "original_source_url": "https://um-support-files.ultimaker.com/Product-datasheet/Factor4/EN-v1.0-UltiMaker-Factor-4-data-sheet.pdf",
+      "original_image_url": "https://um-support-files.ultimaker.com/Product-datasheet/Factor4/EN-v1.0-UltiMaker-Factor-4-data-sheet.pdf",
+      "original_image": "assets/printers/ultimaker-factor-4.webp",
+      "original_sha256": "8262439b29236434fcec9f70d2fb879c0317113756475d3df79cbf2c610b8770",
+      "policy_refs": [
+        "ultimaker"
+      ],
+      "audit_finding": "restrictive_general_terms",
+      "reviewed": "2026-10-29",
+      "decision": "replaced-with-original-diagram",
+      "reason": "The source has explicit restrictions or an explicit licence whose scope/conditions do not establish reuse of this product photograph. Use the original architecture illustration and an external product-photo link until an exact-model licensed alternative is available."
+    }
+  }
+}
