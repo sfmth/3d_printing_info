@@ -6,6 +6,7 @@ Images are selected by exact catalog ID from the separately audited manifest.
 from html import escape
 import json
 from pathlib import Path
+from image_rights import license_credit, source_photo_link
 import re
 
 
@@ -64,9 +65,9 @@ def photograph(model, images, *, eager=False):
 def image_credit(model, images):
     entry = images.get(model['id'])
     if not entry:
-        return ''
+        return '<span class="pl-image-credit">' + source_photo_link(model['id']) + '</span>'
     return ('<span class="pl-image-credit">Image: <a href="' + E(entry['source_url'])
-            + '">' + E(entry['credit']) + '</a></span>')
+            + '">' + E(entry['credit']) + '</a>' + license_credit(entry) + '</span>')
 
 
 def visual(model, images):

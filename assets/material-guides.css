@@ -14,3 +14,11 @@
 /* Applications read as engineering prose rather than a set of numbered cards. */
 .application-copy{max-width:88ch}.application-copy>p{font-size:15px;line-height:1.85;color:var(--ink-2);margin:0 0 18px}.engineering-cases{list-style:none;margin:26px 0;padding:0}.engineering-cases>li{border-top:1px solid var(--grid);padding:20px 0 0;margin-top:20px}.engineering-cases h3{font-size:16px;margin:0 0 6px}.engineering-cases h3 a{text-decoration:none}.engineering-cases p{font-size:14px;line-height:1.8;color:var(--ink-2);margin:8px 0 0}.engineering-cases .case-context{font-size:11px;color:var(--muted);line-height:1.6;margin:0}.material-page .application-sources{margin-top:20px}.model-discovery{margin-top:24px}.model-discovery p{font-size:12px;line-height:1.7;color:var(--muted)}.print-story{border:0;border-top:1px solid var(--grid);border-radius:0;padding:22px 0;background:transparent}.print-story h3{font-size:17px;margin:0 0 10px}.print-story+.print-story{margin-top:0}
 @media(max-width:620px){.application-copy>p{font-size:14px;line-height:1.8}.engineering-cases p{font-size:13px}.print-story{padding:20px 0}}
+
+/* Preserve the complete source image, including in narrow directory cards. */
+.material-page img.print-source-photo{object-fit:contain;background:var(--plane);box-sizing:border-box;padding:8px;border-radius:0}
+.material-page img.photo-no-derivatives{object-fit:contain;box-sizing:border-box;padding:8px;border-radius:0}
+.listing-attribution,.photo-author,.model-credits,.credit-notice,.photo-terms{display:block}
+.example-listing{display:block}
+.card-example .model-credits,.card-example .photo-terms{margin-top:3px}
+.print-story .listing-attribution~span{display:block}

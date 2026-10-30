@@ -230,7 +230,7 @@ def index_body(data):
 def generate_articles(base, index, guide_page, material_ids):
     data, evidence = load_articles(), load_evidence()
     validate_evidence(evidence, data, material_ids)
-    analytics = re.search(r'<!-- Google tag.*?</script>\s*<script>.*?</script>', index, re.S)[0]
+    analytics = ''  # guide_page supplies the local consent gate.
     folder = ROOT / 'articles'
     folder.mkdir(exist_ok=True)
     paths = []

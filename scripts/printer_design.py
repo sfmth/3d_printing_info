@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 from printer_resources import load_resources, entries_for, chapter_context, review_notes
+from image_rights import license_credit, source_photo_link
 
 ROOT = Path(__file__).resolve().parents[1]
 E = lambda value: escape(str(value), quote=True)
@@ -52,7 +53,7 @@ def photo(c, entry):
             '<span class="printer-image-label">Model reference</span><img data-printer-image="' + E(c['id']) + '" src="../' + E(entry['image']) +
             '" alt="' + E(entry['alt']) + '" width="' + str(entry['width']) + '" height="' + str(entry['height']) +
             '" fetchpriority="high" decoding="async"></div><figcaption>' + E(entry['kind']) + ' · ' + E(entry['credit']) +
-            ' · <a href="' + E(entry['source_url']) + '">Image source <span aria-hidden="true">↗</span></a></figcaption></figure>')
+            ' · <a href="' + E(entry['source_url']) + '">Image source <span aria-hidden="true">↗</span></a>' + license_credit(entry) + '</figcaption></figure>')
 
 
 def diagram(c):
@@ -61,7 +62,7 @@ def diagram(c):
             '<span class="printer-image-label">Architecture reference</span><img data-printer-diagram="' + filename +
             '" src="../assets/printers/' + filename + '.svg" alt="' + E(label) +
             ' architecture illustration; not an image of this model" width="720" height="560"></div>'
-            '<figcaption>' + E(label) + ' · Generic illustration, not this model’s appearance or construction.</figcaption></figure>')
+            '<figcaption>' + E(label) + ' · Generic illustration, not this model’s appearance or construction. ' + source_photo_link(c['id']) + '</figcaption></figure>')
 
 
 def source_disclosure(data, ids, refs, label='Sources & dates'):
