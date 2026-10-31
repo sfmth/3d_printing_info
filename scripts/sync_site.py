@@ -14,11 +14,12 @@ from material_articles import generate_articles, load_articles
 from printer_design import detail_body as printer_detail_body, write_diagrams
 from printer_resources import load_resources, source_urls
 from printer_library import directory_body as printer_directory_body
+from pair_comparisons import generate_comparisons, REVISION as COMPARISON_DATE
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
 DATE = '2026-10-29'  # Content/policy revision, not a blanket source/price check date.
-CATALOG_DATE = '2026-10-29'  # Comparison pages, including their Dataset metadata.
+CATALOG_DATE = '2026-10-31'  # Comparison pages, including their Dataset metadata.
 PRINTER_DATE = '2026-10-29'  # Printer presentation only; catalog/source dates are unchanged.
 DATASET_CREATOR = {'@type': 'Organization', 'name': '3D Printing Info', 'url': BASE}
 DATASET_LICENSE = 'https://www.gnu.org/licenses/gpl-3.0.html'
@@ -180,6 +181,7 @@ def generate_materials(data, index):
         path = 'materials/' + c['id'] + '.html'; paths.append(path)
         desc = c['n'] + ': print settings, mechanical and thermal properties, product listings and dated sources. ' + c.get('sum','')
         body = detail_body(data,c,refs,value)
+        body += '<p><a href="../compare/materials/'+E(c['id'])+'/">Compare '+E(c['n'])+' with another filament</a></p>'
         schema = {'@context':'https://schema.org','@type':'WebPage','name':c['n']+' material guide','url':BASE+path,'description':desc,'isPartOf':{'@type':'WebSite','url':BASE,'name':'3D Printing Info'},'mainEntity':{'@type':'TechArticle','headline':c['n']+' — printing, properties and sources','about':c['n'],'description':c.get('sum',''),'url':BASE+path,'citation':[s['u'] for k,s in data['src'].items() if s.get('u') and k in {sid for e in c['sp'].values() for sid in e.get('s',[])}]}}
         (ROOT/path).write_text(guide_page(c['n']+' filament guide',desc,path,body,analytics,styles,schema))
     body = directory_body(data)
@@ -202,6 +204,7 @@ def generate_printers(data, index):
         path='printers/'+c['id']+'.html'; paths.append(path)
         desc=c['n']+': hardware, firmware options, modifications, troubleshooting and sourced specifications. '+c.get('sum','')
         body=printer_detail_body(data,c,refs)
+        body += '<p><a href="../compare/printers/'+E(c['id'])+'/">Compare '+E(c['n'])+' with another printer</a></p>'
         used={sid for e in c['sp'].values() for sid in e.get('s',[])}
         # These are technical reference articles with historical price snapshots,
         # not offer/review records eligible for Google's Product rich results.
@@ -259,6 +262,7 @@ def sync():
         label='printer' if printer else 'material'
         content='<details class="material-directory"><summary>Browse all '+str(cs['items'])+' '+label+' guides</summary><ul>'+''.join('<li><a href="'+directory+'/'+E(c['id'])+'.html">'+E(c['n'])+'</a></li>' for c in data['cats'])+'</ul></details>'
         page=marker(page,label+'-links',content)
+        page=marker(page,'pair-comparisons','<p class="reference-note"><a href="compare/'+directory+'/">Browse every two-'+label+' comparison</a> · Pick two entries in Compare to open their dedicated page.</p>')
         if not printer: page=marker(page,'retail-brands',retail_links(data))
         attribution='<p class="muted" id="dataset-attribution">Catalog compiled by <a href="'+BASE+'">'+E(DATASET_CREATOR['name'])+'</a>. Dataset compilation: <a href="'+DATASET_LICENSE+'" rel="license">GNU GPL v3.0</a> (<a href="https://github.com/sfmth/3d_printing_info/blob/main/LICENSE">repository license</a>). Individual source documents and images retain their respective rights and terms.</p>'
         page=marker(page,'dataset-attribution',attribution)
@@ -266,15 +270,17 @@ def sync():
     summary={'printers':len(datasets[PAGES[0]]['cats']),'printer-fields':len(datasets[PAGES[0]]['fields']),'materials':len(datasets[PAGES[1]]['cats']),'products':counts(datasets[PAGES[1]])['products']}
     path=ROOT/'index.html';index=path.read_text()
     for key,n in summary.items(): index=re.sub(r'(data-summary="'+key+r'">)\d+',lambda m:m[1]+str(n),index)
+    index=marker(index,'pair-comparisons','<p class="note"><a href="compare/">Compare any two filaments or printers side by side →</a></p>')
     path.write_text(add_consent_controls(index))
     material_paths=generate_materials(datasets[PAGES[1]],index)
     printer_paths=generate_printers(datasets[PAGES[0]],index)
     article_paths=generate_articles(BASE,index,guide_page,{c['id'] for c in datasets[PAGES[1]]['cats']})
     generate_privacy()
-    urls=['','comparison.html','filaments.html','privacy.html','materials/','printers/',*material_paths,*printer_paths,*article_paths]
+    comparison_paths=generate_comparisons(ROOT,BASE,datasets)
+    urls=['','comparison.html','filaments.html','privacy.html','materials/','printers/',*material_paths,*printer_paths,*article_paths,*comparison_paths]
     article_dates={'articles/'+a['id']+'.html':a['modified'] for a in load_articles()['articles']}
     article_dates['articles/']=max(article_dates.values())
-    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,CATALOG_DATE if u in PAGES else PRINTER_DATE if u.startswith('printers/') else DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
+    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,COMPARISON_DATE if u.startswith('compare/') else CATALOG_DATE if u in PAGES else PRINTER_DATE if u.startswith('printers/') else DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
     (ROOT/'sitemap.xml').write_text(sitemap)
     print(json.dumps(summary,sort_keys=True))
 

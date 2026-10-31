@@ -4,3 +4,5 @@ node_modules/
 playwright-report/
 test-results/
 dist/
+# Rebuilt from the two source catalogs before validation and Pages deployment.
+compare/

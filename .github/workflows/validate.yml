@@ -22,7 +22,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate catalogs, preservation, generated pages and metadata
-        run: python scripts/check_site.py
+        run: |
+          python scripts/sync_site.py
+          python scripts/check_site.py
+      - name: Check pair coverage and stable URLs
+        run: python -m unittest discover -s tests -p 'test_pair_comparisons.py' -v
       - name: Check article evidence validation regressions
         run: python -m unittest discover -s tests -p 'test_article_evidence.py'
       - name: Check image reuse decisions and individual photo licence handling

@@ -2,8 +2,9 @@
 """Validate complete catalogs, preservation, crawlability and generated output."""
 from pathlib import Path
 from html.parser import HTMLParser
-from html import escape
+from html import escape, unescape
 from collections import Counter
+from itertools import combinations
 from urllib.parse import urlsplit, unquote, quote
 import hashlib
 import json
@@ -22,6 +23,12 @@ from check_articles import validate_evidence
 
 def digest(x):
     return hashlib.sha256(json.dumps(x, sort_keys=True, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+
+
+def file_digest(path):
+    """Keep regeneration checks bounded even when generated HTML exceeds RAM."""
+    with path.open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
 def schema_nodes(value):
@@ -283,6 +290,152 @@ def check_printer_directory(catalog, images):
             assert not photos, (printer_id, 'Directory borrowed a sibling photograph')
 
 
+PAIR_ROWS = re.compile(r'<tr data-field="([^"]+)" data-different="(true|false)">(.*?)</tr>', re.S)
+PAIR_CELLS = re.compile(r'<td\b([^>]*)>(.*?)</td>', re.S)
+PAIR_VALUES = re.compile(r'<span class="value">(.*?)</span>', re.S)
+PAIR_SOURCES = re.compile(r'<li id="([^"]+)" data-source-id="([^"]+)">(.*?)</li>', re.S)
+LOCAL_REFERENCES = re.compile(r'\b(?:href|src)="([^"]*)"')
+
+
+def validate_pair_comparisons(root, base, datasets):
+    """Inspect every generated pair without building thousands of DOM trees.
+
+    Values are compared with the authoritative catalog, independently of the
+    generator's manifest. The small directory pages use the general HTML checks.
+    """
+    root = Path(root)
+    pairs, directories, canonicals, titles = [], [], set(), set()
+    local_cache = {}
+    expected = set()
+    manifest = json.loads((root/'data/pair-comparison-manifest.json').read_text())
+    assert manifest.get('version') == 1 and isinstance(manifest.get('pages'), dict), 'Invalid pair manifest'
+    for kind, catalog in [('materials', 'filaments.html'), ('printers', 'comparison.html')]:
+        data = datasets[catalog] if catalog in datasets else datasets[kind]
+        cats = sorted(data['cats'], key=lambda cat: cat['id'])
+        fields = {field['id']: field for field in data['fields']}
+        ids = [cat['id'] for cat in cats]
+        assert len(ids) == len(set(ids)), (kind, 'Duplicate catalog IDs')
+        directories.extend([root/'compare'/kind/'index.html', *(root/'compare'/kind/key/'index.html' for key in ids)])
+        directory = Page((root/'compare'/kind/'index.html').read_text())
+        links = [a.get('href') for a in directory.attrs('a')]
+        assert all(key+'/' in links for key in ids), (kind, 'Missing comparison discovery route')
+        assert len(links) <= len(ids)+20, (kind, 'Unbounded comparison directory')
+        for cat in cats:
+            page = Page((root/'compare'/kind/cat['id']/'index.html').read_text())
+            links = [a.get('href') for a in page.attrs('a')]
+            wanted = {'../'+'-vs-'.join(sorted([cat['id'], other]))+'.html' for other in ids if other != cat['id']}
+            found = {link for link in links if link and '-vs-' in link and link.endswith('.html')}
+            assert found == wanted, (kind, cat['id'], 'Incomplete pair crawl graph')
+            assert len(links) <= len(ids)+20, (kind, cat['id'], 'Unbounded item directory')
+        for left, right in combinations(cats, 2):
+            relative = 'compare/'+kind+'/'+left['id']+'-vs-'+right['id']+'.html'
+            assert relative not in expected, ('Comparison URL collision', relative)
+            expected.add(relative)
+            path = root/relative
+            pairs.append(path)
+            raw = path.read_bytes()
+            assert manifest['pages'].get(relative) == hashlib.sha256(raw).hexdigest(), (relative, 'Stale pair manifest')
+            text = raw.decode()
+            head = Page(text.split('</head>', 1)[0])
+            url = base+relative
+            assert [a.get('href') for a in head.attrs('link') if a.get('rel') == 'canonical'] == [url], (relative, 'Canonical')
+            assert url not in canonicals, ('Duplicate canonical', url)
+            canonicals.add(url)
+            title = re.findall(r'<title>(.*?)</title>', text)
+            assert len(title) == 1 and title[0] not in titles, (relative, 'Missing or duplicate pair title')
+            titles.add(title[0])
+            assert any(a.get('name') == 'description' and a.get('content') for a in head.attrs('meta')), relative
+            assert any(a.get('name') == 'robots' and a.get('content') == 'index,follow' for a in head.attrs('meta')), relative
+            assert '<body class="pair-page" data-left="'+left['id']+'" data-right="'+right['id']+'"' in text, relative
+            table_head = re.search(r'<thead>(.*?)</thead>', text, re.S)
+            assert table_head and table_head[1].count('<th scope="col">') == 3, (relative, 'Property and two item column headers')
+            for cat in (left, right):
+                assert 'href="../../'+kind+'/'+cat['id']+'.html">'+escape(cat['n'])+'</a>' in table_head[1], (relative, 'Item header guide link')
+            assert 'aria-label="Primary"' in text and 'id="pair-picker"' in text and 'id="pair-status"' in text, relative
+            assert 'id="pair-interactive" href="../../'+catalog+'?compare='+left['id']+','+right['id']+'"' in text, relative
+            assert 'id="pair-differences"' in text and 'aria-pressed="false" hidden' in text, (relative, 'No-JavaScript controls')
+            for selector, selected in [('first', left['id']), ('second', right['id'])]:
+                selected_block = re.search(r'<select name="'+selector+r'">(.*?)</select>', text, re.S)
+                assert selected_block and re.findall(r'<option value="([^"]+)"', selected_block[1]) and set(re.findall(r'<option value="([^"]+)"', selected_block[1])) == set(ids), (relative, 'Picker choices')
+                assert re.findall(r'<option value="([^"]+)" selected>', selected_block[1]) == [selected], (relative, 'Picker selection')
+            scripts = head.attrs('script')
+            assert {s.get('src') for s in scripts if s.get('src')} == {'../../assets/pair-comparisons.js', '../../assets/analytics-consent.js'}, (relative, 'Shared local scripts')
+            assert not re.search(r'\bgtag\s*\(', text), (relative, 'Unconditional analytics')
+            assert '../../assets/analytics-consent.css' in text and 'data-analytics-settings hidden' in text and 'href="../../privacy.html"' in text, relative
+            documents = list(map(json.loads, LD.findall(text)))
+            nodes = [node for document in documents for node in schema_nodes(document)]
+            types = {schema_type(value) for node in nodes for value in ([node['@type']] if isinstance(node.get('@type'), str) else node.get('@type', []))}
+            assert not {'Product', 'Dataset'} & types and 'WebPage' in types, (relative, 'Unsupported comparison metadata')
+            assert any(node.get('@type') == 'WebPage' and node.get('url') == url for node in nodes), (relative, 'WebPage URL')
+            assert not re.search(r'\b(?:itemtype|typeof)="[^"]*(?:Product|Dataset)', text), relative
+            html_ids = re.findall(r'\sid="([^"]+)"', text)
+            assert len(html_ids) == len(set(html_ids)), (relative, 'Duplicate HTML IDs')
+            rows = PAIR_ROWS.findall(text)
+            wanted_fields = [f['id'] for f in data['fields'] if f['id'] in left['sp'] or f['id'] in right['sp']]
+            assert [fid for fid, _, _ in rows] == wanted_fields, (relative, 'Lost or extra documented field')
+            used_sources = []
+            for fid, different, row in rows:
+                label = re.search(r'<th scope="row" class="field-name">(.*?)</th>', row, re.S)
+                assert label and escape(fields[fid]['name']) in label[1], (relative, fid, 'Field label changed')
+                if fields[fid].get('unit'):
+                    assert '<small>'+escape(fields[fid]['unit'])+'</small>' in label[1], (relative, fid, 'Field unit changed')
+                entries = [cat['sp'].get(fid) for cat in (left, right)]
+                assert different == str((entries[0] or {}).get('v') != (entries[1] or {}).get('v')).lower(), (relative, fid, 'Difference flag')
+                cells = PAIR_CELLS.findall(row)
+                assert len(cells) == 2, (relative, fid, 'Exactly two property cells')
+                for entry, (attrs, cell) in zip(entries, cells):
+                    values = PAIR_VALUES.findall(cell)
+                    assert len(values) == 1 and unescape(values[0]) == ('Not documented' if entry is None else entry['v']), (relative, fid, 'Published value changed')
+                    source_attr = re.findall(r'\bdata-sources="([^"]*)"', attrs)
+                    assert source_attr == ([] if entry is None else [' '.join(entry.get('s', []))]), (relative, fid, 'Field source mismatch')
+                    if entry is None:
+                        assert 'missing' in attrs, (relative, fid, 'Unlabelled missing value')
+                    expected_refs = []
+                    for sid in (entry or {}).get('s', []):
+                        if sid not in used_sources:
+                            used_sources.append(sid)
+                        number = used_sources.index(sid)+1
+                        expected_refs.append('source-'+str(number))
+                    assert re.findall(r'<a class="source-ref" href="#([^"]+)"', cell) == expected_refs, (relative, fid, 'Incorrect adjacent citations')
+            sources = PAIR_SOURCES.findall(text)
+            assert [sid for _, sid, _ in sources] == used_sources, (relative, 'Missing, duplicated or unrelated sources')
+            for number, (anchor, sid, source_html) in enumerate(sources, 1):
+                assert anchor == 'source-'+str(number), relative
+                source = data['src'][sid]
+                for key in ('t', 'u', 'p', 'd', 'k'):
+                    if source.get(key):
+                        assert escape(str(source[key])) in source_html, (relative, sid, 'Missing source '+key)
+            for href in LOCAL_REFERENCES.findall(text):
+                href = unescape(href)
+                if href.startswith('#'):
+                    assert unquote(href[1:]) in html_ids, (relative, 'Broken anchor', href)
+                    continue
+                parts = urlsplit(href)
+                if parts.scheme or parts.netloc:
+                    if not href.startswith(base):
+                        continue
+                    target = root/unquote(parts.path[len(urlsplit(base).path):])
+                else:
+                    assert not href.startswith('/'), (relative, 'Root-relative link', href)
+                    target = path.parent/unquote(parts.path)
+                key = str(target)
+                if key not in local_cache:
+                    local_cache[key] = target.exists() and (not target.is_dir() or (target/'index.html').exists())
+                assert local_cache[key], (relative, 'Missing local target', href)
+    directories.append(root/'compare/index.html')
+    hub = Page(directories[-1].read_text())
+    assert {'materials/', 'printers/'} <= {a.get('href') for a in hub.attrs('a')}, 'Missing comparison hub routes'
+    directory_paths = {str(path.relative_to(root))[:-10] for path in directories}
+    assert set(manifest['pages']) == expected | directory_paths, 'Unexpected comparison manifest paths'
+    actual = {str(path.relative_to(root)) for path in (root/'compare').rglob('*.html')}
+    assert actual == expected | {str(path.relative_to(root)) for path in directories}, 'Missing or obsolete comparison pages'
+    for path in directories:
+        relative = str(path.relative_to(root))[:-10]
+        assert manifest['pages'][relative] == file_digest(path), (relative, 'Stale directory manifest')
+    print(f'{len(pairs)} complete pair pages and {len(directories)} bounded comparison directories validated')
+    return pairs, directories, canonicals
+
+
 def run():
     baseline = json.loads((ROOT/'data/baseline-integrity.json').read_text())
     checkpoint = json.loads((ROOT/'data/catalog-checkpoint.json').read_text())
@@ -409,7 +562,9 @@ def run():
     for key,n in summary.items():
         found=re.findall('data-summary="'+key+r'">(\d+)',index)
         assert found and all(int(x)==n for x in found),(key,found,n)
-    paths=[ROOT/'index.html',ROOT/'privacy.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html'),*(ROOT/'articles').glob('*.html')]
+    assert any(a.get('href') == 'compare/' for a in Page(index).attrs('a')), 'Missing home comparison discovery route'
+    pair_paths, pair_directories, pair_canonicals = validate_pair_comparisons(ROOT, BASE, datasets)
+    paths=[ROOT/'index.html',ROOT/'privacy.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html'),*(ROOT/'articles').glob('*.html'),*pair_directories]
     assert len(list((ROOT/'materials').glob('*.html')))==len(filaments['cats'])+1
     assert len(list((ROOT/'printers').glob('*.html')))==len(printers['cats'])+1
     article_data, evidence = load_articles(), load_evidence()
@@ -462,7 +617,8 @@ def run():
         for sid in source_ids:assert evidence['sources'][sid]['url'].replace('&','&amp;') in html
     for entry in ('index.html','filaments.html','materials/index.html'):
         assert 'articles/' in (ROOT/entry).read_text(),('Missing article discovery route',entry)
-    canonicals=set()
+    canonicals=set(pair_canonicals)
+    checked_scripts=set()
     for path in paths:
         text=path.read_text();name=str(path.relative_to(ROOT)); parsed=Page(text)
         # Product nodes trigger rich-result validation even inside TechArticle.about.
@@ -479,7 +635,7 @@ def run():
         if name == 'privacy.html':
             brand_links = [a for a in parsed.attrs('a') if 'brand' in a.get('class', '').split()]
             assert len(brand_links) == 1 and brand_links[0].get('href') == './', 'Privacy brand must link to the site home'
-        depth='../' if '/' in name else ''
+        depth='../' * (len(path.relative_to(ROOT).parts)-1)
         scripts=parsed.attrs('script')
         assert len([script for script in scripts if script.get('src')==depth+'assets/analytics-consent.js' and 'defer' in script])==1,(name,'Missing local analytics consent gate')
         assert not any(urlsplit(script.get('src','')).netloc for script in scripts),(name,'Remote scripts must not load before analytics consent')
@@ -515,17 +671,27 @@ def run():
                 assert local.exists(),(name,href,'missing target')
         for attrs,script in re.findall(r'<script([^>]*)>(.*?)</script>',text,re.S):
             if 'application/json' in attrs or 'ld+json' in attrs: json.loads(script)
-            elif script.strip():
+            elif script.strip() and hashlib.sha256(script.encode()).hexdigest() not in checked_scripts:
+                checked_scripts.add(hashlib.sha256(script.encode()).hexdigest())
                 with tempfile.NamedTemporaryFile(mode='w',suffix='.js') as tmp:
                     tmp.write(script);tmp.flush()
                     checked=subprocess.run(['node','--check',tmp.name],capture_output=True,text=True)
                     assert checked.returncode==0,(name,checked.stderr)
+        for script in scripts:
+            if script.get('src'):
+                source=(path.parent/script['src']).resolve()
+                if source not in checked_scripts:
+                    checked_scripts.add(source)
+                    checked=subprocess.run(['node','--check',str(source)],capture_output=True,text=True)
+                    assert checked.returncode==0,(name,checked.stderr)
     for directory,data,comparison in [('materials',filaments,'filaments.html'),('printers',printers,'comparison.html')]:
         listing=(ROOT/comparison).read_text()
+        assert any(a.get('href') == 'compare/'+directory+'/' for a in Page(listing).attrs('a')), (comparison, 'Missing comparison directory route')
         itemlist=next(json.loads(x) for x in LD.findall(listing) if json.loads(x).get('@type')=='ItemList')
         assert [x['url'] for x in itemlist['itemListElement']]==[BASE+directory+'/'+c['id']+'.html' for c in data['cats']]
         for c in data['cats']:
             html=(ROOT/directory/(c['id']+'.html')).read_text()
+            assert any(a.get('href') == '../compare/'+directory+'/'+c['id']+'/' for a in Page(html).attrs('a')), (directory, c['id'], 'Missing item comparison route')
             schema=json.loads(LD.findall(html)[0])
             assert schema['@type']=='WebPage' and schema['url']==BASE+directory+'/'+c['id']+'.html',(directory,c['id'],'guide metadata')
             article=schema['mainEntity']
@@ -604,11 +770,12 @@ def run():
     robots=(ROOT/'robots.txt').read_text()
     assert 'Disallow:' not in robots and BASE+'sitemap.xml' in robots
     # Staleness test: sync must be idempotent across all generated pages/metadata.
-    files=[*paths,ROOT/'sitemap.xml',ROOT/'assets/materials.css',
+    files=[*paths,*pair_paths,ROOT/'data/pair-comparison-manifest.json',ROOT/'sitemap.xml',ROOT/'assets/materials.css',
            *(ROOT/'assets/printers'/(family.lower()+'.svg') for family in printers['families'])]
-    before={p:p.read_bytes() for p in files}
+    before={p:file_digest(p) for p in files}
     subprocess.run(['python3',str(ROOT/'scripts/sync_site.py')],check=True,capture_output=True)
-    assert all(p.read_bytes()==content for p,content in before.items()),'Generated files out of date: run python scripts/sync_site.py'
-    print(f'{len(paths)} pages validated: metadata, links, scripts, GA, sitemap, fallbacks and generated content agree.')
+    assert all(p.exists() and file_digest(p)==content for p,content in before.items()),'Generated files out of date: run python scripts/sync_site.py'
+    assert set((ROOT/'compare').rglob('*.html'))==set(pair_paths)|set(pair_directories),'Comparison generation added or dropped pages'
+    print(f'{len(paths)+len(pair_paths)} pages validated: metadata, links, scripts, GA, sitemap, fallbacks and generated content agree.')
 
 if __name__=='__main__':run()

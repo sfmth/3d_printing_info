@@ -2,7 +2,8 @@
 """Notify IndexNow after deployment; default to a network-free dry run.
 
 Only sitemap URLs under this GitHub Pages project are eligible. The checkpoint
-advances after HTTP 200/202 receipt (or a no-change deployment), never on error.
+advances after every batch has an HTTP 200/202 receipt (or a no-change deployment),
+never on error. Each request contains at most 10,000 URLs.
 """
 from __future__ import annotations
 
@@ -25,6 +26,7 @@ KEY = "c6df70c23c3143feab713134fa94bc0f"
 KEY_LOCATION = SITE + KEY + ".txt"
 ENDPOINT = "https://api.indexnow.org/indexnow"
 MAX_URLS = 10000
+PAIR_MANIFEST = "data/pair-comparison-manifest.json"
 PAGE_REVISION = re.compile(
     r"(<footer><span>Catalog values retain their original source dates\. Page revision: )"
     r"\d{4}-\d{2}-\d{2}(\.</span>)")
@@ -82,6 +84,26 @@ def substantive_html_change(repo: Path, baseline: str, head: str, path: str) -> 
     return PAGE_REVISION.sub(r"\1[revision-date]\2", before) != PAGE_REVISION.sub(r"\1[revision-date]\2", after)
 
 
+def pair_hashes(text: str) -> dict[str, str]:
+    """Read tracked content hashes for comparison HTML generated only at build time."""
+    manifest = json.loads(text)
+    if (not isinstance(manifest, dict) or type(manifest.get("version")) is not int
+            or manifest["version"] != 1 or not isinstance(manifest.get("pages"), dict)):
+        raise ValueError("Invalid pair comparison manifest")
+    result = {}
+    for relative, content_hash in manifest["pages"].items():
+        if (not isinstance(relative, str)
+                or not (relative == "compare/"
+                        or relative.startswith(("compare/materials/", "compare/printers/")))
+                or not isinstance(content_hash, str)
+                or not re.fullmatch(r"[0-9a-f]{64}", content_hash)):
+            raise ValueError("Invalid pair comparison path or content hash")
+        url = SITE + relative
+        url_file(url)  # Reject queries, fragments, traversal and alternate spellings.
+        result[url] = content_hash
+    return result
+
+
 def select_urls(repo: Path, baseline: str | None, head: str, force_all: bool = False) -> tuple[list[str], str]:
     current = sitemap((repo / "sitemap.xml").read_text(encoding="utf-8"))
     missing = [path for path in current.values() if not (repo / path).is_file()]
@@ -108,6 +130,17 @@ def select_urls(repo: Path, baseline: str | None, head: str, force_all: bool = F
     urls.update(url for url in current.keys() & previous.keys()
                 if (current[url] in changed or previous[url] in changed)
                 and substantive_html_change(repo, baseline, head, current[url]))
+    manifest_path = repo / PAIR_MANIFEST
+    if manifest_path.is_file():
+        current_pairs = pair_hashes(manifest_path.read_text(encoding="utf-8"))
+        try:
+            previous_pairs = pair_hashes(git(repo, "show", baseline + ":" + PAIR_MANIFEST))
+        except subprocess.CalledProcessError:
+            previous_pairs = {}
+        # The HTML itself is ignored in Git. Manifest hashes identify content
+        # changes without turning a lastmod-only sitemap edit into a full ping.
+        urls.update(url for url, content_hash in current_pairs.items()
+                    if url in current and previous_pairs.get(url) != content_hash)
     return sorted(urls), "changed-and-removed-pages"
 
 
@@ -146,7 +179,9 @@ def execute(repo: Path, state_file: Path, report_file: Path, submit: bool = Fals
             force_all: bool = False) -> int:
     report = {"site": SITE, "endpoint": ENDPOINT, "keyLocation": KEY_LOCATION,
               "time": datetime.now(timezone.utc).isoformat(), "submit": submit,
-              "status": "error", "checkpoint_advanced": False, "url_count": 0, "urls": []}
+              "status": "error", "checkpoint_advanced": False, "url_count": 0, "urls": [],
+              "batch_size_limit": MAX_URLS, "batch_count": 0, "batches": [],
+              "accepted_batches": 0, "accepted_url_count": 0}
     exit_code = 0
     try:
         head = git(repo, "rev-parse", "HEAD")
@@ -155,17 +190,36 @@ def execute(repo: Path, state_file: Path, report_file: Path, submit: bool = Fals
         if (repo / (KEY + ".txt")).read_text(encoding="utf-8").strip() != KEY:
             raise ValueError("Local IndexNow key file did not match")
         urls, mode = select_urls(repo, baseline, head, force_all)
-        if len(urls) > MAX_URLS:
-            raise ValueError(f"IndexNow request exceeds {MAX_URLS} URLs; add batching first")
         report.update(urls=urls, url_count=len(urls), selection=mode)
+        batches = [{"batch": offset // MAX_URLS + 1, "urls": urls[offset:offset + MAX_URLS],
+                    "url_count": len(urls[offset:offset + MAX_URLS]),
+                    "status": "not-submitted" if submit else "dry-run"}
+                   for offset in range(0, len(urls), MAX_URLS)]
+        report.update(batches=batches, batch_count=len(batches))
         if not submit:
             report["status"] = "dry-run"
         elif not urls:
             report["status"] = "no-changed-pages"
         else:
-            status, result = receipt({"host": urlsplit(SITE).hostname, "key": KEY,
-                                      "keyLocation": KEY_LOCATION, "urlList": urls})
-            report.update(status=result, http_status=status)
+            for batch in batches:
+                try:
+                    status, result = receipt({"host": urlsplit(SITE).hostname, "key": KEY,
+                                              "keyLocation": KEY_LOCATION, "urlList": batch["urls"]})
+                    if status not in (200, 202):
+                        raise ValueError(f"Unexpected IndexNow HTTP status: {status}")
+                except (OSError, ValueError) as error:
+                    batch.update(status="error", error=str(error))
+                    if isinstance(error, HTTPError):
+                        batch["http_status"] = error.code
+                    raise
+                batch.update(status=result, http_status=status)
+                report["accepted_batches"] += 1
+                report["accepted_url_count"] += batch["url_count"]
+            # Any pending key validation applies to the aggregate receipt. An
+            # accepted prefix never advances the whole-deployment checkpoint.
+            pending = any(batch["http_status"] == 202 for batch in batches)
+            report.update(status="received-key-validation-pending" if pending else "received",
+                          http_status=202 if pending else 200)
         if submit and report["status"] in ("received", "received-key-validation-pending", "no-changed-pages"):
             state_file.parent.mkdir(parents=True, exist_ok=True)
             state_file.write_text(json.dumps({"site": SITE, "key": KEY, "commit": head}) + "\n", encoding="utf-8")
@@ -188,6 +242,8 @@ def execute(repo: Path, state_file: Path, report_file: Path, submit: bool = Fals
                 summary.write(f"### IndexNow notification\n\nStatus: **{report['status']}**. "
                               f"Selected URLs: **{report['url_count']}**. "
                               f"Selection: `{report.get('selection', 'unavailable')}`.\n\n"
+                              f"Accepted batches: **{report['accepted_batches']} / {report['batch_count']}**; "
+                              f"accepted URLs: **{report['accepted_url_count']} / {report['url_count']}**.\n\n"
                               "HTTP 200 acknowledges receipt; HTTP 202 also leaves key validation pending. "
                               "Neither confirms crawling, indexing, rankings, or LLM citations. "
                               "See the IndexNow report artifact for the submitted URLs and any error.\n")

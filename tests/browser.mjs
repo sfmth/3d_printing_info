@@ -21,6 +21,11 @@ const articles = JSON.parse(await fs.readFile(path.join(root,'data/material-arti
 const articleEvidence = JSON.parse(await fs.readFile(path.join(root,'data/article-evidence.json'),'utf8'));
 const genericArticles = articles.filter(article=>article.tables);
 const productCount = materials.cats.reduce((n,c)=>n+c.pr.length,0);
+const pairFile = (kind, ids) => `compare/${kind}/${[...ids].sort().join('-vs-')}.html`;
+const pairCases = [
+  {kind:'materials',data:materials,ids:['petg','pla'],interactive:'filaments.html'},
+  {kind:'printers',data:printers,ids:['bambu-a1','neptune4pro'],interactive:'comparison.html'},
+];
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.xml':'application/xml','.webmanifest':'application/manifest+json'};
 const server = http.createServer(async (req,res) => {
   try {
@@ -77,6 +82,61 @@ try {
     assert.equal(await page.locator('footer [data-analytics-settings]').count(),1);
     assert.equal(await page.locator('script[src$="analytics-consent.js"]').count(),1);
     assert.ok(!(await referenceMetadata()).types.includes('Product'),`no unsupported Product markup: ${file}`);
+  }
+  async function verifyPair(target, fixture) {
+    const {kind,data}=fixture, ids=[...fixture.ids].sort();
+    const cats=ids.map(id=>data.cats.find(cat=>cat.id===id));
+    assert.ok(cats.every(Boolean),'browser pair fixture exists in catalog');
+    assert.equal(await target.locator('body').getAttribute('data-left'),ids[0]);
+    assert.equal(await target.locator('body').getAttribute('data-right'),ids[1]);
+    const headers=target.locator('#pair-table thead th[scope="col"]');
+    assert.equal(await headers.count(),3,'property heading and exactly two item headings');
+    for(let index=0;index<2;index++) {
+      assert.equal(await headers.nth(index+1).locator('a').innerText(),cats[index].n);
+      assert.equal(await headers.nth(index+1).locator('a').getAttribute('href'),`../../${kind}/${ids[index]}.html`);
+    }
+    const rows=await target.locator('#pair-table tr[data-field]').evaluateAll(nodes=>nodes.map(row=>({
+      id:row.dataset.field,different:row.dataset.different,
+      cells:[...row.querySelectorAll('td.property-value')].map(cell=>({value:cell.querySelector('.value').textContent,sources:cell.dataset.sources ?? null,missing:cell.classList.contains('missing')})),
+    })));
+    const expectedFields=data.fields.filter(field=>cats.some(cat=>Object.hasOwn(cat.sp,field.id))).map(field=>field.id);
+    assert.deepEqual(rows.map(row=>row.id),expectedFields,'all documented fields survive server rendering');
+    const sourceIds=[];
+    for(const row of rows) {
+      assert.equal(row.cells.length,2);
+      const entries=cats.map(cat=>cat.sp[row.id]);
+      assert.equal(row.different,String(entries[0]?.v!==entries[1]?.v));
+      for(let index=0;index<2;index++) {
+        const entry=entries[index], cell=row.cells[index];
+        assert.equal(cell.value,entry?.v ?? 'Not documented',`${kind}/${row.id} exact value`);
+        assert.equal(cell.sources,entry ? (entry.s || []).join(' ') : null,`${kind}/${row.id} exact source IDs`);
+        assert.equal(cell.missing,!entry);
+        for(const sid of entry?.s || []) if(!sourceIds.includes(sid))sourceIds.push(sid);
+      }
+    }
+    const sources=await target.locator('#sources li[data-source-id]').evaluateAll(nodes=>nodes.map(node=>({id:node.dataset.sourceId,text:node.textContent,href:node.querySelector('a')?.getAttribute('href')})));
+    assert.deepEqual(sources.map(source=>source.id),sourceIds,'one source record for each actually cited document');
+    for(const source of sources) {
+      const expected=data.src[source.id];
+      if(expected.u)assert.equal(source.href,expected.u);
+      for(const key of ['t','p','d','k']) if(expected[key])assert.ok(source.text.includes(expected[key]),source.id+' '+key);
+    }
+    assert.equal(await target.locator('#pair-interactive').getAttribute('href'),`../../${fixture.interactive}?compare=${ids.join(',')}`);
+    assert.equal(await target.locator('link[rel="canonical"]').getAttribute('href'),`https://sfmth.github.io${prefix}${pairFile(kind,ids)}`);
+    const metadata=await target.locator('script[type="application/ld+json"]').evaluateAll(nodes=>nodes.map(node=>JSON.parse(node.textContent)));
+    const declared=[];
+    const walk=value=>{if(value && typeof value==='object'){if(value['@type'])declared.push(...[].concat(value['@type']));Object.values(value).forEach(walk);}};
+    metadata.forEach(walk);
+    assert.ok(declared.includes('WebPage') && !declared.includes('Product') && !declared.includes('Dataset'));
+    return rows;
+  }
+  async function openPairCitation(target) {
+    const citation=target.locator('#pair-table a.source-ref').first();
+    const href=await citation.getAttribute('href');
+    await citation.focus();
+    await target.keyboard.press('Enter');
+    assert.equal(new URL(target.url()).hash,href);
+    assert.equal(await target.locator(href).isVisible(),true,'pair citation reaches its full dated source');
   }
   async function verifyAnalyticsConsent() {
     const consent = await browser.newContext({viewport:{width:390,height:844}});
@@ -748,9 +808,81 @@ try {
     await page.screenshot({path:path.join(root,'test-results/'+article.id+'-desktop.png')});
   }
   if(genericArticles.length) step(`All ${genericArticles.length} expanded articles retain exact measurements, explicit gaps, adjacent specimen context and source/method navigation`);
+  await visit('');
+  await page.locator('a[href="compare/"]').click();
+  await page.locator('main a[href="materials/"]').click();
+  await page.locator('main a[href="pla/"]').click();
+  await page.locator('main a[href="../petg-vs-pla.html"]').click();
+  await verifyPair(page,pairCases[0]);
+  step('Comparison hub and bounded per-item directories reach a complete pair through ordinary links');
+  for(const fixture of pairCases) {
+    const file=pairFile(fixture.kind,fixture.ids);
+    await visit(file);
+    const rows=await verifyPair(page,fixture);
+    assert.equal(await page.locator('#pair-picker').isVisible(),true,'JavaScript enables the pair picker');
+    assert.ok(rows.some(row=>row.different==='true'),'representative pair exercises different properties');
+    if(fixture.kind==='materials')assert.ok(rows.some(row=>row.different==='false'),'material pair also exercises hiding equal properties');
+    const total=await page.locator('#pair-table tr[data-different]').count();
+    await page.locator('#pair-differences').click();
+    assert.equal(await page.locator('#pair-differences').getAttribute('aria-pressed'),'true');
+    assert.equal(await page.locator('#pair-table tr[data-different="false"]:visible').count(),0,'equal values hide without removing records');
+    assert.equal(await page.locator('#pair-table tr[data-different]').count(),total);
+    assert.match(await page.locator('#pair-status').innerText(),/different values/);
+    await page.emulateMedia({media:'print'});
+    assert.equal(await page.locator('#pair-table tr[data-different="false"]:visible').count(),await page.locator('#pair-table tr[data-different="false"]').count(),'printing includes equal properties while difference filter is active');
+    await page.emulateMedia({media:'screen'});
+    await page.locator('#pair-differences').click();
+    assert.equal(await page.locator('#pair-table tr[data-different][hidden]').count(),0);
+    await page.screenshot({path:path.join(root,`test-results/pair-${fixture.kind==='materials'?'material':'printer'}-desktop.png`)});
+    await openPairCitation(page);
+    await page.locator('#pair-interactive').click();
+    assert.equal(new URL(page.url()).searchParams.get('compare'),[...fixture.ids].sort().join(','));
+    assert.equal(await page.locator('#cmpout table thead th').count(),3,'interactive deep link preselects exactly two entries');
+    assert.equal(await page.locator('#pair-link').getAttribute('href'),file,'interactive comparison links back to its permanent static URL');
+    await page.locator('#pair-link').click();
+    await verifyPair(page,fixture);
+    const ids=[...fixture.ids].sort();
+    await page.locator('#pair-picker select[name="first"]').selectOption(ids[1]);
+    await page.locator('#pair-picker select[name="second"]').selectOption(ids[0]);
+    await page.locator('#pair-picker button[type="submit"]').click();
+    assert.match(await page.locator('#pair-status').innerText(),/already open/,'reversed input maps to the same unordered pair');
+    await page.locator('#pair-picker select[name="first"]').selectOption(ids[0]);
+    await page.locator('#pair-picker button[type="submit"]').click();
+    assert.equal(await page.locator('#pair-picker select[name="second"]').getAttribute('aria-invalid'),'true','same-item selection gets an actionable error');
+    assert.match(await page.locator('#pair-status').innerText(),/two different/);
+    const other=fixture.data.cats.find(cat=>!ids.includes(cat.id)).id;
+    await page.locator('#pair-picker select[name="second"]').selectOption(other);
+    const next=pairFile(fixture.kind,[ids[0],other]);
+    await Promise.all([
+      page.waitForURL(base+next),
+      page.locator('#pair-picker button[type="submit"]').click(),
+    ]);
+    await verifyPair(page,{...fixture,ids:[ids[0],other]});
+  }
+  step('Filament and printer pairs retain every sourced value, filter differences, print complete records, reject self-pairs, navigate the picker and round-trip through interactive deep links');
   await visit('materials/peba.html');
   await page.screenshot({path:path.join(root,'test-results/peba-guide.png')});
   await page.setViewportSize({width:390,height:844});
+  for(const fixture of pairCases) {
+    await visit(pairFile(fixture.kind,fixture.ids));
+    await verifyPair(page,fixture);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,fixture.kind+' pair fits 390px viewport');
+    const scroll=await page.locator('.pair-table-wrap').evaluate(wrapper=>{
+      wrapper.scrollLeft=wrapper.scrollWidth;
+      const result={overflow:wrapper.scrollWidth>wrapper.clientWidth,scrolled:wrapper.scrollLeft>0};
+      wrapper.scrollLeft=0;
+      return result;
+    });
+    assert.ok(scroll.overflow && scroll.scrolled,'both comparison columns scroll inside their wrapper on mobile');
+    const valuesFit=await page.locator('td.property-value').evaluateAll(cells=>cells.every(cell=>{
+      const style=getComputedStyle(cell);
+      return cell.scrollWidth<=cell.clientWidth+1 && cell.scrollHeight<=cell.clientHeight+1 && style.textOverflow!=='ellipsis' && ['none','0',''].includes(style.webkitLineClamp);
+    }));
+    assert.ok(valuesFit,'long property values wrap in full without clipping');
+    await page.screenshot({path:path.join(root,`test-results/pair-${fixture.kind==='materials'?'material':'printer'}-mobile.png`)});
+    await openPairCitation(page);
+  }
+  step('Both pair layouts retain complete values and keyboard source navigation at 390px with scrolling contained inside the table');
   await page.goto(base,{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'homepage mobile width');
   await page.getByRole('link',{name:'Filaments',exact:true}).click();
@@ -838,6 +970,23 @@ try {
   step('Mobile navigation, filtering, material and printer guide layouts at 390 px');
   const nojs=await browser.newContext({javaScriptEnabled:false});
   const staticPage=await nojs.newPage();
+  for(const fixture of pairCases) {
+    await staticPage.goto(base+pairFile(fixture.kind,fixture.ids));
+    await verifyPair(staticPage,fixture);
+    assert.equal(await staticPage.locator('#pair-differences').isVisible(),false,'inactive difference control stays hidden without JavaScript');
+    assert.equal(await staticPage.locator('#pair-picker').isVisible(),false,'inactive pair picker stays hidden without JavaScript');
+    assert.equal(await staticPage.locator('#pair-table tr[data-field][hidden]').count(),0,'all pair values are readable without JavaScript');
+    await openPairCitation(staticPage);
+    await staticPage.locator('#pair-interactive').click();
+    assert.equal(await staticPage.locator('#static > table').first().locator('tbody tr').count(),fixture.data.cats.length,'interactive link still exposes the complete static catalog fallback');
+  }
+  await staticPage.goto(base+'compare/');
+  await staticPage.locator('main a[href="printers/"]').click();
+  await staticPage.locator('main a[href="bambu-a1/"]').click();
+  await staticPage.locator('main a[href="../bambu-a1-vs-neptune4pro.html"]').click();
+  await verifyPair(staticPage,pairCases[1]);
+  await staticPage.screenshot({path:path.join(root,'test-results/pair-printer-nojs.png')});
+  step('Complete pair tables, dated source anchors, directory crawl routes and original catalog fallbacks work with JavaScript disabled');
   await staticPage.goto(base+'printers/');
   assert.equal(await staticPage.locator('script[src*="googletagmanager.com/gtag/js"]').count(),0,'no remote analytics script without JavaScript');
   assert.equal(await staticPage.locator('footer [data-analytics-settings]').isVisible(),false,'inactive settings control stays hidden without JavaScript');
@@ -950,7 +1099,7 @@ try {
   assert.deepEqual(errors,[],'uncaught JavaScript errors');
   assert.deepEqual(missing,[],'missing local assets');
   step('No uncaught JavaScript exceptions or missing local assets');
-  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount,detailPages:printers.cats.length+materials.cats.length,articles:articles.length},analytics:'Zero Google requests before consent/after decline; grant, withdrawal, cookie cleanup and cross-tab/storage behavior checked with intercepted loader/collection; ingestion not verified',steps};
+  const result={commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),browser:await browser.version(),counts:{printers:printers.cats.length,materials:materials.cats.length,products:productCount,detailPages:printers.cats.length+materials.cats.length,articles:articles.length,pairComparisons:[printers,materials].reduce((total,data)=>total+data.cats.length*(data.cats.length-1)/2,0),pairDirectories:3+printers.cats.length+materials.cats.length},analytics:'Zero Google requests before consent/after decline; grant, withdrawal, cookie cleanup and cross-tab/storage behavior checked with intercepted loader/collection; ingestion not verified',steps};
   await fs.writeFile(path.join(root,'test-results/browser-results.json'),JSON.stringify(result,null,2)+'\n');
 } finally {
   if(browser) await browser.close();
