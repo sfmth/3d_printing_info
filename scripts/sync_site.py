@@ -316,6 +316,8 @@ def sync():
     # A byte-identical alternate name isolates the Search Console fetch issue
     # without changing the canonical URL inventory, dates, or original sitemap.
     (ROOT/'library-sitemap.xml').write_bytes((ROOT/'sitemap.xml').read_bytes())
+    # Format control for the same URL inventory; plain-text sitemaps have no dates.
+    (ROOT/'sitemap.txt').write_text(''.join(BASE+u+'\n' for u in urls))
     print(json.dumps(summary,sort_keys=True))
 
 if __name__=='__main__': sync()

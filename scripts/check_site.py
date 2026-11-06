@@ -773,6 +773,7 @@ def run():
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
     assert (ROOT/'library-sitemap.xml').read_bytes()==(ROOT/'sitemap.xml').read_bytes(),'Alternate sitemap must be an identical copy'
     urls=[x.text for x in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)]
+    assert (ROOT/'sitemap.txt').read_text().splitlines()==urls,'Text sitemap must contain exactly the same canonical URLs, one per line'
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)
     revisions={url.find('s:loc',ns).text:url.find('s:lastmod',ns).text for url in ET.parse(ROOT/'sitemap.xml').findall('s:url',ns)}
     for name in PAGES:assert revisions[BASE+name]==CATALOG_DATE
@@ -789,7 +790,7 @@ def run():
     robots=(ROOT/'robots.txt').read_text()
     assert 'Disallow:' not in robots and BASE+'sitemap.xml' in robots
     # Staleness test: sync must be idempotent across all generated pages/metadata.
-    files=[*paths,*pair_paths,*(ROOT/route for route in FEED_ROUTES),ROOT/'data/pair-comparison-manifest.json',ROOT/'sitemap.xml',ROOT/'library-sitemap.xml',ROOT/'assets/materials.css',
+    files=[*paths,*pair_paths,*(ROOT/route for route in FEED_ROUTES),ROOT/'data/pair-comparison-manifest.json',ROOT/'sitemap.xml',ROOT/'library-sitemap.xml',ROOT/'sitemap.txt',ROOT/'assets/materials.css',
            *(ROOT/'assets/printers'/(family.lower()+'.svg') for family in printers['families'])]
     before={p:file_digest(p) for p in files}
     subprocess.run(['python3',str(ROOT/'scripts/sync_site.py')],check=True,capture_output=True)
