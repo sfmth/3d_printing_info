@@ -17,6 +17,7 @@ from printer_library import directory_body as printer_directory_body
 from pair_comparisons import generate_comparisons, REVISION as COMPARISON_DATE
 from comparison_discovery import render_home_comparisons, validate_discovery
 from updates_feed import generate_updates, feed_head
+from page_revisions import COMPARISON_NAVIGATION_PATHS, page_revision
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
@@ -146,8 +147,15 @@ def fallback(data, printer):
     return '<noscript><section id="static"><h2>All ' + str(cs['items']) + ' ' + label + '</h2><p>Sorting, filtering and comparison need JavaScript. These summaries and all printer and material guides remain available without it. Unknown fields are —. Prices and source dates are individual snapshots; manufacturer claims retain their conditions.</p>' + table + '</section></noscript>'
 
 
-def guide_page(name, desc, path, content, analytics, styles, schema):
+def guide_page(name, desc, path, content, analytics, styles, schema, revision_date=None):
     url = BASE + (path[:-10] if path.endswith('/index.html') else path)
+    revision = page_revision(path, revision_date or (PRINTER_DATE if path.startswith('printers/') else DATE))
+    schema = dict(schema)
+    if path in COMPARISON_NAVIGATION_PATHS and schema.get('@type') == 'WebPage':
+        schema['dateModified'] = revision
+    if (path in COMPARISON_NAVIGATION_PATHS and isinstance(schema.get('mainEntity'), dict)
+            and schema['mainEntity'].get('@type') == 'TechArticle'):
+        schema['mainEntity'] = {**schema['mainEntity'], 'dateModified': revision}
     depth = '../' if '/' in path else ''
     head = '<!doctype html>\n<html lang="en" data-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
     head += '<title>' + E(name) + ' | 3D Printing Info</title><meta name="description" content="' + E(desc) + '"><meta name="robots" content="index,follow"><link rel="canonical" href="' + url + '">'
@@ -174,7 +182,7 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="../materials/">Material guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Selection articles</a></nav>'
     if path == 'privacy.html':
         nav = '<nav class="nav" aria-label="Primary"><a href="./">Home</a><a href="printers/">Printer guides</a><a href="materials/">Material guides</a><a href="articles/">Selection articles</a></nav>'
-    return head + '<div class="topbar"><a class="brand" href="' + (depth or './') + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + (PRINTER_DATE if path.startswith('printers/') else DATE) + '.</span><a href="' + depth + 'updates/">Updates</a><a href="'+depth+'feed.xml">RSS</a><a href="' + depth + 'sitemap.xml">Sitemap</a>'+privacy_links(depth)+'</footer></div></body></html>\n'
+    return head + '<div class="topbar"><a class="brand" href="' + (depth or './') + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + revision + '.</span><a href="' + depth + 'updates/">Updates</a><a href="'+depth+'feed.xml">RSS</a><a href="' + depth + 'sitemap.xml">Sitemap</a>'+privacy_links(depth)+'</footer></div></body></html>\n'
 
 
 def generate_materials(data, index):
@@ -298,12 +306,16 @@ def sync():
     comparison_paths=generate_comparisons(ROOT,BASE,datasets)
     updates_dates=generate_updates(ROOT,BASE)
     urls=['','comparison.html','filaments.html','privacy.html','materials/','printers/',*material_paths,*printer_paths,*article_paths,*comparison_paths,*updates_dates]
-    article_dates={'articles/'+a['id']+'.html':a['modified'] for a in load_articles()['articles']}
-    article_dates['articles/']=max(article_dates.values())
+    articles=load_articles()['articles']
+    article_dates={'articles/'+a['id']+'.html':page_revision('articles/'+a['id']+'.html',a['modified']) for a in articles}
+    article_dates['articles/']=max(a['modified'] for a in articles)
     article_dates.update(updates_dates)
     article_dates['']=HOME_DATE
-    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,COMPARISON_DATE if u.startswith('compare/') else CATALOG_DATE if u in PAGES else PRINTER_DATE if u.startswith('printers/') else DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
+    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+page_revision(u,article_dates.get(u,COMPARISON_DATE if u.startswith('compare/') else CATALOG_DATE if u in PAGES else PRINTER_DATE if u.startswith('printers/') else DATE))+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
     (ROOT/'sitemap.xml').write_text(sitemap)
+    # A byte-identical alternate name isolates the Search Console fetch issue
+    # without changing the canonical URL inventory, dates, or original sitemap.
+    (ROOT/'library-sitemap.xml').write_bytes((ROOT/'sitemap.xml').read_bytes())
     print(json.dumps(summary,sort_keys=True))
 
 if __name__=='__main__': sync()

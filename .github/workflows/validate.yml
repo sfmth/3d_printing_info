@@ -30,6 +30,7 @@ jobs:
       - name: Check contextual discovery links and genuine updates feeds
         run: |
           python -m unittest discover -s tests -p 'test_comparison_discovery.py' -v
+          python -m unittest discover -s tests -p 'test_page_revisions.py' -v
           python -m unittest discover -s tests -p 'test_updates_feed.py' -v
           python -m unittest discover -s tests -p 'test_websub.py' -v
       - name: Check article evidence validation regressions

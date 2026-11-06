@@ -18,6 +18,9 @@ const printerPhotos = JSON.parse(await fs.readFile(path.join(root,'data/printer-
 const examples = Object.fromEntries(Object.entries(JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'))).map(([id,entries])=>[id,Array.isArray(entries)?entries:[entries]]));
 const applications = JSON.parse(await fs.readFile(path.join(root,'data/material-applications.json'),'utf8'));
 const articles = JSON.parse(await fs.readFile(path.join(root,'data/material-articles.json'),'utf8')).articles;
+const navigationRevisions = JSON.parse(execFileSync('python3',['-c',
+  'import json,sys; sys.path.insert(0,"scripts"); from page_revisions import COMPARISON_NAVIGATION_PATHS, COMPARISON_NAVIGATION_RELEASE; print(json.dumps(dict.fromkeys(COMPARISON_NAVIGATION_PATHS,COMPARISON_NAVIGATION_RELEASE)))'
+],{cwd:root,encoding:'utf8'}));
 const siteUpdates = JSON.parse(await fs.readFile(path.join(root,'data/site-updates.json'),'utf8')).entries;
 const articleEvidence = JSON.parse(await fs.readFile(path.join(root,'data/article-evidence.json'),'utf8'));
 const genericArticles = articles.filter(article=>article.tables);
@@ -806,7 +809,10 @@ try {
     assert.equal(metadata.url,'https://sfmth.github.io/3d_printing_info/articles/'+article.id+'.html');
     assert.equal(metadata.mainEntity['@type'],'TechArticle');
     assert.equal(metadata.mainEntity.author.name,article.author.name);
-    assert.equal(metadata.mainEntity.dateModified,article.modified);
+    const pageRevision=[article.modified,navigationRevisions['articles/'+article.id+'.html']].filter(Boolean).sort().at(-1);
+    assert.equal(metadata.mainEntity.dateModified,pageRevision);
+    assert.match(await page.locator('footer').innerText(),new RegExp('Article revision: '+article.modified));
+    assert.match(await page.locator('footer').innerText(),new RegExp('Page revision: '+pageRevision));
     await verifyGenericTables(page,article);
     const methodLink=page.locator('table[data-evidence-table] a[href^="#series-"]').first();
     if(await methodLink.count()) {

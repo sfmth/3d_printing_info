@@ -5,6 +5,20 @@
   "websub_hub": "https://pubsubhubbub.appspot.com/",
   "entries": [
     {
+      "id": "featured-comparison-links-and-updates-feeds",
+      "title": "Featured comparisons and new library updates feeds",
+      "published": "2026-11-06T03:29:06Z",
+      "updated": "2026-11-06T03:29:06Z",
+      "summary": "Selected filament and printer comparisons now have direct links from the homepage and relevant guides and selection articles. A library updates archive and RSS and Atom feeds provide a dated record of released improvements, with subscription links across the site.",
+      "links": [
+        {"path": "compare/", "title": "Browse the comparison library"},
+        {"path": "materials/pla.html", "title": "Explore PLA and its selected comparisons"},
+        {"path": "printers/bambu-a1.html", "title": "Explore Bambu A1 and its selected comparisons"},
+        {"path": "updates/", "title": "Read library updates and find RSS and Atom subscriptions"}
+      ],
+      "commit": "01f8ac7f52d7c2392843b6afbf625d4601bcb4f7"
+    },
+    {
       "id": "dedicated-filament-and-printer-comparisons",
       "title": "Dedicated side-by-side filament and printer comparisons",
       "published": "2026-10-31T17:30:57Z",

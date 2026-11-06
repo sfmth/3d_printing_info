@@ -5,9 +5,16 @@
     <link>https://sfmth.github.io/3d_printing_info/updates/</link>
     <description>New material-selection articles, comparison tools and improvements to the 3D Printing Info reference library.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 31 Oct 2026 17:30:57 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2026 03:29:06 GMT</lastBuildDate>
     <atom:link href="https://sfmth.github.io/3d_printing_info/feed.xml" rel="self" type="application/rss+xml" />
     <atom:link href="https://pubsubhubbub.appspot.com/" rel="hub" />
+    <item>
+      <title>Featured comparisons and new library updates feeds</title>
+      <link>https://sfmth.github.io/3d_printing_info/compare/</link>
+      <pubDate>Fri, 06 Nov 2026 03:29:06 GMT</pubDate>
+      <description>&lt;p&gt;Selected filament and printer comparisons now have direct links from the homepage and relevant guides and selection articles. A library updates archive and RSS and Atom feeds provide a dated record of released improvements, with subscription links across the site.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/compare/"&gt;Browse the comparison library&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/materials/pla.html"&gt;Explore PLA and its selected comparisons&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/printers/bambu-a1.html"&gt;Explore Bambu A1 and its selected comparisons&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/updates/"&gt;Read library updates and find RSS and Atom subscriptions&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;a href="https://github.com/sfmth/3d_printing_info/commit/01f8ac7f52d7c2392843b6afbf625d4601bcb4f7"&gt;Release details&lt;/a&gt;&lt;/p&gt;</description>
+      <guid isPermaLink="true">https://sfmth.github.io/3d_printing_info/updates/#featured-comparison-links-and-updates-feeds</guid>
+    </item>
     <item>
       <title>Dedicated side-by-side filament and printer comparisons</title>
       <link>https://sfmth.github.io/3d_printing_info/compare/materials/asa-vs-pla.html</link>

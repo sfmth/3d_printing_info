@@ -3,6 +3,7 @@ from html import escape
 from pathlib import Path
 import re
 from check_articles import strict_load_json, validate_evidence
+from page_revisions import page_revision
 
 ROOT = Path(__file__).resolve().parents[1]
 E = lambda value: escape(str(value), quote=True)
@@ -189,7 +190,11 @@ def source_records(article, evidence):
 
 def article_body(article, evidence, catalog_data=None):
     body = '<div class="breadcrumbs"><a href="../">Home</a><span>/</span><a href="./">Selection articles</a><span>/</span><span>' + E(article['category']) + '</span></div><article><header class="article-header"><span class="kicker">Material selection · ' + E(article['category']) + '</span><h1>' + E(article['title']) + '</h1><p class="article-deck">' + E(article['description']) + '</p><p class="article-byline">'
-    body += E(article['author']['name']) + ' · Published <time datetime="' + E(article['published']) + '">' + E(article['published']) + '</time> · Revised <time datetime="' + E(article['modified']) + '">' + E(article['modified']) + '</time></p><p class="authorship-note">' + E(article['authorship_note']) + '</p></header>'
+    body += E(article['author']['name']) + ' · Published <time datetime="' + E(article['published']) + '">' + E(article['published']) + '</time> · Article revised <time datetime="' + E(article['modified']) + '">' + E(article['modified']) + '</time>'
+    revision = page_revision('articles/' + article['id'] + '.html', article['modified'])
+    if revision != article['modified']:
+        body += ' · Page navigation revised <time datetime="' + E(revision) + '">' + E(revision) + '</time>'
+    body += '</p><p class="authorship-note">' + E(article['authorship_note']) + '</p></header>'
     body += '<nav class="article-contents" aria-label="On this page"><a href="#quick-answer">The selection decision</a><a href="#measurements">Grade measurements</a><a href="#methods">Test conditions</a><a href="#verification">Before releasing a part</a><a href="#sources">Sources</a></nav>'
     body += '<section class="quick-answer" id="quick-answer"><h2>' + E(article['answer']['heading']) + '</h2>' + ''.join(paragraph(b, evidence) for b in article['answer']['paragraphs']) + '</section>'
     for section in article['sections']:
@@ -245,11 +250,12 @@ def generate_articles(base, index, guide_page, material_ids, catalog_data=None):
         schema = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': article['title'], 'url': base + path,
                   'description': article['description'], 'mainEntity': {'@type': 'TechArticle', 'headline': article['title'],
                   'url': base + path, 'description': article['description'], 'author': article['author'],
-                  'datePublished': article['published'], 'dateModified': article['modified'],
+                  'datePublished': article['published'], 'dateModified': page_revision(path, article['modified']),
                   'about': list(article['materials'].values()), 'citation': [s['url'] for sid, s in evidence['sources'].items() if sid in source_ids]}}
-        html = guide_page(article['title'], article['description'], path, article_body(article, evidence, catalog_data), analytics, '', schema)
+        html = guide_page(article['title'], article['description'], path, article_body(article, evidence, catalog_data), analytics, '', schema,
+                          revision_date=article['modified'])
         html = re.sub(r'Catalog values retain their original source dates\. Page revision: [\d-]+\.',
-                      'Article revision: ' + article['modified'] + '. Measurements retain their source dates.', html)
+                      'Page revision: ' + page_revision(path, article['modified']) + '. Article revision: ' + article['modified'] + '. Measurements retain their source dates.', html)
         (ROOT / path).write_text(html)
         paths.append(path)
     path = 'articles/index.html'

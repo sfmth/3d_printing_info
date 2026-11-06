@@ -3,7 +3,7 @@
   <id>https://sfmth.github.io/3d_printing_info/updates/</id>
   <title>Library updates</title>
   <subtitle>New material-selection articles, comparison tools and improvements to the 3D Printing Info reference library.</subtitle>
-  <updated>2026-10-31T17:30:57Z</updated>
+  <updated>2026-11-06T03:29:06Z</updated>
   <link rel="self" href="https://sfmth.github.io/3d_printing_info/atom.xml" type="application/atom+xml" />
   <link rel="alternate" href="https://sfmth.github.io/3d_printing_info/updates/" type="text/html" />
   <link rel="hub" href="https://pubsubhubbub.appspot.com/" />
@@ -11,6 +11,15 @@
     <name>3D Printing Info</name>
     <uri>https://sfmth.github.io/3d_printing_info/</uri>
   </author>
+  <entry>
+    <id>https://sfmth.github.io/3d_printing_info/updates/#featured-comparison-links-and-updates-feeds</id>
+    <title>Featured comparisons and new library updates feeds</title>
+    <published>2026-11-06T03:29:06Z</published>
+    <updated>2026-11-06T03:29:06Z</updated>
+    <summary>Selected filament and printer comparisons now have direct links from the homepage and relevant guides and selection articles. A library updates archive and RSS and Atom feeds provide a dated record of released improvements, with subscription links across the site.</summary>
+    <link rel="alternate" href="https://sfmth.github.io/3d_printing_info/compare/" type="text/html" />
+    <content type="html">&lt;p&gt;Selected filament and printer comparisons now have direct links from the homepage and relevant guides and selection articles. A library updates archive and RSS and Atom feeds provide a dated record of released improvements, with subscription links across the site.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/compare/"&gt;Browse the comparison library&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/materials/pla.html"&gt;Explore PLA and its selected comparisons&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/printers/bambu-a1.html"&gt;Explore Bambu A1 and its selected comparisons&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/updates/"&gt;Read library updates and find RSS and Atom subscriptions&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;a href="https://github.com/sfmth/3d_printing_info/commit/01f8ac7f52d7c2392843b6afbf625d4601bcb4f7"&gt;Release details&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <id>https://sfmth.github.io/3d_printing_info/updates/#dedicated-filament-and-printer-comparisons</id>
     <title>Dedicated side-by-side filament and printer comparisons</title>

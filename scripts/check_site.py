@@ -16,6 +16,7 @@ import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, CATALOG_DATE, PRINTER_DATE, payload, counts
 from comparison_discovery import FEATURED, validate_discovery
 from updates_feed import load_updates, FEED_ROUTES
+from page_revisions import page_revision
 from material_design import EXAMPLES, APPLICATIONS
 from printer_resources import load_resources, section_for, source_urls, CATEGORIES
 from printer_design import CHAPTERS
@@ -587,7 +588,7 @@ def run():
         path=ROOT/'articles'/(article['id']+'.html'); html=path.read_text(); parsed=Page(html)
         schema=next(json.loads(s) for s in LD.findall(html)); entity=schema['mainEntity']
         assert schema['@type']=='WebPage' and entity['@type']=='TechArticle'
-        assert entity['author']==article['author'] and entity['datePublished']==article['published'] and entity['dateModified']==article['modified']
+        assert entity['author']==article['author'] and entity['datePublished']==article['published'] and entity['dateModified']==page_revision('articles/'+article['id']+'.html',article['modified'])
         assert 'Article revision: '+article['modified'] in html and 'Catalog values retain' not in html
         assert article['id']+'.html' in article_index
         tables=article.get('tables',[article.get('table')])
@@ -770,12 +771,17 @@ def run():
             assert re.fullmatch(r'\d{4}-\d{2}-\d{2}',e['checked'])
             assert escape(e['url']) in (ROOT/'materials'/(key+'.html')).read_text()
     ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+    assert (ROOT/'library-sitemap.xml').read_bytes()==(ROOT/'sitemap.xml').read_bytes(),'Alternate sitemap must be an identical copy'
     urls=[x.text for x in ET.parse(ROOT/'sitemap.xml').findall('s:url/s:loc',ns)]
     assert len(urls)==len(set(urls)) and set(urls)==canonicals,('sitemap/canonical mismatch',set(urls)^canonicals)
     revisions={url.find('s:loc',ns).text:url.find('s:lastmod',ns).text for url in ET.parse(ROOT/'sitemap.xml').findall('s:url',ns)}
     for name in PAGES:assert revisions[BASE+name]==CATALOG_DATE
-    for article in article_data['articles']:assert revisions[BASE+'articles/'+article['id']+'.html']==article['modified']
-    for printer in printers['cats']:assert revisions[BASE+'printers/'+printer['id']+'.html']==PRINTER_DATE
+    for article in article_data['articles']:
+        route='articles/'+article['id']+'.html'
+        assert revisions[BASE+route]==page_revision(route,article['modified'])
+    for printer in printers['cats']:
+        route='printers/'+printer['id']+'.html'
+        assert revisions[BASE+route]==page_revision(route,PRINTER_DATE)
     assert revisions[BASE+'printers/']==PRINTER_DATE
     updates=load_updates(ROOT)
     assert revisions[BASE+'updates/']==max(entry['updated'] for entry in updates['entries'])[:10]
@@ -783,7 +789,7 @@ def run():
     robots=(ROOT/'robots.txt').read_text()
     assert 'Disallow:' not in robots and BASE+'sitemap.xml' in robots
     # Staleness test: sync must be idempotent across all generated pages/metadata.
-    files=[*paths,*pair_paths,*(ROOT/route for route in FEED_ROUTES),ROOT/'data/pair-comparison-manifest.json',ROOT/'sitemap.xml',ROOT/'assets/materials.css',
+    files=[*paths,*pair_paths,*(ROOT/route for route in FEED_ROUTES),ROOT/'data/pair-comparison-manifest.json',ROOT/'sitemap.xml',ROOT/'library-sitemap.xml',ROOT/'assets/materials.css',
            *(ROOT/'assets/printers'/(family.lower()+'.svg') for family in printers['families'])]
     before={p:file_digest(p) for p in files}
     subprocess.run(['python3',str(ROOT/'scripts/sync_site.py')],check=True,capture_output=True)
