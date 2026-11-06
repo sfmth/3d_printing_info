@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Library updates</title>
+    <link>https://sfmth.github.io/3d_printing_info/updates/</link>
+    <description>New material-selection articles, comparison tools and improvements to the 3D Printing Info reference library.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 31 Oct 2026 17:30:57 GMT</lastBuildDate>
+    <atom:link href="https://sfmth.github.io/3d_printing_info/feed.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://pubsubhubbub.appspot.com/" rel="hub" />
+    <item>
+      <title>Dedicated side-by-side filament and printer comparisons</title>
+      <link>https://sfmth.github.io/3d_printing_info/compare/materials/asa-vs-pla.html</link>
+      <pubDate>Sat, 31 Oct 2026 17:30:57 GMT</pubDate>
+      <description>&lt;p&gt;Each pair of material families or printers now has a permanent comparison page with its full specification table, dated source notes and links to both guides. Start with ASA vs PLA or Bambu A1 vs P1S, or browse the complete comparison library.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/compare/materials/asa-vs-pla.html"&gt;Compare ASA and PLA&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/compare/printers/bambu-a1-vs-bambu-p1s.html"&gt;Compare Bambu A1 and P1S&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/compare/"&gt;Browse all filament and printer comparisons&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;a href="https://github.com/sfmth/3d_printing_info/commit/bddeb190aa3d7bc249fd207d31a54629879195c1"&gt;Release details&lt;/a&gt;&lt;/p&gt;</description>
+      <guid isPermaLink="true">https://sfmth.github.io/3d_printing_info/updates/#dedicated-filament-and-printer-comparisons</guid>
+    </item>
+    <item>
+      <title>Clearer image credits and a choice about analytics</title>
+      <link>https://sfmth.github.io/3d_printing_info/printers/</link>
+      <pubDate>Fri, 30 Oct 2026 02:29:58 GMT</pubDate>
+      <description>&lt;p&gt;Printer imagery and attributions were revised after a source-terms review. Optional analytics now waits for consent, with privacy information and settings available across the site.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/printers/"&gt;Browse the printer guides&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/privacy.html"&gt;Read the privacy and analytics information&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;a href="https://github.com/sfmth/3d_printing_info/commit/02f3100fa689708c390bda94282663eac20c6e46"&gt;Release details&lt;/a&gt;&lt;/p&gt;</description>
+      <guid isPermaLink="true">https://sfmth.github.io/3d_printing_info/updates/#image-rights-and-analytics-consent</guid>
+    </item>
+    <item>
+      <title>Printer guides with ownership resources and readable specifications</title>
+      <link>https://sfmth.github.io/3d_printing_info/printers/</link>
+      <pubDate>Wed, 21 Oct 2026 04:45:45 GMT</pubDate>
+      <description>&lt;p&gt;The printer guides gained a more readable layout, model imagery and contextual ownership resources covering documented firmware options, modifications and common problems. Known catalog fields and their original source notes remain available.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/printers/"&gt;Explore the printer reference library&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/printers/bambu-a1-mini.html"&gt;Read the Bambu A1 mini guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/comparison.html"&gt;Open the interactive printer comparison&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;a href="https://github.com/sfmth/3d_printing_info/commit/769d71938c32818a9b0210ff75222b00e1f16953"&gt;Release details&lt;/a&gt;&lt;/p&gt;</description>
+      <guid isPermaLink="true">https://sfmth.github.io/3d_printing_info/updates/#printer-guides-and-ownership-resources</guid>
+    </item>
+    <item>
+      <title>Material-selection articles for real loads and service environments</title>
+      <link>https://sfmth.github.io/3d_printing_info/articles/</link>
+      <pubDate>Mon, 19 Oct 2026 06:57:24 GMT</pubDate>
+      <description>&lt;p&gt;Seven selection articles connect named FDM grades to published test conditions: load-bearing parts, structural composites, heat under load, moisture-conditioned nylon, outdoor components, creep and chemical exposure. The articles retain evidence gaps and verification steps beside the measured results.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/articles/"&gt;Browse the material-selection articles&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/articles/choosing-fdm-material-load-bearing-part.html"&gt;Choose a material for a load-bearing part&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="https://sfmth.github.io/3d_printing_info/articles/asa-petg-pc-outdoor-components.html"&gt;Compare materials for outdoor components&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;a href="https://github.com/sfmth/3d_printing_info/commit/41d6de6f40bd5a7854b8398a9819f22099e92adc"&gt;Release details&lt;/a&gt;&lt;/p&gt;</description>
+      <guid isPermaLink="true">https://sfmth.github.io/3d_printing_info/updates/#material-selection-evidence-articles</guid>
+    </item>
+  </channel>
+</rss>

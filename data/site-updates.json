@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "title": "Library updates",
+  "description": "New material-selection articles, comparison tools and improvements to the 3D Printing Info reference library.",
+  "websub_hub": "https://pubsubhubbub.appspot.com/",
+  "entries": [
+    {
+      "id": "dedicated-filament-and-printer-comparisons",
+      "title": "Dedicated side-by-side filament and printer comparisons",
+      "published": "2026-10-31T17:30:57Z",
+      "updated": "2026-10-31T17:30:57Z",
+      "summary": "Each pair of material families or printers now has a permanent comparison page with its full specification table, dated source notes and links to both guides. Start with ASA vs PLA or Bambu A1 vs P1S, or browse the complete comparison library.",
+      "links": [
+        {"path": "compare/materials/asa-vs-pla.html", "title": "Compare ASA and PLA"},
+        {"path": "compare/printers/bambu-a1-vs-bambu-p1s.html", "title": "Compare Bambu A1 and P1S"},
+        {"path": "compare/", "title": "Browse all filament and printer comparisons"}
+      ],
+      "commit": "bddeb190aa3d7bc249fd207d31a54629879195c1"
+    },
+    {
+      "id": "image-rights-and-analytics-consent",
+      "title": "Clearer image credits and a choice about analytics",
+      "published": "2026-10-30T02:29:58Z",
+      "updated": "2026-10-30T02:29:58Z",
+      "summary": "Printer imagery and attributions were revised after a source-terms review. Optional analytics now waits for consent, with privacy information and settings available across the site.",
+      "links": [
+        {"path": "printers/", "title": "Browse the printer guides"},
+        {"path": "privacy.html", "title": "Read the privacy and analytics information"}
+      ],
+      "commit": "02f3100fa689708c390bda94282663eac20c6e46"
+    },
+    {
+      "id": "printer-guides-and-ownership-resources",
+      "title": "Printer guides with ownership resources and readable specifications",
+      "published": "2026-10-21T04:45:45Z",
+      "updated": "2026-10-21T04:45:45Z",
+      "summary": "The printer guides gained a more readable layout, model imagery and contextual ownership resources covering documented firmware options, modifications and common problems. Known catalog fields and their original source notes remain available.",
+      "links": [
+        {"path": "printers/", "title": "Explore the printer reference library"},
+        {"path": "printers/bambu-a1-mini.html", "title": "Read the Bambu A1 mini guide"},
+        {"path": "comparison.html", "title": "Open the interactive printer comparison"}
+      ],
+      "commit": "769d71938c32818a9b0210ff75222b00e1f16953"
+    },
+    {
+      "id": "material-selection-evidence-articles",
+      "title": "Material-selection articles for real loads and service environments",
+      "published": "2026-10-19T06:57:24Z",
+      "updated": "2026-10-19T06:57:24Z",
+      "summary": "Seven selection articles connect named FDM grades to published test conditions: load-bearing parts, structural composites, heat under load, moisture-conditioned nylon, outdoor components, creep and chemical exposure. The articles retain evidence gaps and verification steps beside the measured results.",
+      "links": [
+        {"path": "articles/", "title": "Browse the material-selection articles"},
+        {"path": "articles/choosing-fdm-material-load-bearing-part.html", "title": "Choose a material for a load-bearing part"},
+        {"path": "articles/asa-petg-pc-outdoor-components.html", "title": "Compare materials for outdoor components"}
+      ],
+      "commit": "41d6de6f40bd5a7854b8398a9819f22099e92adc"
+    }
+  ]
+}

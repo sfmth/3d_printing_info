@@ -27,6 +27,11 @@ jobs:
           python scripts/check_site.py
       - name: Check pair coverage and stable URLs
         run: python -m unittest discover -s tests -p 'test_pair_comparisons.py' -v
+      - name: Check contextual discovery links and genuine updates feeds
+        run: |
+          python -m unittest discover -s tests -p 'test_comparison_discovery.py' -v
+          python -m unittest discover -s tests -p 'test_updates_feed.py' -v
+          python -m unittest discover -s tests -p 'test_websub.py' -v
       - name: Check article evidence validation regressions
         run: python -m unittest discover -s tests -p 'test_article_evidence.py'
       - name: Check image reuse decisions and individual photo licence handling

@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 import re
 from urllib.parse import quote
+from updates_feed import feed_head
 
 REVISION = '2026-10-31'
 KINDS = {'materials': ('filaments.html', 'filament', 'Filament'),
@@ -55,7 +56,7 @@ def _shell(base, path, title, description, body, *, left=None, right=None):
         head += '<meta property="'+key+'" content="'+e(value)+'">'
     head += '<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="'+e(title)+'"><meta name="twitter:description" content="'+e(description)+'"><meta name="twitter:image" content="'+base+'assets/og-card.png">'
     head += '<link rel="icon" href="'+depth+'assets/site-icon.svg"><link rel="stylesheet" href="'+depth+'assets/pair-comparisons.css"><script defer src="'+depth+'assets/pair-comparisons.js"></script>'
-    head += '<link rel="stylesheet" href="'+depth+'assets/analytics-consent.css"><script defer src="'+depth+'assets/analytics-consent.js"></script><script type="application/ld+json">'+_json(schema)+'</script></head>'
+    head += feed_head(base)+'<link rel="stylesheet" href="'+depth+'assets/analytics-consent.css"><script defer src="'+depth+'assets/analytics-consent.js"></script><script type="application/ld+json">'+_json(schema)+'</script></head>'
     attributes = ' data-left="'+e(left['id'])+'" data-right="'+e(right['id'])+'"' if left and right else ''
     nav = '<a class="brand" href="'+depth+'"><img src="'+depth+'assets/site-icon.svg" width="28" height="28" alt="">3D Printing Info</a><nav class="pair-nav" aria-label="Primary"><a href="'+depth+'filaments.html">Filaments</a><a href="'+depth+'comparison.html">Printers</a><a href="'+depth+'compare/">Comparisons</a></nav>'
     footer = '<footer class="pair-footer"><p>Values retain their individual source dates; prices are dated snapshots. Comparison layout revision: '+REVISION+'.</p><a href="'+depth+'sitemap.xml">Sitemap</a><span class="privacy-links"><a href="'+depth+'privacy.html">Privacy</a><button type="button" data-analytics-settings hidden>Analytics settings</button></span></footer>'

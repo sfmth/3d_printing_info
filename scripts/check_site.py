@@ -14,6 +14,8 @@ import statistics
 import tempfile
 import xml.etree.ElementTree as ET
 from sync_site import ROOT, BASE, PAGES, PAYLOAD, LD, CATALOG_DATE, PRINTER_DATE, payload, counts
+from comparison_discovery import FEATURED, validate_discovery
+from updates_feed import load_updates, FEED_ROUTES
 from material_design import EXAMPLES, APPLICATIONS
 from printer_resources import load_resources, section_for, source_urls, CATEGORIES
 from printer_design import CHAPTERS
@@ -563,8 +565,14 @@ def run():
         found=re.findall('data-summary="'+key+r'">(\d+)',index)
         assert found and all(int(x)==n for x in found),(key,found,n)
     assert any(a.get('href') == 'compare/' for a in Page(index).attrs('a')), 'Missing home comparison discovery route'
+    home_links={a.get('href') for a in Page(index).attrs('a')}
+    assert set(FEATURED) <= home_links, 'Featured pairs must be one ordinary link from home'
+    for item in validate_discovery(datasets):
+        for identity in (item['left'],item['right']):
+            guide=Page((ROOT/item['kind']/(identity+'.html')).read_text())
+            assert any(a.get('href')=='../'+item['path'] for a in guide.attrs('a')), (identity, 'Missing relevant direct comparison')
     pair_paths, pair_directories, pair_canonicals = validate_pair_comparisons(ROOT, BASE, datasets)
-    paths=[ROOT/'index.html',ROOT/'privacy.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html'),*(ROOT/'articles').glob('*.html'),*pair_directories]
+    paths=[ROOT/'index.html',ROOT/'privacy.html',ROOT/'updates/index.html',*(ROOT/x for x in PAGES),*(ROOT/'materials').glob('*.html'),*(ROOT/'printers').glob('*.html'),*(ROOT/'articles').glob('*.html'),*pair_directories]
     assert len(list((ROOT/'materials').glob('*.html')))==len(filaments['cats'])+1
     assert len(list((ROOT/'printers').glob('*.html')))==len(printers['cats'])+1
     article_data, evidence = load_articles(), load_evidence()
@@ -651,6 +659,8 @@ def run():
         canonical=[a['href'] for a in parsed.attrs('link') if a.get('rel')=='canonical']
         url=BASE+('' if name=='index.html' else name[:-10] if name.endswith('/index.html') else name)
         assert canonical==[url],(name,canonical)
+        for feed,type_ in [('feed.xml','application/rss+xml'),('atom.xml','application/atom+xml')]:
+            assert len([a for a in parsed.attrs('link') if a.get('rel')=='alternate' and a.get('type')==type_ and a.get('href')==BASE+feed])==1,(name,'Missing unique feed discovery',feed)
         assert url not in canonicals,('Duplicate canonical',url)
         canonicals.add(url)
         assert any(a.get('name')=='robots' and a.get('content')=='index,follow' for a in parsed.attrs('meta')),name
@@ -767,10 +777,13 @@ def run():
     for article in article_data['articles']:assert revisions[BASE+'articles/'+article['id']+'.html']==article['modified']
     for printer in printers['cats']:assert revisions[BASE+'printers/'+printer['id']+'.html']==PRINTER_DATE
     assert revisions[BASE+'printers/']==PRINTER_DATE
+    updates=load_updates(ROOT)
+    assert revisions[BASE+'updates/']==max(entry['updated'] for entry in updates['entries'])[:10]
+    for route in FEED_ROUTES:ET.parse(ROOT/route)
     robots=(ROOT/'robots.txt').read_text()
     assert 'Disallow:' not in robots and BASE+'sitemap.xml' in robots
     # Staleness test: sync must be idempotent across all generated pages/metadata.
-    files=[*paths,*pair_paths,ROOT/'data/pair-comparison-manifest.json',ROOT/'sitemap.xml',ROOT/'assets/materials.css',
+    files=[*paths,*pair_paths,*(ROOT/route for route in FEED_ROUTES),ROOT/'data/pair-comparison-manifest.json',ROOT/'sitemap.xml',ROOT/'assets/materials.css',
            *(ROOT/'assets/printers'/(family.lower()+'.svg') for family in printers['families'])]
     before={p:file_digest(p) for p in files}
     subprocess.run(['python3',str(ROOT/'scripts/sync_site.py')],check=True,capture_output=True)

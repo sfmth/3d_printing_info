@@ -15,12 +15,15 @@ from printer_design import detail_body as printer_detail_body, write_diagrams
 from printer_resources import load_resources, source_urls
 from printer_library import directory_body as printer_directory_body
 from pair_comparisons import generate_comparisons, REVISION as COMPARISON_DATE
+from comparison_discovery import render_home_comparisons, validate_discovery
+from updates_feed import generate_updates, feed_head
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
 DATE = '2026-10-29'  # Content/policy revision, not a blanket source/price check date.
 CATALOG_DATE = '2026-10-31'  # Comparison pages, including their Dataset metadata.
 PRINTER_DATE = '2026-10-29'  # Printer presentation only; catalog/source dates are unchanged.
+HOME_DATE = '2026-11-05'  # Direct comparison entry points; no catalog/source recheck.
 DATASET_CREATOR = {'@type': 'Organization', 'name': '3D Printing Info', 'url': BASE}
 DATASET_LICENSE = 'https://www.gnu.org/licenses/gpl-3.0.html'
 PAGES = ('comparison.html', 'filaments.html')
@@ -105,6 +108,8 @@ def add_consent_controls(page):
     page = re.sub(r'<!-- Google tag.*?</script>\s*<script>.*?</script>', '', page, flags=re.S)
     page = re.sub(r'<link rel="stylesheet" href="assets/analytics-consent.css"><script defer src="assets/analytics-consent.js"></script>', '', page)
     page = page.replace('</head>', consent_head()+'</head>', 1)
+    page = re.sub(r'<link rel="alternate" type="application/(?:rss|atom)\+xml"[^>]*>', '', page)
+    page = page.replace('</head>', feed_head(BASE)+'</head>', 1)
     page = re.sub(r'<span class="privacy-links">.*?</span>', '', page, flags=re.S)
     if '</footer>' in page:
         page = page.replace('</footer>', privacy_links()+'</footer>', 1)
@@ -155,6 +160,7 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
     article = path.startswith('articles/')
     body_class = 'article-page' if article else 'material-page '+('material-library' if path.endswith('/index.html') else 'material-detail') if path.startswith('materials/') else 'printer-page '+('printer-library-page' if path.endswith('/index.html') else 'printer-detail') if path.startswith('printers/') else 'privacy-page' if path == 'privacy.html' else ''
     head += '<link rel="icon" href="' + depth + 'assets/site-icon.svg"><link rel="stylesheet" href="' + depth + 'assets/materials.css">'
+    head += '<link rel="stylesheet" href="'+depth+'assets/comparison-discovery.css">'+feed_head(BASE)
     if article: head += '<link rel="stylesheet" href="'+depth+'assets/material-articles.css">'
     if path.startswith('printers/'):
         head += '<link rel="stylesheet" href="'+depth+'assets/printer-guides.css">'
@@ -168,7 +174,7 @@ def guide_page(name, desc, path, content, analytics, styles, schema):
         nav = '<nav class="nav" aria-label="Primary"><a href="../">Home</a><a href="../comparison.html">Printers</a><a href="../filaments.html">Filaments</a><a href="../materials/">Material guides</a><a href="./" aria-current="'+('page' if path.endswith('index.html') else 'true')+'">Selection articles</a></nav>'
     if path == 'privacy.html':
         nav = '<nav class="nav" aria-label="Primary"><a href="./">Home</a><a href="printers/">Printer guides</a><a href="materials/">Material guides</a><a href="articles/">Selection articles</a></nav>'
-    return head + '<div class="topbar"><a class="brand" href="' + (depth or './') + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + (PRINTER_DATE if path.startswith('printers/') else DATE) + '.</span><a href="' + depth + 'sitemap.xml">Sitemap</a>'+privacy_links(depth)+'</footer></div></body></html>\n'
+    return head + '<div class="topbar"><a class="brand" href="' + (depth or './') + '"><img src="' + depth + 'assets/site-icon.svg" alt="">3D Printing Info</a>' + nav + '</div><main>' + content + '</main><footer><span>Catalog values retain their original source dates. Page revision: ' + (PRINTER_DATE if path.startswith('printers/') else DATE) + '.</span><a href="' + depth + 'updates/">Updates</a><a href="'+depth+'feed.xml">RSS</a><a href="' + depth + 'sitemap.xml">Sitemap</a>'+privacy_links(depth)+'</footer></div></body></html>\n'
 
 
 def generate_materials(data, index):
@@ -181,6 +187,12 @@ def generate_materials(data, index):
         path = 'materials/' + c['id'] + '.html'; paths.append(path)
         desc = c['n'] + ': print settings, mechanical and thermal properties, product listings and dated sources. ' + c.get('sum','')
         body = detail_body(data,c,refs,value)
+        from comparison_discovery import render_guide_comparisons
+        comparisons = render_guide_comparisons('materials', c, data)
+        if comparisons:
+            anchor = '<section class="guide-section material-applications"'
+            if anchor not in body: raise ValueError('Missing material comparison insertion point: '+c['id'])
+            body = body.replace(anchor, comparisons+anchor, 1)
         body += '<p><a href="../compare/materials/'+E(c['id'])+'/">Compare '+E(c['n'])+' with another filament</a></p>'
         schema = {'@context':'https://schema.org','@type':'WebPage','name':c['n']+' material guide','url':BASE+path,'description':desc,'isPartOf':{'@type':'WebSite','url':BASE,'name':'3D Printing Info'},'mainEntity':{'@type':'TechArticle','headline':c['n']+' — printing, properties and sources','about':c['n'],'description':c.get('sum',''),'url':BASE+path,'citation':[s['u'] for k,s in data['src'].items() if s.get('u') and k in {sid for e in c['sp'].values() for sid in e.get('s',[])}]}}
         (ROOT/path).write_text(guide_page(c['n']+' filament guide',desc,path,body,analytics,styles,schema))
@@ -204,6 +216,12 @@ def generate_printers(data, index):
         path='printers/'+c['id']+'.html'; paths.append(path)
         desc=c['n']+': hardware, firmware options, modifications, troubleshooting and sourced specifications. '+c.get('sum','')
         body=printer_detail_body(data,c,refs)
+        from comparison_discovery import render_guide_comparisons
+        comparisons = render_guide_comparisons('printers', c, data)
+        if comparisons:
+            anchor = '<section class="printer-section" id="specifications"'
+            if anchor not in body: raise ValueError('Missing printer comparison insertion point: '+c['id'])
+            body = body.replace(anchor, comparisons+anchor, 1)
         body += '<p><a href="../compare/printers/'+E(c['id'])+'/">Compare '+E(c['n'])+' with another printer</a></p>'
         used={sid for e in c['sp'].values() for sid in e.get('s',[])}
         # These are technical reference articles with historical price snapshots,
@@ -235,6 +253,7 @@ def generate_privacy():
 
 def sync():
     datasets = {name:payload((ROOT/name).read_text()) for name in PAGES}
+    validate_discovery(datasets)
     for filename,data in datasets.items():
         printer = filename=='comparison.html'; cs=counts(data); path=ROOT/filename; page=path.read_text()
         desc = (f"Compare {cs['items']} FDM and resin 3D printers across {cs['brands']} brands and {cs['fields']} fields, with hardware specifications, dated prices and source notes." if printer else f"Compare {cs['items']} filament materials and {cs['products']} products across {cs['brands']} brands, with printing parameters, properties, dated prices and sources.")
@@ -270,16 +289,19 @@ def sync():
     summary={'printers':len(datasets[PAGES[0]]['cats']),'printer-fields':len(datasets[PAGES[0]]['fields']),'materials':len(datasets[PAGES[1]]['cats']),'products':counts(datasets[PAGES[1]])['products']}
     path=ROOT/'index.html';index=path.read_text()
     for key,n in summary.items(): index=re.sub(r'(data-summary="'+key+r'">)\d+',lambda m:m[1]+str(n),index)
-    index=marker(index,'pair-comparisons','<p class="note"><a href="compare/">Compare any two filaments or printers side by side →</a></p>')
+    index=marker(index,'pair-comparisons',render_home_comparisons(datasets))
     path.write_text(add_consent_controls(index))
     material_paths=generate_materials(datasets[PAGES[1]],index)
     printer_paths=generate_printers(datasets[PAGES[0]],index)
-    article_paths=generate_articles(BASE,index,guide_page,{c['id'] for c in datasets[PAGES[1]]['cats']})
+    article_paths=generate_articles(BASE,index,guide_page,{c['id'] for c in datasets[PAGES[1]]['cats']},catalog_data=datasets[PAGES[1]])
     generate_privacy()
     comparison_paths=generate_comparisons(ROOT,BASE,datasets)
-    urls=['','comparison.html','filaments.html','privacy.html','materials/','printers/',*material_paths,*printer_paths,*article_paths,*comparison_paths]
+    updates_dates=generate_updates(ROOT,BASE)
+    urls=['','comparison.html','filaments.html','privacy.html','materials/','printers/',*material_paths,*printer_paths,*article_paths,*comparison_paths,*updates_dates]
     article_dates={'articles/'+a['id']+'.html':a['modified'] for a in load_articles()['articles']}
     article_dates['articles/']=max(article_dates.values())
+    article_dates.update(updates_dates)
+    article_dates['']=HOME_DATE
     sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+article_dates.get(u,COMPARISON_DATE if u.startswith('compare/') else CATALOG_DATE if u in PAGES else PRINTER_DATE if u.startswith('printers/') else DATE)+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
     (ROOT/'sitemap.xml').write_text(sitemap)
     print(json.dumps(summary,sort_keys=True))

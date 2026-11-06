@@ -1,4 +1,8 @@
-# 3D Printing Info
+# [3D Printing Info — visit the website](https://sfmth.github.io/3d_printing_info/)
+
+**[Open the printer and filament reference →](https://sfmth.github.io/3d_printing_info/)**
+
+Start with [ASA vs PLA](https://sfmth.github.io/3d_printing_info/compare/materials/asa-vs-pla.html), [PETG vs PLA](https://sfmth.github.io/3d_printing_info/compare/materials/petg-vs-pla.html), [Bambu A1 vs P1S](https://sfmth.github.io/3d_printing_info/compare/printers/bambu-a1-vs-bambu-p1s.html), or [P1S vs X1-Carbon](https://sfmth.github.io/3d_printing_info/compare/printers/bambu-p1s-vs-bambu-x1c.html). Browse [all comparisons](https://sfmth.github.io/3d_printing_info/compare/) and [site updates](https://sfmth.github.io/3d_printing_info/updates/), or subscribe through [RSS](https://sfmth.github.io/3d_printing_info/feed.xml) or [Atom](https://sfmth.github.io/3d_printing_info/atom.xml).
 
 Static GitHub Pages reference for printer hardware and filament materials. Existing interactive comparisons, family filters, field guides, theme controls and slicer exports are retained. Every material and printer has an individual guide that works without JavaScript.
 
@@ -85,6 +89,23 @@ Each page contains its complete two-column specification table in the HTML, incl
 
 Run `python3 scripts/sync_site.py` before serving a clean checkout. Both workflows do this automatically. Generated pair HTML is intentionally excluded from Git to avoid committing hundreds of megabytes of repeated markup. `data/pair-comparison-manifest.json` records every generated comparison URL and SHA-256 hash; static checks validate all pairs and the complete crawl graph. IndexNow compares tracked manifest hashes to detect changes to ignored pair pages. Representative Chromium checks cover both catalogs, pair controls, mobile scrolling and no-JavaScript reading. Bump `REVISION` in the pair generator for substantive comparison-layout changes; catalog source and price dates remain intact.
 
+
+### Comparison discovery and library updates
+
+`scripts/comparison_discovery.py` keeps a small editorial selection of 13 relevant pairs. Eight have visible, direct homepage links; the matching material/printer guides and articles also link directly to relevant pairs. Labels come from the complete catalogs and paths use the same unordered-pair function as the comparison generator. These are editorial starting points, not measured search-volume rankings. The broader browse directories still reach every other pair. Edit the selection and explanations in that module, then regenerate; do not hand-edit generated guides.
+
+`data/site-updates.json` records actual released improvements, their permanent IDs, original UTC timestamps, canonical content links and the full release commit. Add a record after a real release; preserve its ID and publication date when correcting wording. Update its `updated` timestamp only when the record materially changes. Do not announce every generated combination as a separate release or refresh dates on every build. `scripts/updates_feed.py` generates the readable [updates archive](https://sfmth.github.io/3d_printing_info/updates/), [RSS feed](https://sfmth.github.io/3d_printing_info/feed.xml) and [Atom feed](https://sfmth.github.io/3d_printing_info/atom.xml). Feeds advertise stable self links and the configured hub; all content templates expose RSS/Atom discovery links. Only the archive HTML joins the sitemap.
+
+After a successful Pages deployment, `scripts/notify_websub.py` selects changed, committed feeds across the complete push and verifies that each public feed exactly matches the deployed commit before sending one publication notification to the [public Google hub](https://pubsubhubbub.appspot.com/). The workflow supplies the push's `before` commit as its baseline, so a later README or asset commit in the same push cannot hide an earlier feed update. Manual dispatch or unavailable history bootstraps both feeds. The hub's documented form protocol sends `hub.mode=publish` with the changed feed URLs. Asset-only pushes send no notification. Failures and exact HTTP receipts are retained as workflow artifacts; there are no automatic POST retries. A failed notification can be retried by rerunning that deployment after checking the public feeds. This is a feed-distribution experiment: a hub receipt does not establish subscribers, Googlebot crawling, indexing or ranking. See the [WebSub specification](https://www.w3.org/TR/websub/).
+
+```sh
+python3 scripts/notify_websub.py --report /tmp/websub-preview.json
+python3 -m unittest discover -s tests -p 'test_comparison_discovery.py' -v
+python3 -m unittest discover -s tests -p 'test_updates_feed.py' -v
+python3 -m unittest discover -s tests -p 'test_websub.py' -v
+```
+
+The notification command defaults to a network-free dry run. The tests cover canonical pair links, real release records, deterministic XML, stable dates/IDs, public-feed mismatch rejection and mocked hub receipts. Maintain the GitHub repository's Website field as `https://sfmth.github.io/3d_printing_info/`; README comparison links use absolute Pages URLs because generated `compare/` HTML is not stored on GitHub.
 
 ## Branch and release safeguards
 

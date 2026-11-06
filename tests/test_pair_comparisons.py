@@ -52,7 +52,7 @@ class PairComparisonTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.datasets = {name: copy.deepcopy(sample_catalog()) for name in PAGES}
         # Only local existence is checked; fixture sources never contact a network.
-        for name in ['index.html', 'privacy.html', 'sitemap.xml', *PAGES,
+        for name in ['index.html', 'privacy.html', 'sitemap.xml', 'feed.xml', 'atom.xml', *PAGES,
                      'assets/site-icon.svg', 'assets/pair-comparisons.css', 'assets/pair-comparisons.js',
                      'assets/analytics-consent.css', 'assets/analytics-consent.js']:
             target = self.root/name

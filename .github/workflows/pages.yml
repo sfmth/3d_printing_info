@@ -52,6 +52,25 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+      - name: Notify WebSub of changed deployed updates feeds
+        id: websub
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        timeout-minutes: 2
+        env:
+          WEBSUB_BASE: ${{ github.event.before || '0000000000000000000000000000000000000000' }}
+        run: python3 scripts/notify_websub.py --base "$WEBSUB_BASE" --submit --report "$RUNNER_TEMP/websub-report.json"
+
+      - name: Retain WebSub publication receipt
+        if: always() && steps.websub.outcome != 'skipped' && github.ref == 'refs/heads/main'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: websub-publication-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/websub-report.json
+          if-no-files-found: warn
+          retention-days: 30
+
       # Keep the last acknowledged notification outside the published site.
       # On provider failure it stays unchanged, so the next deploy retries the diff.
       - name: Restore IndexNow notification checkpoint

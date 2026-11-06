@@ -187,7 +187,7 @@ def source_records(article, evidence):
     return body + '</dl></details></section>'
 
 
-def article_body(article, evidence):
+def article_body(article, evidence, catalog_data=None):
     body = '<div class="breadcrumbs"><a href="../">Home</a><span>/</span><a href="./">Selection articles</a><span>/</span><span>' + E(article['category']) + '</span></div><article><header class="article-header"><span class="kicker">Material selection · ' + E(article['category']) + '</span><h1>' + E(article['title']) + '</h1><p class="article-deck">' + E(article['description']) + '</p><p class="article-byline">'
     body += E(article['author']['name']) + ' · Published <time datetime="' + E(article['published']) + '">' + E(article['published']) + '</time> · Revised <time datetime="' + E(article['modified']) + '">' + E(article['modified']) + '</time></p><p class="authorship-note">' + E(article['authorship_note']) + '</p></header>'
     body += '<nav class="article-contents" aria-label="On this page"><a href="#quick-answer">The selection decision</a><a href="#measurements">Grade measurements</a><a href="#methods">Test conditions</a><a href="#verification">Before releasing a part</a><a href="#sources">Sources</a></nav>'
@@ -206,7 +206,11 @@ def article_body(article, evidence):
         body += '</section>'
     body += '<section id="related-materials"><h2>Explore the candidate grades</h2><p>Use the reference guides to find settings and individual product sources, then check the exact grade against the evidence above.</p><ul class="article-material-links">'
     body += ''.join('<li><a href="../materials/' + E(cid) + '.html">' + E(label) + ' material guide</a></li>' for cid, label in article['materials'].items())
-    body += '</ul><a href="../filaments.html">Open the interactive filament comparison</a></section>'
+    body += '</ul><a href="../filaments.html">Open the interactive filament comparison</a>'
+    if catalog_data is not None:
+        from comparison_discovery import render_article_comparisons
+        body += render_article_comparisons(article, catalog_data)
+    body += '</section>'
     return body + source_records(article, evidence) + '</article>'
 
 
@@ -227,7 +231,7 @@ def index_body(data):
     return body
 
 
-def generate_articles(base, index, guide_page, material_ids):
+def generate_articles(base, index, guide_page, material_ids, catalog_data=None):
     data, evidence = load_articles(), load_evidence()
     validate_evidence(evidence, data, material_ids)
     analytics = ''  # guide_page supplies the local consent gate.
@@ -243,7 +247,7 @@ def generate_articles(base, index, guide_page, material_ids):
                   'url': base + path, 'description': article['description'], 'author': article['author'],
                   'datePublished': article['published'], 'dateModified': article['modified'],
                   'about': list(article['materials'].values()), 'citation': [s['url'] for sid, s in evidence['sources'].items() if sid in source_ids]}}
-        html = guide_page(article['title'], article['description'], path, article_body(article, evidence), analytics, '', schema)
+        html = guide_page(article['title'], article['description'], path, article_body(article, evidence, catalog_data), analytics, '', schema)
         html = re.sub(r'Catalog values retain their original source dates\. Page revision: [\d-]+\.',
                       'Article revision: ' + article['modified'] + '. Measurements retain their source dates.', html)
         (ROOT / path).write_text(html)

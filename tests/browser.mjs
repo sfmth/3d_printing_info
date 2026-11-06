@@ -18,6 +18,7 @@ const printerPhotos = JSON.parse(await fs.readFile(path.join(root,'data/printer-
 const examples = Object.fromEntries(Object.entries(JSON.parse(await fs.readFile(path.join(root,'data/print-examples.json'),'utf8'))).map(([id,entries])=>[id,Array.isArray(entries)?entries:[entries]]));
 const applications = JSON.parse(await fs.readFile(path.join(root,'data/material-applications.json'),'utf8'));
 const articles = JSON.parse(await fs.readFile(path.join(root,'data/material-articles.json'),'utf8')).articles;
+const siteUpdates = JSON.parse(await fs.readFile(path.join(root,'data/site-updates.json'),'utf8')).entries;
 const articleEvidence = JSON.parse(await fs.readFile(path.join(root,'data/article-evidence.json'),'utf8'));
 const genericArticles = articles.filter(article=>article.tables);
 const productCount = materials.cats.reduce((n,c)=>n+c.pr.length,0);
@@ -424,6 +425,19 @@ try {
     for (const s of await page.locator(`[data-summary="${key}"]`).allTextContents()) assert.equal(Number(s),n);
   }
   await page.screenshot({path:path.join(root,'test-results/home.png')});
+  assert.equal(await page.locator('#featured-comparisons a[data-discovery-pair]').count(),8,'homepage exposes eight curated pairs as ordinary HTML links');
+  await page.locator('#featured-comparisons').screenshot({path:path.join(root,'test-results/home-comparisons.png')});
+  await page.locator('#featured-comparisons a[href="compare/materials/petg-vs-pla.html"]').click();
+  await verifyPair(page,pairCases[0]);
+  await visit('materials/pla.html');
+  await page.locator('#selected-comparisons a[href="../compare/materials/asa-vs-pla.html"]').click();
+  assert.match(await page.locator('h1').innerText(),/ASA vs PLA/);
+  await visit('updates/');
+  assert.equal(await page.locator('link[rel="alternate"][type="application/rss+xml"]').getAttribute('href'),'https://sfmth.github.io/3d_printing_info/feed.xml');
+  assert.equal(await page.locator('.updates-list > article').count(),siteUpdates.length);
+  await page.screenshot({path:path.join(root,'test-results/updates-desktop.png')});
+  step('Homepage and guide links open the exact pair directly; dated updates expose RSS and Atom');
+  await visit('');
   await page.getByRole('link',{name:'Printers',exact:true}).click();
   await page.locator('#mtbody tr.row').first().waitFor({state:'visible'});
   assert.equal(await page.locator('#mtbody tr.row').count(),printers.cats.length);
@@ -885,6 +899,11 @@ try {
   step('Both pair layouts retain complete values and keyboard source navigation at 390px with scrolling contained inside the table');
   await page.goto(base,{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'homepage mobile width');
+  await page.locator('#featured-comparisons').screenshot({path:path.join(root,'test-results/home-comparisons-mobile.png')});
+  await visit('updates/');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'updates archive mobile width');
+  await page.screenshot({path:path.join(root,'test-results/updates-mobile.png')});
+  await visit('');
   await page.getByRole('link',{name:'Filaments',exact:true}).click();
   await page.locator('#mtbody tr.row[data-id="peba"]').waitFor({state:'visible'});
   await page.getByLabel('Search materials and products',{exact:true}).fill('PEBA');
@@ -970,6 +989,17 @@ try {
   step('Mobile navigation, filtering, material and printer guide layouts at 390 px');
   const nojs=await browser.newContext({javaScriptEnabled:false});
   const staticPage=await nojs.newPage();
+  await staticPage.goto(base);
+  assert.equal(await staticPage.locator('#featured-comparisons a[data-discovery-pair]').count(),8);
+  await staticPage.locator('#featured-comparisons a[href="compare/materials/petg-vs-pla.html"]').click();
+  await verifyPair(staticPage,pairCases[0]);
+  await staticPage.goto(base+'printers/bambu-a1.html');
+  await staticPage.locator('#selected-comparisons a[href="../compare/printers/bambu-a1-vs-bambu-p1s.html"]').click();
+  assert.match(await staticPage.locator('h1').innerText(),/A1 vs Bambu Lab P1S|A1 vs.*P1S/);
+  await staticPage.goto(base+'updates/');
+  assert.equal(await staticPage.locator('.updates-list > article').count(),siteUpdates.length);
+  assert.equal(await staticPage.getByRole('link',{name:'Subscribe with RSS',exact:true}).getAttribute('href'),'../feed.xml');
+  step('Featured comparisons, contextual guide links and the updates archive work without JavaScript');
   for(const fixture of pairCases) {
     await staticPage.goto(base+pairFile(fixture.kind,fixture.ids));
     await verifyPair(staticPage,fixture);
