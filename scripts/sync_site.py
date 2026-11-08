@@ -18,6 +18,7 @@ from pair_comparisons import generate_comparisons, REVISION as COMPARISON_DATE
 from comparison_discovery import render_home_comparisons, validate_discovery
 from updates_feed import generate_updates, feed_head
 from page_revisions import COMPARISON_NAVIGATION_PATHS, page_revision
+from comparison_hub import HUB_REVISION
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://sfmth.github.io/3d_printing_info/'
@@ -311,6 +312,7 @@ def sync():
     article_dates['articles/']=max(a['modified'] for a in articles)
     article_dates.update(updates_dates)
     article_dates['']=HOME_DATE
+    article_dates['compare/']=HUB_REVISION
     sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('  <url><loc>'+BASE+u+'</loc><lastmod>'+page_revision(u,article_dates.get(u,COMPARISON_DATE if u.startswith('compare/') else CATALOG_DATE if u in PAGES else PRINTER_DATE if u.startswith('printers/') else DATE))+'</lastmod></url>\n' for u in urls)+'</urlset>\n'
     (ROOT/'sitemap.xml').write_text(sitemap)
     # A byte-identical alternate name isolates the Search Console fetch issue

@@ -11,6 +11,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from pair_comparisons import generate_comparisons, pair_path
+from comparison_hub import render_hub
 from check_site import Document, validate_pair_comparisons
 from sync_site import PAGES, ROOT, payload
 
@@ -54,6 +55,7 @@ class PairComparisonTests(unittest.TestCase):
         # Only local existence is checked; fixture sources never contact a network.
         for name in ['index.html', 'privacy.html', 'sitemap.xml', 'feed.xml', 'atom.xml', *PAGES,
                      'assets/site-icon.svg', 'assets/pair-comparisons.css', 'assets/pair-comparisons.js',
+                     'assets/comparison-hub.css', 'assets/comparison-hub.js',
                      'assets/analytics-consent.css', 'assets/analytics-consent.js']:
             target = self.root/name
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -89,6 +91,30 @@ class PairComparisonTests(unittest.TestCase):
         for a, b in combinations(['z', 'a', 'b'], 2):
             self.assertEqual(pair_path('materials', a, b), pair_path('materials', b, a))
         self.assertEqual(pair_path('materials', 'z', 'a'), 'compare/materials/a-vs-z.html')
+
+    def test_hub_accepts_catalog_aliases_and_escapes_names_with_featured_pairs(self):
+        catalogs = {
+            'materials': {'cats': [{'id': 'pla', 'n': 'PLA & <prototype>'}, {'id': 'petg', 'n': 'PETG'}]},
+            'printers': {'cats': [{'id': 'bambu-a1', 'n': 'A1'}, {'id': 'bambu-p1s', 'n': 'P1S'}]},
+        }
+        html = render_hub(catalogs)
+        self.assertEqual(html, render_hub({'filaments.html': catalogs['materials'], 'comparison.html': catalogs['printers']}))
+        self.assertIn('PLA &amp; &lt;prototype&gt;', html)
+        doc = Document(html).root
+        links = {node.attrs['href'] for node in doc.find('a')}
+        self.assertTrue({'materials/petg-vs-pla.html', 'printers/bambu-a1-vs-bambu-p1s.html'} <= links)
+        self.assertEqual(len(list(doc.find('select'))), 4)
+
+    def test_bare_two_link_hub_is_rejected_even_with_a_matching_manifest(self):
+        path = self.root/'compare/index.html'
+        html = re.sub(r'<main>.*?</main>', '<main><a href="materials/">Filaments</a><a href="printers/">Printers</a></main>', path.read_text(), flags=re.S)
+        path.write_text(html)
+        manifest_path = self.root/'data/pair-comparison-manifest.json'
+        manifest = json.loads(manifest_path.read_text())
+        manifest['pages']['compare/'] = hashlib.sha256(path.read_bytes()).hexdigest()
+        manifest_path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(AssertionError, 'Missing comparison browse cards'):
+            self.validate()
 
     def test_union_preserves_values_qualifiers_conditions_and_exact_sources(self):
         self.validate()

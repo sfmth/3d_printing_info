@@ -428,6 +428,35 @@ def validate_pair_comparisons(root, base, datasets):
     directories.append(root/'compare/index.html')
     hub = Page(directories[-1].read_text())
     assert {'materials/', 'printers/'} <= {a.get('href') for a in hub.attrs('a')}, 'Missing comparison hub routes'
+    hub_document = Document(directories[-1].read_text()).root
+    cards = [a for a in hub_document.find('a') if 'data-hub-category' in a.attrs]
+    assert {a.attrs['data-hub-category'] for a in cards} == {'materials', 'printers'} and len(cards) == 2, 'Missing comparison browse cards'
+    forms = [form for form in hub_document.find('form') if 'data-hub-picker' in form.attrs]
+    for kind, catalog, noun in [('materials', 'filaments.html', 'material families'), ('printers', 'comparison.html', 'printer models')]:
+        data = datasets[catalog] if catalog in datasets else datasets[kind]
+        ids = {cat['id'] for cat in data['cats']}
+        card = next(a for a in cards if a.attrs['data-hub-category'] == kind)
+        assert card.attrs['href'] == kind+'/' and f'{len(ids):,} {noun}' in card.text, (kind, 'Incorrect hub count or browse route')
+        assert f'{len(ids)*(len(ids)-1)//2:,} dedicated pair comparisons' in card.text, (kind, 'Incorrect hub pair count')
+        matching = [form for form in forms if form.attrs.get('data-kind') == kind]
+        assert len(matching) == (1 if len(ids) >= 2 else 0), (kind, 'Missing usable pair selector')
+        if matching:
+            form = matching[0]
+            assert form.attrs.get('data-pair-base') == kind+'/' and 'hidden' in form.attrs, (kind, 'Invalid progressive enhancement')
+            selects = list(form.find('select'))
+            assert [select.attrs.get('name') for select in selects] == ['first', 'second'], (kind, 'Missing pair choices')
+            selected = []
+            for select in selects:
+                options = list(select.find('option'))
+                assert len(options) == len(ids) and {o.attrs.get('value') for o in options} == ids, (kind, 'Incomplete hub catalog')
+                defaults = [o.attrs['value'] for o in options if 'selected' in o.attrs]
+                assert len(defaults) == 1, (kind, 'Ambiguous hub default')
+                selected += defaults
+                assert any(label.attrs.get('for') == select.attrs.get('id') for label in form.find('label')), (kind, 'Unlabeled hub choice')
+            assert selected[0] != selected[1], (kind, 'Same-item default')
+    featured = [a for a in hub_document.find('a') if 'data-hub-featured-pair' in a.attrs]
+    assert {a.attrs['data-hub-featured-pair'] for a in featured} == set(FEATURED) & expected, 'Missing featured hub comparisons'
+    assert all(a.attrs.get('href') == a.attrs['data-hub-featured-pair'].removeprefix('compare/') for a in featured), 'Incorrect featured hub destination'
     directory_paths = {str(path.relative_to(root))[:-10] for path in directories}
     assert set(manifest['pages']) == expected | directory_paths, 'Unexpected comparison manifest paths'
     actual = {str(path.relative_to(root)) for path in (root/'compare').rglob('*.html')}

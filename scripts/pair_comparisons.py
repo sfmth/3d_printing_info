@@ -39,7 +39,8 @@ def _json(value):
     return json.dumps(value, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
 
 
-def _shell(base, path, title, description, body, *, left=None, right=None):
+def _shell(base, path, title, description, body, *, left=None, right=None,
+           stylesheets=(), scripts=(), revision=REVISION):
     depth = '../' * path.count('/')
     # Directory URLs have a trailing slash and already encode their depth.
     url = base+path
@@ -56,10 +57,12 @@ def _shell(base, path, title, description, body, *, left=None, right=None):
         head += '<meta property="'+key+'" content="'+e(value)+'">'
     head += '<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="'+e(title)+'"><meta name="twitter:description" content="'+e(description)+'"><meta name="twitter:image" content="'+base+'assets/og-card.png">'
     head += '<link rel="icon" href="'+depth+'assets/site-icon.svg"><link rel="stylesheet" href="'+depth+'assets/pair-comparisons.css"><script defer src="'+depth+'assets/pair-comparisons.js"></script>'
+    head += ''.join('<link rel="stylesheet" href="'+depth+e(asset)+'">' for asset in stylesheets)
+    head += ''.join('<script defer src="'+depth+e(asset)+'"></script>' for asset in scripts)
     head += feed_head(base)+'<link rel="stylesheet" href="'+depth+'assets/analytics-consent.css"><script defer src="'+depth+'assets/analytics-consent.js"></script><script type="application/ld+json">'+_json(schema)+'</script></head>'
     attributes = ' data-left="'+e(left['id'])+'" data-right="'+e(right['id'])+'"' if left and right else ''
     nav = '<a class="brand" href="'+depth+'"><img src="'+depth+'assets/site-icon.svg" width="28" height="28" alt="">3D Printing Info</a><nav class="pair-nav" aria-label="Primary"><a href="'+depth+'filaments.html">Filaments</a><a href="'+depth+'comparison.html">Printers</a><a href="'+depth+'compare/">Comparisons</a></nav>'
-    footer = '<footer class="pair-footer"><p>Values retain their individual source dates; prices are dated snapshots. Comparison layout revision: '+REVISION+'.</p><a href="'+depth+'sitemap.xml">Sitemap</a><span class="privacy-links"><a href="'+depth+'privacy.html">Privacy</a><button type="button" data-analytics-settings hidden>Analytics settings</button></span></footer>'
+    footer = '<footer class="pair-footer"><p>Values retain their individual source dates; prices are dated snapshots. Comparison layout revision: '+revision+'.</p><a href="'+depth+'sitemap.xml">Sitemap</a><span class="privacy-links"><a href="'+depth+'privacy.html">Privacy</a><button type="button" data-analytics-settings hidden>Analytics settings</button></span></footer>'
     return head+'<body class="pair-page"'+attributes+'><div class="pair-wrap"><div class="pair-topbar">'+nav+'</div><main>'+body+'</main>'+footer+'</div></body></html>\n'
 
 
@@ -170,8 +173,10 @@ def generate_comparisons(root, base, datasets):
         body += ''.join('<li><a href="'+e(cat['id'])+'/">Compare '+e(cat['n'])+'</a></li>' for cat in sorted(cats, key=lambda cat: cat['n'].casefold()))+'</ul>'
         write(path, _shell(base, path, plural+' comparisons', 'Browse every '+singular+' matchup in the sourced comparison catalog.', body))
     path = 'compare/'
-    body = '<header class="pair-heading"><p class="pair-kicker">Side by side</p><h1>Compare two filaments or printers</h1><p>Open a dedicated comparison with two items selected, every documented property and the original source notes.</p></header><ul class="pair-directory"><li><a href="materials/">Filament comparisons</a></li><li><a href="printers/">Printer comparisons</a></li></ul>'
-    write(path, _shell(base, path, 'Filament and printer comparisons', 'Find a side-by-side comparison for every pair of filament materials or 3D printers in the catalog.', body))
+    from comparison_hub import HUB_REVISION, render_hub
+    body = render_hub(datasets)
+    write(path, _shell(base, path, 'Filament and printer comparisons', 'Find a side-by-side comparison for every pair of filament materials or 3D printers in the catalog.', body,
+                       stylesheets=('assets/comparison-hub.css',), scripts=('assets/comparison-hub.js',), revision=HUB_REVISION))
     # Remove only obsolete HTML inside this generator's owned, ignored folder.
     expected = {(root/(path+'index.html' if path.endswith('/') else path)).resolve() for path in paths}
     for existing in (root/'compare').rglob('*.html'):

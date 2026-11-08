@@ -30,6 +30,9 @@ const pairCases = [
   {kind:'materials',data:materials,ids:['petg','pla'],interactive:'filaments.html'},
   {kind:'printers',data:printers,ids:['bambu-a1','neptune4pro'],interactive:'comparison.html'},
 ];
+const featuredHubPaths = JSON.parse(execFileSync('python3',['-c',
+  'import json,sys; sys.path.insert(0,"scripts"); from comparison_discovery import COMPARISONS; from pair_comparisons import pair_path; print(json.dumps([pair_path(item["kind"],item["left"],item["right"]) for item in COMPARISONS if item["featured"]]))'
+],{cwd:root,encoding:'utf8'}));
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'application/javascript','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.webp':'image/webp','.xml':'application/xml','.webmanifest':'application/manifest+json'};
 const server = http.createServer(async (req,res) => {
   try {
@@ -133,6 +136,36 @@ try {
     metadata.forEach(walk);
     assert.ok(declared.includes('WebPage') && !declared.includes('Product') && !declared.includes('Dataset'));
     return rows;
+  }
+  async function verifyHub(target, enhanced=true) {
+    assert.equal(await target.locator('.comparison-hub').count(),1,'comparison hub contains its usable entry points');
+    assert.equal(await target.locator('[data-hub-category]').count(),2,'both catalog browse cards are present');
+    assert.equal(await target.locator('form[data-hub-picker]').count(),2,'each catalog has an independent picker');
+    for(const {kind,data} of pairCases) {
+      const card=target.locator(`[data-hub-category="${kind}"]`);
+      assert.equal(await card.isVisible(),true,kind+' browse card remains readable');
+      assert.equal(await card.getAttribute('href'),kind+'/');
+      assert.equal(await card.locator('.hub-count').innerText(),data.cats.length.toLocaleString('en-US')+' '+(kind==='materials'?'material families':'printer models'));
+      assert.ok((await card.locator('.hub-card-description').innerText()).includes((data.cats.length*(data.cats.length-1)/2).toLocaleString('en-US')+' dedicated pair comparisons'));
+      const form=target.locator(`form[data-hub-picker][data-kind="${kind}"]`);
+      assert.equal(await form.isVisible(),enhanced,kind+' picker is enabled only with JavaScript');
+      for(const [name,label] of [['first','First '],['second','Second ']]) {
+        const labelText=label+(kind==='materials'?'filament':'printer');
+        const select=form.getByLabel(labelText,{exact:true});
+        assert.equal(await select.getAttribute('name'),name,'native picker has an explicit associated label');
+        assert.deepEqual(await select.evaluate(node=>({label:node.labels[0].textContent,associated:node.labels[0].control===node})),{label:labelText,associated:true},'picker label stays concise and explicitly controls its native selector');
+        assert.deepEqual((await select.locator('option').evaluateAll(options=>options.map(option=>option.value))).sort(),data.cats.map(cat=>cat.id).sort(),kind+' picker retains every catalog choice');
+      }
+      assert.notEqual(await form.locator('select[name="first"]').inputValue(),await form.locator('select[name="second"]').inputValue(),'initial pair contains two different items');
+    }
+    const featured=target.locator('[data-hub-featured-pair]');
+    assert.equal(await featured.count(),8,'hub exposes eight direct editorial comparisons');
+    assert.deepEqual((await featured.evaluateAll(links=>links.map(link=>link.dataset.hubFeaturedPair))).sort(),[...featuredHubPaths].sort(),'hub uses the shared editorial selection');
+    for(const link of await featured.all()) {
+      assert.equal(await link.isVisible(),true,'featured comparison is visible without opening a category');
+      const file=await link.getAttribute('data-hub-featured-pair');
+      assert.equal(new URL(await link.getAttribute('href'),target.url()).href,base+file,'featured link opens the dedicated canonical pair path');
+    }
   }
   async function openPairCitation(target) {
     const citation=target.locator('#pair-table a.source-ref').first();
@@ -830,7 +863,47 @@ try {
   if(genericArticles.length) step(`All ${genericArticles.length} expanded articles retain exact measurements, explicit gaps, adjacent specimen context and source/method navigation`);
   await visit('');
   await page.locator('a[href="compare/"]').click();
-  await page.locator('main a[href="materials/"]').click();
+  await verifyHub(page);
+  await page.screenshot({path:path.join(root,'test-results/comparison-hub-desktop.png'),fullPage:true});
+  await page.emulateMedia({colorScheme:'dark'});
+  assert.equal(await page.locator('.hub-selector').first().evaluate(form=>getComputedStyle(form).backgroundColor),'rgb(26, 26, 25)','hub cards inherit the dark color palette');
+  await page.screenshot({path:path.join(root,'test-results/comparison-hub-dark.png'),fullPage:true});
+  await page.emulateMedia({colorScheme:'light'});
+  for(const fixture of pairCases) {
+    await visit('compare/');
+    const form=page.locator(`form[data-hub-picker][data-kind="${fixture.kind}"]`);
+    const first=form.locator('select[name="first"]'), second=form.locator('select[name="second"]');
+    const status=form.locator('[role="status"]'), ids=[...fixture.ids].sort();
+    const other=page.locator(`form[data-hub-picker]:not([data-kind="${fixture.kind}"]) select[name="first"]`);
+    const untouched=await other.inputValue();
+    await first.selectOption(ids[0]);
+    await second.selectOption(ids[0]);
+    await form.locator('button[type="submit"]').focus();
+    await page.keyboard.press('Enter');
+    assert.equal(page.url(),base+'compare/','same-item hub request stays on the chooser');
+    assert.equal(await second.getAttribute('aria-invalid'),'true');
+    assert.equal(await second.evaluate(select=>select===document.activeElement),true,'same-item error focuses the second native selector');
+    assert.match(await status.innerText(),/two different/);
+    assert.equal(await status.getAttribute('data-state'),'error');
+    assert.equal(await other.inputValue(),untouched,'using one catalog picker does not change the other');
+    await second.selectOption(ids[1]);
+    assert.equal(await first.getAttribute('aria-invalid'),null);
+    assert.equal(await second.getAttribute('aria-invalid'),null,'changing a choice clears the old invalid state');
+    assert.equal(await status.getAttribute('data-state'),'ready');
+    await first.selectOption(ids[1]);
+    await second.selectOption(ids[0]);
+    await Promise.all([
+      page.waitForURL(base+pairFile(fixture.kind,ids)),
+      form.locator('button[type="submit"]').click(),
+    ]);
+    await verifyPair(page,fixture);
+  }
+  await visit('compare/');
+  await page.locator(`[data-hub-featured-pair="${pairFile(pairCases[0].kind,pairCases[0].ids)}"]`).click();
+  await verifyPair(page,pairCases[0]);
+  step('Comparison hub shows both complete catalogs and eight direct matchups; independent keyboard-accessible pickers reject self-pairs and resolve reversed choices to the exact canonical kind path');
+  await visit('compare/');
+  await page.locator('[data-hub-category="materials"]').click();
   await page.locator('main a[href="pla/"]').click();
   await page.locator('main a[href="../petg-vs-pla.html"]').click();
   await verifyPair(page,pairCases[0]);
@@ -903,6 +976,12 @@ try {
     await openPairCitation(page);
   }
   step('Both pair layouts retain complete values and keyboard source navigation at 390px with scrolling contained inside the table');
+  await visit('compare/');
+  await verifyHub(page);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'comparison hub fits a 390px viewport');
+  assert.equal(await page.locator('.hub-selector select').evaluateAll(selects=>selects.every(select=>select.getBoundingClientRect().width>=44 && select.getBoundingClientRect().height>=44)),true,'mobile native selectors retain usable touch targets');
+  await page.screenshot({path:path.join(root,'test-results/comparison-hub-mobile.png'),fullPage:true});
+  step('Comparison hub browse cards, native pair pickers and featured comparisons remain readable at 390px without page overflow');
   await page.goto(base,{waitUntil:'networkidle'});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'homepage mobile width');
   await page.locator('#featured-comparisons').screenshot({path:path.join(root,'test-results/home-comparisons-mobile.png')});
@@ -1017,7 +1096,13 @@ try {
     assert.equal(await staticPage.locator('#static > table').first().locator('tbody tr').count(),fixture.data.cats.length,'interactive link still exposes the complete static catalog fallback');
   }
   await staticPage.goto(base+'compare/');
-  await staticPage.locator('main a[href="printers/"]').click();
+  await verifyHub(staticPage,false);
+  await staticPage.screenshot({path:path.join(root,'test-results/comparison-hub-nojs.png'),fullPage:true});
+  await staticPage.locator(`[data-hub-featured-pair="${pairFile(pairCases[0].kind,pairCases[0].ids)}"]`).click();
+  await verifyPair(staticPage,pairCases[0]);
+  await staticPage.goto(base+'compare/');
+  step('Comparison hub retains both browse routes and eight direct comparison links with inactive selectors hidden when JavaScript is disabled');
+  await staticPage.locator('[data-hub-category="printers"]').click();
   await staticPage.locator('main a[href="bambu-a1/"]').click();
   await staticPage.locator('main a[href="../bambu-a1-vs-neptune4pro.html"]').click();
   await verifyPair(staticPage,pairCases[1]);
