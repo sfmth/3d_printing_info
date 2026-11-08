@@ -4,6 +4,8 @@
 
 Start with [ASA vs PLA](https://sfmth.github.io/3d_printing_info/compare/materials/asa-vs-pla.html), [PETG vs PLA](https://sfmth.github.io/3d_printing_info/compare/materials/petg-vs-pla.html), [Bambu A1 vs P1S](https://sfmth.github.io/3d_printing_info/compare/printers/bambu-a1-vs-bambu-p1s.html), or [P1S vs X1-Carbon](https://sfmth.github.io/3d_printing_info/compare/printers/bambu-p1s-vs-bambu-x1c.html). Browse [all comparisons](https://sfmth.github.io/3d_printing_info/compare/) and [site updates](https://sfmth.github.io/3d_printing_info/updates/), or subscribe through [RSS](https://sfmth.github.io/3d_printing_info/feed.xml) or [Atom](https://sfmth.github.io/3d_printing_info/atom.xml).
 
+## [Visit the 3D Printing Info website →](https://sfmth.github.io/3d_printing_info/)
+
 Static GitHub Pages reference for printer hardware and filament materials. Existing interactive comparisons, family filters, field guides, theme controls and slicer exports are retained. Every material and printer has an individual guide that works without JavaScript.
 
 ## Catalog maintenance
